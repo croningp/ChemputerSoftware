@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tools.vlogging &mdash; Chempiler 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Chempiler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Chempiler</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>tools.vlogging</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tools.vlogging</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;vlogging&quot; -- Utilities for video logging</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: vlogging</span>
+<span class="sd">   :platform: Windows</span>
+<span class="sd">   :synopsis: Utilities for video logging.</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+
+<span class="sd">(c) 2018 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This file contains all utilities required to record webcam videos at variable frame rates, with time stamp, and the</span>
+<span class="sd">current INFO level log message overlaid.</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+
+<div class="viewcode-block" id="VlogHandler"><a class="viewcode-back" href="../../source/tools.html#tools.vlogging.VlogHandler">[docs]</a><span class="k">class</span> <span class="nc">VlogHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Logging module handler class. Inherits directly from the logging.Handler prototype, as no fancy stuff is required.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the handler.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            queue (multiprocessing.Queue): A queue object shared with the video recording process.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">queue</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ERROR: No queue object supplied!&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="VlogHandler.flush"><a class="viewcode-back" href="../../source/tools.html#tools.vlogging.VlogHandler.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Empties the queue by popping all items until it&#39;s empty.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="VlogHandler.emit"><a class="viewcode-back" href="../../source/tools.html#tools.vlogging.VlogHandler.emit">[docs]</a>    <span class="k">def</span> <span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Emit a record.</span>
+
+<span class="sd">        If a formatter is specified, it is used to format the record.</span>
+<span class="sd">        The record is then put into the queue.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+            <span class="c1"># print(&quot;Logger {0} is enqueuing \&quot;{1}\&quot;&quot;.format(self.name, msg))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handleError</span><span class="p">(</span><span class="n">record</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="RecordingSpeedFilter"><a class="viewcode-back" href="../../source/tools.html#tools.vlogging.RecordingSpeedFilter">[docs]</a><span class="k">class</span> <span class="nc">RecordingSpeedFilter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Filter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Logging filter that only allows messages with logging level 5 to be passed on. Used for controlling video recording</span>
+<span class="sd">    speed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RecordingSpeedFilter.filter"><a class="viewcode-back" href="../../source/tools.html#tools.vlogging.RecordingSpeedFilter.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">record</span><span class="o">.</span><span class="n">levelno</span> <span class="o">==</span> <span class="mi">5</span></div></div>
+
+
+<div class="viewcode-block" id="recording_worker"><a class="viewcode-back" href="../../source/tools.html#tools.vlogging.recording_worker">[docs]</a><span class="k">def</span> <span class="nf">recording_worker</span><span class="p">(</span><span class="n">message_queue</span><span class="p">,</span> <span class="n">recording_speed_queue</span><span class="p">,</span> <span class="n">video_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Worker process which records a video to a file at variable frame rate. The main loop grabs an image from the camera,</span>
+<span class="sd">    overlays a time stamp and the most recent log message, and then waits the appropriate time until the next frame is</span>
+<span class="sd">    due. Log messages and requests to change recording speed are passed via multiprocessing queues. This worker is meant</span>
+<span class="sd">    to be run as an individual process to improve performance in cPython.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        message_queue (multiprocessing.Queue): A queue object containing logging messages</span>
+<span class="sd">        recording_speed_queue (multiprocessing.Queue): A queue object containing requests to change frame rate</span>
+<span class="sd">        video_path (str): A path to the output video file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># constants for easy maintenance</span>
+    <span class="n">camera_id</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">resolution</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1280</span><span class="p">,</span> <span class="mi">720</span><span class="p">)</span>
+    <span class="n">fps</span> <span class="o">=</span> <span class="mi">24</span>
+    <span class="n">time_per_frame</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">fps</span>
+
+    <span class="c1"># start capture</span>
+    <span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">camera_id</span><span class="p">)</span>
+
+    <span class="c1"># set image size</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cap</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_WIDTH</span><span class="p">,</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cap</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_HEIGHT</span><span class="p">,</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># start video writer</span>
+    <span class="n">fourcc</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoWriter_fourcc</span><span class="p">(</span><span class="o">*</span><span class="s1">&#39;XVID&#39;</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoWriter</span><span class="p">(</span><span class="n">video_path</span><span class="p">,</span> <span class="n">fourcc</span><span class="p">,</span> <span class="n">fps</span><span class="p">,</span> <span class="n">resolution</span><span class="p">)</span>
+
+    <span class="c1"># initialise working variables</span>
+    <span class="n">recording_speed</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">current_log_message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1"># keep recording</span>
+    <span class="k">while</span> <span class="n">cap</span><span class="o">.</span><span class="n">isOpened</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">beginning_of_frame</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">ret</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
+                <span class="c1"># create and format time stamp</span>
+                <span class="n">timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">beginning_of_frame</span><span class="p">)</span>
+                <span class="n">timestamp_pretty_print</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+                <span class="n">timestamp_string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">X&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timestamp_pretty_print</span><span class="p">,</span> <span class="n">recording_speed</span><span class="p">)</span>
+
+                <span class="c1"># check if there is a new log message, if there&#39;s more than one discard all but the most recent one</span>
+                <span class="k">while</span> <span class="ow">not</span> <span class="n">message_queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                    <span class="n">current_log_message</span> <span class="o">=</span> <span class="n">message_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+                <span class="c1"># insert time stamp and log message as overlay</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">timestamp_string</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">660</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">LINE_AA</span><span class="p">)</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">current_log_message</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">710</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">LINE_AA</span><span class="p">)</span>
+
+                <span class="c1"># write the frame</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+
+                <span class="c1"># display video</span>
+                <span class="c1"># cv2.imshow(&#39;frame&#39;, frame)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="c1"># wait until the next frame is due</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">beginning_of_frame</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">time_per_frame</span> <span class="o">*</span> <span class="n">recording_speed</span><span class="p">):</span>
+                <span class="c1"># if a speed change is requested end the wait immediately</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">recording_speed_queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                    <span class="n">recording_speed</span> <span class="o">=</span> <span class="n">recording_speed_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                    <span class="n">recording_speed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">recording_speed</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="c1"># else wait for a couple dozen milliseconds to save CPU time</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.005</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+            <span class="n">cap</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

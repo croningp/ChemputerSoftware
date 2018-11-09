@@ -1,0 +1,74 @@
+DEF default_speed_dead_slow = 0.5; # mL/min
+DEF default_speed_slow = 20;  # mL/min
+DEF default_speed_fast = 50;  # mL/min
+DEF default_speed_viscous = 2; # mL/min for viscous stuff
+
+DEF clean_hose(volume_washing_hose, part_backbone_used){ #general cleaning method for hoses and pumps. Takes the desired volume of washing liquid as an argument. The cleaning agents are moved from one side through the whole backbone and pumps. By that technique, everything in between is cleaned. The first cleaning step is with ether, to get rid of really reactive chemicals like chlorosulphonic acid. Then everything is washed with water, followed by acetone and once again, ether, to get rid of reactive solvents.
+    # make sure washing liquids are on the valve on other side of rig than waste
+    # PART_BACKBONE_USED: put in the name of the waste on the valve, up till where you want to clean, works in this graphfile from left to right
+
+    S SET_RECORDING_SPEED(180);
+
+    S MOVE(flask_ether, waste_reagents_1, 2, default_speed_fast, default_speed_fast);
+    S MOVE(flask_ether, waste_reagents_2, 2, default_speed_fast, default_speed_fast);
+    S MOVE(flask_ether, waste_solvents, 2, default_speed_fast, default_speed_fast);
+    S MOVE(flask_ether, waste_reactor, 2, default_speed_fast, default_speed_fast);
+
+    S MOVE(flask_ether, part_backbone_used, 5, default_speed_fast, default_speed_fast);
+    S MOVE(flask_water, part_backbone_used, volume_washing_hose, default_speed_fast, default_speed_slow);
+    S MOVE(part_backbone_used, waste_reagents_1, 40); #dries backbone a bit
+
+    S MOVE(flask_acetone, part_backbone_used, volume_washing_hose, default_speed_fast, default_speed_slow);
+    S MOVE(flask_acetone, part_backbone_used, volume_washing_hose, default_speed_fast, default_speed_slow);
+    S MOVE(part_backbone_used, waste_reagents_1, 40); #dries backbone a bit
+
+    S MOVE(flask_ether, part_backbone_used, volume_washing_hose, default_speed_fast, default_speed_slow);
+    S MOVE(flask_ether, part_backbone_used, volume_washing_hose, default_speed_fast, default_speed_slow);
+    S MOVE(part_backbone_used, waste_reagents_1, 40); #dries backbone a bit
+    S SET_RECORDING_SPEED(30);
+}
+
+MAIN {
+
+	# S SET_STIR_RPM(flask_separator_top, 800);
+    # S START_STIR(flask_separator_top);
+	# S SET_STIR_RPM(reactor_reactor, 400);
+	# S SET_STIR_RPM(filter_filter_top, 400);
+	# S START_STIR(reactor_reactor);
+	# S START_STIR(filter_filter_top);
+    # S MOVE(flask_ether, waste_reagents_2, 8);
+    S SWITCH_CHILLER(reactor_reactor, 1);
+	S SET_CHILLER(reactor_reactor, 5); # set temperature
+	S START_CHILLER(reactor_reactor); # start cooling
+	S WAIT(20);
+	S CHILLER_WAIT_FOR_TEMP(reactor_reactor);
+    # S SEPARATE(waste_separator, waste_separator);
+    # clean_hose(5, waste_solvents);
+	
+	# S STOP_STIR(filter_filter_top);
+	# S STOP_STIR(reactor_reactor);
+	# S STOP_STIR(flask_separator_top);
+	
+	S WAIT(60);
+	
+	# S STOP_CHILLER(filter_filter_top);
+	
+	S WAIT(180);
+	
+	S SWITCH_CHILLER(reactor_reactor, 0);
+	S WAIT(5);
+	S SET_CHILLER(filter_filter_top, 30); # set temperature
+	S START_CHILLER(filter_filter_top); # start cooling
+	S WAIT(20);
+	S CHILLER_WAIT_FOR_TEMP(filter_filter_top);
+	S SET_CHILLER(filter_filter_top, 60);
+	
+	S WAIT(20);
+	S CHILLER_WAIT_FOR_TEMP(filter_filter_top);
+	
+	S STOP_CHILLER(filter_filter_top);
+
+	
+	S WAIT(60);
+	
+}

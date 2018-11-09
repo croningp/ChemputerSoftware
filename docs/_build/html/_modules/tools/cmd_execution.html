@@ -1,0 +1,962 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tools.cmd_execution &mdash; Chempiler 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Chempiler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Chempiler</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>tools.cmd_execution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tools.cmd_execution</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;cmd_execution&quot; -- Command dispatcher and deep control layer for the Chemputer</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: cmd_execution</span>
+<span class="sd">   :platform: Windows, Unix</span>
+<span class="sd">   :synopsis: Command dispatcher for the Chemputer.</span>
+<span class="sd">.. moduleauthor:: Graham Keenan &lt;1105045k@student.gla.ac.uk&gt;</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+
+<span class="sd">(c) 2017 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This module provides a class that takes possession of the physical resources via the various module executioners,</span>
+<span class="sd">and carries out commands supplied as a list of &quot;opcode&quot; and arguments. This is the heart of the Chemputer control.</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getfile</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">tools.module_execution.pump_execution</span> <span class="k">import</span> <span class="n">PumpExecutioner</span>
+<span class="kn">from</span> <span class="nn">tools.module_execution.stirrer_execution</span> <span class="k">import</span> <span class="n">StirrerExecutioner</span>
+<span class="kn">from</span> <span class="nn">tools.module_execution.rotavap_execution</span> <span class="k">import</span> <span class="n">RotavapExecutioner</span>
+<span class="kn">from</span> <span class="nn">tools.module_execution.vacuum_execution</span> <span class="k">import</span> <span class="n">VacuumExecutioner</span>
+<span class="kn">from</span> <span class="nn">tools.module_execution.chiller_execution</span> <span class="k">import</span> <span class="n">ChillerExecutioner</span>
+<span class="kn">from</span> <span class="nn">tools.module_execution.camera_execution</span> <span class="k">import</span> <span class="n">CameraExecutioner</span>
+
+<span class="kn">from</span> <span class="nn">tools.constants</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="Executioner"><a class="viewcode-back" href="../../source/tools.html#tools.cmd_execution.Executioner">[docs]</a><span class="k">class</span> <span class="nc">Executioner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Judge. Jury. Executioner.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        graph (ChemOSGraph): Graph object representing the physical platform_server, populated with module objects</span>
+<span class="sd">        simulation (bool): Whether or not this is a simulation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">simulation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span> <span class="o">=</span> <span class="n">simulation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;main_logger.executioner_logger&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Devices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pumps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_device_objects</span><span class="p">(</span><span class="n">PUMP_FLAG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valves</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_device_objects</span><span class="p">(</span><span class="n">VALVE_FLAG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotavaps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_device_objects</span><span class="p">(</span><span class="n">ROTAVAP_FLAG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stirrers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_device_objects</span><span class="p">(</span><span class="n">STIR_FLAG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_device_objects</span><span class="p">(</span><span class="n">VAC_FLAG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chiller</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_device_objects</span><span class="p">(</span><span class="n">CHILLER_FLAG</span><span class="p">)</span>
+
+        <span class="c1"># Executors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span> <span class="o">=</span> <span class="n">PumpExecutioner</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pumps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">valves</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span> <span class="o">=</span> <span class="n">StirrerExecutioner</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stirrers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span> <span class="o">=</span> <span class="n">RotavapExecutioner</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rotavaps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span> <span class="o">=</span> <span class="n">VacuumExecutioner</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span> <span class="o">=</span> <span class="n">ChillerExecutioner</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">chiller</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">camera_executor</span> <span class="o">=</span> <span class="n">CameraExecutioner</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Executioner.execute"><a class="viewcode-back" href="../../source/tools.html#tools.cmd_execution.Executioner.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes the command, depending on the operation move that is passed</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cmd (List): List of arguments for a command</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">join_parallel_operations</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">PUMP_CMDS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_pump_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">STIR_CMDS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_stirring_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">WAIT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_waiting_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">ROTAVAP_CMDS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_rotavap_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">VACUUM_CMDS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_vacuum_cmds</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">CHILLER_CMDS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_chiller_cmds</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">CAMERA_CMDS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_camera_cmds</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="o">==</span> <span class="n">BREAKPOINT_CMD</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Breakpoint reached. Type </span><span class="se">\&quot;</span><span class="s2">off</span><span class="se">\&quot;</span><span class="s2"> to stop the sequence. Press Enter to continue&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;off&quot;</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid command </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cmd</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Executioner.join_parallel_operations"><a class="viewcode-back" href="../../source/tools.html#tools.cmd_execution.Executioner.join_parallel_operations">[docs]</a>    <span class="k">def</span> <span class="nf">join_parallel_operations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Joins all parallel execution threads before processing a sequential command</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="p">:</span>
+            <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span> <span class="o">=</span> <span class="p">[]</span></div>
+    
+<div class="viewcode-block" id="Executioner.process_pump_cmd"><a class="viewcode-back" href="../../source/tools.html#tools.cmd_execution.Executioner.process_pump_cmd">[docs]</a>    <span class="k">def</span> <span class="nf">process_pump_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Processes a command that involves the pumps/valves</span>
+<span class="sd">        Commands are [MOVE, HOME]</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cmd (List): Command arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmd_type</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">PUMP_CMDS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="o">==</span> <span class="n">op</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;MOVE&quot;</span><span class="p">:</span>
+                    <span class="n">source</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">dest</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="n">volume</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+                    <span class="c1"># move all case</span>
+                    <span class="k">if</span> <span class="n">volume</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+                        <span class="n">volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">source</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">volume</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span>
+                    <span class="c1"># I know this is somewhat clumsy, but until I come up with a cleverer idea it&#39;ll have to do</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">move_speed</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+                    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                        <span class="n">move_speed</span> <span class="o">=</span> <span class="n">DEFAULT_PUMP_SPEED</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">aspiration_speed</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+                    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                        <span class="n">aspiration_speed</span> <span class="o">=</span> <span class="n">move_speed</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">dispense_speed</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+                    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                        <span class="n">dispense_speed</span> <span class="o">=</span> <span class="n">move_speed</span>
+                    <span class="k">if</span> <span class="n">source</span> <span class="o">==</span> <span class="n">dest</span><span class="p">:</span>  <span class="c1"># if the source and destination are the same</span>
+                        <span class="n">associated_valve</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">predecessors</span><span class="p">(</span><span class="n">source</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># this relies on the fact that a flask only has one predecessor</span>
+                        <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="n">source</span><span class="p">,</span> <span class="n">associated_valve</span><span class="p">,</span> <span class="n">dest</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># self.graph is directed, so there are no direct paths between the flasks.</span>
+                        <span class="c1"># To remedy that, nx.Graph(self.graph) returns a shallow copy in the form of an undirected graph.</span>
+                        <span class="c1"># Hopefully this does not create too many issues.</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">path</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">shortest_path</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">),</span> <span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Encountered an error during MOVE command.&quot;</span><span class="p">)</span>
+                            <span class="k">return</span>
+
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">move_speed</span><span class="p">,</span> <span class="n">aspiration_speed</span><span class="p">,</span> <span class="n">dispense_speed</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">move_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">move</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">move_speed</span><span class="p">,</span> <span class="n">aspiration_speed</span><span class="p">,</span> <span class="n">dispense_speed</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">move_thread</span><span class="p">)</span>
+                        <span class="n">move_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;HOME&quot;</span><span class="p">:</span>
+                    <span class="n">pump_name</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">move_speed</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">home</span><span class="p">(</span><span class="n">pump_name</span><span class="p">,</span> <span class="n">move_speed</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">home_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">move</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pump_name</span><span class="p">,</span> <span class="n">move_speed</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">home_thread</span><span class="p">)</span>
+                        <span class="n">home_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SEPARATE&quot;</span><span class="p">:</span>
+                    <span class="n">lower_phase_target</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">upper_phase_target</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">separate_phases</span><span class="p">(</span><span class="n">lower_phase_target</span><span class="p">,</span> <span class="n">upper_phase_target</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">separate_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">separate_phases</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">lower_phase_target</span><span class="p">,</span> <span class="n">upper_phase_target</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">separate_thread</span><span class="p">)</span>
+                        <span class="n">separate_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;PRIME&quot;</span><span class="p">:</span>
+                    <span class="n">aspiration_speed</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">prime_tubes</span><span class="p">(</span><span class="n">aspiration_speed</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">prime_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">prime_tubes</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">aspiration_speed</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prime_thread</span><span class="p">)</span>
+                        <span class="n">prime_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;CLEAN&quot;</span><span class="p">:</span>
+                    <span class="n">source</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">volume</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">clean_all</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="n">volume</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">clean_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">clean_all</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">volume</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clean_thread</span><span class="p">)</span>
+                        <span class="n">clean_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SWITCH_VACUUM&quot;</span><span class="p">:</span>
+                    <span class="n">flask</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">destination</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">switch_vacuum</span><span class="p">(</span><span class="n">flask</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">vacvalve_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">switch_vacuum</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">flask</span><span class="p">,</span> <span class="n">destination</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vacvalve_thread</span><span class="p">)</span>
+                        <span class="n">vacvalve_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SWITCH_CARTRIDGE&quot;</span><span class="p">:</span>
+                    <span class="n">flask</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">cartridge</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">switch_cartridge</span><span class="p">(</span><span class="n">flask</span><span class="p">,</span> <span class="n">cartridge</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">cartridge_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">switch_cartridge</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">flask</span><span class="p">,</span> <span class="n">cartridge</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cartridge_thread</span><span class="p">)</span>
+                        <span class="n">cartridge_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SWITCH_COLUMN&quot;</span><span class="p">:</span>
+                    <span class="n">column</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">destination</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">switch_column_fraction</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">column_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_executor</span><span class="o">.</span><span class="n">switch_column_fraction</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">destination</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">column_thread</span><span class="p">)</span>
+                        <span class="n">column_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span></div>
+
+<div class="viewcode-block" id="Executioner.process_stirring_cmd"><a class="viewcode-back" href="../../source/tools.html#tools.cmd_execution.Executioner.process_stirring_cmd">[docs]</a>    <span class="k">def</span> <span class="nf">process_stirring_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Processes a command involving the stirrer plates</span>
+<span class="sd">        Commands are [STIR, HEAT, SET_TEMP, SET_STIR_RPM]</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cmd (List): Command arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmd_type</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">stirrer_name</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">STIR_CMDS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="o">==</span> <span class="n">op</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;START_STIR&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">stir</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">stir_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">stir</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stir_thread</span><span class="p">)</span>
+                        <span class="n">stir_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;START_HEAT&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">heat</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">heat_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">heat</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">heat_thread</span><span class="p">)</span>
+                        <span class="n">heat_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;STOP_STIR&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">stop_stir</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">stir_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">stop_stir</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stir_thread</span><span class="p">)</span>
+                        <span class="n">stir_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;STOP_HEAT&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">stop_heat</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">stir_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">stop_heat</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stir_thread</span><span class="p">)</span>
+                        <span class="n">stir_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SET_TEMP&quot;</span><span class="p">:</span>
+                    <span class="n">temp</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">set_temp</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">set_temp_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">set_temp</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">,</span> <span class="n">temp</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">set_temp_thread</span><span class="p">)</span>
+                        <span class="n">set_temp_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SET_STIR_RPM&quot;</span><span class="p">:</span>
+                    <span class="n">stir_rate</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">set_stir_rate</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">,</span> <span class="n">stir_rate</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">set_stir_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">set_stir_rate</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">,</span> <span class="n">stir_rate</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">set_stir_thread</span><span class="p">)</span>
+                        <span class="n">set_stir_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;STIRRER_WAIT_FOR_TEMP&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">wait_for_temp</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">stirrer_wait_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stirrer_executor</span><span class="o">.</span><span class="n">wait_for_temp</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stirrer_wait_thread</span><span class="p">)</span>
+                        <span class="n">stirrer_wait_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span></div>
+
+<div class="viewcode-block" id="Executioner.process_rotavap_cmd"><a class="viewcode-back" href="../../source/tools.html#tools.cmd_execution.Executioner.process_rotavap_cmd">[docs]</a>    <span class="k">def</span> <span class="nf">process_rotavap_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Processes a command involving the rotavap</span>
+
+<span class="sd">        Commands are [START_HEATER, STOP_HEATER, START_ROTATION, STOP_ROTATION, LIFT_UP, LIFT_DOWN, RESET, SET_BATH_TEMP, SET_ROTATION]</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cmd (List): Command arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmd_type</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">rotavap</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">ROTAVAP_CMDS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">op</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;START_HEATER_BATH&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">start_heater</span><span class="p">(</span><span class="n">rotavap</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">heater_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">start_heater</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">heater_thread</span><span class="p">)</span>
+                        <span class="n">heater_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;STOP_HEATER_BATH&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">stop_heater</span><span class="p">(</span><span class="n">rotavap</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">heater_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">stop_heater</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">heater_thread</span><span class="p">)</span>
+                        <span class="n">heater_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;START_ROTATION&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">start_rotation</span><span class="p">(</span><span class="n">rotavap</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">rot_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">start_rotation</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rot_thread</span><span class="p">)</span>
+                        <span class="n">rot_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;STOP_ROTATION&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">stop_rotation</span><span class="p">(</span><span class="n">rotavap</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">rot_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">stop_rotation</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rot_thread</span><span class="p">)</span>
+                        <span class="n">rot_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;LIFT_ARM_UP&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">lift_up</span><span class="p">(</span><span class="n">rotavap</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">lift_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">lift_up</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lift_thread</span><span class="p">)</span>
+                        <span class="n">lift_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;LIFT_ARM_DOWN&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">lift_down</span><span class="p">(</span><span class="n">rotavap</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">lift_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">lift_down</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lift_thread</span><span class="p">)</span>
+                        <span class="n">lift_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;RESET_ROTAVAP&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">rotavap</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">reset_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">reset</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reset_thread</span><span class="p">)</span>
+                        <span class="n">reset_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SET_BATH_TEMP&quot;</span><span class="p">:</span>
+                    <span class="n">temp</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">set_temp</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">temp_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">set_temp</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,</span> <span class="n">temp</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_thread</span><span class="p">)</span>
+                        <span class="n">temp_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SET_ROTATION&quot;</span><span class="p">:</span>
+                    <span class="n">rot_speed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">set_rotation</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,</span> <span class="n">rot_speed</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">speed_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">set_rotation</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,</span> <span class="n">rot_speed</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">speed_thread</span><span class="p">)</span>
+                        <span class="n">speed_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;RV_WAIT_FOR_TEMP&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">wait_for_temp</span><span class="p">(</span><span class="n">rotavap</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">temp_wait_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">wait_for_temp</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_wait_thread</span><span class="p">)</span>
+                        <span class="n">temp_wait_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SET_INTERVAL&quot;</span><span class="p">:</span>
+                    <span class="n">interval</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">set_interval</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,</span> <span class="n">interval</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">interval_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotavap_executor</span><span class="o">.</span><span class="n">set_interval</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">rotavap</span><span class="p">,</span> <span class="n">interval</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">interval_thread</span><span class="p">)</span>
+                        <span class="n">interval_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span></div>
+
+<div class="viewcode-block" id="Executioner.process_vacuum_cmds"><a class="viewcode-back" href="../../source/tools.html#tools.cmd_execution.Executioner.process_vacuum_cmds">[docs]</a>    <span class="k">def</span> <span class="nf">process_vacuum_cmds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Processes a command involving the Vacuum pump</span>
+
+<span class="sd">        Commands are: [INIT, GET_VAC_SP, SET_VAC_SP, START_VAC, STOP_VAC, VENT, GET_STATUS, GET_END_VAC_SP, SET_END_VAC_SP, GET_RUNTIME_SP, SET_RUNTIME_SP]</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cmd (List): List of commands</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmd_type</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">vacuum</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">VACUUM_CMDS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">op</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;INIT_VAC_PUMP&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">initialise</span><span class="p">(</span><span class="n">vacuum</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">init_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">initialise</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">init_thread</span><span class="p">)</span>
+                        <span class="n">init_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;GET_VAC_SP&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">get_vacuum_set_point</span><span class="p">(</span><span class="n">vacuum</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">vac_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">get_vacuum_set_point</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vac_thread</span><span class="p">)</span>
+                        <span class="n">vac_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SET_VAC_SP&quot;</span><span class="p">:</span>
+                    <span class="n">set_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">set_vacuum_set_point</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,</span> <span class="n">set_val</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">set_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">set_vacuum_set_point</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,</span> <span class="n">set_val</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">set_thread</span><span class="p">)</span>
+                        <span class="n">set_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;START_VAC&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">start_vacuum</span><span class="p">(</span><span class="n">vacuum</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">start_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">start_vacuum</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_thread</span><span class="p">)</span>
+                        <span class="n">start_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;STOP_VAC&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">stop_vacuum</span><span class="p">(</span><span class="n">vacuum</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">stop_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">stop_vacuum</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stop_thread</span><span class="p">)</span>
+                        <span class="n">stop_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;VENT_VAC&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">vent_vacuum</span><span class="p">(</span><span class="n">vacuum</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">vent_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">vent_vacuum</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vent_thread</span><span class="p">)</span>
+                        <span class="n">vent_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;GET_VAC_STATUS&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">vacuum</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">status_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">get_status</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">status_thread</span><span class="p">)</span>
+                        <span class="n">status_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;GET_END_VAC_SP&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">get_end_vacuum_set_point</span><span class="p">(</span><span class="n">vacuum</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">get_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">get_end_vacuum_set_point</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_thread</span><span class="p">)</span>
+                        <span class="n">get_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SET_END_VAC_SP&quot;</span><span class="p">:</span>
+                    <span class="n">set_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">set_end_vacuum_set_point</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,</span> <span class="n">set_val</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">set_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">set_end_vacuum_set_point</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,</span> <span class="n">set_val</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">set_thread</span><span class="p">)</span>
+                        <span class="n">set_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;GET_RUNTIME_SP&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">get_runtime_set_point</span><span class="p">(</span><span class="n">vacuum</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">get_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">get_runtime_set_point</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_thread</span><span class="p">)</span>
+                        <span class="n">get_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SET_RUNTIME_SP&quot;</span><span class="p">:</span>
+                    <span class="n">set_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">set_runtime_set_point</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,</span> <span class="n">set_val</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">set_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">set_runtime_set_point</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,</span> <span class="n">set_val</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">set_thread</span><span class="p">)</span>
+                        <span class="n">set_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SET_SPEED_SP&quot;</span><span class="p">:</span>
+                    <span class="n">set_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">set_speed_set_point</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,</span> <span class="n">set_val</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">set_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vacuum_executor</span><span class="o">.</span><span class="n">set_speed_set_point</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,</span> <span class="n">set_val</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">set_thread</span><span class="p">)</span>
+                        <span class="n">set_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span></div>
+                    
+<div class="viewcode-block" id="Executioner.process_chiller_cmds"><a class="viewcode-back" href="../../source/tools.html#tools.cmd_execution.Executioner.process_chiller_cmds">[docs]</a>    <span class="k">def</span> <span class="nf">process_chiller_cmds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Processes a command involving the recirculation chiller</span>
+
+<span class="sd">        Commands are: [START_CHILLER, STOP_CHILLER, SET_CHILLER, RAMP_CHILLER]</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cmd (List): List of commands</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmd_type</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">chiller</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">CHILLER_CMDS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">op</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;START_CHILLER&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">start_chiller</span><span class="p">(</span><span class="n">chiller</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">init_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">start_chiller</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">chiller</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">init_thread</span><span class="p">)</span>
+                        <span class="n">init_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;STOP_CHILLER&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">stop_chiller</span><span class="p">(</span><span class="n">chiller</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">vac_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">stop_chiller</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">chiller</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vac_thread</span><span class="p">)</span>
+                        <span class="n">vac_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SET_CHILLER&quot;</span><span class="p">:</span>
+                    <span class="n">set_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">set_temp</span><span class="p">(</span><span class="n">chiller</span><span class="p">,</span> <span class="n">set_val</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">set_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">set_temp</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">chiller</span><span class="p">,</span> <span class="n">set_val</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">set_thread</span><span class="p">)</span>
+                        <span class="n">set_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;CHILLER_WAIT_FOR_TEMP&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">wait_for_temp</span><span class="p">(</span><span class="n">chiller</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">chiller_wait_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">wait_for_temp</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">chiller</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chiller_wait_thread</span><span class="p">)</span>
+                        <span class="n">chiller_wait_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;RAMP_CHILLER&quot;</span><span class="p">:</span>
+                    <span class="n">ramp_duration</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="n">temp</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">ramp_chiller</span><span class="p">(</span><span class="n">chiller</span><span class="p">,</span> <span class="n">ramp_duration</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">set_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">ramp_chiller</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">chiller</span><span class="p">,</span> <span class="n">ramp_duration</span><span class="p">,</span> <span class="n">temp</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">set_thread</span><span class="p">)</span>
+                        <span class="n">set_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SWITCH_CHILLER&quot;</span><span class="p">:</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">switch_vessel</span><span class="p">(</span><span class="n">chiller</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">set_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">switch_vessel</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">chiller</span><span class="p">,</span> <span class="n">state</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">set_thread</span><span class="p">)</span>
+                        <span class="n">set_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SET_COOLING_POWER&quot;</span><span class="p">:</span>
+                    <span class="n">cooling_power</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">cooling_power</span><span class="p">(</span><span class="n">chiller</span><span class="p">,</span> <span class="n">cooling_power</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+                        <span class="n">set_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chiller_executor</span><span class="o">.</span><span class="n">cooling_power</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">chiller</span><span class="p">,</span> <span class="n">cooling_power</span><span class="p">,))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">set_thread</span><span class="p">)</span>
+                        <span class="n">set_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">break</span></div>
+
+<div class="viewcode-block" id="Executioner.process_camera_cmds"><a class="viewcode-back" href="../../source/tools.html#tools.cmd_execution.Executioner.process_camera_cmds">[docs]</a>    <span class="k">def</span> <span class="nf">process_camera_cmds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Processes a command involving the camera</span>
+
+<span class="sd">        Commands are: [SET_RECORDING_SPEED]</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cmd (List): List of commands</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">CAMERA_CMDS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cmd</span><span class="p">[</span><span class="n">OP_POS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">op</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;SET_RECORDING_SPEED&quot;</span><span class="p">:</span>
+                    <span class="n">recording_speed</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">recording_speed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">recording_speed</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;ERROR! Recording speed </span><span class="si">{0}</span><span class="s2"> is not supported!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">recording_speed</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">camera_executor</span><span class="o">.</span><span class="n">change_recording_speed</span><span class="p">(</span><span class="n">recording_speed</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Executioner.process_waiting_cmd"><a class="viewcode-back" href="../../source/tools.html#tools.cmd_execution.Executioner.process_waiting_cmd">[docs]</a>    <span class="k">def</span> <span class="nf">process_waiting_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Processes a command for waiting on the platform_server</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cmd (List): Command arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Too many arguments for wait command&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting for </span><span class="si">{0}</span><span class="s2"> seconds...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:][</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">SEQUENTIAL</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wait_with_feedback</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:][</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting done.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">PARALLEL</span><span class="p">:</span>
+            <span class="n">wait_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wait_with_feedback</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:][</span><span class="mi">0</span><span class="p">]),))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">thread_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wait_thread</span><span class="p">)</span>
+            <span class="n">wait_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Executioner.get_device_objects"><a class="viewcode-back" href="../../source/tools.html#tools.cmd_execution.Executioner.get_device_objects">[docs]</a>    <span class="k">def</span> <span class="nf">get_device_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flag</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Goes through the graph, grabbing the objects that held in the nodes depending on the passed flag</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            flag (str): Flag identifying what objects to retrieve (Pumps, Valves, Stirrer, Rotavap, etc.)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            device_dict (Dict): Dictionary containing the name of the device and its associated object</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception: No objects found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">device_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Gets the pumps</span>
+        <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="n">PUMP_FLAG</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">PUMP</span><span class="p">:</span>
+                    <span class="n">pump_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">OBJECT</span><span class="p">]</span>
+                    <span class="n">device_dict</span><span class="p">[</span><span class="n">pump_object</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pump_object</span>
+
+            <span class="k">return</span> <span class="n">device_dict</span>
+
+        <span class="c1"># Gets the valves</span>
+        <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="n">VALVE_FLAG</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">VALVE</span><span class="p">:</span>
+                    <span class="n">valve_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">OBJECT</span><span class="p">]</span>
+                    <span class="n">device_dict</span><span class="p">[</span><span class="n">valve_object</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">valve_object</span>
+
+            <span class="k">return</span> <span class="n">device_dict</span>
+
+        <span class="c1"># Gets the rotavap</span>
+        <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="n">ROTAVAP_FLAG</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ROTAVAPS</span><span class="p">:</span>
+                        <span class="n">device_dict</span><span class="p">[</span><span class="n">each_node</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>  <span class="c1"># TODO really need to add a name attribute to serial devices</span>
+
+            <span class="k">return</span> <span class="n">device_dict</span>
+
+        <span class="c1"># Gets the vacuum pump</span>
+        <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="n">VAC_FLAG</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">VACUUM_PUMPS</span><span class="p">:</span>
+                        <span class="n">device_dict</span><span class="p">[</span><span class="n">each_node</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="k">return</span> <span class="n">device_dict</span>
+
+        <span class="c1"># Gets the stirrer plates</span>
+        <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="n">STIR_FLAG</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">STIRRERS</span><span class="p">:</span>
+                        <span class="n">device_dict</span><span class="p">[</span><span class="n">each_node</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="k">return</span> <span class="n">device_dict</span>
+
+        <span class="c1"># Gets the chillers</span>
+        <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="n">CHILLER_FLAG</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CHILLERS</span><span class="p">:</span>
+                        <span class="n">device_dict</span><span class="p">[</span><span class="n">each_node</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="k">return</span> <span class="n">device_dict</span>
+        
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No objects of the desired type could be found.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Executioner.wait_with_feedback"><a class="viewcode-back" href="../../source/tools.html#tools.cmd_execution.Executioner.wait_with_feedback">[docs]</a>    <span class="k">def</span> <span class="nf">wait_with_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wait_time</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Waits for a desired time and prints the wait progress.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wait_time (int): Time to wait in seconds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;WAIT - Waiting for </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wait_time</span><span class="p">))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">end_time</span> <span class="o">=</span> <span class="n">start_time</span> <span class="o">+</span> <span class="n">wait_time</span>
+            <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
+            <span class="n">end_time_pretty_print</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting will be done at approximately </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wait_time</span><span class="p">,</span> <span class="n">end_time_pretty_print</span><span class="p">))</span>
+            <span class="n">percent_done</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">wait_time</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> <span class="n">wait_time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">percent_done</span><span class="p">:</span>
+                    <span class="n">percent_done</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> <span class="n">wait_time</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="s2">&quot;Waiting to </span><span class="si">{0}% d</span><span class="s2">one. Approximately </span><span class="si">{1}</span><span class="s2"> h, </span><span class="si">{2}</span><span class="s2"> min, </span><span class="si">{3}</span><span class="s2"> sec remaining.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">percent_done</span><span class="p">,</span>
+                            <span class="nb">str</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">wait_time</span> <span class="o">-</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">)),</span>
+                            <span class="nb">str</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">wait_time</span> <span class="o">-</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span>
+                                <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">wait_time</span> <span class="o">-</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">))</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)),</span>
+                            <span class="nb">str</span><span class="p">(</span>
+                                <span class="nb">round</span><span class="p">(</span>
+                                    <span class="n">start_time</span> <span class="o">+</span> <span class="n">wait_time</span> <span class="o">-</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span>
+                                        <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">wait_time</span> <span class="o">-</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span>
+                                            <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">wait_time</span> <span class="o">-</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">))</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span> <span class="o">+</span>
+                                        <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">wait_time</span> <span class="o">-</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">)</span>
+                                    <span class="p">)</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

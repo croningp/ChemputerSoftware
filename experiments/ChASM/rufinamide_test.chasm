@@ -1,0 +1,118 @@
+# General constants
+
+
+# increased the scale if three times
+# 3*2.5 G of bromide (36.0 mmol) to the flask
+DEF volume_sodium_azide = 5;  #mL 2.535G (39.0 mmol) in 75 mL of water
+DEF volume_methyl_propiolate = 3.21; #mL (36.0 mmol)
+DEF volume_ammonia = 5; # mL 25% aqueous solution of ammonia  
+
+DEF rufiamide_stirring_rate = 400; # RPM
+
+DEF wait_time_rufinamide_stage_1 = 43200; # 12 h
+DEF wait_time_rufinamide_stage_2 = 14400; # 4 h
+DEF wait_time_rufinamide_stage_3 = 43200; # 12 h
+
+DEF stage_1_temperature = 75; # oC
+DEF stage_2_temperature = 65; # oC
+DEF stage_3_temperature = 75; # oC
+DEF room_temperature = 25; # oC
+
+DEF default_speed_slow = 20;  # mL/min
+DEF default_speed_fast = 50;  # mL/min
+
+
+DEF clean_reactor(){
+    S MOVE(flask_acetone, reactor_reactor, 200);
+    S SET_STIR_RPM(reactor_reactor, 400);
+    S START_STIR(reactor_reactor);
+    S WAIT(60);
+    S STOP_STIR(reactor_reactor);
+    S MOVE(reactor_reactor, waste_reactor, all);
+    S MOVE(flask_ether, reactor_reactor, 200);
+    S SET_STIR_RPM(reactor_reactor, 400);
+    S START_STIR(reactor_reactor);
+    S WAIT(60);
+    S STOP_STIR(reactor_reactor);
+    S MOVE(reactor_reactor, waste_reactor, all);
+}
+
+
+
+MAIN{
+    # TODO  add pumps priming routine
+	# 
+	#####################################
+	# First step of rufinamide synthesis#
+	#####################################
+	# ADD BROMIDE TO THE FLASK BEFORE RUNNING THE SEQUENCE!
+	S MOVE (flask_sodium_azide, reactor_reactor, volume_sodium_azide, default_speed_slow);
+	S MOVE(flask_water, reactor_reactor, 5); #clean tubing with water
+	
+	S SET_STIR_RPM(reactor_reactor, rufiamide_stirring_rate); # set stirring rate
+	S START_STIR(reactor_reactor); # start stirrer
+	
+	S SET_TEMP(reactor_reactor, stage_1_temperature); # set temperature
+	S START_HEAT(reactor_reactor); # start heating 
+	S WAIT(60); # wait for synthesis 
+	S STOP_HEAT(reactor_reactor); # stop heater
+	S WAIT(60); # Change to cooling routine to room temp in the future
+	S STOP_STIR(reactor_reactor);
+	S BREAKPOINT();
+	
+	
+	######################################
+	# Second step of rufinamide synthesis#
+	######################################
+	S MOVE(reactor_reactor, filter_filter_top, 10); # Move reaction mixture from reactor to filtration nutche
+	
+	S SET_STIR_RPM(filter_filter_top, rufiamide_stirring_rate); # Set the stirring rate
+	S START_STIR(filter_filter_top); # Start stirrer
+	
+	S MOVE (flask_methyl_propiolate, filter_filter_top, volume_methyl_propiolate, default_speed_slow); # Add methyl propiolate
+	S MOVE(flask_water, filter_filter_top, 5); #clean tubing with water
+	
+	
+	S SET_CHILLER(filter_filter_top, stage_2_temperature); # Set the temperature of the chiller
+	S START_CHILLER(filter_filter_top); # Starts the chiller
+	
+	
+	S WAIT(60); # Wait for reaction to complete
+		
+	S SET_CHILLER(filter_filter_top, room_temperature);
+	S WAIT(60); # Change to cooling routine to room temp in the future
+	S STOP_CHILLER(filter_filter_top); # 
+	S STOP_STIR(filter_filter_top);
+	S BREAKPOINT();
+	
+	######################################
+	# Third step of rufinamide synthesis #
+	######################################
+	
+	S SET_STIR_RPM(filter_filter_top, rufiamide_stirring_rate); # Set the stirring rate
+	S START_STIR(filter_filter_top); # Start stirrer
+	
+	S MOVE (flask_ammonia, filter_filter_top, 10, default_speed_slow);
+	S MOVE(flask_water, filter_filter_top, 5); #clean tubing with water
+	
+	
+	
+	S SET_CHILLER(filter_filter_top, stage_3_temperature); # Set the temperature of chiller
+	S START_CHILLER(filter_filter_top);
+	S WAIT(60);
+	S SET_CHILLER(filter_filter_top, room_temperature); # Cool to room temperature
+	
+	S WAIT(60); # Change to cooling routine to room temp in the future
+	S STOP_CHILLER(filter_filter_top); #Stop chiller
+	S STOP_STIR(filter_filter_top); # Start stirrer
+	
+	S MOVE(flask_filter_bottom, waste_solvents, 20); # Remove the solvent
+	# Wash with water
+	FOR(3) {
+			S MOVE(flask_water, filter_filter_top, 10); # wash with water three times
+			S MOVE(flask_filter_bottom, waste_solvents, 20);
+			}
+	# Add Reactor cleaning routine
+	S BREAKPOINT();
+	
+}

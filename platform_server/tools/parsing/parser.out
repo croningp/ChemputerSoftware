@@ -1,0 +1,835 @@
+Created by PLY version 3.10 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    DIVIDE
+    PLUS
+    BOOL_EQUAL
+    MINUS
+    BOOL_LESSER
+    RESERVED
+    IGNORED
+    BOOL_GREATER_QUAL
+    BOOL_NOT_EQUAL
+    MULTIPLY
+    BOOL_GREATER
+    BOOL_LESSER_EQUAL
+
+Grammar
+
+Rule 0     S' -> script
+Rule 1     script -> assign_var
+Rule 2     script -> assign_func
+Rule 3     script -> main
+Rule 4     script -> script assign_var
+Rule 5     script -> script assign_func
+Rule 6     script -> script main
+Rule 7     main -> MAIN CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+Rule 8     body -> instruction
+Rule 9     body -> function
+Rule 10    body -> for_loop
+Rule 11    body -> body instruction
+Rule 12    body -> body function
+Rule 13    body -> body for_loop
+Rule 14    instruction -> PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+Rule 15    instruction -> PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+Rule 16    arg_list -> arg_list arg
+Rule 17    arg_list -> arg
+Rule 18    arg -> NUMBER
+Rule 19    arg -> variable
+Rule 20    assign_var -> DEF variable EQUAL_SIGN variable SEMICOLON
+Rule 21    assign_var -> DEF variable EQUAL_SIGN NUMBER SEMICOLON
+Rule 22    variable -> WORD
+Rule 23    assign_func -> DEF variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+Rule 24    assign_func -> DEF variable PARENTHESIS_OPEN PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+Rule 25    function -> variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+Rule 26    function -> variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+Rule 27    for_loop -> FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+
+Terminals, with rules where they appear
+
+BOOL_EQUAL           : 
+BOOL_GREATER         : 
+BOOL_GREATER_QUAL    : 
+BOOL_LESSER          : 
+BOOL_LESSER_EQUAL    : 
+BOOL_NOT_EQUAL       : 
+CURLY_BRACE_CLOSED   : 7 23 24 27
+CURLY_BRACE_OPEN     : 7 23 24 27
+DEF                  : 20 21 23 24
+DIVIDE               : 
+EQUAL_SIGN           : 20 21
+FOR                  : 27
+IGNORED              : 
+MAIN                 : 7
+MINUS                : 
+MULTIPLY             : 
+NUMBER               : 18 21 27
+OPCODE               : 14 15
+PARENTHESIS_CLOSED   : 14 15 23 24 25 26 27
+PARENTHESIS_OPEN     : 14 15 23 24 25 26 27
+PLUS                 : 
+PS_TOK               : 14 15
+RESERVED             : 
+SEMICOLON            : 14 15 20 21 25 26
+WORD                 : 22
+error                : 
+
+Nonterminals, with rules where they appear
+
+arg                  : 16 17
+arg_list             : 14 16 23 25
+assign_func          : 2 5
+assign_var           : 1 4
+body                 : 7 11 12 13 23 24 27
+for_loop             : 10 13
+function             : 9 12
+instruction          : 8 11
+main                 : 3 6
+script               : 4 5 6 0
+variable             : 19 20 20 21 23 24 25 26
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . script
+    (1) script -> . assign_var
+    (2) script -> . assign_func
+    (3) script -> . main
+    (4) script -> . script assign_var
+    (5) script -> . script assign_func
+    (6) script -> . script main
+    (20) assign_var -> . DEF variable EQUAL_SIGN variable SEMICOLON
+    (21) assign_var -> . DEF variable EQUAL_SIGN NUMBER SEMICOLON
+    (23) assign_func -> . DEF variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (24) assign_func -> . DEF variable PARENTHESIS_OPEN PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (7) main -> . MAIN CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+
+    DEF             shift and go to state 2
+    MAIN            shift and go to state 6
+
+    assign_func                    shift and go to state 1
+    main                           shift and go to state 5
+    assign_var                     shift and go to state 4
+    script                         shift and go to state 3
+
+state 1
+
+    (2) script -> assign_func .
+
+    DEF             reduce using rule 2 (script -> assign_func .)
+    MAIN            reduce using rule 2 (script -> assign_func .)
+    $end            reduce using rule 2 (script -> assign_func .)
+
+
+state 2
+
+    (20) assign_var -> DEF . variable EQUAL_SIGN variable SEMICOLON
+    (21) assign_var -> DEF . variable EQUAL_SIGN NUMBER SEMICOLON
+    (23) assign_func -> DEF . variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (24) assign_func -> DEF . variable PARENTHESIS_OPEN PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (22) variable -> . WORD
+
+    WORD            shift and go to state 7
+
+    variable                       shift and go to state 8
+
+state 3
+
+    (0) S' -> script .
+    (4) script -> script . assign_var
+    (5) script -> script . assign_func
+    (6) script -> script . main
+    (20) assign_var -> . DEF variable EQUAL_SIGN variable SEMICOLON
+    (21) assign_var -> . DEF variable EQUAL_SIGN NUMBER SEMICOLON
+    (23) assign_func -> . DEF variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (24) assign_func -> . DEF variable PARENTHESIS_OPEN PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (7) main -> . MAIN CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+
+    DEF             shift and go to state 2
+    MAIN            shift and go to state 6
+
+    assign_func                    shift and go to state 9
+    main                           shift and go to state 11
+    assign_var                     shift and go to state 10
+
+state 4
+
+    (1) script -> assign_var .
+
+    DEF             reduce using rule 1 (script -> assign_var .)
+    MAIN            reduce using rule 1 (script -> assign_var .)
+    $end            reduce using rule 1 (script -> assign_var .)
+
+
+state 5
+
+    (3) script -> main .
+
+    DEF             reduce using rule 3 (script -> main .)
+    MAIN            reduce using rule 3 (script -> main .)
+    $end            reduce using rule 3 (script -> main .)
+
+
+state 6
+
+    (7) main -> MAIN . CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+
+    CURLY_BRACE_OPEN shift and go to state 12
+
+
+state 7
+
+    (22) variable -> WORD .
+
+    PARENTHESIS_CLOSED reduce using rule 22 (variable -> WORD .)
+    NUMBER          reduce using rule 22 (variable -> WORD .)
+    WORD            reduce using rule 22 (variable -> WORD .)
+    SEMICOLON       reduce using rule 22 (variable -> WORD .)
+    PARENTHESIS_OPEN reduce using rule 22 (variable -> WORD .)
+    EQUAL_SIGN      reduce using rule 22 (variable -> WORD .)
+
+
+state 8
+
+    (20) assign_var -> DEF variable . EQUAL_SIGN variable SEMICOLON
+    (21) assign_var -> DEF variable . EQUAL_SIGN NUMBER SEMICOLON
+    (23) assign_func -> DEF variable . PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (24) assign_func -> DEF variable . PARENTHESIS_OPEN PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+
+    EQUAL_SIGN      shift and go to state 13
+    PARENTHESIS_OPEN shift and go to state 14
+
+
+state 9
+
+    (5) script -> script assign_func .
+
+    DEF             reduce using rule 5 (script -> script assign_func .)
+    MAIN            reduce using rule 5 (script -> script assign_func .)
+    $end            reduce using rule 5 (script -> script assign_func .)
+
+
+state 10
+
+    (4) script -> script assign_var .
+
+    DEF             reduce using rule 4 (script -> script assign_var .)
+    MAIN            reduce using rule 4 (script -> script assign_var .)
+    $end            reduce using rule 4 (script -> script assign_var .)
+
+
+state 11
+
+    (6) script -> script main .
+
+    DEF             reduce using rule 6 (script -> script main .)
+    MAIN            reduce using rule 6 (script -> script main .)
+    $end            reduce using rule 6 (script -> script main .)
+
+
+state 12
+
+    (7) main -> MAIN CURLY_BRACE_OPEN . body CURLY_BRACE_CLOSED
+    (8) body -> . instruction
+    (9) body -> . function
+    (10) body -> . for_loop
+    (11) body -> . body instruction
+    (12) body -> . body function
+    (13) body -> . body for_loop
+    (14) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (15) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (25) function -> . variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (26) function -> . variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (27) for_loop -> . FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (22) variable -> . WORD
+
+    PS_TOK          shift and go to state 21
+    FOR             shift and go to state 20
+    WORD            shift and go to state 7
+
+    for_loop                       shift and go to state 15
+    instruction                    shift and go to state 17
+    body                           shift and go to state 18
+    variable                       shift and go to state 19
+    function                       shift and go to state 16
+
+state 13
+
+    (20) assign_var -> DEF variable EQUAL_SIGN . variable SEMICOLON
+    (21) assign_var -> DEF variable EQUAL_SIGN . NUMBER SEMICOLON
+    (22) variable -> . WORD
+
+    NUMBER          shift and go to state 22
+    WORD            shift and go to state 7
+
+    variable                       shift and go to state 23
+
+state 14
+
+    (23) assign_func -> DEF variable PARENTHESIS_OPEN . arg_list PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (24) assign_func -> DEF variable PARENTHESIS_OPEN . PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (16) arg_list -> . arg_list arg
+    (17) arg_list -> . arg
+    (18) arg -> . NUMBER
+    (19) arg -> . variable
+    (22) variable -> . WORD
+
+    PARENTHESIS_CLOSED shift and go to state 25
+    NUMBER          shift and go to state 26
+    WORD            shift and go to state 7
+
+    arg_list                       shift and go to state 24
+    variable                       shift and go to state 28
+    arg                            shift and go to state 27
+
+state 15
+
+    (10) body -> for_loop .
+
+    CURLY_BRACE_CLOSED reduce using rule 10 (body -> for_loop .)
+    PS_TOK          reduce using rule 10 (body -> for_loop .)
+    FOR             reduce using rule 10 (body -> for_loop .)
+    WORD            reduce using rule 10 (body -> for_loop .)
+
+
+state 16
+
+    (9) body -> function .
+
+    CURLY_BRACE_CLOSED reduce using rule 9 (body -> function .)
+    PS_TOK          reduce using rule 9 (body -> function .)
+    FOR             reduce using rule 9 (body -> function .)
+    WORD            reduce using rule 9 (body -> function .)
+
+
+state 17
+
+    (8) body -> instruction .
+
+    CURLY_BRACE_CLOSED reduce using rule 8 (body -> instruction .)
+    PS_TOK          reduce using rule 8 (body -> instruction .)
+    FOR             reduce using rule 8 (body -> instruction .)
+    WORD            reduce using rule 8 (body -> instruction .)
+
+
+state 18
+
+    (7) main -> MAIN CURLY_BRACE_OPEN body . CURLY_BRACE_CLOSED
+    (11) body -> body . instruction
+    (12) body -> body . function
+    (13) body -> body . for_loop
+    (14) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (15) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (25) function -> . variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (26) function -> . variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (27) for_loop -> . FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (22) variable -> . WORD
+
+    CURLY_BRACE_CLOSED shift and go to state 29
+    PS_TOK          shift and go to state 21
+    FOR             shift and go to state 20
+    WORD            shift and go to state 7
+
+    for_loop                       shift and go to state 30
+    instruction                    shift and go to state 32
+    variable                       shift and go to state 19
+    function                       shift and go to state 31
+
+state 19
+
+    (25) function -> variable . PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (26) function -> variable . PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+
+    PARENTHESIS_OPEN shift and go to state 33
+
+
+state 20
+
+    (27) for_loop -> FOR . PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+
+    PARENTHESIS_OPEN shift and go to state 34
+
+
+state 21
+
+    (14) instruction -> PS_TOK . OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (15) instruction -> PS_TOK . OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+
+    OPCODE          shift and go to state 35
+
+
+state 22
+
+    (21) assign_var -> DEF variable EQUAL_SIGN NUMBER . SEMICOLON
+
+    SEMICOLON       shift and go to state 36
+
+
+state 23
+
+    (20) assign_var -> DEF variable EQUAL_SIGN variable . SEMICOLON
+
+    SEMICOLON       shift and go to state 37
+
+
+state 24
+
+    (23) assign_func -> DEF variable PARENTHESIS_OPEN arg_list . PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (16) arg_list -> arg_list . arg
+    (18) arg -> . NUMBER
+    (19) arg -> . variable
+    (22) variable -> . WORD
+
+    PARENTHESIS_CLOSED shift and go to state 38
+    NUMBER          shift and go to state 26
+    WORD            shift and go to state 7
+
+    variable                       shift and go to state 28
+    arg                            shift and go to state 39
+
+state 25
+
+    (24) assign_func -> DEF variable PARENTHESIS_OPEN PARENTHESIS_CLOSED . CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+
+    CURLY_BRACE_OPEN shift and go to state 40
+
+
+state 26
+
+    (18) arg -> NUMBER .
+
+    PARENTHESIS_CLOSED reduce using rule 18 (arg -> NUMBER .)
+    NUMBER          reduce using rule 18 (arg -> NUMBER .)
+    WORD            reduce using rule 18 (arg -> NUMBER .)
+
+
+state 27
+
+    (17) arg_list -> arg .
+
+    PARENTHESIS_CLOSED reduce using rule 17 (arg_list -> arg .)
+    NUMBER          reduce using rule 17 (arg_list -> arg .)
+    WORD            reduce using rule 17 (arg_list -> arg .)
+
+
+state 28
+
+    (19) arg -> variable .
+
+    PARENTHESIS_CLOSED reduce using rule 19 (arg -> variable .)
+    NUMBER          reduce using rule 19 (arg -> variable .)
+    WORD            reduce using rule 19 (arg -> variable .)
+
+
+state 29
+
+    (7) main -> MAIN CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .
+
+    DEF             reduce using rule 7 (main -> MAIN CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+    MAIN            reduce using rule 7 (main -> MAIN CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+    $end            reduce using rule 7 (main -> MAIN CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+
+
+state 30
+
+    (13) body -> body for_loop .
+
+    CURLY_BRACE_CLOSED reduce using rule 13 (body -> body for_loop .)
+    PS_TOK          reduce using rule 13 (body -> body for_loop .)
+    FOR             reduce using rule 13 (body -> body for_loop .)
+    WORD            reduce using rule 13 (body -> body for_loop .)
+
+
+state 31
+
+    (12) body -> body function .
+
+    CURLY_BRACE_CLOSED reduce using rule 12 (body -> body function .)
+    PS_TOK          reduce using rule 12 (body -> body function .)
+    FOR             reduce using rule 12 (body -> body function .)
+    WORD            reduce using rule 12 (body -> body function .)
+
+
+state 32
+
+    (11) body -> body instruction .
+
+    CURLY_BRACE_CLOSED reduce using rule 11 (body -> body instruction .)
+    PS_TOK          reduce using rule 11 (body -> body instruction .)
+    FOR             reduce using rule 11 (body -> body instruction .)
+    WORD            reduce using rule 11 (body -> body instruction .)
+
+
+state 33
+
+    (25) function -> variable PARENTHESIS_OPEN . arg_list PARENTHESIS_CLOSED SEMICOLON
+    (26) function -> variable PARENTHESIS_OPEN . PARENTHESIS_CLOSED SEMICOLON
+    (16) arg_list -> . arg_list arg
+    (17) arg_list -> . arg
+    (18) arg -> . NUMBER
+    (19) arg -> . variable
+    (22) variable -> . WORD
+
+    PARENTHESIS_CLOSED shift and go to state 42
+    NUMBER          shift and go to state 26
+    WORD            shift and go to state 7
+
+    arg_list                       shift and go to state 41
+    variable                       shift and go to state 28
+    arg                            shift and go to state 27
+
+state 34
+
+    (27) for_loop -> FOR PARENTHESIS_OPEN . NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+
+    NUMBER          shift and go to state 43
+
+
+state 35
+
+    (14) instruction -> PS_TOK OPCODE . PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (15) instruction -> PS_TOK OPCODE . PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+
+    PARENTHESIS_OPEN shift and go to state 44
+
+
+state 36
+
+    (21) assign_var -> DEF variable EQUAL_SIGN NUMBER SEMICOLON .
+
+    DEF             reduce using rule 21 (assign_var -> DEF variable EQUAL_SIGN NUMBER SEMICOLON .)
+    MAIN            reduce using rule 21 (assign_var -> DEF variable EQUAL_SIGN NUMBER SEMICOLON .)
+    $end            reduce using rule 21 (assign_var -> DEF variable EQUAL_SIGN NUMBER SEMICOLON .)
+
+
+state 37
+
+    (20) assign_var -> DEF variable EQUAL_SIGN variable SEMICOLON .
+
+    DEF             reduce using rule 20 (assign_var -> DEF variable EQUAL_SIGN variable SEMICOLON .)
+    MAIN            reduce using rule 20 (assign_var -> DEF variable EQUAL_SIGN variable SEMICOLON .)
+    $end            reduce using rule 20 (assign_var -> DEF variable EQUAL_SIGN variable SEMICOLON .)
+
+
+state 38
+
+    (23) assign_func -> DEF variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED . CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+
+    CURLY_BRACE_OPEN shift and go to state 45
+
+
+state 39
+
+    (16) arg_list -> arg_list arg .
+
+    PARENTHESIS_CLOSED reduce using rule 16 (arg_list -> arg_list arg .)
+    NUMBER          reduce using rule 16 (arg_list -> arg_list arg .)
+    WORD            reduce using rule 16 (arg_list -> arg_list arg .)
+
+
+state 40
+
+    (24) assign_func -> DEF variable PARENTHESIS_OPEN PARENTHESIS_CLOSED CURLY_BRACE_OPEN . body CURLY_BRACE_CLOSED
+    (8) body -> . instruction
+    (9) body -> . function
+    (10) body -> . for_loop
+    (11) body -> . body instruction
+    (12) body -> . body function
+    (13) body -> . body for_loop
+    (14) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (15) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (25) function -> . variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (26) function -> . variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (27) for_loop -> . FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (22) variable -> . WORD
+
+    PS_TOK          shift and go to state 21
+    FOR             shift and go to state 20
+    WORD            shift and go to state 7
+
+    for_loop                       shift and go to state 15
+    instruction                    shift and go to state 17
+    body                           shift and go to state 46
+    variable                       shift and go to state 19
+    function                       shift and go to state 16
+
+state 41
+
+    (25) function -> variable PARENTHESIS_OPEN arg_list . PARENTHESIS_CLOSED SEMICOLON
+    (16) arg_list -> arg_list . arg
+    (18) arg -> . NUMBER
+    (19) arg -> . variable
+    (22) variable -> . WORD
+
+    PARENTHESIS_CLOSED shift and go to state 47
+    NUMBER          shift and go to state 26
+    WORD            shift and go to state 7
+
+    variable                       shift and go to state 28
+    arg                            shift and go to state 39
+
+state 42
+
+    (26) function -> variable PARENTHESIS_OPEN PARENTHESIS_CLOSED . SEMICOLON
+
+    SEMICOLON       shift and go to state 48
+
+
+state 43
+
+    (27) for_loop -> FOR PARENTHESIS_OPEN NUMBER . PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+
+    PARENTHESIS_CLOSED shift and go to state 49
+
+
+state 44
+
+    (14) instruction -> PS_TOK OPCODE PARENTHESIS_OPEN . arg_list PARENTHESIS_CLOSED SEMICOLON
+    (15) instruction -> PS_TOK OPCODE PARENTHESIS_OPEN . PARENTHESIS_CLOSED SEMICOLON
+    (16) arg_list -> . arg_list arg
+    (17) arg_list -> . arg
+    (18) arg -> . NUMBER
+    (19) arg -> . variable
+    (22) variable -> . WORD
+
+    PARENTHESIS_CLOSED shift and go to state 50
+    NUMBER          shift and go to state 26
+    WORD            shift and go to state 7
+
+    arg_list                       shift and go to state 51
+    variable                       shift and go to state 28
+    arg                            shift and go to state 27
+
+state 45
+
+    (23) assign_func -> DEF variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED CURLY_BRACE_OPEN . body CURLY_BRACE_CLOSED
+    (8) body -> . instruction
+    (9) body -> . function
+    (10) body -> . for_loop
+    (11) body -> . body instruction
+    (12) body -> . body function
+    (13) body -> . body for_loop
+    (14) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (15) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (25) function -> . variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (26) function -> . variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (27) for_loop -> . FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (22) variable -> . WORD
+
+    PS_TOK          shift and go to state 21
+    FOR             shift and go to state 20
+    WORD            shift and go to state 7
+
+    for_loop                       shift and go to state 15
+    instruction                    shift and go to state 17
+    body                           shift and go to state 52
+    variable                       shift and go to state 19
+    function                       shift and go to state 16
+
+state 46
+
+    (24) assign_func -> DEF variable PARENTHESIS_OPEN PARENTHESIS_CLOSED CURLY_BRACE_OPEN body . CURLY_BRACE_CLOSED
+    (11) body -> body . instruction
+    (12) body -> body . function
+    (13) body -> body . for_loop
+    (14) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (15) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (25) function -> . variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (26) function -> . variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (27) for_loop -> . FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (22) variable -> . WORD
+
+    CURLY_BRACE_CLOSED shift and go to state 53
+    PS_TOK          shift and go to state 21
+    FOR             shift and go to state 20
+    WORD            shift and go to state 7
+
+    for_loop                       shift and go to state 30
+    instruction                    shift and go to state 32
+    variable                       shift and go to state 19
+    function                       shift and go to state 31
+
+state 47
+
+    (25) function -> variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED . SEMICOLON
+
+    SEMICOLON       shift and go to state 54
+
+
+state 48
+
+    (26) function -> variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON .
+
+    CURLY_BRACE_CLOSED reduce using rule 26 (function -> variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON .)
+    PS_TOK          reduce using rule 26 (function -> variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON .)
+    FOR             reduce using rule 26 (function -> variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON .)
+    WORD            reduce using rule 26 (function -> variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON .)
+
+
+state 49
+
+    (27) for_loop -> FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED . CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+
+    CURLY_BRACE_OPEN shift and go to state 55
+
+
+state 50
+
+    (15) instruction -> PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED . SEMICOLON
+
+    SEMICOLON       shift and go to state 56
+
+
+state 51
+
+    (14) instruction -> PS_TOK OPCODE PARENTHESIS_OPEN arg_list . PARENTHESIS_CLOSED SEMICOLON
+    (16) arg_list -> arg_list . arg
+    (18) arg -> . NUMBER
+    (19) arg -> . variable
+    (22) variable -> . WORD
+
+    PARENTHESIS_CLOSED shift and go to state 57
+    NUMBER          shift and go to state 26
+    WORD            shift and go to state 7
+
+    variable                       shift and go to state 28
+    arg                            shift and go to state 39
+
+state 52
+
+    (23) assign_func -> DEF variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED CURLY_BRACE_OPEN body . CURLY_BRACE_CLOSED
+    (11) body -> body . instruction
+    (12) body -> body . function
+    (13) body -> body . for_loop
+    (14) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (15) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (25) function -> . variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (26) function -> . variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (27) for_loop -> . FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (22) variable -> . WORD
+
+    CURLY_BRACE_CLOSED shift and go to state 58
+    PS_TOK          shift and go to state 21
+    FOR             shift and go to state 20
+    WORD            shift and go to state 7
+
+    for_loop                       shift and go to state 30
+    instruction                    shift and go to state 32
+    variable                       shift and go to state 19
+    function                       shift and go to state 31
+
+state 53
+
+    (24) assign_func -> DEF variable PARENTHESIS_OPEN PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .
+
+    DEF             reduce using rule 24 (assign_func -> DEF variable PARENTHESIS_OPEN PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+    MAIN            reduce using rule 24 (assign_func -> DEF variable PARENTHESIS_OPEN PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+    $end            reduce using rule 24 (assign_func -> DEF variable PARENTHESIS_OPEN PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+
+
+state 54
+
+    (25) function -> variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON .
+
+    CURLY_BRACE_CLOSED reduce using rule 25 (function -> variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON .)
+    PS_TOK          reduce using rule 25 (function -> variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON .)
+    FOR             reduce using rule 25 (function -> variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON .)
+    WORD            reduce using rule 25 (function -> variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON .)
+
+
+state 55
+
+    (27) for_loop -> FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN . body CURLY_BRACE_CLOSED
+    (8) body -> . instruction
+    (9) body -> . function
+    (10) body -> . for_loop
+    (11) body -> . body instruction
+    (12) body -> . body function
+    (13) body -> . body for_loop
+    (14) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (15) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (25) function -> . variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (26) function -> . variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (27) for_loop -> . FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (22) variable -> . WORD
+
+    PS_TOK          shift and go to state 21
+    FOR             shift and go to state 20
+    WORD            shift and go to state 7
+
+    for_loop                       shift and go to state 15
+    instruction                    shift and go to state 17
+    body                           shift and go to state 59
+    variable                       shift and go to state 19
+    function                       shift and go to state 16
+
+state 56
+
+    (15) instruction -> PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON .
+
+    CURLY_BRACE_CLOSED reduce using rule 15 (instruction -> PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON .)
+    PS_TOK          reduce using rule 15 (instruction -> PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON .)
+    FOR             reduce using rule 15 (instruction -> PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON .)
+    WORD            reduce using rule 15 (instruction -> PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON .)
+
+
+state 57
+
+    (14) instruction -> PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED . SEMICOLON
+
+    SEMICOLON       shift and go to state 60
+
+
+state 58
+
+    (23) assign_func -> DEF variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .
+
+    DEF             reduce using rule 23 (assign_func -> DEF variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+    MAIN            reduce using rule 23 (assign_func -> DEF variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+    $end            reduce using rule 23 (assign_func -> DEF variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+
+
+state 59
+
+    (27) for_loop -> FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body . CURLY_BRACE_CLOSED
+    (11) body -> body . instruction
+    (12) body -> body . function
+    (13) body -> body . for_loop
+    (14) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (15) instruction -> . PS_TOK OPCODE PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (25) function -> . variable PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON
+    (26) function -> . variable PARENTHESIS_OPEN PARENTHESIS_CLOSED SEMICOLON
+    (27) for_loop -> . FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED
+    (22) variable -> . WORD
+
+    CURLY_BRACE_CLOSED shift and go to state 61
+    PS_TOK          shift and go to state 21
+    FOR             shift and go to state 20
+    WORD            shift and go to state 7
+
+    for_loop                       shift and go to state 30
+    instruction                    shift and go to state 32
+    variable                       shift and go to state 19
+    function                       shift and go to state 31
+
+state 60
+
+    (14) instruction -> PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON .
+
+    CURLY_BRACE_CLOSED reduce using rule 14 (instruction -> PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON .)
+    PS_TOK          reduce using rule 14 (instruction -> PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON .)
+    FOR             reduce using rule 14 (instruction -> PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON .)
+    WORD            reduce using rule 14 (instruction -> PS_TOK OPCODE PARENTHESIS_OPEN arg_list PARENTHESIS_CLOSED SEMICOLON .)
+
+
+state 61
+
+    (27) for_loop -> FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .
+
+    CURLY_BRACE_CLOSED reduce using rule 27 (for_loop -> FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+    PS_TOK          reduce using rule 27 (for_loop -> FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+    FOR             reduce using rule 27 (for_loop -> FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+    WORD            reduce using rule 27 (for_loop -> FOR PARENTHESIS_OPEN NUMBER PARENTHESIS_CLOSED CURLY_BRACE_OPEN body CURLY_BRACE_CLOSED .)
+

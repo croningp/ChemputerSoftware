@@ -1,0 +1,340 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tools.module_execution.stirrer_execution &mdash; Chempiler 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Chempiler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Chempiler</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>tools.module_execution.stirrer_execution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tools.module_execution.stirrer_execution</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;stirrer_execution&quot; -- Mid-level wrapper class around :mod:&quot;IKA_RET_Control_Visc&quot;</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: stirrer_execution</span>
+<span class="sd">   :platform: Windows, Unix</span>
+<span class="sd">   :synopsis: Mid-level wrapper around hotplate stirrer control, provides real-live useful methods</span>
+<span class="sd">.. moduleauthor:: Graham Keenan &lt;1105045k@student.gla.ac.uk&gt;</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+
+<span class="sd">(c) 2017 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This class provides all real-life applications of hotplate stirrers within the Chemputer rig, essentially</span>
+<span class="sd">just wrapping the original class methods.</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+
+
+<div class="viewcode-block" id="StirrerExecutioner"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.stirrer_execution.StirrerExecutioner">[docs]</a><span class="k">class</span> <span class="nc">StirrerExecutioner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to interface with Stirrer plates</span>
+
+<span class="sd">    TODO: add try/except statements to catch calls to unsupported methods!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stirrers</span><span class="p">,</span> <span class="n">simulation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialiser for the StirrerExecutioner class</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stirrers (dict): Dictionary containing the stirrer names and their associated objects</span>
+<span class="sd">            simulation (bool): Simulation mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stirrers</span> <span class="o">=</span> <span class="n">stirrers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span> <span class="o">=</span> <span class="n">simulation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;main_logger.stirrer_executioner_logger&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StirrerExecutioner.stir"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.stirrer_execution.StirrerExecutioner.stir">[docs]</a>    <span class="k">def</span> <span class="nf">stir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stirrer_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts the stirring the stirrer plate</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stirrer_name (str): Name of the stirrer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting stirring for hotplate </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">))</span>
+        <span class="n">stirrer_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stirrers</span><span class="p">[</span><span class="n">stirrer_name</span><span class="p">]</span>
+        <span class="n">stirrer_obj</span><span class="o">.</span><span class="n">start_stirrer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StirrerExecutioner.heat"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.stirrer_execution.StirrerExecutioner.heat">[docs]</a>    <span class="k">def</span> <span class="nf">heat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stirrer_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts heating the stirrer plate</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stirrer_name (str): Name of the stirrer </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting heating for hotplate </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">))</span>
+        <span class="n">stirrer_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stirrers</span><span class="p">[</span><span class="n">stirrer_name</span><span class="p">]</span>
+        <span class="n">stirrer_obj</span><span class="o">.</span><span class="n">start_heater</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StirrerExecutioner.wait_for_temp"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.stirrer_execution.StirrerExecutioner.wait_for_temp">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stirrer_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Waits for the stirrer to reach its setpoint temperature (approaching from either way)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stirrer_name (str): Name of the stirrer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting for temperature... Done.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">stirrer_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stirrers</span><span class="p">[</span><span class="n">stirrer_name</span><span class="p">]</span>
+            <span class="n">setpofloat</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">stirrer_obj</span><span class="o">.</span><span class="n">temperature_sp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stirrer </span><span class="si">{0}</span><span class="s2"> waiting to reach </span><span class="si">{1}</span><span class="s2">°C...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">,</span> <span class="n">setpofloat</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">stirrer_obj</span><span class="o">.</span><span class="n">temperature_pv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">setpofloat</span><span class="p">:</span>  <span class="c1"># approach from below</span>
+                <span class="k">while</span> <span class="nb">float</span><span class="p">(</span><span class="n">stirrer_obj</span><span class="o">.</span><span class="n">temperature_pv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">setpofloat</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Still heating... Current temperature: </span><span class="si">{0}</span><span class="s2">°C&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">stirrer_obj</span><span class="o">.</span><span class="n">temperature_pv</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">float</span><span class="p">(</span><span class="n">stirrer_obj</span><span class="o">.</span><span class="n">temperature_pv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">setpofloat</span><span class="p">:</span>  <span class="c1"># approach from above</span>
+                <span class="k">while</span> <span class="nb">float</span><span class="p">(</span><span class="n">stirrer_obj</span><span class="o">.</span><span class="n">temperature_pv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">setpofloat</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Still cooling... Current temperature: </span><span class="si">{0}</span><span class="s2">°C&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">stirrer_obj</span><span class="o">.</span><span class="n">temperature_pv</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StirrerExecutioner.stop_stir"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.stirrer_execution.StirrerExecutioner.stop_stir">[docs]</a>    <span class="k">def</span> <span class="nf">stop_stir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stirrer_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stops stirring the stirrer plate</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stirrer_name (str): Name of the stirrer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stopping stirring for hotplate </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">))</span>
+        <span class="n">stirrer_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stirrers</span><span class="p">[</span><span class="n">stirrer_name</span><span class="p">]</span>
+        <span class="n">stirrer_obj</span><span class="o">.</span><span class="n">stop_stirrer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StirrerExecutioner.stop_heat"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.stirrer_execution.StirrerExecutioner.stop_heat">[docs]</a>    <span class="k">def</span> <span class="nf">stop_heat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stirrer_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stops heating the stirrer plate</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stirrer_name (str): Name of the stirrer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stopping heating for hotplate </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">))</span>
+        <span class="n">stirrer_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stirrers</span><span class="p">[</span><span class="n">stirrer_name</span><span class="p">]</span>
+        <span class="n">stirrer_obj</span><span class="o">.</span><span class="n">stop_heater</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="StirrerExecutioner.set_temp"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.stirrer_execution.StirrerExecutioner.set_temp">[docs]</a>    <span class="k">def</span> <span class="nf">set_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stirrer_name</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the temperature of the stirrer plate</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stirrer_name (str): Name of the stirrer</span>
+<span class="sd">            temp (float): Temperature to set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting temperature for hotplate </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2">°C...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">,</span> <span class="n">temp</span><span class="p">))</span>
+        <span class="n">stirrer_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stirrers</span><span class="p">[</span><span class="n">stirrer_name</span><span class="p">]</span>
+        <span class="n">stirrer_obj</span><span class="o">.</span><span class="n">temperature_sp</span> <span class="o">=</span> <span class="n">temp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="StirrerExecutioner.set_stir_rate"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.stirrer_execution.StirrerExecutioner.set_stir_rate">[docs]</a>    <span class="k">def</span> <span class="nf">set_stir_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stirrer_name</span><span class="p">,</span> <span class="n">stir_rate</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the stirring rate of the stirrer</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stirrer_name (str): Name of the stirrer</span>
+<span class="sd">            stir_rate (int): Stirring rate to set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting stir rate for hotplate </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2"> RPM...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stirrer_name</span><span class="p">,</span> <span class="n">stir_rate</span><span class="p">))</span>
+        <span class="n">stirrer_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stirrers</span><span class="p">[</span><span class="n">stirrer_name</span><span class="p">]</span>
+        <span class="n">stirrer_obj</span><span class="o">.</span><span class="n">stir_rate_sp</span> <span class="o">=</span> <span class="n">stir_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

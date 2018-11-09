@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>modules.serial_labware.Heidolph_RZR_2052_control.Heidolph_RZR_2052_control &mdash; Chempiler 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Chempiler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Chempiler</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>modules.serial_labware.Heidolph_RZR_2052_control.Heidolph_RZR_2052_control</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for modules.serial_labware.Heidolph_RZR_2052_control.Heidolph_RZR_2052_control</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;Heidolph_RZR_2052_control&quot; -- API for Heidolph RZR 2052 control remote controllable overhead stirrer</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: Heidolph_RZR_2052_control</span>
+<span class="sd">   :platform: Windows</span>
+<span class="sd">   :synopsis: Control Heidolph RZR 2052 control overhead stirrer</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+<span class="sd">.. moduleauthor:: Stefan Glatzel &lt;stefan.glatzel@croningroupplc.com&gt;</span>
+
+<span class="sd">(c) 2018 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This provides a python class for the Heidolph RZR 2052 control overhead stirrer. Command implementation is based on the</span>
+<span class="sd">manual dated 21/10/2011 downloaded from the Heidolph homepage. The english translation is rubbish, &quot;OUT&quot; refers to</span>
+<span class="sd">queries, &quot;IN&quot; refers to setting values. Thank fuck I speak German!</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># system imports</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+
+<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getfile</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">))</span>
+
+<span class="c1"># additioanl module imports</span>
+<span class="kn">from</span> <span class="nn">SerialDevice.serial_labware</span> <span class="k">import</span> <span class="n">SerialDevice</span><span class="p">,</span> <span class="n">command</span>
+
+
+<div class="viewcode-block" id="RZR_2052"><a class="viewcode-back" href="../../../../source/modules.serial_labware.Heidolph_RZR_2052_control.html#modules.serial_labware.Heidolph_RZR_2052_control.Heidolph_RZR_2052_control.RZR_2052">[docs]</a><span class="k">class</span> <span class="nc">RZR_2052</span><span class="p">(</span><span class="n">SerialDevice</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This provides a python class for the overhead stirrer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">device_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">soft_fail_for_testing</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializer of the RZR_2052 class</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            port (str): The port name/number of the stirrer</span>
+<span class="sd">            device_name (str): A descriptive name for the device, used mainly in debug prints</span>
+<span class="sd">            connect_on_instantiation (bool): (optional) determines if the connection is established on instantiation of</span>
+<span class="sd">                the class. Default: Off</span>
+<span class="sd">            soft_fail_for_testing (bool): (optional) determines if an invalid serial port raises an error or merely</span>
+<span class="sd">                logs a message. Default: Off</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">soft_fail_for_testing</span><span class="p">)</span>
+
+        <span class="c1"># serial settings</span>
+        <span class="c1"># all settings are at default, 9600 Baud, 8N1, no flow control</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="mf">0.2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command_termination</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_delay</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_delay</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+        <span class="c1"># answer patterns</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query_answer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;([A-Z]</span><span class="si">{3}</span><span class="s2">): ([0-9]+)</span><span class="se">\r\n\r\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># most answers, except for status and setpoint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setpoint_answer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;R([0-9]+)</span><span class="se">\r\n</span><span class="s2">([A-Z]</span><span class="si">{3}</span><span class="s2">): ([0-9]+)</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># reply to setting the RPM</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_answer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;([A-Z]</span><span class="si">{3}</span><span class="s2">): (.*)</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># most answers, except for status and setpoint</span>
+
+        <span class="c1"># DOCUMENTED COMMANDS for easier maintenance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_rpm</span> <span class="o">=</span> <span class="s2">&quot;R&quot;</span>  <span class="c1"># Rxxxx (1-4 digits) sets RPM. limits are 30-1000 rpm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">range_II</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span>  <span class="c1"># no effect on 2052</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">range_I</span> <span class="o">=</span> <span class="s2">&quot;B&quot;</span>  <span class="c1"># no effect on 2052</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete_error</span> <span class="o">=</span> <span class="s2">&quot;C&quot;</span>  <span class="c1"># restarts the motor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote_off</span> <span class="o">=</span> <span class="s2">&quot;D&quot;</span>  <span class="c1"># erroneous translation, meant to be &quot;motor control uses potentiometer&quot; i.e. THE KNOB</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_reference</span> <span class="o">=</span> <span class="s2">&quot;N&quot;</span>  <span class="c1"># sets zero for analog speed out</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_rpm</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span>  <span class="c1"># queries current RPM</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_setpoint</span> <span class="o">=</span> <span class="s2">&quot;s&quot;</span>  <span class="c1"># queries setpoint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_torque</span> <span class="o">=</span> <span class="s2">&quot;m&quot;</span>  <span class="c1"># queries torque</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_error</span> <span class="o">=</span> <span class="s2">&quot;f&quot;</span>  <span class="c1"># No Error! / Motor Error! / Motor Temperature!</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">launch_command_handler</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">connect_on_instantiation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">stir_rate_pv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the stir rate process value</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            rpm (int): RPM process value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rpm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_rpm</span><span class="p">,</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">query_answer</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">rpm</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">stir_rate_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the stir rate setpoint</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            rpm (int): RPM setpoint</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rpm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_setpoint</span><span class="p">,</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">query_answer</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">rpm</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="nd">@stir_rate_sp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">stir_rate_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rpm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the target rpm for the stirrer, thereby switching it on.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rpm (int): RPM setpoint</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># type checking of the stir rate that the user provided</span>
+            <span class="n">rpm</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rpm</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting stir rate. Rate was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rpm</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting stir rate to </span><span class="si">{0}</span><span class="s2"> RPM...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rpm</span><span class="p">))</span>
+        <span class="c1"># setting the setpoint</span>
+        <span class="k">if</span> <span class="mi">30</span> <span class="o">&lt;=</span> <span class="n">rpm</span> <span class="o">&lt;=</span> <span class="mi">1000</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}{1:04}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">set_rpm</span><span class="p">,</span> <span class="n">rpm</span><span class="p">),</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">setpoint_answer</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The set point should be in range 30..1000&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RZR_2052.start_stirrer"><a class="viewcode-back" href="../../../../source/modules.serial_labware.Heidolph_RZR_2052_control.html#modules.serial_labware.Heidolph_RZR_2052_control.Heidolph_RZR_2052_control.RZR_2052.start_stirrer">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">start_stirrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start the stirrer&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delete_error</span><span class="p">,</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RZR_2052.stop_stirrer"><a class="viewcode-back" href="../../../../source/modules.serial_labware.Heidolph_RZR_2052_control.html#modules.serial_labware.Heidolph_RZR_2052_control.Heidolph_RZR_2052_control.RZR_2052.stop_stirrer">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">stop_stirrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stops the stirrer&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}{1:04}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">set_rpm</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">setpoint_answer</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RZR_2052.get_status"><a class="viewcode-back" href="../../../../source/modules.serial_labware.Heidolph_RZR_2052_control.html#modules.serial_labware.Heidolph_RZR_2052_control.Heidolph_RZR_2052_control.RZR_2052.get_status">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">get_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the status of the chiller&quot;&quot;&quot;</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_error</span><span class="p">,</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">status_answer</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">status</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">stirrer</span> <span class="o">=</span> <span class="n">RZR_2052</span><span class="p">(</span><span class="s2">&quot;COM1&quot;</span><span class="p">,</span> <span class="s2">&quot;stirrer&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">stirrer</span><span class="o">.</span><span class="n">stir_rate_sp</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">stirrer</span><span class="o">.</span><span class="n">start_stirrer</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">stirrer</span><span class="o">.</span><span class="n">stir_rate_pv</span><span class="p">)</span>
+    <span class="n">stirrer</span><span class="o">.</span><span class="n">stir_rate_sp</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">stirrer</span><span class="o">.</span><span class="n">stop_stirrer</span><span class="p">()</span>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

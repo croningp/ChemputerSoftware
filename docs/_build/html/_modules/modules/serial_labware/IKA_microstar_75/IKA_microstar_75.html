@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>modules.serial_labware.IKA_microstar_75.IKA_microstar_75 &mdash; Chempiler 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Chempiler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Chempiler</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>modules.serial_labware.IKA_microstar_75.IKA_microstar_75</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for modules.serial_labware.IKA_microstar_75.IKA_microstar_75</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;IKA_microstar_75&quot; -- API for IKA microstar 7.5 remote controllable overhead stirrer</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: IKA_microstar_75</span>
+<span class="sd">   :platform: Windows</span>
+<span class="sd">   :synopsis: Control IKA microstar 7.5 overhead stirrer.</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+<span class="sd">.. moduleauthor:: Stefan Glatzel &lt;stefan.glatzel@croningroupplc.com&gt;</span>
+
+<span class="sd">(c) 2018 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This provides a python class for the IKA microstar 7.5 overhead stirrer</span>
+<span class="sd">based on software developed by Stefan Glatzel.</span>
+<span class="sd">The command implementation is based on the German manual pages 32-34.</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># system imports</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+
+<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getfile</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">))</span>
+
+<span class="c1"># additional module imports</span>
+<span class="kn">from</span> <span class="nn">SerialDevice.serial_labware</span> <span class="k">import</span> <span class="n">SerialDevice</span><span class="p">,</span> <span class="n">command</span>
+
+
+<div class="viewcode-block" id="IKAmicrostar75"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_microstar_75.html#modules.serial_labware.IKA_microstar_75.IKA_microstar_75.IKAmicrostar75">[docs]</a><span class="k">class</span> <span class="nc">IKAmicrostar75</span><span class="p">(</span><span class="n">SerialDevice</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This provides a python class for the IKA microstar 7.5 overhead stirrers</span>
+<span class="sd">    The command implementation is based on the German manual pages 32-34.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">device_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">soft_fail_for_testing</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializer of the IKAmicrostar75 class</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            port (str): The port name/number of the stirrer.</span>
+<span class="sd">            device_name (str): A descriptive name for the device, used mainly in debug prints.</span>
+<span class="sd">            connect_on_instantiation (bool): (optional) determines if the connection is established on instantiation of</span>
+<span class="sd">                the class. Default: Off</span>
+<span class="sd">            soft_fail_for_testing (bool): (optional) switch for just logging an error rather than raising it.</span>
+<span class="sd">                Default: False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">soft_fail_for_testing</span><span class="p">)</span>
+
+        <span class="c1"># serial settings</span>
+        <span class="c1"># baud rate etc are default</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_delay</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_delay</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+        <span class="c1"># answer patterns</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valueanswer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;(\d+\.\d+) (\d)</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diranswer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;IN_MODE_(\d)</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># DOCUMENTED COMMANDS for easier maintenance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_NAME</span> <span class="o">=</span> <span class="s2">&quot;IN_NAME&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_TEMP_PV</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_3&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_STIR_RATE_PV</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_4&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_TORQUE_PV</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_5&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_STIR_RATE_SP</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_4&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_TORQUE_SP</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_5&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_MAX_RPM</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_6&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_SAFETY_RPM</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_8&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_STIR_RATE_SP</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_4&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_TORQUE_SP</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_5&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_MAX_RPM</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_6&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_SAFETY_RPM</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_8&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">START_STIR</span> <span class="o">=</span> <span class="s2">&quot;START_4&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STOP_STIR</span> <span class="o">=</span> <span class="s2">&quot;STOP_4&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RESET</span> <span class="o">=</span> <span class="s2">&quot;RESET&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_DIRECTION</span> <span class="o">=</span> <span class="s2">&quot;OUT_MODE_&quot;</span>  <span class="c1"># argument: 1 or 2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_DIRECTION</span> <span class="o">=</span> <span class="s2">&quot;IN_MODE&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">launch_command_handler</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">connect_on_instantiation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">stir_rate_pv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the process variable (i.e. the current) stir rate</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            call back to send_message with a request to return and check a value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_STIR_RATE_PV</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">valueanswer</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">stir_rate_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the set point (target) for the stir rate</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            call back to send_message with a request to return and check a value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_STIR_RATE_SP</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">valueanswer</span><span class="p">)</span>
+
+    <span class="nd">@stir_rate_sp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">stir_rate_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stir_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the stirrer rate</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stir_rate (int): the target stir rate of the hot plate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># type checking of the stir rate that the user provided</span>
+            <span class="n">stir_rate</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">stir_rate</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting stir rate. Rate was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stir_rate</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting stir rate to </span><span class="si">{0}</span><span class="s2"> RPM...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stir_rate</span><span class="p">))</span>
+
+        <span class="c1"># actually sending the command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_STIR_RATE_SP</span><span class="p">,</span> <span class="n">stir_rate</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">temperature_pv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the process variable (i.e. the current) temperature</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            call back to send_message with a request to return and check a value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_TEMP_PV</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">valueanswer</span><span class="p">)</span>
+
+<div class="viewcode-block" id="IKAmicrostar75.start_stirrer"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_microstar_75.html#modules.serial_labware.IKA_microstar_75.IKA_microstar_75.IKAmicrostar75.start_stirrer">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">start_stirrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts the stirring operation. Since the stirrer &quot;forgets&quot; the current stir rate every time &quot;START&quot; is sent,</span>
+<span class="sd">        the method first queries the current setpoint, then starts the stirrer, then sets the RPM again.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting stirrer...&quot;</span><span class="p">)</span>
+        <span class="n">current_rpm</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stir_rate_sp</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">START_STIR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stir_rate_sp</span> <span class="o">=</span> <span class="n">current_rpm</span></div>
+
+<div class="viewcode-block" id="IKAmicrostar75.stop_stirrer"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_microstar_75.html#modules.serial_labware.IKA_microstar_75.IKA_microstar_75.IKAmicrostar75.stop_stirrer">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">stop_stirrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stops the stirring operation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            call back to send_message with a request to stop the stirring</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Stopping heater...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">STOP_STIR</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the name of the stirrer</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            call back to send_message with a request to return the name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_NAME</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">direction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the current stirring direction</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            either &quot;cw&quot; or &quot;ccw&quot; depending on the currently set direction</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_DIRECTION</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diranswer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">current_direction</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;cw&quot;</span>
+        <span class="k">elif</span> <span class="n">current_direction</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;ccw&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ERROR: Stirrer did not return correct direction: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_direction</span><span class="p">))</span>
+
+    <span class="nd">@direction</span><span class="o">.</span><span class="n">setter</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">direction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stir_direction</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the stirring direction</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stir_direction (str): either &quot;cw&quot; or &quot;ccw&quot; for clockwise or counterclockwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">stir_direction</span> <span class="o">==</span> <span class="s2">&quot;cw&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">1&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_DIRECTION</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">stir_direction</span> <span class="o">==</span> <span class="s2">&quot;ccw&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">2&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_DIRECTION</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ERROR: Supplied direction string is invalid: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stir_direction</span><span class="p">))</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">IKAmicrostar75</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="s2">&quot;COM12&quot;</span><span class="p">,</span> <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">stir_rate_sp</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">start_stirrer</span><span class="p">()</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">stir_rate_sp</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;stir rate = </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">stir_rate_pv</span><span class="p">))</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">stop_stirrer</span><span class="p">()</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

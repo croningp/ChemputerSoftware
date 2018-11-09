@@ -1,0 +1,978 @@
+2018-07-31 00:05:17,149 ; DEBUG ; chempiler_client ; MainThread ; User Input:
+XML file: C:\Users\group\Documents\Chempiler\experiments\graph\chemputer_rig_3_sildenafil.graphml
+Command file: C:\Users\group\Documents\Chempiler\experiments\ChASM\clean_rig.chasm
+Simulation: n
+2018-07-31 00:05:17,314 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Clear errors DONE.
+2018-07-31 00:05:17,320 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:17,327 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Clear errors DONE.
+2018-07-31 00:05:17,333 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:17,339 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Clear errors DONE.
+2018-07-31 00:05:17,346 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:17,353 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Clear errors DONE.
+2018-07-31 00:05:17,359 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:17,366 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Clear errors DONE.
+2018-07-31 00:05:17,372 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:17,379 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Clear errors DONE.
+2018-07-31 00:05:17,387 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:18,200 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:05:18,345 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:05:18,394 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Move DONE
+2018-07-31 00:05:18,418 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Move DONE
+2018-07-31 00:05:18,438 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Move DONE
+2018-07-31 00:05:18,442 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:05:18,853 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:18,857 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:18,857 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:18,857 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:18,857 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:18,857 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:18,858 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:05:18,858 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:05:18,858 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Move DONE
+2018-07-31 00:05:18,858 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Move DONE
+2018-07-31 00:05:18,859 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Move DONE
+2018-07-31 00:05:19,279 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:05:19,894 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Clear errors DONE.
+2018-07-31 00:05:19,900 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:19,906 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Clear errors DONE.
+2018-07-31 00:05:19,913 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:19,919 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Clear errors DONE.
+2018-07-31 00:05:19,926 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:19,932 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Clear errors DONE.
+2018-07-31 00:05:19,939 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:19,946 ; DEBUG ; Chemputer_Device_API ; pump_separator TCP thread ; Clear errors DONE.
+2018-07-31 00:05:19,952 ; DEBUG ; Chemputer_Device_API ; pump_separator TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:19,959 ; DEBUG ; Chemputer_Device_API ; pump_rotary TCP thread ; Clear errors DONE.
+2018-07-31 00:05:19,966 ; DEBUG ; Chemputer_Device_API ; pump_rotary TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:23,908 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; DONE. New home reading is 808
+2018-07-31 00:05:23,915 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Homing DONE.
+2018-07-31 00:05:23,937 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; DONE. New home reading is 599
+2018-07-31 00:05:23,944 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Homing DONE.
+2018-07-31 00:05:23,967 ; DEBUG ; Chemputer_Device_API ; pump_separator TCP thread ; DONE. New home reading is 604
+2018-07-31 00:05:23,970 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; DONE. New home reading is 582
+2018-07-31 00:05:23,974 ; DEBUG ; Chemputer_Device_API ; pump_separator TCP thread ; Homing DONE.
+2018-07-31 00:05:23,976 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; DONE. New home reading is 608
+2018-07-31 00:05:23,976 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Homing DONE.
+2018-07-31 00:05:23,982 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Homing DONE.
+2018-07-31 00:05:23,995 ; DEBUG ; Chemputer_Device_API ; pump_rotary TCP thread ; DONE. New home reading is 630
+2018-07-31 00:05:24,002 ; DEBUG ; Chemputer_Device_API ; pump_rotary TCP thread ; Homing DONE.
+2018-07-31 00:05:25,362 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Clear errors DONE.
+2018-07-31 00:05:25,382 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:26,170 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Move DONE
+2018-07-31 00:05:26,319 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:26,822 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Move DONE
+2018-07-31 00:05:28,153 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Initialising IKA RV10...
+2018-07-31 00:05:28,212 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Starting rotation...
+2018-07-31 00:05:28,515 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Stopping rotation...
+2018-07-31 00:05:28,752 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Starting heater...
+2018-07-31 00:05:29,013 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Stopping heater...
+2018-07-31 00:05:30,086 ; DEBUG ; Vacuubrand_CVC_3000 ; MainThread ; Initialising CVC3000...
+2018-07-31 00:05:30,686 ; DEBUG ; Vacuubrand_CVC_3000 ; MainThread ; Done.
+2018-07-31 00:05:31,288 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Clear errors DONE.
+2018-07-31 00:05:31,422 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Clear errors DONE.
+2018-07-31 00:05:31,507 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:31,588 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:32,563 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Move DONE
+2018-07-31 00:05:32,635 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Move DONE
+2018-07-31 00:05:32,932 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:32,950 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:32,994 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Move DONE
+2018-07-31 00:05:33,040 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Move DONE
+2018-07-31 00:05:33,871 ; DEBUG ; chempiler ; MainThread ; Parsing ChASM file. Command stack:
+2018-07-31 00:05:33,905 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'flask_ether', 'waste_reagents_2', '8']
+2018-07-31 00:05:33,927 ; DEBUG ; chempiler ; MainThread ; ['S', 'SET_RECORDING_SPEED', '180']
+2018-07-31 00:05:33,973 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'flask_ether', 'waste_reagents_1', '2', '50', '50']
+2018-07-31 00:05:33,996 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'flask_ether', 'waste_reagents_2', '2', '50', '50']
+2018-07-31 00:05:34,037 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'flask_ether', 'waste_solvents', '2', '50', '50']
+2018-07-31 00:05:34,097 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'flask_ether', 'waste_reactor', '2', '50', '50']
+2018-07-31 00:05:34,112 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'flask_ether', 'waste_solvents', '5', '50', '50']
+2018-07-31 00:05:34,130 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'flask_water', 'waste_solvents', '5', '50', '20']
+2018-07-31 00:05:34,130 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'waste_solvents', 'waste_reagents_1', '40']
+2018-07-31 00:05:34,130 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'flask_acetone', 'waste_solvents', '5', '50', '20']
+2018-07-31 00:05:34,130 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'flask_acetone', 'waste_solvents', '5', '50', '20']
+2018-07-31 00:05:34,130 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'waste_solvents', 'waste_reagents_1', '40']
+2018-07-31 00:05:34,166 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'flask_ether', 'waste_solvents', '5', '50', '20']
+2018-07-31 00:05:34,196 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'flask_ether', 'waste_solvents', '5', '50', '20']
+2018-07-31 00:05:34,213 ; DEBUG ; chempiler ; MainThread ; ['S', 'MOVE', 'waste_solvents', 'waste_reagents_1', '40']
+2018-07-31 00:05:34,272 ; DEBUG ; chempiler ; MainThread ; ['S', 'SET_RECORDING_SPEED', '30']
+2018-07-31 00:05:34,312 ; INFO ; pump_execution ; MainThread ; Moving 8.0mL from flask_ether to waste_reagents_2 at 50mL/min. Aspirating at 50mL/min, dispensing at 50mL/min.
+2018-07-31 00:05:34,394 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:34,406 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:34,457 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:05:34,868 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:05:35,156 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:05:35,168 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 8.0mL at 50mL/min.
+2018-07-31 00:05:35,214 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:45,188 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:05:45,591 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:45,602 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:46,032 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:05:46,263 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:05:46,618 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 8.0mL at 50mL/min.
+2018-07-31 00:05:46,646 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:46,788 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:05:46,812 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:56,527 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:05:56,813 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:05:57,093 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:57,168 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:05:57,574 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:05:57,665 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:05:57,895 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:05:57,937 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:07,589 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:06:07,776 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:06:07,782 ; DEBUG ; pump_execution ; MainThread ; New volumes are: flask_ether: 2492.0mL; waste_reagents_2: 8.0mL.
+2018-07-31 00:06:08,175 ; INFO ; pump_execution ; MainThread ; Moving 2.0mL from flask_ether to waste_reagents_1 at 50.0mL/min. Aspirating at 50.0mL/min, dispensing at 50.0mL/min.
+2018-07-31 00:06:08,248 ; DEBUG ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 2.0 ***
+2018-07-31 00:06:08,282 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:08,294 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:08,426 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 2.0mL at 50.0mL/min.
+2018-07-31 00:06:08,524 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:11,204 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:12,416 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:12,988 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:13,215 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:06:13,279 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:15,963 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:06:16,074 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:06:16,131 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:06:16,259 ; DEBUG ; pump_execution ; MainThread ; New volumes are: flask_ether: 2490.0mL; waste_reagents_1: 2.0mL.
+2018-07-31 00:06:16,605 ; INFO ; pump_execution ; MainThread ; Moving 2.0mL from flask_ether to waste_reagents_2 at 50.0mL/min. Aspirating at 50.0mL/min, dispensing at 50.0mL/min.
+2018-07-31 00:06:16,675 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:16,681 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:16,710 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:17,142 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:17,413 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:06:17,460 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 2.0mL at 50.0mL/min.
+2018-07-31 00:06:17,508 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:20,204 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:20,630 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:20,689 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:21,144 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:21,292 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:21,597 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 2.0mL at 50.0mL/min.
+2018-07-31 00:06:21,704 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:06:21,704 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:21,728 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:24,366 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:24,504 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:06:24,777 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:24,800 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:25,260 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:25,356 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:25,665 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:06:25,745 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:28,258 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:06:28,399 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:06:28,454 ; DEBUG ; pump_execution ; MainThread ; New volumes are: flask_ether: 2488.0mL; waste_reagents_2: 10.0mL.
+2018-07-31 00:06:28,776 ; INFO ; pump_execution ; MainThread ; Moving 2.0mL from flask_ether to waste_solvents at 50.0mL/min. Aspirating at 50.0mL/min, dispensing at 50.0mL/min.
+2018-07-31 00:06:28,833 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:28,833 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:28,856 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:28,965 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:29,330 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:06:29,414 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:29,813 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:06:29,870 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 2.0mL at 50.0mL/min.
+2018-07-31 00:06:29,910 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:32,595 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:33,036 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:33,087 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:33,116 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:33,583 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:33,600 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:06:33,707 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:34,244 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 2.0mL at 50.0mL/min.
+2018-07-31 00:06:34,278 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:34,279 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:06:34,489 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:36,927 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:37,172 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:06:37,599 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:37,610 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:37,674 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:38,047 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:38,141 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:38,146 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:06:38,692 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 2.0mL at 50.0mL/min.
+2018-07-31 00:06:38,746 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:06:38,757 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:38,797 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:41,313 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:06:41,450 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:06:41,617 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:41,709 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:41,755 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:42,168 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:42,204 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:06:42,273 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:42,782 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50.0mL/min.
+2018-07-31 00:06:42,818 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:45,495 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:06:45,752 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:06:45,752 ; DEBUG ; pump_execution ; MainThread ; New volumes are: flask_ether: 2486.0mL; waste_solvents: 2.0mL.
+2018-07-31 00:06:46,003 ; INFO ; pump_execution ; MainThread ; Moving 2.0mL from flask_ether to waste_reactor at 50.0mL/min. Aspirating at 50.0mL/min, dispensing at 50.0mL/min.
+2018-07-31 00:06:46,038 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:46,049 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:46,049 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:46,066 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:46,177 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Move DONE
+2018-07-31 00:06:46,508 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:46,532 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:06:46,613 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:47,296 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:06:47,366 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 2.0mL at 50.0mL/min.
+2018-07-31 00:06:47,396 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:50,079 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:50,783 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:50,870 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:50,905 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:50,994 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:51,299 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:51,359 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:06:51,406 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Move DONE
+2018-07-31 00:06:51,453 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:52,089 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 2.0mL at 50.0mL/min.
+2018-07-31 00:06:52,119 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:06:52,143 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:52,281 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:54,786 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:55,041 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:06:55,564 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:55,605 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:55,682 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:55,683 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:56,019 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:06:56,112 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Move DONE
+2018-07-31 00:06:56,152 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:06:56,157 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:06:56,736 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 2.0mL at 50.0mL/min.
+2018-07-31 00:06:56,754 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:56,771 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:06:56,894 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:59,271 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:06:59,445 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:06:59,739 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:59,778 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:59,842 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:06:59,859 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:00,221 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:07:00,267 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Move DONE
+2018-07-31 00:07:00,290 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:07:00,402 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:07:01,194 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reactor is moving to 2.0mL at 50.0mL/min.
+2018-07-31 00:07:01,230 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:01,242 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50.0mL/min.
+2018-07-31 00:07:01,324 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:03,738 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:07:03,916 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Move DONE
+2018-07-31 00:07:04,091 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:04,103 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:04,115 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:04,126 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:04,565 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Move DONE
+2018-07-31 00:07:04,565 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:07:04,589 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:07:04,668 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:07:05,150 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reactor is moving to 0mL at 50.0mL/min.
+2018-07-31 00:07:05,197 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:07,876 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Move DONE.
+2018-07-31 00:07:08,089 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:07:08,134 ; DEBUG ; pump_execution ; MainThread ; New volumes are: flask_ether: 2484.0mL; waste_reactor: 2.0mL.
+2018-07-31 00:07:08,452 ; INFO ; pump_execution ; MainThread ; Moving 5.0mL from flask_ether to waste_solvents at 50.0mL/min. Aspirating at 50.0mL/min, dispensing at 50.0mL/min.
+2018-07-31 00:07:08,499 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:08,516 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:07:08,634 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:08,640 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:08,656 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:07:08,674 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:07:09,070 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:07:09,111 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:07:09,157 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:15,512 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:07:15,923 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:15,956 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:15,985 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:16,398 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:07:16,478 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:07:16,548 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:07:17,032 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:07:17,101 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:17,113 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:07:17,248 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:23,403 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:07:23,567 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:07:23,956 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:23,974 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:24,031 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:24,446 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:07:24,511 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:07:24,588 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:07:25,236 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:07:25,282 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:25,282 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:07:25,464 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:31,513 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:07:31,590 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:07:31,832 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:31,891 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:31,903 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:32,338 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:07:32,391 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:07:32,559 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:07:33,019 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50.0mL/min.
+2018-07-31 00:07:33,136 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:39,188 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:07:39,382 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:07:39,441 ; DEBUG ; pump_execution ; MainThread ; New volumes are: flask_ether: 2479.0mL; waste_solvents: 7.0mL.
+2018-07-31 00:07:39,871 ; INFO ; pump_execution ; MainThread ; Moving 5.0mL from flask_water to waste_solvents at 50.0mL/min. Aspirating at 20.0mL/min, dispensing at 50.0mL/min.
+2018-07-31 00:07:39,922 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:39,958 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:39,969 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:40,354 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:07:40,397 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:07:40,464 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:07:40,753 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:07:40,759 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 5.0mL at 20.0mL/min.
+2018-07-31 00:07:40,804 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:56,265 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:07:56,664 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:56,699 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:56,705 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:57,099 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:07:57,145 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:07:57,208 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:07:57,514 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:07:57,571 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:07:57,594 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:07:57,618 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:03,873 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:08:04,007 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:08:04,501 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:04,513 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:04,559 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:04,919 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:08:04,978 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:08:05,014 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:08:05,428 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:08:05,446 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:05,446 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:08:05,551 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:11,578 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:08:11,762 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:08:11,950 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:12,017 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:12,110 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:12,380 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:08:12,427 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:08:12,600 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:08:12,890 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50.0mL/min.
+2018-07-31 00:08:12,915 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:18,966 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:08:19,117 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:08:19,164 ; DEBUG ; pump_execution ; MainThread ; New volumes are: flask_water: 2495.0mL; waste_solvents: 12.0mL.
+2018-07-31 00:08:19,691 ; WARNING ; pump_execution ; MainThread ; Warning! MOVE instruction withdraws more (40.0mL) than the current volume (12.0mL)!
+2018-07-31 00:08:19,828 ; INFO ; pump_execution ; MainThread ; Moving 40.0mL from waste_solvents to waste_reagents_1 at 50mL/min. Aspirating at 50mL/min, dispensing at 50mL/min.
+2018-07-31 00:08:19,875 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:19,904 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:08:19,928 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:19,934 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:08:19,974 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:19,974 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:08:20,312 ; INFO ; pump_execution ; MainThread ; 30.0mL left...
+2018-07-31 00:08:20,373 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 10.0mL at 50mL/min.
+2018-07-31 00:08:20,421 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:32,779 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:08:33,375 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:33,392 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:33,433 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:33,839 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:08:33,851 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:08:33,868 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:08:34,318 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:08:34,367 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50mL/min.
+2018-07-31 00:08:34,372 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:34,395 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:46,497 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:08:46,710 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:08:46,969 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:47,013 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:47,076 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:47,456 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:08:47,468 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:08:47,496 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:08:47,858 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:08:47,919 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:47,978 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:08:48,039 ; INFO ; pump_execution ; MainThread ; 20.0mL left...
+2018-07-31 00:08:48,074 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:08:48,147 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 10.0mL at 50mL/min.
+2018-07-31 00:08:48,342 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:00,062 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:09:00,289 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:09:00,706 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:09:01,155 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:01,173 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:01,254 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:01,629 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:09:01,630 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:09:01,698 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:09:02,123 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:09:02,174 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:09:02,180 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:02,186 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50mL/min.
+2018-07-31 00:09:02,203 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:02,220 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:14,313 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:09:14,483 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:09:14,483 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:09:14,799 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:14,841 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:14,882 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:15,290 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:09:15,291 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:09:15,291 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:09:15,824 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:09:15,841 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:15,870 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:09:15,910 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:15,922 ; INFO ; pump_execution ; MainThread ; 10.0mL left...
+2018-07-31 00:09:16,032 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 10.0mL at 50mL/min.
+2018-07-31 00:09:16,051 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:28,055 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:09:28,234 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:09:28,422 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:09:28,868 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:28,898 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:28,927 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:29,363 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:09:29,363 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:09:29,374 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:09:29,954 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:09:29,994 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:09:30,000 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:30,029 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50mL/min.
+2018-07-31 00:09:30,041 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:30,196 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:42,256 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:09:42,314 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:09:42,326 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:09:42,695 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:42,710 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:42,756 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:43,152 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:09:43,176 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:09:43,181 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:09:43,779 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:09:43,853 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:43,853 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:09:43,947 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:09:43,964 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:43,975 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 10.0mL at 50mL/min.
+2018-07-31 00:09:44,075 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:55,980 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:09:56,242 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:09:56,428 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:09:56,812 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:56,830 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:56,859 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:57,280 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:09:57,286 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:09:57,356 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:09:57,853 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:09:57,877 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:09:57,888 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:57,916 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:09:58,017 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50mL/min.
+2018-07-31 00:09:58,047 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:10,021 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:10:10,237 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:10:10,390 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:10:10,937 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:10,937 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:10,937 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:11,373 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:10:11,380 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:10:11,421 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:10:12,129 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:10:12,177 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:12,207 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:10:12,259 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:24,300 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:10:24,571 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:10:24,707 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:24,735 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:24,782 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:25,184 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:10:25,184 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:10:25,225 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:10:25,617 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:10:25,740 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:37,840 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:10:38,027 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:10:38,275 ; DEBUG ; pump_execution ; MainThread ; New volumes are: waste_solvents: 0mL; waste_reagents_1: 42.0mL.
+2018-07-31 00:10:38,615 ; INFO ; pump_execution ; MainThread ; Moving 5.0mL from flask_acetone to waste_solvents at 50.0mL/min. Aspirating at 20.0mL/min, dispensing at 50.0mL/min.
+2018-07-31 00:10:38,633 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:38,640 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:38,640 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:38,652 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:10:38,653 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:10:39,304 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:10:39,712 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:10:39,806 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 5.0mL at 20.0mL/min.
+2018-07-31 00:10:39,835 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:55,301 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:10:55,768 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:55,768 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:55,779 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:56,192 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:10:56,249 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:10:56,284 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:10:56,732 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:10:56,762 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:10:56,780 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:10:56,780 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:02,841 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:11:03,046 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:11:03,301 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:03,301 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:03,301 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:03,753 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:11:03,781 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:11:03,877 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:11:04,351 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:11:04,385 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:04,402 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:11:04,525 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:10,479 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:11:10,707 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:11:10,903 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:11,053 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:11,077 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:11,457 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:11:11,481 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:11:11,539 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:11:12,046 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50.0mL/min.
+2018-07-31 00:11:12,064 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:18,143 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:11:18,367 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:11:18,419 ; DEBUG ; pump_execution ; MainThread ; New volumes are: flask_acetone: 1995.0mL; waste_solvents: 5.0mL.
+2018-07-31 00:11:18,726 ; INFO ; pump_execution ; MainThread ; Moving 5.0mL from flask_acetone to waste_solvents at 50.0mL/min. Aspirating at 20.0mL/min, dispensing at 50.0mL/min.
+2018-07-31 00:11:18,778 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:18,801 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:18,801 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:19,212 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:11:19,271 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:11:19,301 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:11:19,741 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:11:19,868 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 5.0mL at 20.0mL/min.
+2018-07-31 00:11:19,902 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:35,388 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:11:35,813 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:35,813 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:35,859 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:36,263 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:11:36,357 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:11:36,374 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:11:36,792 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:11:36,844 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:11:36,867 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:36,867 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:43,074 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:11:43,120 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:11:43,532 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:43,595 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:43,619 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:44,062 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:11:44,091 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:11:44,187 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:11:44,566 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:11:44,611 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:11:44,617 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:44,652 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:50,693 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:11:50,930 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:11:51,131 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:51,160 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:51,212 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:51,603 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:11:51,731 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:11:51,731 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:11:52,355 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50.0mL/min.
+2018-07-31 00:11:52,378 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:58,690 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:11:58,833 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:11:58,849 ; DEBUG ; pump_execution ; MainThread ; New volumes are: flask_acetone: 1990.0mL; waste_solvents: 10.0mL.
+2018-07-31 00:11:59,062 ; WARNING ; pump_execution ; MainThread ; Warning! MOVE instruction withdraws more (40.0mL) than the current volume (10.0mL)!
+2018-07-31 00:11:59,086 ; INFO ; pump_execution ; MainThread ; Moving 40.0mL from waste_solvents to waste_reagents_1 at 50mL/min. Aspirating at 50mL/min, dispensing at 50mL/min.
+2018-07-31 00:11:59,114 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:59,143 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:11:59,253 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:59,294 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:11:59,294 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:11:59,375 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:11:59,608 ; INFO ; pump_execution ; MainThread ; 30.0mL left...
+2018-07-31 00:11:59,654 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 10.0mL at 50mL/min.
+2018-07-31 00:11:59,772 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:12,128 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:12:12,617 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:12,652 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:12,692 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:13,078 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:12:13,106 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:12:13,117 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:12:13,492 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:12:13,504 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50mL/min.
+2018-07-31 00:12:13,504 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:13,545 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:25,787 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:12:25,899 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:12:26,443 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:26,454 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:26,511 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:26,907 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:12:26,918 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:12:26,934 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:12:27,465 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:12:27,545 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:27,573 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:12:27,590 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:27,678 ; INFO ; pump_execution ; MainThread ; 20.0mL left...
+2018-07-31 00:12:27,689 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 10.0mL at 50mL/min.
+2018-07-31 00:12:27,777 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:39,673 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:12:39,956 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:12:40,139 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:12:40,834 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:40,870 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:40,881 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:41,312 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:12:41,335 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:12:41,346 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:12:41,882 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:12:41,905 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:41,927 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:12:42,014 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:42,025 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50mL/min.
+2018-07-31 00:12:42,140 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:54,227 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:12:54,325 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:12:54,325 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:12:54,668 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:54,749 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:54,749 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:55,164 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:12:55,175 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:12:55,187 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:12:55,730 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:12:55,823 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:12:55,845 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:55,960 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:12:56,012 ; INFO ; pump_execution ; MainThread ; 10.0mL left...
+2018-07-31 00:12:56,080 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 10.0mL at 50mL/min.
+2018-07-31 00:12:56,137 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:08,119 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:13:08,217 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:13:08,503 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:13:09,059 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:09,099 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:09,151 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:09,533 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:13:09,560 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:13:09,583 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:13:09,976 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:13:09,998 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:10,021 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:13:10,181 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:10,192 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50mL/min.
+2018-07-31 00:13:10,239 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:22,219 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:13:22,442 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:13:22,655 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:13:23,153 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:23,255 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:23,343 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:23,580 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:13:23,746 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:13:23,785 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:13:24,075 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:13:24,127 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:24,184 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:13:24,354 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:24,376 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:13:24,405 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 10.0mL at 50mL/min.
+2018-07-31 00:13:24,551 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:36,361 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:13:36,514 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:13:36,848 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:13:37,410 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:37,439 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:37,461 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:37,885 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:13:37,890 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:13:37,995 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:13:38,659 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:13:38,727 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:38,778 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:13:38,849 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:38,972 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50mL/min.
+2018-07-31 00:13:39,000 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:51,057 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:13:51,132 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:13:51,348 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:13:51,736 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:51,789 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:51,817 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:52,229 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:13:52,235 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:13:52,246 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:13:52,653 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:13:52,682 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:13:52,682 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:13:52,826 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:04,983 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:14:05,081 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:14:05,380 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:05,414 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:05,529 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:05,871 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:14:05,889 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:14:05,906 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:14:06,455 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:14:06,489 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:18,804 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:14:18,983 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:14:18,994 ; DEBUG ; pump_execution ; MainThread ; New volumes are: waste_solvents: 0mL; waste_reagents_1: 82.0mL.
+2018-07-31 00:14:19,236 ; INFO ; pump_execution ; MainThread ; Moving 5.0mL from flask_ether to waste_solvents at 50.0mL/min. Aspirating at 20.0mL/min, dispensing at 50.0mL/min.
+2018-07-31 00:14:19,349 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:19,378 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:19,401 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:14:19,435 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:19,469 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:14:19,816 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:14:20,486 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:14:20,544 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 5.0mL at 20.0mL/min.
+2018-07-31 00:14:20,653 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:36,036 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:14:36,605 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:36,605 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:36,669 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:37,045 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:14:37,155 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:14:37,272 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:14:37,766 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:14:37,806 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:37,818 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:14:38,046 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:44,054 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:14:44,082 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:14:44,651 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:44,737 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:44,754 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:45,190 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:14:45,219 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:14:45,225 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:14:45,724 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:14:45,760 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:45,799 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:14:45,846 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:52,038 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:14:52,079 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:14:52,311 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:52,351 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:52,373 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:52,776 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:14:52,857 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:14:52,986 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:14:53,422 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50.0mL/min.
+2018-07-31 00:14:53,468 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:14:59,506 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:14:59,770 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:14:59,793 ; DEBUG ; pump_execution ; MainThread ; New volumes are: flask_ether: 2474.0mL; waste_solvents: 5.0mL.
+2018-07-31 00:14:59,995 ; INFO ; pump_execution ; MainThread ; Moving 5.0mL from flask_ether to waste_solvents at 50.0mL/min. Aspirating at 20.0mL/min, dispensing at 50.0mL/min.
+2018-07-31 00:15:00,077 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:00,083 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:00,123 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:00,534 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:15:00,615 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:15:00,718 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:15:01,260 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:15:01,294 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 5.0mL at 20.0mL/min.
+2018-07-31 00:15:01,351 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:16,811 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:15:17,178 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:17,184 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:17,214 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:17,628 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:15:17,712 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:15:17,837 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:15:18,546 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:15:18,582 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:18,592 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:15:18,627 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:24,694 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:15:24,857 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:15:25,214 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:25,226 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:25,232 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:25,693 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:15:25,746 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:15:25,846 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:15:26,274 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 5.0mL at 50.0mL/min.
+2018-07-31 00:15:26,320 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:26,353 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50.0mL/min.
+2018-07-31 00:15:26,370 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:32,504 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:15:32,639 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:15:32,912 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:32,918 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:32,963 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:33,380 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:15:33,431 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:15:33,561 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:15:33,965 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50.0mL/min.
+2018-07-31 00:15:33,983 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:40,047 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:15:40,202 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:15:40,309 ; DEBUG ; pump_execution ; MainThread ; New volumes are: flask_ether: 2469.0mL; waste_solvents: 10.0mL.
+2018-07-31 00:15:40,728 ; WARNING ; pump_execution ; MainThread ; Warning! MOVE instruction withdraws more (40.0mL) than the current volume (10.0mL)!
+2018-07-31 00:15:40,845 ; INFO ; pump_execution ; MainThread ; Moving 40.0mL from waste_solvents to waste_reagents_1 at 50mL/min. Aspirating at 50mL/min, dispensing at 50mL/min.
+2018-07-31 00:15:40,897 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:40,974 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:15:41,036 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:41,051 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:41,109 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:15:41,270 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:15:41,623 ; INFO ; pump_execution ; MainThread ; 30.0mL left...
+2018-07-31 00:15:41,629 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 10.0mL at 50mL/min.
+2018-07-31 00:15:41,652 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:54,049 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:15:54,518 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:54,518 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:54,632 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:54,952 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:15:54,975 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:15:55,082 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:15:55,328 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:15:55,427 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:15:55,504 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50mL/min.
+2018-07-31 00:15:55,563 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:07,712 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:16:07,955 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:16:08,344 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:08,356 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:08,391 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:08,802 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:16:08,802 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:16:08,837 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:16:09,313 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:16:09,360 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:09,370 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:16:09,481 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:09,498 ; INFO ; pump_execution ; MainThread ; 20.0mL left...
+2018-07-31 00:16:09,690 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 10.0mL at 50mL/min.
+2018-07-31 00:16:09,718 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:21,503 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:16:21,749 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:16:22,091 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:16:22,710 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:22,752 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:22,851 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:23,167 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:16:23,219 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:16:23,299 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:16:23,608 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:16:23,646 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:16:23,652 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:23,689 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:23,728 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50mL/min.
+2018-07-31 00:16:23,793 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:35,963 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:16:36,074 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:16:36,154 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:16:36,652 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:36,665 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:36,666 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:37,136 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:16:37,136 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:16:37,136 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:16:37,667 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:16:37,702 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:37,715 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:16:37,762 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:37,862 ; INFO ; pump_execution ; MainThread ; 10.0mL left...
+2018-07-31 00:16:37,920 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 10.0mL at 50mL/min.
+2018-07-31 00:16:37,954 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:49,903 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:16:50,084 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:16:50,327 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:16:50,846 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:50,917 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:51,001 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:51,334 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:16:51,380 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:16:51,450 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:16:51,852 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:16:51,946 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:16:51,952 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:51,975 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:16:51,998 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50mL/min.
+2018-07-31 00:16:52,274 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:04,252 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:17:04,467 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:17:04,637 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:17:05,067 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:05,078 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:05,089 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:05,523 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:17:05,540 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:17:05,586 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:17:06,007 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:17:06,118 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:06,141 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:17:06,199 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:06,217 ; INFO ; pump_execution ; MainThread ; 0.0mL left...
+2018-07-31 00:17:06,328 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 10.0mL at 50mL/min.
+2018-07-31 00:17:06,414 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:18,224 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:17:18,526 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:17:18,812 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE
+2018-07-31 00:17:19,255 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:19,272 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:19,312 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:19,702 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:17:19,732 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:17:19,773 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:17:20,119 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:17:20,136 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:20,172 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:17:20,248 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:20,304 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_solvents is moving to 0mL at 50mL/min.
+2018-07-31 00:17:20,336 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:32,262 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:17:32,420 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Move DONE.
+2018-07-31 00:17:32,531 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:17:32,936 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:32,942 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:32,998 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:33,390 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:17:33,435 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:17:33,435 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:17:33,949 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 10.0mL at 50mL/min.
+2018-07-31 00:17:33,985 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:34,003 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_2 is moving to 0mL at 50mL/min.
+2018-07-31 00:17:34,114 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:46,111 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Move DONE.
+2018-07-31 00:17:46,373 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:17:46,507 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:46,536 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:46,642 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:17:46,981 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:17:46,988 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:17:47,093 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:17:47,551 ; DEBUG ; Chemputer_Device_API ; MainThread ; Pump pump_reagents_1 is moving to 0mL at 50mL/min.
+2018-07-31 00:17:47,666 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:18:00,036 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Move DONE.
+2018-07-31 00:18:00,272 ; INFO ; pump_execution ; MainThread ; Done.
+2018-07-31 00:18:00,318 ; DEBUG ; pump_execution ; MainThread ; New volumes are: waste_solvents: 0mL; waste_reagents_1: 122.0mL.

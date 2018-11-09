@@ -1,0 +1,560 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>modules.serial_labware.IKA_RV.IKA_RV10 &mdash; Chempiler 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Chempiler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Chempiler</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>modules.serial_labware.IKA_RV.IKA_RV10</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for modules.serial_labware.IKA_RV.IKA_RV10</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;IKA_RV10&quot; -- API for IKA RV10 remote controllable rotary evaporator</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: IKA_RV10</span>
+<span class="sd">   :platform: Windows</span>
+<span class="sd">   :synopsis: Control IKA RV10 rotary evaporator.</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+<span class="sd">.. moduleauthor:: Stefan Glatzel &lt;stefan.glatzel@croningroupplc.com&gt;</span>
+
+<span class="sd">(c) 2017 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This provides a python class for the IKA RV 10 rotary evaporator</span>
+<span class="sd">with IKA HB 10 heating bath.</span>
+<span class="sd">The command implementation is not based on the manual since the</span>
+<span class="sd">manual list different/wrong commands for the rotavap and no commands</span>
+<span class="sd">for the bath at all. The correct commands were worked out in</span>
+<span class="sd">correspondence with IKA and by trial and error.</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># system imports</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">serial</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span><span class="p">,</span> <span class="n">time</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="k">import</span> <span class="n">Event</span>
+
+<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getfile</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">))</span>
+
+<span class="c1"># additional module imports</span>
+<span class="kn">from</span> <span class="nn">SerialDevice.serial_labware</span> <span class="k">import</span> <span class="n">SerialDevice</span><span class="p">,</span> <span class="n">command</span>
+
+
+<div class="viewcode-block" id="IKARV10"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10">[docs]</a><span class="k">class</span> <span class="nc">IKARV10</span><span class="p">(</span><span class="n">SerialDevice</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This provides a python class for the IKA RV 10 rotary evaporator</span>
+<span class="sd">    with IKA HB 10 heating bath.</span>
+<span class="sd">    The command implementation is not based on the manual since the</span>
+<span class="sd">    manual list different/wrong commands for the rotavap and no commands</span>
+<span class="sd">    for the bath at all. The correct commands were worked out in</span>
+<span class="sd">    correspondence with IKA and by trial and error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">device_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">soft_fail_for_testing</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializer of the IKARV10 class</span>
+<span class="sd">        :param str port: The port name/number of the rotavap (remember under Windows: COM15 -&gt; port 14)</span>
+<span class="sd">        :param str device_name: A descriptive name for the device, used mainly in debug prints.</span>
+<span class="sd">        :param bool connect_on_instantiation: (optional) determines if the connection is established on instantiation of</span>
+<span class="sd">            the class. Default: Off</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">soft_fail_for_testing</span><span class="p">)</span>
+
+        <span class="c1"># serial settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">baudrate</span> <span class="o">=</span> <span class="mi">9600</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bytesize</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">SEVENBITS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parity</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">PARITY_EVEN</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_delay</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_delay</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+        <span class="c1"># answer patterns</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stranswer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;([0-9A-Z_]+)</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intanswer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;(\d+) (\d)</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">floatanswer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;(\d+\.\d+) (\d)</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># DOCUMENTED COMMANDS for easier maintenance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_ROTATION_PV</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_4&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_ROTATION_SP</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_4&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_ROTATION_SP</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_4&quot;</span>  <span class="c1"># 20-280 RPM</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_TEMP_PV</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_2&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_TEMP_SP</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_2&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_TEMP_SP</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_2&quot;</span>  <span class="c1"># 0-180°C, max. T is safety temperature minus 10°C, T&gt;90°C switches to oil mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_SAFETY_TEMP_SP</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_2&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_SAFETY_TEMP_SP</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_2&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">START_TEMP</span> <span class="o">=</span> <span class="s2">&quot;START_2&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STOP_TEMP</span> <span class="o">=</span> <span class="s2">&quot;STOP_2&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">START_ROTATION</span> <span class="o">=</span> <span class="s2">&quot;START_4&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STOP_ROTATION</span> <span class="o">=</span> <span class="s2">&quot;STOP_4&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RESET</span> <span class="o">=</span> <span class="s2">&quot;RESET&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_NAME</span> <span class="o">=</span> <span class="s2">&quot;IN_NAME&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_NAME</span> <span class="o">=</span> <span class="s2">&quot;OUT_NAME&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_SOFTWARE_VERSION</span> <span class="o">=</span> <span class="s2">&quot;IN_SOFTWARE&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_INTERVAL_SP</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_60&quot;</span>  <span class="c1"># 1-60s, &quot;0&quot; switches mode off</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_TIMER_SP</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_61&quot;</span>  <span class="c1"># 1-199min, &quot;0&quot; switches mode off</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LIFT_UP</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_62 1&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LIFT_DOWN</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_63 1&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">MAX_RPM</span> <span class="o">=</span> <span class="mi">280</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">MAX_RETRIES</span> <span class="o">=</span> <span class="mi">10</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">heating_on</span> <span class="o">=</span> <span class="n">Event</span><span class="p">()</span>  <span class="c1"># communicator for switching the keepalive on or off</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">launch_command_handler</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">connect_on_instantiation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+
+<div class="viewcode-block" id="IKARV10.keepalive"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.keepalive">[docs]</a>    <span class="k">def</span> <span class="nf">keepalive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Queries heating bath temperature every 2 seconds if the heating is on to keep it alive. Overrides dummy</span>
+<span class="sd">        keepalive from parent method. This does not utilise the non_blocking_wait method because passing a property as</span>
+<span class="sd">        callback leads to unwanted behaviour (i.e. property gets read on every loop iteration, not just</span>
+<span class="sd">        every x seconds). self.last_time is initialised in the parent method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">time</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">+</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">heating_on</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature_pv</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">floattemp</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Oh noes! Something went wrong!&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="IKARV10.initialise"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.initialise">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">initialise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Due to unspeakable firmware dumbfuckery both rotavap and heating bath only actually enter remote mode</span>
+<span class="sd">        after a start command has been sent. This method starts and stops both devices to force them into</span>
+<span class="sd">        remote mode.</span>
+<span class="sd">        :return: True if successful, False if not</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Initialising IKA RV10...&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_rotation</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop_rotation</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_heater</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop_heater</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;Error while initialising rotavap: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">rotation_speed_pv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the process variable (i.e. the current) rpm</span>
+<span class="sd">        :return: call back to send_message with a request to return and check a value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_ROTATION_PV</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">intanswer</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">rotation_speed_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the set point (target) for the rpm</span>
+<span class="sd">        :return: call back to send_message with a request to return and check a value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_ROTATION_SP</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">intanswer</span><span class="p">)</span>
+
+    <span class="nd">@rotation_speed_sp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">rotation_speed_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rpm</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the rotation speed and return the set point from the rotavap so the user can verify that it was successful</span>
+<span class="sd">        :param rpm: (integer) the target rotation speed of the rotavap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># type checking of the rotation speed that the user provided</span>
+            <span class="n">rpm</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rpm</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting rotation speed. Speed was not a valid integer: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rpm</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="n">rpm</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">rpm</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_RPM</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting rotation speed. Speed was outside the limits: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rpm</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting rotation speed to </span><span class="si">{0}</span><span class="s2"> RPM...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rpm</span><span class="p">))</span>
+
+        <span class="c1"># actually sending the command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_ROTATION_SP</span><span class="p">,</span> <span class="n">rpm</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">temperature_pv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># reading the process variable</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_TEMP_PV</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">floatanswer</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">temperature_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_TEMP_SP</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">floatanswer</span><span class="p">)</span>
+
+    <span class="nd">@temperature_sp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">temperature_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the target temperature for the heating bath&quot;</span>
+<span class="sd">        :param temperature: (float) the target temperature</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">temperature</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting temperature. Value was not a valid float </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temperature</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting heating bath temperature to </span><span class="si">{0}</span><span class="s2">°C...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temperature</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_TEMP_SP</span><span class="p">,</span> <span class="n">temperature</span><span class="p">))</span>
+
+<div class="viewcode-block" id="IKARV10.set_interval_sp"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.set_interval_sp">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">set_interval_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the time for the interval operation. Here it rotates in one direction for a time, then reverts the</span>
+<span class="sd">        direction, and so forth.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interval (int): desired interval time in seconds. &quot;0&quot; deactivates interval mode.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">interval</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting interval. Value was not a valid float </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">interval</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting interval time to </span><span class="si">{0}</span><span class="s2">°C...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">interval</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_INTERVAL_SP</span><span class="p">,</span> <span class="n">interval</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="IKARV10.start_heater"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.start_heater">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">start_heater</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting heater...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heating_on</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">START_TEMP</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IKARV10.stop_heater"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.stop_heater">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">stop_heater</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Stopping heater...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heating_on</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">STOP_TEMP</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IKARV10.start_rotation"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.start_rotation">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">start_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting rotation...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">START_ROTATION</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IKARV10.stop_rotation"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.stop_rotation">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">stop_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Stopping rotation...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">STOP_ROTATION</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IKARV10.lift_up"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.lift_up">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">lift_up</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Lifting up...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LIFT_UP</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IKARV10.lift_down"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.lift_down">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">lift_down</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Lifting down...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LIFT_DOWN</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IKARV10.reset_rotavap"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.reset_rotavap">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">reset_rotavap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Resetting rotavap...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RESET</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the name of the rotavap</span>
+<span class="sd">        :return: call back to send_message with a request to return the name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_NAME</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># setting a name doesn&#39;t seem to work</span>
+    <span class="c1"># @name.setter</span>
+    <span class="c1"># def name(self, name=None):</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     Sets the name of the rotavap to &quot;name&quot;. Resets to default (self.IKA_default_name) if no name is passed.</span>
+    <span class="c1">#         Warns that names longer than 6 characters get truncated upon restart of the rotavap.</span>
+    <span class="c1">#     :param name: (string) the new name</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     if name is None:</span>
+    <span class="c1">#         name = self.IKA_default_name</span>
+    <span class="c1">#     if len(name) &gt; 6:</span>
+    <span class="c1">#         self.logger.debug(&quot;Warning name will be shortened to \&quot;{}\&quot; by the rotary evaporator after restart.&quot;.format(name[0:6]))</span>
+    <span class="c1">#     self.send_message(&quot;{0} {1}&quot;.format(self.SET_NAME, name))</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">software_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the software version of the firmware</span>
+<span class="sd">        !!!WARNING!!! Despite being documented this does not seem to work as intended, it just returns an empty string</span>
+<span class="sd">        :return: (supposed to...) software version of the firmware</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_SOFTWARE_VERSION</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">safety_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_SAFETY_TEMP_SP</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">floatanswer</span><span class="p">)</span>
+
+    <span class="nd">@safety_temp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">safety_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the safety temperature for the heating bath</span>
+<span class="sd">        :param temperature: (float) the safety temperature</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">temperature</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting heating bath temperature. Value was not a valid float </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temperature</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_SAFETY_TEMP_SP</span><span class="p">,</span> <span class="n">temperature</span><span class="p">))</span>
+
+<div class="viewcode-block" id="IKARV10.set_interval"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.set_interval">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">set_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the interval length in seconds for the interval mode. Setting this to 0 stops the function</span>
+<span class="sd">        :param interval: (int) the interval in seconds (1-60)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">interval</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting interval time. Value was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">interval</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting interval time to </span><span class="si">{0}</span><span class="s2">s...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">interval</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_INTERVAL_SP</span><span class="p">,</span> <span class="n">interval</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="IKARV10.set_timer"><a class="viewcode-back" href="../../../../source/modules.serial_labware.IKA_RV.html#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.set_timer">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">set_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_setpoint</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the time in minutes for the timer mode. Setting this to 0 stops the function</span>
+<span class="sd">        :param time_setpoint: (int) the time in minutes (1-199)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">time_setpoint</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">time_setpoint</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting timer. Value was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_setpoint</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_TIMER_SP</span><span class="p">,</span> <span class="n">time_setpoint</span><span class="p">))</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="n">IKARV10</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="s2">&quot;COM5&quot;</span><span class="p">,</span> <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">rv</span><span class="o">.</span><span class="n">initialise</span><span class="p">()</span>
+    <span class="n">rv</span><span class="o">.</span><span class="n">temperature_sp</span> <span class="o">=</span> <span class="mi">30</span>  <span class="c1"># setting temperature to 30 °C</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Temp </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">temperature_pv</span><span class="p">))</span>
+    <span class="n">rv</span><span class="o">.</span><span class="n">start_rotation</span><span class="p">()</span>  <span class="c1"># starting the heater</span>
+    <span class="c1"># rv.stop_heater()  # stopping heater</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Safety temp </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">safety_temp</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Temp </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">temperature_pv</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Speed </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">rotation_speed_pv</span><span class="p">))</span>
+    <span class="c1"># print(&quot;Name {}&quot;.format(rv.name))</span>
+    <span class="c1"># print(&quot;Ver {}&quot;.format(rv.software_version))</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

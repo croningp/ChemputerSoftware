@@ -1,0 +1,702 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>modules.serial_labware.Vacuubrand.Vacuubrand_CVC_3000 &mdash; Chempiler 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Chempiler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Chempiler</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>modules.serial_labware.Vacuubrand.Vacuubrand_CVC_3000</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for modules.serial_labware.Vacuubrand.Vacuubrand_CVC_3000</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;Vacuubrand_CVC_3000&quot; -- API for Vacuubrand CVC3000 remote controllable vacuum controller</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: Vacuubrand_CVC_3000</span>
+<span class="sd">   :platform: Windows</span>
+<span class="sd">   :synopsis: Control CVC3000 vacuum controller.</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+
+<span class="sd">(c) 2017 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This provides a python class for Vacuubrand vacuum pumps with</span>
+<span class="sd">CVC 3000 vacuum controller.</span>
+<span class="sd">The command implementation is based on the english manual:</span>
+<span class="sd">English manual version: 999222 / 11/03/2016 Pages 40 - 45</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># system imports</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">serial</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+
+<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getfile</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">))</span>
+
+<span class="c1"># additional module imports</span>
+<span class="kn">from</span> <span class="nn">SerialDevice.serial_labware</span> <span class="k">import</span> <span class="n">SerialDevice</span><span class="p">,</span> <span class="n">command</span>
+
+
+<div class="viewcode-block" id="CVC3000"><a class="viewcode-back" href="../../../../source/modules.serial_labware.Vacuubrand.html#modules.serial_labware.Vacuubrand.Vacuubrand_CVC_3000.CVC3000">[docs]</a><span class="k">class</span> <span class="nc">CVC3000</span><span class="p">(</span><span class="n">SerialDevice</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This provides a python class for Vacuubrand vacuum pumps with</span>
+<span class="sd">    CVC 3000 vacuum controller.</span>
+<span class="sd">    The command implementation is based on the english manual:</span>
+<span class="sd">    English manual version: 999222 / 11/03/2016 Pages 40 - 45</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">device_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">soft_fail_for_testing</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializer of the IKARETControlVisc class</span>
+<span class="sd">        :param str port: The port name/number of the vacuum pump</span>
+<span class="sd">        :param str name: A descriptive name for the device, used mainly in debug prints.</span>
+<span class="sd">        :param bool connect_on_instantiation: (optional) determines if the connection is established on instantiation of</span>
+<span class="sd">            the class. Default: Off</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># implement class logger</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">soft_fail_for_testing</span><span class="p">)</span>
+
+        <span class="c1"># serial settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">baudrate</span> <span class="o">=</span> <span class="mi">19200</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bytesize</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">EIGHTBITS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parity</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">PARITY_NONE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rtscts</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># answer patterns</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getanswer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;([0-9.]+) ([0-9A-z%]+)</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;([0-9A-z%]+)</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timepattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeanswer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;(\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">) ([hms]:[hms])</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timesecondsanswer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;(\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">) ([hms]:[hms]:[hms])</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># dictionary for modes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MODES_3</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;VACUULAN&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;pump down&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;vac control&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">&quot;auto&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s2">&quot;auto low&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+            <span class="s2">&quot;auto normal&quot;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span>
+            <span class="s2">&quot;auto high&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+            <span class="s2">&quot;program&quot;</span><span class="p">:</span> <span class="mi">4</span>
+        <span class="p">}</span>
+
+        <span class="c1"># DOCUMENTED COMMANDS for easier maintenance</span>
+        <span class="c1"># general commands</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_CONTROLLER_VERSION</span> <span class="o">=</span> <span class="s2">&quot;CVC&quot;</span>             <span class="c1"># params: 2: CVC 2000; 3: CVC 3000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ECHO</span> <span class="o">=</span> <span class="s2">&quot;ECHO&quot;</span>                              <span class="c1"># params: 0: echo off, returns nothing; 1: echo on, returns 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STORE</span> <span class="o">=</span> <span class="s2">&quot;STORE&quot;</span>                            <span class="c1"># no params, store settings permanently</span>
+
+        <span class="c1"># CVC 2000 command set</span>
+        <span class="c1"># read commands</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_CURRENT_PRESSURE_2</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_1&quot;</span>         <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_CURRENT_FREQUENCY_2</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_2&quot;</span>        <span class="c1"># unit Hz</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_DEVICE_CONFIG_2</span> <span class="o">=</span> <span class="s2">&quot;IN_CFG&quot;</span>             <span class="c1"># unit none, for decoding see manual p. 41</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_ERROR_2</span> <span class="o">=</span> <span class="s2">&quot;IN_ERR&quot;</span>                     <span class="c1"># unit none, for decoding see manual p. 41</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_STATUS_2</span> <span class="o">=</span> <span class="s2">&quot;IN_STAT&quot;</span>                   <span class="c1"># unit none, for decoding see manual p. 41</span>
+        <span class="c1"># write commands</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_MODE_2</span> <span class="o">=</span> <span class="s2">&quot;OUT_MODE&quot;</span>                    <span class="c1"># unit none, for parameters see manual p. 41</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_VACUUM_2</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_1&quot;</span>                  <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_VACUUM_WITH_VENTING_2</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_V&quot;</span>     <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_FREQUENCY_2</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_2&quot;</span>               <span class="c1"># unit Hz; format XX.X; 99.9 for &quot;HI&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_VACUUM_FOR_SWITCH_ON_2</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_3&quot;</span>    <span class="c1"># unit mbar/hPa/Torr (according to preselection), VACUU·LAN only</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_DELAY_2</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_4&quot;</span>                   <span class="c1"># unit hh:mm; format XX:XX; VACUU·LAN only; max. 05:00</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_SWITCHING_OFF_VAC_2</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_5&quot;</span>       <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_SWITCHING_OFF_TIME_2</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_6&quot;</span>      <span class="c1"># unit hh:mm; format XX:XX</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">START_2</span> <span class="o">=</span> <span class="s2">&quot;START&quot;</span>                          <span class="c1"># always returns 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STOP_2</span> <span class="o">=</span> <span class="s2">&quot;STOP&quot;</span>                            <span class="c1"># params: None: stops operation, returns 0; 1: stops operation,</span>
+                                                        <span class="c1"># returns 1; 2: stops operation and stores current pressure as</span>
+                                                        <span class="c1"># new setpoint, returns 2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">REMOTE_2</span> <span class="o">=</span> <span class="s2">&quot;REMOTE&quot;</span>                        <span class="c1"># params: 0: local operation, returns 0;</span>
+                                                        <span class="c1"># 1: remote operation, returns 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">VENT_VALVE_2</span> <span class="o">=</span> <span class="s2">&quot;OUT_VENT&quot;</span>                  <span class="c1"># params: 0: closed, returns 0;</span>
+                                                        <span class="c1"># 1: open and stop operation, returns 1</span>
+
+        <span class="c1"># CVC 3000 command set</span>
+        <span class="c1"># read commands</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_CURRENT_PRESSURE_3</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_1&quot;</span>         <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_TRANSDUCER_X_PRESSURE_3</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_S&quot;</span>    <span class="c1"># command is followed by transducer Nr without space;</span>
+                                                        <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_CURRENT_SPEED_3</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_2&quot;</span>            <span class="c1"># unit 1-100% or &quot;HI&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_PROCESS_TIME_3</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_3&quot;</span>             <span class="c1"># unit hh:mm; format XX:XX h:m</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_ALL_PRESSURES_3</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_X&quot;</span>            <span class="c1"># unit mbar/hPa/Torr (according to preselection);</span>
+                                                        <span class="c1"># returns pressures of all connected sensors separated by spaces</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_CONTROLLER_RUN_TIME_3</span> <span class="o">=</span> <span class="s2">&quot;IN_PV_T&quot;</span>      <span class="c1"># unit days and hours; format XXXXdXXh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_DEVICE_CONFIG_3</span> <span class="o">=</span> <span class="s2">&quot;IN_CFG&quot;</span>             <span class="c1"># unit none, for decoding see manual p. 42</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_ERROR_3</span> <span class="o">=</span> <span class="s2">&quot;IN_ERR&quot;</span>                     <span class="c1"># unit none, for decoding see manual p. 42</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_STATUS_3</span> <span class="o">=</span> <span class="s2">&quot;IN_STAT&quot;</span>                   <span class="c1"># unit none, for decoding see manual p. 42</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_VACUUM_SETPOINT_3</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_1&quot;</span>          <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_MAX_SPEED_SETPOINT_3</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_2&quot;</span>       <span class="c1"># unit 1-100% or &quot;HI&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_SWITCHING_PRESSURE_3</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_3&quot;</span>       <span class="c1"># switching pressure for VACUU·LAN or two point control,</span>
+                                                        <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_DELAY_3</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_3&quot;</span>                    <span class="c1"># unit hh:mm; format XX:XX h:m; 00:00 = off</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_SWITCHING_OFF_VAC_3</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_5&quot;</span>        <span class="c1"># &quot;maximum&quot; for &quot;vac control&quot;; &quot;minimum&quot; for &quot;pump down&quot;;</span>
+                                                        <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_RUNTIME_3</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_6&quot;</span>                  <span class="c1"># process runtime; unit hh:mm; format XX:XX h:m</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_STEP_TIME_3</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_P1&quot;</span>               <span class="c1"># followed by a number y without space; time in program step y</span>
+                                                        <span class="c1"># unit hh:mm:ss; format XX:XX:XX h:m:s</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_STEP_PRESSURE_3</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_P2&quot;</span>           <span class="c1"># followed by a number y without space;</span>
+                                                        <span class="c1"># pressure in program step y;</span>
+                                                        <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_STEP_VALVE_3</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_P3&quot;</span>              <span class="c1"># followed by a number y without space; venting valve in</span>
+                                                        <span class="c1"># program step y; unit none; 0: no vent; 1: vent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_STEP_STEP_3</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_P4&quot;</span>               <span class="c1"># followed by a number y without space; step mark in</span>
+                                                        <span class="c1"># program step y; unit none; 0: no step; 1: step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_STEP_AUTO_3</span> <span class="o">=</span> <span class="s2">&quot;IN_SP_P5&quot;</span>               <span class="c1"># followed by a number y without space; automatic boiling point</span>
+                                                        <span class="c1"># finding in program step y; 0: no auto; 1: auto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GET_VERSION_3</span> <span class="o">=</span> <span class="s2">&quot;IN_VER&quot;</span>                   <span class="c1"># software version; format CVC 3000 VX.XX</span>
+        <span class="c1"># write commands</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_MODE_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_MODE&quot;</span>                    <span class="c1"># unit none, for parameters see manual p. 44</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_CONFIG_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_CFG&quot;</span>                   <span class="c1"># unit none, for parameters see manual p. 44</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_VACUUM_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_1&quot;</span>                  <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_VACUUM_WITH_VENTING_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_V&quot;</span>     <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_SPEED_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_2&quot;</span>                   <span class="c1"># unit 1-100% or &quot;HI&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_START_UP_PRESSURE_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_3&quot;</span>       <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_DELAY_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_4&quot;</span>                   <span class="c1"># unit hh:mm; format XX:XX</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_SWITCHING_OFF_VAC_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_5&quot;</span>       <span class="c1"># &quot;maximum&quot; for &quot;vac control&quot;; &quot;minimum&quot; for &quot;pump down&quot;;</span>
+                                                        <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_RUNTIME_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_6&quot;</span>                 <span class="c1"># process runtime; unit hh:mm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OPEN_PROGRAM_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_PL&quot;</span>               <span class="c1"># unit none, program 0...9</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STORE_PROGRAM_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_PS&quot;</span>              <span class="c1"># unit none, program 0...9</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_STEP_TIME_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_P1&quot;</span>              <span class="c1"># followed by a number y without space; time in program step y</span>
+                                                        <span class="c1"># unit hh:mm:ss; format XX:XX:XX or +XX:XX:XX for additive time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_STEP_PRESSURE_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_P2&quot;</span>          <span class="c1"># followed by a number y without space;</span>
+                                                        <span class="c1"># pressure in program step y;</span>
+                                                        <span class="c1"># unit mbar/hPa/Torr (according to preselection)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_STEP_VALVE_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_P3&quot;</span>             <span class="c1"># followed by a number y without space; venting valve in</span>
+                                                        <span class="c1"># program step y; unit none; 0: no vent; 1: vent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_STEP_STEP_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_P4&quot;</span>              <span class="c1"># followed by a number y without space; step mark in</span>
+                                                        <span class="c1"># program step y; unit none; 0: no step; 1: step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_STEP_AUTO_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SP_P5&quot;</span>              <span class="c1"># followed by a number y without space; automatic boiling point</span>
+                                                        <span class="c1"># finding in program step y; 0: no auto; 1: automatic</span>
+                                                        <span class="c1"># determination of boiling point,</span>
+                                                        <span class="c1"># 2: automatic adaption to changes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">START_3</span> <span class="o">=</span> <span class="s2">&quot;START&quot;</span>                          <span class="c1"># always returns 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STOP_3</span> <span class="o">=</span> <span class="s2">&quot;STOP&quot;</span>                            <span class="c1"># params: None: stops operation, returns 0; 1: stops operation,</span>
+                                                        <span class="c1"># returns 1; 2: stops operation and stores current pressure as</span>
+                                                        <span class="c1"># new setpoint, returns 2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">REMOTE_3</span> <span class="o">=</span> <span class="s2">&quot;REMOTE&quot;</span>                        <span class="c1"># params: 0: local operation, returns 0;</span>
+                                                        <span class="c1"># 1: remote operation, returns 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">VENT_VALVE_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_VENT&quot;</span>                  <span class="c1"># params: 0: closed, returns 0;</span>
+                                                        <span class="c1"># 1: open and stop operation, returns 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_SENSOR_3</span> <span class="o">=</span> <span class="s2">&quot;OUT_SENSOR&quot;</span>                <span class="c1"># params: 1: internal sensor; 2...9: external sensors</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">launch_command_handler</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">connect_on_instantiation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CVC3000.initialise"><a class="viewcode-back" href="../../../../source/modules.serial_labware.Vacuubrand.html#modules.serial_labware.Vacuubrand.Vacuubrand_CVC_3000.CVC3000.initialise">[docs]</a>    <span class="k">def</span> <span class="nf">initialise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller_version</span><span class="o">=</span><span class="s2">&quot;CVC 3000&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the necessary setup work. Turns ECHO on, sets the desired controller version</span>
+<span class="sd">        and sets the mode to Vac control (in order to always start from the same spot).</span>
+<span class="sd">        :param controller_version: desired controller version (&quot;CVC 2000&quot; or &quot;CVC 3000&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Initialising CVC3000...&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">controller_version</span> <span class="o">==</span> <span class="s2">&quot;CVC 2000&quot;</span><span class="p">:</span>
+            <span class="c1"># switch to remote control</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">REMOTE_2</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">),</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># turn echo on</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ECHO</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">),</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span><span class="p">)</span>
+            <span class="c1"># switch to CVC 2000 command set</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_CONTROLLER_VERSION</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">),</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span><span class="p">)</span>
+            <span class="c1"># switch to Vac control mode</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_MODE_2</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">),</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">controller_version</span> <span class="o">==</span> <span class="s2">&quot;CVC 3000&quot;</span><span class="p">:</span>
+            <span class="c1"># switch to remote control</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">REMOTE_3</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">),</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># turn echo on</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ECHO</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">),</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span><span class="p">)</span>
+            <span class="c1"># switch to CVC 3000 command set</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_CONTROLLER_VERSION</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">),</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span><span class="p">)</span>
+            <span class="c1"># switch to Vac control mode</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_MODE_3</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">),</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+    <span class="c1"># CVC 2000 methods</span>
+    <span class="c1"># TODO: I can&#39;t be asked to write that just now, if someone is especially bored please have a go at it...</span>
+
+    <span class="c1"># CVC 3000 methods</span>
+<div class="viewcode-block" id="CVC3000.set_mode"><a class="viewcode-back" href="../../../../source/modules.serial_labware.Vacuubrand.html#modules.serial_labware.Vacuubrand.Vacuubrand_CVC_3000.CVC3000.set_mode">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">set_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the mode of the vacuum controller.</span>
+<span class="sd">        :param mode: (string) the mode to be set. Must be a valid key in the MODES_3 dict.</span>
+<span class="sd">        :return: call back to __send_message with an order to set the mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">mode_number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODES_3</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Error setting mode. Input is not a valid mode name </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mode</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting mode to </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mode</span><span class="p">))</span>
+
+        <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_MODE_3</span><span class="p">,</span> <span class="n">mode_number</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="n">mode_number</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Value Error. Vacuum pump did not return correct return code. Send: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Received: </span><span class="se">\&quot;</span><span class="si">{1}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mode_number</span><span class="p">,</span> <span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">vacuum_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the set point (target) for the vacuum in mode Vac control</span>
+<span class="sd">        :return: call back to send_message with a request to return a value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_VACUUM_SETPOINT_3</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getanswer</span><span class="p">)</span>
+
+    <span class="nd">@vacuum_sp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">vacuum_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the vacuum and returns the set point from the pump so the user can verify that it was successful</span>
+<span class="sd">        :param vacuum: (integer) the target vacuum</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># type checking of the vacuum that the user provided</span>
+            <span class="n">vacuum</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">vacuum</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting vacuum. Vacuum was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vacuum</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting vacuum setpoint to </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vacuum</span><span class="p">))</span>
+
+        <span class="c1"># actually sending the command</span>
+        <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_VACUUM_3</span><span class="p">,</span> <span class="n">vacuum</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">reply_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting vacuum. Reply was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+        <span class="k">if</span> <span class="n">reply_value</span> <span class="o">!=</span> <span class="n">vacuum</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Value Error. Vacuum pump did not return correct return code. Send: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Received: </span><span class="se">\&quot;</span><span class="si">{1}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,</span> <span class="n">reply_value</span><span class="p">)</span>
+            <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">speed_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the set point (target) for the speed.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            call back to send_message with a request to return a value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_MAX_SPEED_SETPOINT_3</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getanswer</span><span class="p">)</span>
+
+    <span class="nd">@speed_sp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">speed_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the maximum pumping speed (1-100%).</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            speed (int): Maximum speed setpoint. Has to be between 1 and 100</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># type checking of the speed that the user provided</span>
+            <span class="n">speed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting speed. Speed was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speed</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">speed</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting speed. Speed was not between 1 and 100% </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speed</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting speed setpoint to </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speed</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">speed</span> <span class="o">==</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="n">speed</span> <span class="o">=</span> <span class="s2">&quot;HI&quot;</span>
+
+        <span class="c1"># actually sending the command</span>
+        <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_SPEED_3</span><span class="p">,</span> <span class="n">speed</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">speed</span> <span class="o">==</span> <span class="s2">&quot;HI&quot;</span> <span class="ow">and</span> <span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;HI&quot;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">reply_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting speed. Reply was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+            <span class="k">if</span> <span class="n">reply_value</span> <span class="o">!=</span> <span class="n">speed</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Value Error. Vacuum pump did not return correct return code. Send: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">. &quot;</span>
+                    <span class="s2">&quot;Received: </span><span class="se">\&quot;</span><span class="si">{1}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="n">reply_value</span><span class="p">)</span>
+                <span class="p">)</span>
+
+<div class="viewcode-block" id="CVC3000.vacuum_pv"><a class="viewcode-back" href="../../../../source/modules.serial_labware.Vacuubrand.html#modules.serial_labware.Vacuubrand.Vacuubrand_CVC_3000.CVC3000.vacuum_pv">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">vacuum_pv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the process value (actual pressure) for the vacuum in any mode</span>
+<span class="sd">        :return: call back to send_message with a request to return a value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_CURRENT_PRESSURE_3</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getanswer</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CVC3000.start"><a class="viewcode-back" href="../../../../source/modules.serial_labware.Vacuubrand.html#modules.serial_labware.Vacuubrand.Vacuubrand_CVC_3000.CVC3000.start">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts the current function.</span>
+<span class="sd">        :return: True if pump responds properly, else a ValueError is raised.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting operation...&quot;</span><span class="p">)</span>
+        <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">START_3</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">reply_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error starting operation. Reply was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+        <span class="k">if</span> <span class="n">reply_value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">reply_value</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Value Error. Vacuum pump appears to be already running!&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Value Error. Vacuum pump did not return correct return code. Expected: 1. &quot;</span>
+                <span class="s2">&quot;Received: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reply_value</span><span class="p">)</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CVC3000.stop"><a class="viewcode-back" href="../../../../source/modules.serial_labware.Vacuubrand.html#modules.serial_labware.Vacuubrand.Vacuubrand_CVC_3000.CVC3000.stop">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stop_mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stops the current function. This does not utilise the different stop parameters, but they seem to serve</span>
+<span class="sd">        no apparent purpose anyway.</span>
+<span class="sd">        :return: True if pump responds properly, else a ValueError is raised.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Stopping operation...&quot;</span><span class="p">)</span>
+        <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">STOP_3</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">reply_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Error stopping operation. Reply was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+        <span class="k">if</span> <span class="n">reply_value</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Value Error. Vacuum pump did not return correct return code. Expected: </span><span class="si">{0}</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Received: </span><span class="se">\&quot;</span><span class="si">{1}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stop_mode</span><span class="p">,</span> <span class="n">reply_value</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CVC3000.vent"><a class="viewcode-back" href="../../../../source/modules.serial_labware.Vacuubrand.html#modules.serial_labware.Vacuubrand.Vacuubrand_CVC_3000.CVC3000.vent">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">vent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vent_status</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Controls the vent valve.</span>
+<span class="sd">        :param vent_status: 0: valve closed; 1: valve open; 2: vent to atmospheric pressure</span>
+<span class="sd">        :return: True if pump responds properly, else a ValueError is raised.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># type checking of the vent status that the user provided</span>
+            <span class="n">vent_status</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">vent_status</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error while venting. Vent status was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vent_status</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Actuating vent valve...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># actually sending the command</span>
+        <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">VENT_VALVE_3</span><span class="p">,</span> <span class="n">vent_status</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">reply_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error while venting. Reply was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+        <span class="k">if</span> <span class="n">reply_value</span> <span class="o">==</span> <span class="n">vent_status</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Value Error. Vacuum pump did not return correct return code. Send: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Received: </span><span class="se">\&quot;</span><span class="si">{1}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vent_status</span><span class="p">,</span> <span class="n">reply_value</span><span class="p">)</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CVC3000.query_status"><a class="viewcode-back" href="../../../../source/modules.serial_labware.Vacuubrand.html#modules.serial_labware.Vacuubrand.Vacuubrand_CVC_3000.CVC3000.query_status">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">query_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Queries the status of the pump. For individual parameters see manual p. 43</span>
+<span class="sd">        :return: dictionary of status items</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># initialise empty dict</span>
+        <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_STATUS_3</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># get status as series of digits</span>
+        <span class="c1"># deconstruct reply and stuff into dict</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">status</span><span class="p">[</span><span class="s2">&quot;Pump state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">status</span><span class="p">[</span><span class="s2">&quot;In-line valve state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reply</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">status</span><span class="p">[</span><span class="s2">&quot;Coolant valve state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reply</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">status</span><span class="p">[</span><span class="s2">&quot;Vent valve state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reply</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">status</span><span class="p">[</span><span class="s2">&quot;Mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reply</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">status</span><span class="p">[</span><span class="s2">&quot;Controller state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reply</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">status</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Value Error. Reply does not conform to format. Received: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reply</span><span class="p">)</span>
+            <span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">end_vacuum_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the set point (target) for the switch off vacuum in mode Auto</span>
+<span class="sd">        :return: call back to send_message with a request to return a value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_SWITCHING_OFF_VAC_3</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getanswer</span><span class="p">)</span>
+
+    <span class="nd">@end_vacuum_sp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">end_vacuum_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the switch off vacuum and returns the set point from the pump so the user can verify that it was successful</span>
+<span class="sd">        :param vacuum: (integer) the target vacuum</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># type checking of the vacuum the user provided</span>
+            <span class="n">vacuum</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">vacuum</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting vacuum. Vacuum was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vacuum</span><span class="p">)))</span>
+
+        <span class="c1"># actually sending the command</span>
+        <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_SWITCHING_OFF_VAC_3</span><span class="p">,</span> <span class="n">vacuum</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setanswer</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">reply_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting vacuum. Reply was not a valid integer </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+        <span class="k">if</span> <span class="n">reply_value</span> <span class="o">!=</span> <span class="n">vacuum</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Value Error. Vacuum pump did not return correct return code. Send: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Received: </span><span class="se">\&quot;</span><span class="si">{1}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vacuum</span><span class="p">,</span> <span class="n">reply_value</span><span class="p">)</span>
+            <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">runtime_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the set point (target) for the run time in mode Auto</span>
+<span class="sd">        :return: call back to send_message with a request to return a value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_RUNTIME_3</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeanswer</span><span class="p">)</span>
+
+    <span class="nd">@runtime_sp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">runtime_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the runtime and returns the set point from the pump so the user can verify that it was successful</span>
+<span class="sd">        :param time: (integer) the desired runtime</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># type checking the input</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">timepattern</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>  <span class="c1"># this is actually too conservative since the pump can deal with integers, but better confine an idiot to a smaller space than let him roam free</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error setting runtime. Runtime did not match the pattern: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="p">)))</span>
+
+        <span class="c1"># actually sending the command</span>
+        <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SET_RUNTIME_3</span><span class="p">,</span> <span class="n">time</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeanswer</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">time</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Value Error. Vacuum pump did not return correct return code. Send: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Received: </span><span class="se">\&quot;</span><span class="si">{1}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">reply</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="p">)</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">CVC3000</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="s2">&quot;COM3&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">initialise</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vacuum sp </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">vacuum_sp</span><span class="p">))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">vacuum_sp</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">vacuum_sp</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">vent</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">query_status</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

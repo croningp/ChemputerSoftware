@@ -1,0 +1,560 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>modules.serial_labware.SerialDevice.serial_labware &mdash; Chempiler 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Chempiler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Chempiler</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>modules.serial_labware.SerialDevice.serial_labware</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for modules.serial_labware.SerialDevice.serial_labware</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;serial_labware&quot; -- Generic base class for communicating with lab equipment via serial connection</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: serial_labware</span>
+<span class="sd">   :platform: Windows</span>
+<span class="sd">   :synopsis: Generic base class to control lab equipment via serial.</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+
+<span class="sd">(c) 2017 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This provides a generic python class for safe serial communication</span>
+<span class="sd">with various lab equipment over serial interfaces (RS232, RS485, USB)</span>
+<span class="sd">by sending command strings. This parent class handles establishing</span>
+<span class="sd">a connection as well as sending and receiving commands.</span>
+<span class="sd">Based on code originally developed by Stefan Glatzel.</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># system imports</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="k">import</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">time</span><span class="p">,</span> <span class="n">sleep</span>
+
+<span class="c1"># additional module imports</span>
+<span class="kn">import</span> <span class="nn">serial</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+
+<div class="viewcode-block" id="command"><a class="viewcode-back" href="../../../../source/modules.serial_labware.SerialDevice.html#modules.serial_labware.SerialDevice.serial_labware.command">[docs]</a><span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decorator for command_set execution. Checks if the method is called in the same thread as the class instance,</span>
+<span class="sd">    if so enqueues the command_set and waits for a reply in the reply queue. Else it concludes it must be the command</span>
+<span class="sd">    handler thread and actually executes the method. This way methods in the child classes need to be written</span>
+<span class="sd">    just once and decorated accordingly.</span>
+<span class="sd">    :return: decorated method</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">device_instance</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">threading</span><span class="o">.</span><span class="n">get_ident</span><span class="p">()</span> <span class="o">==</span> <span class="n">device_instance</span><span class="o">.</span><span class="n">current_thread</span><span class="p">:</span>
+            <span class="n">command_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">]</span>
+            <span class="n">device_instance</span><span class="o">.</span><span class="n">command_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">command_set</span><span class="p">)</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">device_instance</span><span class="o">.</span><span class="n">reply_queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                    <span class="k">return</span> <span class="n">device_instance</span><span class="o">.</span><span class="n">reply_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+<div class="viewcode-block" id="SerialDevice"><a class="viewcode-back" href="../../../../source/modules.serial_labware.SerialDevice.html#modules.serial_labware.SerialDevice.serial_labware.SerialDevice">[docs]</a><span class="k">class</span> <span class="nc">SerialDevice</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a generic parent class handling serial communication with lab equipment. It provides</span>
+<span class="sd">    methods for opening and closing connections as well as a keepalive. It works by spawning a</span>
+<span class="sd">    daemon thread which periodically checks a queue for commands. If no commands are enqueued,</span>
+<span class="sd">    a keepalive method is executed periodically. Replies are put in their own reply queue where</span>
+<span class="sd">    they can be retrieved at any time.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">device_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">soft_fail_for_testing</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializer of the SerialDevice class</span>
+<span class="sd">        :param str port: The port name/number of the serial device</span>
+<span class="sd">        :param str device_name: A descriptive name for the device, used mainly in debug prints.</span>
+<span class="sd">        :param bool soft_fail_for_testing: (optional) determines if an invalid serial port raises an error or merely</span>
+<span class="sd">            logs a message. Default: Off</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># note down current thread number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">get_ident</span><span class="p">()</span>
+        <span class="c1"># implement class logger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;main_logger.serial_device_logger&quot;</span><span class="p">)</span>
+        <span class="c1"># spawn queues</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reply_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+        <span class="c1"># DEBUG testing switch, to allow soft-fails instead of exceptions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__soft_fail_for_testing</span> <span class="o">=</span> <span class="n">soft_fail_for_testing</span>
+        <span class="c1"># check if the port passed is of the correct format</span>
+        <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">port</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;COM&quot;</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># allowing for soft fail in test modes, this will allow an outer script to continue, even if an</span>
+                    <span class="c1"># invalid port was passed</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__soft_fail_for_testing</span><span class="p">:</span>
+                        <span class="c1"># in normal use raise an exception to make surrounding python scrips stop</span>
+                        <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The port number (</span><span class="si">{0}</span><span class="s2">) is not a valid serial port!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">)))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># soft-fail error message</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;ERROR: The specified serial port is not valid: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="c1"># self.logger.debug a more descriptive error message before re-raising the exception</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;ERROR: The specified serial port is not valid: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="c1"># raising the exception again so the surrounding script is aware that this failed</span>
+                <span class="k">raise</span>  <span class="c1"># raises the last exception again</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># TODO ADD port consistency checks for posix operating systems</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">(</span>
+                <span class="s2">&quot;You are running a currently unsupported operating system: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">())</span>
+            <span class="p">))</span>
+
+        <span class="c1"># device name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_name</span> <span class="o">=</span> <span class="n">device_name</span>
+
+        <span class="c1"># syntax of a returned answer, to be overridden by child classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">answer_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;(.*)&quot;</span><span class="p">)</span>  <span class="c1"># any number of any character, in one group</span>
+
+        <span class="c1"># initialise last time (for non blocking wait</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+
+        <span class="c1"># serial parameters, to be overridden by child classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command_termination</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">standard_encoding</span> <span class="o">=</span> <span class="s1">&#39;UTF-8&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">baudrate</span> <span class="o">=</span> <span class="mi">9600</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bytesize</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">EIGHTBITS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parity</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">PARITY_NONE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stopbits</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">STOPBITS_ONE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xonxoff</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rtscts</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_timeout</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dsrdtr</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inter_byte_timeout</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_delay</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># delay in seconds before sending a command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_delay</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># delay in seconds after sending a command</span>
+
+    <span class="k">def</span> <span class="nf">__command_handler_daemon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Daemon thread for relaying any commands to the device. The &quot;possession&quot; of the serial port and therefore</span>
+<span class="sd">        any actual communication with the device is relegated to its own thread, partially to free up the main</span>
+<span class="sd">        thread for more important stuff, partially to allow for implementation of watchdog keepalive calls,</span>
+<span class="sd">        which would be tremendously tricky to do from the main thread.</span>
+
+<span class="sd">        This private function polls the command_queue for any commands to send. If no commands are queued,</span>
+<span class="sd">        a keepalive method is executed. Any replies received from the device are enqueued into reply_queue for</span>
+<span class="sd">        further processing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                    <span class="n">command_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                    <span class="n">method</span> <span class="o">=</span> <span class="n">command_item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">arguments</span> <span class="o">=</span> <span class="n">command_item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">keywordarguments</span> <span class="o">=</span> <span class="n">command_item</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">reply</span> <span class="o">=</span> <span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">keywordarguments</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reply_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">reply</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">keepalive</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="c1"># workaround if something goes wrong with the serial connection</span>
+                <span class="c1"># future me will certainly not hate past me for this...</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                <span class="c1"># thread-safe purging of both queues</span>
+                <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">command_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">reply_queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reply_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SerialDevice.launch_command_handler"><a class="viewcode-back" href="../../../../source/modules.serial_labware.SerialDevice.html#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.launch_command_handler">[docs]</a>    <span class="k">def</span> <span class="nf">launch_command_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">command_handler</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__command_handler_daemon</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_command_handler&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_name</span><span class="p">),</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">command_handler</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SerialDevice.open_connection"><a class="viewcode-back" href="../../../../source/modules.serial_labware.SerialDevice.html#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.open_connection">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">open_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Opens the serial connection to the device.</span>
+<span class="sd">        If a connection is already open it is closed and then a connection is re-established with the current settings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">isOpen</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Already connected. Closing connection and re-establishing with parameters given.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">close_connection</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span>
+                <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+                <span class="n">baudrate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">baudrate</span><span class="p">,</span>
+                <span class="n">bytesize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bytesize</span><span class="p">,</span>
+                <span class="n">parity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parity</span><span class="p">,</span>
+                <span class="n">stopbits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stopbits</span><span class="p">,</span>
+                <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+                <span class="n">xonxoff</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xonxoff</span><span class="p">,</span>
+                <span class="n">rtscts</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rtscts</span><span class="p">,</span>
+                <span class="n">write_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">write_timeout</span><span class="p">,</span>
+                <span class="n">dsrdtr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dsrdtr</span><span class="p">,</span>
+                <span class="n">inter_byte_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inter_byte_timeout</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># announce success</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="n">serial</span><span class="o">.</span><span class="n">SerialException</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># allowing for soft fail in test modes, this will allow an outer script to continue, even if an</span>
+            <span class="c1"># invalid port was passed</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__soft_fail_for_testing</span><span class="p">:</span>
+                <span class="c1"># in normal use just raise exception again</span>
+                <span class="k">raise</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># soft-fail error message</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;ERROR: The connection to the serial device could not be established: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># announce failure</span></div>
+
+<div class="viewcode-block" id="SerialDevice.close_connection"><a class="viewcode-back" href="../../../../source/modules.serial_labware.SerialDevice.html#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.close_connection">[docs]</a>    <span class="nd">@command</span>
+    <span class="k">def</span> <span class="nf">close_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Attempts to close the serial connection if one is open.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># announce success</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># announce failure</span></div>
+
+<div class="viewcode-block" id="SerialDevice.send_message"><a class="viewcode-back" href="../../../../source/modules.serial_labware.SerialDevice.html#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.send_message">[docs]</a>    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">get_return</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method for sending messages to the device. This method needs to be publicly accessible, otherwise</span>
+<span class="sd">        child classes can&#39;t use it. This method does not do a consistency check on the arguments passed to it,</span>
+<span class="sd">        since they may vary wildly. Therefore such a check must be performed before calling send_message!</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            message (str): The message string. No checks are performed on the message and it is just passed on</span>
+<span class="sd">            get_return (bool): Are you expecting a return message?</span>
+<span class="sd">            return_pattern (_sre.SRE_Pattern): Passes on a regex pattern to check the returned message against</span>
+<span class="sd">            multiline (bool): Are you expecting a return message spanning multiple lines?</span>
+<span class="sd">                (not evaluated if get_return is False)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (conditional)</span>
+<span class="sd">            - returns &quot;True&quot; if no message is expected back</span>
+<span class="sd">            - does a call back to &quot;__receive_message&quot; and passes on &quot;the return pattern&quot;</span>
+<span class="sd">            - returns -1 if send message fails</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># send the message and encode it according to the standard settings found in __init__</span>
+        <span class="c1"># Hint: &quot;{}&quot;.format(message) auto converts message to string in case it was something else, so no type checking</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write_delay</span><span class="p">)</span>
+                <span class="c1"># self.__connection.flush()  # get rid of shite from the last transmission</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">{0}{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_termination</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_encoding</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_delay</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__soft_fail_for_testing</span><span class="p">:</span>
+                    <span class="c1"># just raise the exception again when not in test mode</span>
+                    <span class="k">raise</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error: Unexpected error while writing to serial. Error Message: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+            <span class="c1"># if the user specified that a return message is expected</span>
+            <span class="k">if</span> <span class="n">get_return</span><span class="p">:</span>
+                <span class="c1"># call back to __receive_message and passing on of the expected regex pattern</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__receive_message</span><span class="p">(</span><span class="n">return_pattern</span><span class="o">=</span><span class="n">return_pattern</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="n">multiline</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># just return True of no response is expected</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not send message: no connection to serial device established.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+
+    <span class="k">def</span> <span class="nf">__receive_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Protected member function that is the sole responsible for actually receiving messages from the device.</span>
+<span class="sd">            This isn&#39;t exactly the pythonic way of doing thing (protected member functions should be _ not __).</span>
+<span class="sd">            However, two leading __ actually prevents the function to be called from the outside (as opposed to just</span>
+<span class="sd">            raising a flag says &quot;you&#39;re accessing a protected member function&quot;.</span>
+<span class="sd">        Pro-Tip: (due to Python weirdness) A savvy user can still gain access to thus protected functions via</span>
+<span class="sd">            {InstanceName}._{ClassName}__{FunctionName}</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            return_pattern (_sre.SRE_Pattern): Passes on a regex pattern to check the returned message against</span>
+<span class="sd">            multiline (bool): Are you expecting a return message spanning multiple lines?</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            answer (str or list of str): If no return pattern is specified, the stripped answer string is returned. If</span>
+<span class="sd">                a pattern is passed, a list of the captured groups is returned instead</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># checking if a connection is there</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># if multiple lines are expected, keep reading lines until no more lines come in</span>
+                <span class="k">if</span> <span class="n">multiline</span><span class="p">:</span>
+                    <span class="n">answer</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+                            <span class="n">answer</span> <span class="o">+=</span> <span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_encoding</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">break</span>
+                <span class="c1"># if just one line is expected, just read one line (faster than always waiting for the timeout)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">answer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+                    <span class="c1"># decoding the answer using the standard settings from __init__</span>
+                    <span class="n">answer</span> <span class="o">=</span> <span class="n">answer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_encoding</span><span class="p">)</span>
+
+                <span class="c1"># if the user wants a code check performed</span>
+                <span class="k">if</span> <span class="n">return_pattern</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">return_pattern</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">!=</span> <span class="s2">&quot;SRE_Pattern&quot;</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="s2">&quot;The return code you specified was not a valid regular expression: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">return_pattern</span><span class="p">)</span>
+                        <span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">return_pattern</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">answer</span><span class="p">):</span>
+                        <span class="c1"># if the answer matches the desired pattern return the read value</span>
+                        <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">return_pattern</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">answer</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
+                            <span class="s2">&quot;Value Error. Serial device did not return correct return code. Send: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">. &quot;</span>
+                            <span class="s2">&quot;Received: </span><span class="se">\&quot;</span><span class="si">{1}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">return_pattern</span><span class="p">,</span> <span class="n">answer</span><span class="p">)</span>
+                        <span class="p">)</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__soft_fail_for_testing</span><span class="p">:</span>
+                            <span class="k">return</span> <span class="n">answer</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                                <span class="s2">&quot;Value Error. Serial device did not return correct return code. Send: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2">. &quot;</span>
+                                <span class="s2">&quot;Received: </span><span class="se">\&quot;</span><span class="si">{1}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">return_pattern</span><span class="p">,</span> <span class="n">answer</span><span class="p">)</span>
+                            <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># if no return code checking was requested, just return the read value</span>
+                    <span class="k">return</span> <span class="n">answer</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Error. No connection to the device&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># This is not very elegant, but lets the user know that the device failed while retaining the error</span>
+            <span class="c1"># information</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Serial device message receive failed. Error Message: </span><span class="si">{0}</span><span class="se">\n</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">__traceback__</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SerialDevice.non_blocking_wait"><a class="viewcode-back" href="../../../../source/modules.serial_labware.SerialDevice.html#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.non_blocking_wait">[docs]</a>    <span class="k">def</span> <span class="nf">non_blocking_wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simple non-blocking wait function crafted after the Arduino Blink Without Delay example. Checks whether the</span>
+<span class="sd">        time elapsed since the last callback is greater than or equal to the interval. If so, the callback method</span>
+<span class="sd">        is returned and the time updated.</span>
+<span class="sd">        :param callback: function or method to be executed</span>
+<span class="sd">        :param int interval: wait time in seconds</span>
+<span class="sd">        :return: callback if interval has elapsed, None otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">time</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">+</span> <span class="n">interval</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">callback</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="SerialDevice.keepalive"><a class="viewcode-back" href="../../../../source/modules.serial_labware.SerialDevice.html#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.keepalive">[docs]</a>    <span class="k">def</span> <span class="nf">keepalive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dummy keepalive method. This is just a stand-in for whatever keepalive operation needs to be performed</span>
+<span class="sd">        on the device, meant to be overridden in the actual child class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

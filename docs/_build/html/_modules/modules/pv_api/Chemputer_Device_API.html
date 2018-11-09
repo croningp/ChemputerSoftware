@@ -1,0 +1,936 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>modules.pv_api.Chemputer_Device_API &mdash; Chempiler 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Chempiler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Chempiler</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>modules.pv_api.Chemputer_Device_API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for modules.pv_api.Chemputer_Device_API</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;Chemputer_Device_API&quot; -- API for Chemputer pumps and valves</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: Chemputer_Device_API</span>
+<span class="sd">   :platform: Unix, Windows</span>
+<span class="sd">   :synopsis: Control Chemputer pumps and valves.</span>
+<span class="sd">.. moduleauthor:: Graham Keenan &lt;1105045k@student.gla.ac.uk&gt;</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+
+<span class="sd">This API is intended for controlling a set of Chemputer pumps and valves over a local network.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+
+<span class="kn">import</span> <span class="nn">modules.pv_api.configs</span> <span class="k">as</span> <span class="nn">cfgs</span>
+
+<span class="sd">&quot;&quot;&quot; CONSTANTS &quot;&quot;&quot;</span>
+<span class="n">TCP_PORT</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">1024</span>
+
+<span class="n">RESPOND</span> <span class="o">=</span> <span class="s2">&quot;RESPOND: &quot;</span>
+<span class="n">SUCCESS</span> <span class="o">=</span> <span class="s2">&quot;SUCCESS&quot;</span>
+<span class="n">FAILURE</span> <span class="o">=</span> <span class="s2">&quot;FAILURE&quot;</span>
+<span class="n">STALL</span> <span class="o">=</span> <span class="s2">&quot;Stall&quot;</span>
+<span class="n">DONE</span> <span class="o">=</span> <span class="s2">&quot;DONE&quot;</span>
+<span class="n">READ_PUMP_CFG</span> <span class="o">=</span> <span class="s2">&quot;PUMP_CFG &quot;</span>
+<span class="n">READ_VALVE_CFG</span> <span class="o">=</span> <span class="s2">&quot;VALVE_CFG &quot;</span>
+<span class="n">READ_NETWORK_CFG</span> <span class="o">=</span> <span class="s2">&quot;NETCFG &quot;</span>
+<span class="n">ERRORS</span> <span class="o">=</span> <span class="s2">&quot;ERRORS: &quot;</span>
+<span class="n">ADC</span> <span class="o">=</span> <span class="s2">&quot;ADC: &quot;</span>
+<span class="n">PUMP_CFG</span> <span class="o">=</span> <span class="s2">&quot;PUMP&quot;</span>
+<span class="n">VALVE_CFG</span> <span class="o">=</span> <span class="s2">&quot;VALVE&quot;</span>
+<span class="n">NETWORK_CFG</span> <span class="o">=</span> <span class="s2">&quot;NETWORK&quot;</span>
+
+<span class="n">KEEPALIVE_COOKIE</span> <span class="o">=</span> <span class="s2">&quot;reset_wdt</span><span class="se">\0</span><span class="s2">&quot;</span>
+
+<span class="n">ip_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})&quot;</span><span class="p">)</span>
+
+<span class="c1"># debug setting</span>
+<span class="c1"># logging.basicConfig(level=logging.DEBUG, format=&quot;%(asctime)s ; %(levelname)s ; %(message)s&quot;)</span>
+
+
+<div class="viewcode-block" id="udp_keepalive"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.udp_keepalive">[docs]</a><span class="k">def</span> <span class="nf">udp_keepalive</span><span class="p">(</span><span class="n">udp_host</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Broadcasts the UDP keepalive signal to ensure the board is still alive</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        udp_host (Tuple): Tuple containing the IP address and port of the server e.g. (192.168.255.255, 3000)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">udp</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting UDP keepalive broadcast...&quot;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">udp</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">KEEPALIVE_COOKIE</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">udp_host</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span></div>
+
+
+<span class="c1"># TODO: Maybe keep the port constant so they only need to provide address and build tuple from that.</span>
+<div class="viewcode-block" id="initialise_udp_keepalive"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.initialise_udp_keepalive">[docs]</a><span class="k">def</span> <span class="nf">initialise_udp_keepalive</span><span class="p">(</span><span class="n">udp_host</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Starts a thread for the UDP keepalive broadcast to the server</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        udp_host (Tuple): Tuple containing the IP address and host port of the server.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">udp_host</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to launch UDP Keepalive thread.</span><span class="se">\n</span><span class="s2">Parameter is not tuple&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">udp_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">udp_keepalive</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">udp_host</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Keepalive thread for subnet </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">udp_host</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">udp_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ChemputerDevice"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice">[docs]</a><span class="k">class</span> <span class="nc">ChemputerDevice</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    API for interfacing with the Chemputer pumps and valves.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        address (str): Address of the device</span>
+<span class="sd">        name (str): Optional name of the device</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_cfg</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">network_cfg</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_type</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;main_logger.pv_logger&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tcp</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect_to_server</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tcp_response_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">receive_response</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> TCP thread&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tcp_response_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+        <span class="sd">&quot;&quot;&quot; COMMAND STRINGS &quot;&quot;&quot;</span>
+        <span class="c1"># common</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">READ_CONFIG</span> <span class="o">=</span> <span class="s2">&quot;read_config&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WRITE_CONFIG</span> <span class="o">=</span> <span class="s2">&quot;write_config&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">READ_NETWORK_CONFIG</span> <span class="o">=</span> <span class="s2">&quot;read_netcfg&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WRITE_NETWORK_CONFIG</span> <span class="o">=</span> <span class="s2">&quot;write_netcfg&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">READ_ERRORS</span> <span class="o">=</span> <span class="s2">&quot;read_errors&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CLEAR_ERRORS</span> <span class="o">=</span> <span class="s2">&quot;clear_errors&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">READ_ADC</span> <span class="o">=</span> <span class="s2">&quot;read_ADC&quot;</span>
+
+        <span class="c1"># pump</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MOVE_ABSOLUTE</span> <span class="o">=</span> <span class="s2">&quot;move_abs&quot;</span>     <span class="c1"># param: speed in uL/min, position in uL (both integers)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MOVE_RELATIVE</span> <span class="o">=</span> <span class="s2">&quot;move_rel&quot;</span>     <span class="c1"># param: speed in uL/min, volume in uL (both integers)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MOVE_PUMP_HOME</span> <span class="o">=</span> <span class="s2">&quot;move_home&quot;</span>   <span class="c1"># param: speed in uL/min (integer)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">HARD_HOME</span> <span class="o">=</span> <span class="s2">&quot;hard_home&quot;</span>        <span class="c1"># param: speed in uL/min (integer)</span>
+
+        <span class="c1"># valve</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AUTO_CONFIG</span> <span class="o">=</span> <span class="s2">&quot;cfg&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MOVE_VALVE_HOME</span> <span class="o">=</span> <span class="s2">&quot;home&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MOVE_TO_POSITION</span> <span class="o">=</span> <span class="s2">&quot;pos&quot;</span>
+
+        <span class="sd">&quot;&quot;&quot; Default configs &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_PUMP_CONFIG</span> <span class="o">=</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">DEFAULT_PUMP_CONFIG</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALVE_CONFIG</span> <span class="o">=</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">DEFAULT_VALVE_CONFIG</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span> <span class="o">=</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Destructor that closes the server connection and joins the listening thread</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tcp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tcp_response_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+<div class="viewcode-block" id="ChemputerDevice.connect_to_server"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.connect_to_server">[docs]</a>    <span class="k">def</span> <span class="nf">connect_to_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Attempts to connect to the TCP server.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception (OSException): The connection has failed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tcp</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">TCP_PORT</span><span class="p">))</span>
+            <span class="c1"># self.tcp.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)  # turn on the TCP keepalive</span>
+            <span class="c1"># self.tcp.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 1000, 1000))  # configure to send a keepalive packet every second</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Unable to connect to host device: IP </span><span class="si">{0}</span><span class="s2"> did not respond.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">))</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.receive_response"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.receive_response">[docs]</a>    <span class="k">def</span> <span class="nf">receive_response</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Received the response from the server and prints out the response to screen.</span>
+<span class="sd">        Specific cases are present for reading configurations (device/network) and for checking the completion flag.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tcp</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">BUFFER_SIZE</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">(</span><span class="ne">TimeoutError</span><span class="p">,</span> <span class="ne">ConnectionResetError</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Device </span><span class="si">{0}</span><span class="s2"> has disconnected.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="k">break</span>  <span class="c1"># TODO raise disconnection error</span>
+
+            <span class="c1"># response = self.tcp.recv(BUFFER_SIZE).decode()</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="k">elif</span> <span class="n">READ_PUMP_CFG</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+                <span class="n">split</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">READ_PUMP_CFG</span><span class="p">)</span>
+                <span class="n">cfg_string</span> <span class="o">=</span> <span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">device_cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_device_config_string</span><span class="p">(</span><span class="n">cfg_string</span><span class="p">,</span> <span class="n">PUMP_CFG</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_cfg</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                <span class="k">continue</span>
+
+            <span class="k">elif</span> <span class="n">READ_VALVE_CFG</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+                <span class="n">split</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">READ_VALVE_CFG</span><span class="p">)</span>
+                <span class="n">cfg_string</span> <span class="o">=</span> <span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">device_cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_device_config_string</span><span class="p">(</span><span class="n">cfg_string</span><span class="p">,</span> <span class="n">VALVE_CFG</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_cfg</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                <span class="k">continue</span>
+
+            <span class="k">elif</span> <span class="n">READ_NETWORK_CFG</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+                <span class="n">split</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">READ_NETWORK_CFG</span><span class="p">)</span>
+                <span class="n">network_cfg_string</span> <span class="o">=</span> <span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">network_cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_network_config_string</span><span class="p">(</span><span class="n">network_cfg_string</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">network_cfg</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                <span class="k">continue</span>
+
+            <span class="k">elif</span> <span class="n">ERRORS</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+                <span class="n">split</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">ERRORS</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">error_byte</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">error_list</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">if</span> <span class="n">error_byte</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">):</span>
+                        <span class="n">error_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CONFIGURATION_ERROR&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">error_byte</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">):</span>
+                        <span class="n">error_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;COMMUNICATION_ERROR&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">error_byte</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">):</span>
+                        <span class="n">error_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;WATCHDOG_ERROR&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">error_byte</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">):</span>
+                        <span class="n">error_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;MOTOR_STALL_ERROR&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">error_byte</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">):</span>
+                        <span class="n">error_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;ACTUATION_ERROR&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">error_byte</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">):</span>
+                        <span class="n">error_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;SHUTDOWN_ERROR&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">error_byte</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">7</span><span class="p">):</span>
+                        <span class="n">error_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;UNDEFINED_ERROR&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error_list</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Invalid response: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="k">continue</span>
+
+            <span class="k">elif</span> <span class="n">ADC</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+                <span class="n">split</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">ADC</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">ADC_reading</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;ADC reading: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ADC_reading</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Invalid response: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="k">continue</span>
+
+            <span class="k">elif</span> <span class="n">STALL</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;Error! Device has stalled!&quot;</span><span class="p">)</span>  <span class="c1"># TODO maybe raise an error?</span>
+                <span class="c1"># TODO not sure about the ready flag. Need to think some more.</span>
+                <span class="c1"># self.device_ready_flag.set()</span>
+                <span class="k">continue</span>
+
+            <span class="k">elif</span> <span class="n">SUCCESS</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">FAILURE</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+                <span class="c1"># TODO not sure about the ready flag. Need to think some more.</span>
+                <span class="c1"># self.device_ready_flag.set()</span>
+                <span class="k">continue</span>
+
+            <span class="k">elif</span> <span class="n">DONE</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+                <span class="k">continue</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.build_command"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.build_command">[docs]</a>    <span class="k">def</span> <span class="nf">build_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">cmds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds the command string from a varying list of arguments, adding a null-terminated character</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cmds (Variadic): List of commands to create the string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmd_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">cmds</span><span class="p">:</span>
+            <span class="n">cmd_string</span> <span class="o">+=</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cmd_string</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.send_command"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.send_command">[docs]</a>    <span class="k">def</span> <span class="nf">send_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">cmds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the command string and sends it to the TCP server.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cmds (Variadic): List of commands used to create the string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_command</span><span class="p">(</span><span class="o">*</span><span class="n">cmds</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tcp</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+        <span class="k">except</span> <span class="ne">ConnectionResetError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Device </span><span class="si">{0}</span><span class="s2"> has disconnected.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>  <span class="c1"># TODO raise connection error</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.convert_network_address_to_list"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.convert_network_address_to_list">[docs]</a>    <span class="k">def</span> <span class="nf">convert_network_address_to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">split_delimiter</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts a network address to a python list</span>
+<span class="sd">        Splits the address based off of a delimiter and adds the elements as string to a list</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            address (str): Address to convert</span>
+<span class="sd">            split_delimiter (str): Delimiting character used to split the address (&quot;.&quot; for IP addresses, &quot;:&quot; for MAC Addresses)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            addr_split (List): List of strings containing the values of the address minus the delimiting character</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">addr_split</span> <span class="o">=</span> <span class="n">address</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">split_delimiter</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">addr_split</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">split_delimiter</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
+                <span class="n">mac_seg</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+                <span class="n">addr_split</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mac_seg</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">addr_split</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+        <span class="k">return</span> <span class="n">addr_split</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.construct_network_config_string"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_network_config_string">[docs]</a>    <span class="k">def</span> <span class="nf">construct_network_config_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the network configuration string from a list of addresses created via convert_network_address_to_list</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cfg_list (List): List of lists containing all the addresses</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            cfg_string (str): String containing the numbers of the addresses</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cfg_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">cfg_list</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">:</span>
+                <span class="n">cfg_string</span> <span class="o">+=</span> <span class="p">(</span><span class="n">elem</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cfg_string</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.construct_network_config"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_network_config">[docs]</a>    <span class="k">def</span> <span class="nf">construct_network_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mac_address</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">,</span> <span class="n">subnet_mask</span><span class="p">,</span> <span class="n">gateway_ip</span><span class="p">,</span> <span class="n">dns_server_ip</span><span class="p">,</span> <span class="n">DHCP_mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the network configuration</span>
+<span class="sd">        Parses the addresses and joining them into a string of numbers that represent the addresses</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mac_address (str): MAC address of the device</span>
+<span class="sd">            ip_address (str): IP address of the device</span>
+<span class="sd">            subnet_mask (str): Address f the subnet mask of the network</span>
+<span class="sd">            gateway_ip (str): Address of the default gateway of the network</span>
+<span class="sd">            dns_server_ip (str): Address of the DNS server</span>
+<span class="sd">            DHCP_mode (int): Flag for determining if the device should use static IP allocation (1) or the DHCP allocation (2).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            cfg_string (str): String representing all the addresses as individual numbers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mac_addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_network_address_to_list</span><span class="p">(</span><span class="n">mac_address</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="n">ip_addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_network_address_to_list</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">subnet_addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_network_address_to_list</span><span class="p">(</span><span class="n">subnet_mask</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">gateway_addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_network_address_to_list</span><span class="p">(</span><span class="n">gateway_ip</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">dns_server_addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_network_address_to_list</span><span class="p">(</span><span class="n">dns_server_ip</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">DHCP_mode</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">DHCP_mode</span><span class="p">)]</span>  <span class="c1"># sorry for butchering that...</span>
+
+        <span class="n">cfg_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">cfg_list</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="n">mac_addr</span><span class="p">,</span> <span class="n">ip_addr</span><span class="p">,</span> <span class="n">subnet_addr</span><span class="p">,</span> <span class="n">gateway_addr</span><span class="p">,</span> <span class="n">dns_server_addr</span><span class="p">,</span> <span class="n">DHCP_mode</span><span class="p">))</span>
+        <span class="n">cfg_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_network_config_string</span><span class="p">(</span><span class="n">cfg_list</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cfg_string</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.construct_pump_config"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_pump_config">[docs]</a>    <span class="k">def</span> <span class="nf">construct_pump_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Constructs a pump configuration</span>
+<span class="sd">            Takes a normal (unordered) dictionary with human-readable parameters (e.g. 256 microsteps rather than</span>
+<span class="sd">            microsteps = 0) and constructs an ordered dict containing all values that need to be sent to the pump in their</span>
+<span class="sd">            proper order. The process involves three steps: first, the microstep value, the motor profile, number of steps</span>
+<span class="sd">            per mL and for the entire syringe are worked out based on the information provided, and stored in the</span>
+<span class="sd">            PUMP_CONFIG dict. Then all keys that have not yet been populated are just transferred over. Third, the new</span>
+<span class="sd">            dict is ordered by iterating over the key list and sending each item to the end.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                config_dict (dict): dictionary containing all necessary information to configure a pump</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                PUMP_CONFIG (ordereddict): ordered dictionary ready to be sent to the pump</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">config_dict</span><span class="p">:</span>  <span class="c1"># TODO find out if a property can be passed as kwarg somehow</span>
+            <span class="n">config_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_PUMP_CONFIG</span>
+        
+        <span class="n">PUMP_CONFIG</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+
+        <span class="c1"># first, figure out all the &quot;special&quot; items</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">PUMP_CONFIG</span><span class="p">[</span><span class="s2">&quot;microsteps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">MICROSTEP_MAP</span><span class="p">[</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;microsteps&quot;</span><span class="p">]]</span>
+            <span class="n">PUMP_CONFIG</span><span class="p">[</span><span class="s2">&quot;motor_profile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">MOTOR_PROFILE_MAP</span><span class="p">[</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;motor_profile&quot;</span><span class="p">]]</span>
+            <span class="n">PUMP_CONFIG</span><span class="p">[</span><span class="s2">&quot;steps_per_ml&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="mi">360</span> <span class="o">/</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">ANGLE_PER_STEP</span><span class="p">)</span> <span class="o">*</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;microsteps&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span>
+                <span class="n">cfgs</span><span class="o">.</span><span class="n">SYRINGE_VOL_TO_MM</span><span class="p">[</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;syringe_size&quot;</span><span class="p">]]</span> <span class="o">/</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">THREAD_PITCH</span><span class="p">))</span>
+            <span class="n">PUMP_CONFIG</span><span class="p">[</span><span class="s2">&quot;syringe_volume_steps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">PUMP_CONFIG</span><span class="p">[</span><span class="s2">&quot;steps_per_ml&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;syringe_size&quot;</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>  <span class="c1"># TODO log that</span>
+
+        <span class="c1"># then, just fill up the rest</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">PUMP_CONFIG_ITEMS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">PUMP_CONFIG</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">PUMP_CONFIG</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span><span class="n">item</span><span class="p">])</span>  <span class="c1"># the int() function casts booleans to integers</span>
+
+        <span class="c1"># finally, sort the items in the right order</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">PUMP_CONFIG_ITEMS</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">PUMP_CONFIG</span><span class="o">.</span><span class="n">move_to_end</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>  <span class="c1"># TODO log that</span>
+
+        <span class="k">return</span> <span class="n">PUMP_CONFIG</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.construct_valve_config"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_valve_config">[docs]</a>    <span class="k">def</span> <span class="nf">construct_valve_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Constructs a valve configuration</span>
+
+
+<span class="sd">            Args:</span>
+<span class="sd">                config_dict (dict): dictionary containing all necessary information to configure a valve</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                VALVE_CONFIG (ordereddict): ordered dictionary ready to be sent to the valve</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">config_dict</span><span class="p">:</span>
+            <span class="n">config_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALVE_CONFIG</span>
+        
+        <span class="n">VALVE_CONFIG</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+
+        <span class="c1"># first, figure out all the &quot;special&quot; items</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">VALVE_CONFIG</span><span class="p">[</span><span class="s2">&quot;microsteps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">MICROSTEP_MAP</span><span class="p">[</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;microsteps&quot;</span><span class="p">]]</span>
+            <span class="n">VALVE_CONFIG</span><span class="p">[</span><span class="s2">&quot;motor_profile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">MOTOR_PROFILE_MAP</span><span class="p">[</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;motor_profile&quot;</span><span class="p">]]</span>
+            <span class="n">VALVE_CONFIG</span><span class="p">[</span><span class="s2">&quot;full_revolution&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="mi">360</span> <span class="o">/</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">ANGLE_PER_STEP</span><span class="p">)</span> <span class="o">*</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;microsteps&quot;</span><span class="p">])</span>
+            <span class="n">VALVE_CONFIG</span><span class="p">[</span><span class="s2">&quot;clearing_distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+                <span class="n">VALVE_CONFIG</span><span class="p">[</span><span class="s2">&quot;full_revolution&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;number_of_positions&quot;</span><span class="p">]))</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>  <span class="c1"># TODO log that</span>
+
+        <span class="c1"># then, just fill up the rest</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">VALVE_CONFIG_ITEMS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALVE_CONFIG</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">VALVE_CONFIG</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span><span class="n">item</span><span class="p">])</span>  <span class="c1"># the int() function casts booleans to integers</span>
+
+        <span class="c1"># finally, sort the items in the right order</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">VALVE_CONFIG_ITEMS</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">VALVE_CONFIG</span><span class="o">.</span><span class="n">move_to_end</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>  <span class="c1"># TODO log that</span>
+
+        <span class="k">return</span> <span class="n">VALVE_CONFIG</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.parse_device_config_string"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.parse_device_config_string">[docs]</a>    <span class="k">def</span> <span class="nf">parse_device_config_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg_string</span><span class="p">,</span> <span class="n">cfg_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parses the config string message and sets the appropriate values in the relevant dictionary</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cfg_string (str): String representing the configuration</span>
+<span class="sd">            cfg_type (str): Type of configuration to parse into (Pump/Valve/Network)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            config (OrderedDict): Configuration of the device/network</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception: Unable to parse the configuration string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">str_split</span> <span class="o">=</span> <span class="n">cfg_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">cfg_type</span> <span class="o">==</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">PUMP_TYPE</span><span class="p">:</span>
+            <span class="n">PUMP_CONFIG</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">cfgs</span><span class="o">.</span><span class="n">PUMP_CONFIG_ITEMS</span><span class="p">,</span> <span class="n">str_split</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">PUMP_CONFIG</span>
+
+        <span class="k">if</span> <span class="n">cfg_type</span> <span class="o">==</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">VALVE_TYPE</span><span class="p">:</span>
+            <span class="n">VALVE_CONFIG</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">cfgs</span><span class="o">.</span><span class="n">VALVE_CONFIG_ITEMS</span><span class="p">,</span> <span class="n">str_split</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">VALVE_CONFIG</span>
+
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to parse configuration string!&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.parse_network_config_string"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.parse_network_config_string">[docs]</a>    <span class="k">def</span> <span class="nf">parse_network_config_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg_string</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parses the network configuration string for the relevant information</span>
+<span class="sd">        Hardcoded values should not change but a fix will be implemented to make it a bit more robust</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cfg_string (str): String representing the network information</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            network_config (OrderedDict): Ordered Dictionary containing all the network information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cfg_split</span> <span class="o">=</span> <span class="n">cfg_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span><span class="p">[</span><span class="s2">&quot;mac_address&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg_split</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span><span class="p">[</span><span class="s2">&quot;ip_address&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg_split</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span><span class="p">[</span><span class="s2">&quot;gateway_ip&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg_split</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span><span class="p">[</span><span class="s2">&quot;subnet_mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg_split</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span><span class="p">[</span><span class="s2">&quot;dns_server_ip&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg_split</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span><span class="p">[</span><span class="s2">&quot;dhcp_flag&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cfg_split</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.convert_list_to_address"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.convert_list_to_address">[docs]</a>    <span class="k">def</span> <span class="nf">convert_list_to_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr_list</span><span class="p">,</span> <span class="n">mac</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts a list into an address</span>
+<span class="sd">        Will also convert the decimal mac address into the appropriate hex format</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            addr_list (List): List containing the elements of the address</span>
+<span class="sd">            mac (bool): Flag for determining if the address is a mac address</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            addr (str): The string representation of the address</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">addr_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mac</span><span class="p">:</span>
+                <span class="n">mac_seg</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">elem</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;0x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+                <span class="n">addr</span> <span class="o">+=</span> <span class="p">(</span><span class="n">mac_seg</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">addr</span> <span class="o">+=</span> <span class="p">(</span><span class="n">elem</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">addr</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.wait_until_ready"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.wait_until_ready">[docs]</a>    <span class="k">def</span> <span class="nf">wait_until_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Waits until the device is ready by listening for a DONE command from the server.</span>
+<span class="sd">        This then sets the flag that the operation has completed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># set = self.device_ready_flag.is_set()  # TODO statement seems to have no effect</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.send_and_wait_reply"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.send_and_wait_reply">[docs]</a>    <span class="k">def</span> <span class="nf">send_and_wait_reply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Debug method for sending arbitrary strings to the server.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (str): Message to send</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+    <span class="c1">################################### PUMPS &amp; VALVES ##############################################</span>
+<div class="viewcode-block" id="ChemputerDevice.read_device_configuration"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_device_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">read_device_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reads the device configuration from the server and displays it back to the user &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">READ_CONFIG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.read_network_configuration"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_network_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">read_network_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reads the network configuration for the device from the server and displays it back to the user &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">READ_NETWORK_CONFIG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.write_network_configuration"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.write_network_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">write_network_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mac_address</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">,</span> <span class="n">subnet_mask</span><span class="p">,</span> <span class="n">gateway_ip</span><span class="p">,</span> <span class="n">dns_server_ip</span><span class="p">,</span> <span class="n">DHCP_mode</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the network configuration for the device and sends it to the server.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mac_address (str): MAC address of the device</span>
+<span class="sd">            ip_address (str): IP Address of the device</span>
+<span class="sd">            subnet_mask (str):  Address of the subnet mask of the network</span>
+<span class="sd">            gateway_ip (str): Address of the default gateway of the network</span>
+<span class="sd">            dns_server_ip (str): Address of  the DNS server</span>
+<span class="sd">            DHCP_mode (int): Flag for determining if the device should use static IP allocation (1) or the DHCP allocation (2). Default is 1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">network_cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_network_config</span><span class="p">(</span><span class="n">mac_address</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">,</span> <span class="n">subnet_mask</span><span class="p">,</span> <span class="n">gateway_ip</span><span class="p">,</span> <span class="n">dns_server_ip</span><span class="p">,</span> <span class="n">DHCP_mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">WRITE_NETWORK_CONFIG</span><span class="p">,</span> <span class="n">network_cfg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.assign_ip_address"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.assign_ip_address">[docs]</a>    <span class="k">def</span> <span class="nf">assign_ip_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        High-level method to assign a new IP to a device. Constructs a standard MAC from the provided IP and sends over</span>
+<span class="sd">        the entire network config.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ip_address (str): new IP Address of the device</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">ip_pattern</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Supplied address </span><span class="si">{0}</span><span class="s2"> is not a valid IP!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ip_address</span><span class="p">))</span>
+
+        <span class="n">ip_ending</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">ip_pattern</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;pump&quot;</span><span class="p">:</span>
+            <span class="n">mac_address</span> <span class="o">=</span> <span class="s2">&quot;0A:</span><span class="si">{0}</span><span class="s2">:B0:0B:5A:55&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ip_ending</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;valve&quot;</span><span class="p">:</span>
+            <span class="n">mac_address</span> <span class="o">=</span> <span class="s2">&quot;1A:</span><span class="si">{0}</span><span class="s2">:B0:0B:5A:55&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ip_ending</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Unknown device type!&quot;</span><span class="p">)</span>
+
+        <span class="n">network_cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_network_config</span><span class="p">(</span>
+            <span class="n">mac_address</span><span class="o">=</span><span class="n">mac_address</span><span class="p">,</span>
+            <span class="n">ip_address</span><span class="o">=</span><span class="n">ip_address</span><span class="p">,</span>
+            <span class="n">subnet_mask</span><span class="o">=</span><span class="n">cfgs</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span><span class="p">[</span><span class="s2">&quot;subnet_mask&quot;</span><span class="p">],</span>
+            <span class="n">gateway_ip</span><span class="o">=</span><span class="n">cfgs</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span><span class="p">[</span><span class="s2">&quot;gateway_ip&quot;</span><span class="p">],</span>
+            <span class="n">dns_server_ip</span><span class="o">=</span><span class="n">cfgs</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span><span class="p">[</span><span class="s2">&quot;dns_server_ip&quot;</span><span class="p">],</span>
+            <span class="n">DHCP_mode</span><span class="o">=</span><span class="n">cfgs</span><span class="o">.</span><span class="n">DEFAULT_NETWORK_CONFIG</span><span class="p">[</span><span class="s2">&quot;dhcp_flag&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">WRITE_NETWORK_CONFIG</span><span class="p">,</span> <span class="n">network_cfg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.read_errors"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_errors">[docs]</a>    <span class="k">def</span> <span class="nf">read_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reads error flags from the server &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">READ_ERRORS</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.clear_errors"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.clear_errors">[docs]</a>    <span class="k">def</span> <span class="nf">clear_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Clears the previously set errors &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CLEAR_ERRORS</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ChemputerDevice.read_ADC"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_ADC">[docs]</a>    <span class="k">def</span> <span class="nf">read_ADC</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reads ADC &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">READ_ADC</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div></div>
+
+    <span class="c1">###################################################################################################</span>
+
+    <span class="c1"># TODO implement some sort of check whether the device is a pump or valve, and disallow the wrong commands outright</span>
+
+
+    <span class="c1">################################### PUMPS ##############################################</span>
+<div class="viewcode-block" id="ChemputerPump"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerPump">[docs]</a><span class="k">class</span> <span class="nc">ChemputerPump</span><span class="p">(</span><span class="n">ChemputerDevice</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Child class of ChemputerDevice. Gives the user control over the pump commands</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        address (str): Address of the pump</span>
+<span class="sd">        name (str): Optional name of the device</span>
+<span class="sd">    </span>
+<span class="sd">    Extends:</span>
+<span class="sd">        ChemputerDevice</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="n">ChemputerDevice</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_type</span> <span class="o">=</span> <span class="s2">&quot;pump&quot;</span>
+
+<div class="viewcode-block" id="ChemputerPump.move_relative"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerPump.move_relative">[docs]</a>    <span class="k">def</span> <span class="nf">move_relative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volume_in_milliliters</span><span class="p">,</span> <span class="n">speed_in_milliliters_per_min</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the plunger to a specific volume relative to the current position</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            volume_in_milliliters (int): Volume to move in milliliters</span>
+<span class="sd">            speed_in_milliliters_per_min (int): Speed to move in milliliters per minute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Pump </span><span class="si">{0}</span><span class="s2"> is moving by </span><span class="si">{1}</span><span class="s2">mL at </span><span class="si">{2}</span><span class="s2">mL/min.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">volume_in_milliliters</span><span class="p">,</span> <span class="n">speed_in_milliliters_per_min</span><span class="p">))</span>
+        <span class="n">volume_in_microliters</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">volume_in_milliliters</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="n">speed_in_microliters_per_min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">speed_in_milliliters_per_min</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MOVE_RELATIVE</span><span class="p">,</span> <span class="n">volume_in_microliters</span><span class="p">,</span> <span class="n">speed_in_microliters_per_min</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChemputerPump.move_absolute"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerPump.move_absolute">[docs]</a>    <span class="k">def</span> <span class="nf">move_absolute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_volume_in_milliliters</span><span class="p">,</span> <span class="n">speed_in_milliliters_per_min</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the plunger to a set volume, regardless of current position</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target_volume_in_milliliters (int): Target volume to move in milliliters</span>
+<span class="sd">            speed_in_milliliters_per_min (int): Speed to move in milliliters per minute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Pump </span><span class="si">{0}</span><span class="s2"> is moving to </span><span class="si">{1}</span><span class="s2">mL at </span><span class="si">{2}</span><span class="s2">mL/min.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">target_volume_in_milliliters</span><span class="p">,</span> <span class="n">speed_in_milliliters_per_min</span><span class="p">))</span>
+        <span class="n">target_volume_in_microliters</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">target_volume_in_milliliters</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="n">speed_in_microliters_per_min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">speed_in_milliliters_per_min</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MOVE_ABSOLUTE</span><span class="p">,</span> <span class="n">target_volume_in_microliters</span><span class="p">,</span> <span class="n">speed_in_microliters_per_min</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChemputerPump.move_to_home"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerPump.move_to_home">[docs]</a>    <span class="k">def</span> <span class="nf">move_to_home</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed_in_milliliters_per_min</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the plunger to the home position</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            speed_in_milliliters_per_min (int): Speed to move in milliliters per minute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Pump </span><span class="si">{0}</span><span class="s2"> is homing at </span><span class="si">{1}</span><span class="s2">mL/min.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">speed_in_milliliters_per_min</span><span class="p">))</span>
+        <span class="n">speed_in_microliters_per_min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">speed_in_milliliters_per_min</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MOVE_PUMP_HOME</span><span class="p">,</span> <span class="n">speed_in_microliters_per_min</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChemputerPump.hard_home"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerPump.hard_home">[docs]</a>    <span class="k">def</span> <span class="nf">hard_home</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed_in_milliliters_per_min</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finds the home position by stalling the plunger against the base, then backing up a number of steps.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            speed_in_milliliters_per_min (int): Speed to move in milliliters per minute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">speed_in_microliters_per_min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">speed_in_milliliters_per_min</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">speed_in_microliters_per_min</span> <span class="o">&gt;=</span> <span class="mi">35000</span><span class="p">:</span>  <span class="c1"># slower speeds don&#39;t really work</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HARD_HOME</span><span class="p">,</span> <span class="n">speed_in_microliters_per_min</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;Error. Supplied speed too low!&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChemputerPump.write_default_pump_configuration"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerPump.write_default_pump_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">write_default_pump_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># TODO make another method that allows writing an arbitrary config</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Writes a default configuration for the pump to the server</span>
+<span class="sd">        This uses the default configuration (OrderedDict) laid out in the default_configs script</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">default_cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_pump_config</span><span class="p">()</span>
+        <span class="n">pump_cfg</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">default_cfg</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">WRITE_CONFIG</span><span class="p">,</span> <span class="o">*</span><span class="n">pump_cfg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div></div>
+
+    <span class="c1">########################################################################################</span>
+
+
+    <span class="c1">################################### VALVES ##############################################</span>
+<div class="viewcode-block" id="ChemputerValve"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerValve">[docs]</a><span class="k">class</span> <span class="nc">ChemputerValve</span><span class="p">(</span><span class="n">ChemputerDevice</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Child class of the ChemputerDevice. Gives the user control over the valve commands</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        address (str): Address of the valve</span>
+<span class="sd">        name (str): Optional name for the device.</span>
+
+<span class="sd">    Extends:</span>
+<span class="sd">        ChemputerDevice</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="n">ChemputerDevice</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_type</span> <span class="o">=</span> <span class="s2">&quot;valve&quot;</span>
+
+<div class="viewcode-block" id="ChemputerValve.auto_config"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerValve.auto_config">[docs]</a>    <span class="k">def</span> <span class="nf">auto_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an automatic configuration for the valve device</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AUTO_CONFIG</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChemputerValve.move_home"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerValve.move_home">[docs]</a>    <span class="k">def</span> <span class="nf">move_home</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the valve to its home position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MOVE_VALVE_HOME</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="ChemputerValve.move_to_position"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerValve.move_to_position">[docs]</a>    <span class="k">def</span> <span class="nf">move_to_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the valve to a specific position</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            position (int/str): Position to move to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MOVE_TO_POSITION</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChemputerValve.write_default_valve_configuration"><a class="viewcode-back" href="../../../source/modules.pv_api.html#modules.pv_api.Chemputer_Device_API.ChemputerValve.write_default_valve_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">write_default_valve_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Writes a default configuration for the valve to the server</span>
+<span class="sd">        This uses the default configuration (OrderedDict) laid out in the default_configs script</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">default_cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_valve_config</span><span class="p">()</span>
+        <span class="n">valve_cfg</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">default_cfg</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">WRITE_CONFIG</span><span class="p">,</span> <span class="o">*</span><span class="n">valve_cfg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_ready_flag</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div></div>
+
+    <span class="c1">#########################################################################################</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

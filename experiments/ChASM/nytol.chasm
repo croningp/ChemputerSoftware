@@ -1,0 +1,944 @@
+########################################################################################################################
+#                                                                                                                      #
+#   SYNTHESIS OF DIPHENHYDRAMINE HYDROCHLORIDE (NYTOL)                                                                 #
+#                                                                                                                      #
+#   Based on papers by [insert lit procedure]. Initial manual experimental work done by Anna Andreou, automation and   #
+#   further development by Sebastian Steiner.                                                                          #
+#                                                                                                                      #
+#   (c) 2018 The Cronin Group, University of Glasgow                                                                   #
+#                                                                                                                      #
+#   Required hardware modules:                                                                                         #
+#       * mixing and heating                                                                                           #
+#       * liquid/liquid separation                                                                                     #
+#       * solvent evaporation                                                                                          #
+#       * filtration (with heating and cooling)                                                                        #
+#                                                                                                                      #
+#   List of chemicals:                                                                                                 #
+#       * bromobenzene 108-86-1                                                                                        #
+#       * benzaldehyde 100-52-7 (2M solution in diethyl ether)                                                         #
+#       * acetyl bromide 506-96-7                                                                                      #
+#       * 2-dimethylaminoethanol 108-01-0                                                                              #
+#       * etheric hydrochloric acid 2M                                                                                 #
+#       * aq. hydrochloric acid 2M                                                                                     #
+#       * aq. sodium hydroxide 4M                                                                                      #
+#                                                                                                                      #
+#   List of solvents:                                                                                                  #
+#       * diethyl ether                                                                                                #
+#       * toluene                                                                                                      #
+#       * isopropanol                                                                                                  #
+#       * water                                                                                                        #
+#                                                                                                                      #
+########################################################################################################################
+
+#======================================================================================================================#
+#                                                                                                                      #
+#       CONSTANTS                                                                                                      #
+#                                                                                                                      #
+#======================================================================================================================#
+
+####################
+# Global constants #
+####################
+
+# pumping speeds
+DEF default_speed_slow = 20;  # mL/min
+DEF default_speed_fast = 50;  # mL/min
+
+# volumes
+DEF dead_volume_filter = 10;  # mL
+
+# stirring rates
+DEF extraction_stirring_rate = 400;  # RPM
+DEF extraction_overhead_stirring_rate = 800;  # RPM
+DEF extraction_settling_stirring_rate = 30;  # RPM
+
+DEF default_speed_rv = 280;  # RPM
+
+# temperatures
+DEF default_temp_rv = 40;  # °C
+DEF room_temperature = 26;  # °C
+
+# times
+DEF wait_time_settling = 120;  # in s, actually 2min
+
+############
+# Grignard #
+############
+
+# volumes
+DEF volume_ether_grignard = 30;  # mL
+DEF volume_bromobenzene_1 = 2;  # mL
+DEF volume_bromobenzene_2 = 8.65;  # mL
+DEF volume_ether_bromobenzene_flush = 10;  # mL
+DEF volume_benzaldehyde = 50;  # mL, for a 2M solution
+DEF volume_water_quench = 25;  # mL
+DEF volume_acid_dilution = 100;  # mL
+DEF volume_ether_sweep_up = 5;  # mL
+DEF volume_water_wash = 50;  # mL
+
+# stirring rates
+DEF grignard_stirring_rate = 250;  # rpm
+
+# temperatures
+DEF grignard_temperature = 50;  # °C
+
+# times
+DEF wait_time_grignard_initiation = 1200;  # in s, actually 20min
+DEF wait_time_grignard_formation = 900;  # in s, actually 15min
+DEF wait_time_grignard_reaction = 18000;  # in s, actually 5h
+DEF wait_time_grignard_extraction = 1800;  # in s, actually 30min
+
+###############
+# Bromination #
+###############
+
+# volumes
+DEF volume_toluene_sweep_up = 10;  # mL
+DEF volume_default_wash = 5;  # mL
+DEF volume_toluene_1 = 100;  # mL
+DEF volume_toluene_2 = 15;  # mL
+DEF volume_toluene_3 = 10;  # mL
+DEF volume_acetyl_bromide = 9.55;  # mL
+DEF volume_bromination_reaction = 150;  # mL, estimate (actual volume appears to be around 174.55mL)
+
+# temperatures
+DEF bromination_temperature = 130;  # °C
+
+# times
+DEF bromination_time = 14400;  # seconds, = 4h
+
+##############
+# Williamson #
+##############
+
+# volumes
+DEF volume_dimethylaminoethanol = 12.46;  # mL
+DEF volume_toluene_williamson = 10;  # mL
+DEF volume_toluene_4 = 15;  # mL (oh, I know...)
+DEF volume_toluene_5 = 10;  # mL
+DEF volume_toluene_6 = 10;  # mL
+DEF volume_HCl = 20;  # mL
+DEF volume_NaOH = 50;  # mL
+DEF volume_ether_extraction = 50;  # mL
+DEF volume_pre_extraction_acidic = 25;  # mL, volume being withdrawn before the slow separation routine kicks in
+DEF volume_pre_extraction_basic = 150;  # mL, volume being withdrawn before the slow separation routine kicks in
+
+# temperatures
+DEF williamson_temperature = 130;  # °C
+
+# times
+DEF williamson_time = 57600;  # seconds, = 18h
+DEF drying_time_DMAE = 10800;  # in s, actually 3h
+
+###############################
+# Hydrochloride precipitation #
+###############################
+
+# volumes
+DEF volume_etheric_HCl = 41.5;  # mL
+DEF volume_ether_transfer = 20;  # mL
+
+# times
+DEF ether_drying_time = 900;  # in s, actually 15min
+
+#####################
+# Recrystallisation #
+#####################
+
+# volumes
+DEF volume_isoprop_recrystallisation = 110;  # mL
+DEF washing_volume = 50;  # mL
+
+# stirring rates
+DEF recrystallisation_rpm = 250;  # RPM
+
+# temperatures
+DEF dissolution_temperature = 60;  # °C
+DEF cooling_threshold = 30;  # °C
+DEF crystallisation_temperature = -20;  # °C
+DEF nytol_drying_temperature = 60;  # °C
+
+# times
+DEF dissolution_time = 600;  # in s, actually 10min
+DEF crystallisation_time = 300;  # in s, actually 5min
+DEF nytol_drying_time = 3600;  # in s, actually 1h
+
+#======================================================================================================================#
+#                                                                                                                      #
+#       FUNCTIONS                                                                                                      #
+#                                                                                                                      #
+#======================================================================================================================#
+
+DEF evaporate_to_dryness(distillate_volume, end_vacuum, speed, distillation_time, drying_time){
+    # lower flask, start rotation
+    S SET_RECORDING_SPEED(1);
+    S LIFT_ARM_DOWN(rotavap);
+    S SET_ROTATION(rotavap, default_speed_rv);
+    S START_ROTATION(rotavap);
+    # degas
+    S SET_VAC_SP(rotavap, 900);
+    S START_VAC(rotavap);
+    S SET_BATH_TEMP(rotavap, 40);
+    S START_HEATER_BATH(rotavap);
+    # start cooling
+    S SET_CHILLER(rotavap, 4);
+    S START_CHILLER(rotavap);
+    # wait until ready
+    S WAIT(10);  # for filming purposes
+    S SET_RECORDING_SPEED(75);
+    S RV_WAIT_FOR_TEMP(rotavap);
+    S CHILLER_WAIT_FOR_TEMP(rotavap);
+    # main distillation
+    S SET_SPEED_SP(rotavap, speed);
+    S SET_VAC_SP(rotavap, end_vacuum);
+    S SET_RECORDING_SPEED(200);
+    S WAIT(distillation_time);
+    S SET_RECORDING_SPEED(1);
+    # vent and empty
+    S LIFT_ARM_UP(rotavap);
+    S WAIT(10);
+    S STOP_VAC(rotavap);
+    S SET_RECORDING_SPEED(50);
+    S VENT_VAC(rotavap);
+    S MOVE(flask_rv_bottom, waste_reactor, distillate_volume, default_speed_fast);  # TODO don't hard-code outlets
+    # pre-dry at max. vacuum
+    S LIFT_ARM_DOWN(rotavap);
+    S SET_SPEED_SP(rotavap, 100);
+    S SET_VAC_SP(rotavap, 0);
+    S START_VAC(rotavap);
+    S SET_RECORDING_SPEED(50);
+    S WAIT(120);  # wait for the rest to distill over
+    # vent, empty and replenish volume
+    S LIFT_ARM_UP(rotavap);
+    S WAIT(10);
+    S STOP_VAC(rotavap);
+    S VENT_VAC(rotavap);
+    S MOVE(flask_rv_bottom, waste_reactor, 25);  # TODO don't hard-code outlets
+    S MOVE(waste_reactor, rotavap, 25);  # pump 25mL of air into the top so the volumes match up again
+    # dry at max. vacuum
+    S STOP_CHILLER(rotavap);
+    S LIFT_ARM_DOWN(rotavap);
+    S SET_SPEED_SP(rotavap, 100);
+    S SET_VAC_SP(rotavap, 0);
+    S START_VAC(rotavap);
+    S SET_RECORDING_SPEED(200);
+    S WAIT(drying_time);
+    # recover flask and vent;
+    S SET_RECORDING_SPEED(1);
+    S LIFT_ARM_UP(rotavap);
+    S WAIT(10);
+    S STOP_VAC(rotavap);
+    S VENT_VAC(rotavap);
+    S STOP_ROTATION(rotavap);
+    S STOP_HEATER_BATH(rotavap);
+}
+
+DEF reflux_and_wait(temperature, time, end_temperature, vessel){
+    S SET_TEMP(vessel, temperature);
+    S START_HEAT(vessel);
+
+    # wait for temperature
+    S STIRRER_WAIT_FOR_TEMP(vessel);
+
+    S WAIT(time);
+
+    # cool down
+    S STOP_HEAT(vessel);
+    S SET_TEMP(vessel, end_temperature);
+    S STIRRER_WAIT_FOR_TEMP(vessel);
+}
+
+DEF clean_reactor(){
+    S SET_RECORDING_SPEED(200);
+    S MOVE(flask_isoprop, reactor_reactor, 200);
+    S SET_STIR_RPM(reactor_reactor, 400);
+    S START_STIR(reactor_reactor);
+    S WAIT(60);
+    S STOP_STIR(reactor_reactor);
+    S MOVE(reactor_reactor, waste_reactor, all);
+    S MOVE(flask_ether, reactor_reactor, 200);
+    S SET_STIR_RPM(reactor_reactor, 400);
+    S START_STIR(reactor_reactor);
+    S WAIT(60);
+    S STOP_STIR(reactor_reactor);
+    S MOVE(reactor_reactor, waste_reactor, all);
+    S MOVE(reactor_reactor, waste_reactor, 25);  # make sure it's really empty
+    S SET_RECORDING_SPEED(1);
+}
+
+DEF clean_separator(){
+    S SET_RECORDING_SPEED(200);
+    S MOVE(flask_isoprop, flask_separator_top, 200);
+    S SET_STIR_RPM(flask_separator_top, 1000);
+    S START_STIR(flask_separator_top);
+    S WAIT(60);
+    S STOP_STIR(flask_separator_top);
+    S MOVE(flask_separator_bottom, waste_workup, all);
+    S MOVE(flask_ether, flask_separator_top, 200);
+    S SET_STIR_RPM(flask_separator_top, 1000);
+    S START_STIR(flask_separator_top);
+    S WAIT(60);
+    S STOP_STIR(flask_separator_top);
+    S MOVE(flask_separator_bottom, waste_workup, all);
+    S MOVE(flask_separator_bottom, waste_workup, 25);  # make sure it's really empty
+    S SET_RECORDING_SPEED(1);
+}
+
+DEF clean_holding_flask(){
+    S SET_RECORDING_SPEED(200);
+    S MOVE(flask_water, flask_holding, 200);
+    S SET_STIR_RPM(flask_holding, 400);
+    S START_STIR(flask_holding);
+    S WAIT(60);
+    S STOP_STIR(flask_holding);
+    S MOVE(flask_holding, waste_workup, all);
+    S MOVE(flask_isoprop, flask_holding, 200);
+    S SET_STIR_RPM(flask_holding, 400);
+    S START_STIR(flask_holding);
+    S WAIT(60);
+    S STOP_STIR(flask_holding);
+    S MOVE(flask_holding, waste_workup, all);
+    S MOVE(flask_ether, flask_holding, 200);
+    S SET_STIR_RPM(flask_holding, 400);
+    S START_STIR(flask_holding);
+    S WAIT(60);
+    S STOP_STIR(flask_holding);
+    S MOVE(flask_holding, waste_workup, all);
+    S MOVE(flask_holding, waste_workup, 25);  # make sure it's really empty
+    S SET_RECORDING_SPEED(1);
+}
+
+DEF clean_rotavap(){
+    S SET_RECORDING_SPEED(200);
+    S SET_INTERVAL(rotavap, 5);
+    S LIFT_ARM_DOWN(rotavap);
+    S MOVE(flask_water, rotavap, 200);
+    S START_ROTATION(rotavap);
+    S WAIT(60);
+    S STOP_ROTATION(rotavap);
+    S MOVE(rotavap, waste_reactor, all);
+    S MOVE(rotavap, waste_reactor, 25);  # make sure it's really empty
+    S MOVE(flask_isoprop, rotavap, 200);
+    S START_ROTATION(rotavap);
+    S WAIT(60);
+    S STOP_ROTATION(rotavap);
+    S MOVE(rotavap, waste_reactor, all);
+    S MOVE(flask_ether, rotavap, 200);
+    S START_ROTATION(rotavap);
+    S WAIT(60);
+    S STOP_ROTATION(rotavap);
+    S MOVE(rotavap, waste_reactor, all);
+    S MOVE(rotavap, waste_reactor, 25);  # make sure it's really empty
+    S MOVE(flask_rv_bottom, waste_reactor, 25);
+    S SET_INTERVAL(rotavap, 0);
+    S LIFT_ARM_UP(rotavap);
+    S SET_RECORDING_SPEED(1);
+}
+
+#======================================================================================================================#
+#                                                                                                                      #
+#       SYNTHESIS                                                                                                      #
+#                                                                                                                      #
+#======================================================================================================================#
+
+MAIN {
+    ###########################
+    # Prime and wash Backbone #
+    ###########################
+    S SET_RECORDING_SPEED(10);
+
+    S PRIME(default_speed_slow);
+
+    S SET_RECORDING_SPEED(10);
+
+    FOR(3){  # wash aqueous valve
+        S MOVE(flask_water, waste_aqueous, 5);
+    }
+    S MOVE(flask_water, flask_NaOH, 1);
+
+    S SET_RECORDING_SPEED(25);
+
+    # first clean with water, in case there are reactive residues
+    S MOVE(flask_ether, waste_reagents_1, 10);
+    S MOVE(flask_ether, waste_reagents_2, 10);
+    S MOVE(flask_ether, waste_solvents, 10);
+    S MOVE(flask_ether, waste_reactor, 10);
+    S MOVE(flask_ether, waste_workup, 10);
+
+    S SET_RECORDING_SPEED(50);
+
+    # then clean with water, to get rid of salty deposits
+    S MOVE(flask_water, waste_workup, 10);
+    S MOVE(flask_water, waste_reactor, 10);
+    S MOVE(flask_water, waste_solvents, 10);
+    S MOVE(flask_water, waste_reagents_2, 10);
+    S MOVE(flask_water, waste_reagents_1, 10);
+
+    # then clean with isoprop, for drying purposes
+    FOR(3){
+        S MOVE(flask_isoprop, waste_reagents_1, 5, default_speed_fast, default_speed_slow);
+    }
+
+    # make sure there's no isoprop in the tube
+    S MOVE(reactor_reactor, waste_reactor, 1, default_speed_fast, default_speed_slow);
+
+    # flush tubes with air
+    FOR(3){
+        S MOVE(waste_reagents_1, waste_workup, 10);
+    }
+
+    # wash with ether to obtain a clean, dry backbone
+    FOR(5){
+        S MOVE(flask_ether, waste_aqueous, 5, default_speed_fast, default_speed_slow);
+    }
+
+    ############
+    # Grignard #
+    ############
+
+    S SET_RECORDING_SPEED(50);
+
+    # charging reactor and initiating Grignard
+    S MOVE(flask_ether, reactor_reactor, volume_ether_grignard, default_speed_fast, default_speed_slow);
+    S MOVE(flask_bromobenzene, reactor_reactor, volume_bromobenzene_1, default_speed_fast, default_speed_slow);
+    S MOVE(flask_ether, reactor_reactor, volume_ether_bromobenzene_flush, default_speed_fast, default_speed_slow);
+
+    # stirring and waiting
+    S SET_STIR_RPM(reactor_reactor, grignard_stirring_rate);
+    S SET_TEMP(reactor_reactor, grignard_temperature);
+    S START_STIR(reactor_reactor);
+    S START_HEAT(reactor_reactor);
+    S SET_RECORDING_SPEED(150);
+    S WAIT(wait_time_grignard_initiation);
+    S STOP_HEAT(reactor_reactor);
+    S SET_TEMP(reactor_reactor, room_temperature);
+    S STIRRER_WAIT_FOR_TEMP(reactor_reactor);
+    S SET_RECORDING_SPEED(50);
+
+    # add rest of the bromobenzene
+    S MOVE(flask_bromobenzene, reactor_reactor, volume_bromobenzene_2, default_speed_fast, default_speed_slow, 1);  # dispense dead slow
+    S MOVE(flask_ether, reactor_reactor, volume_ether_bromobenzene_flush, default_speed_fast, default_speed_slow);
+
+    # wash backbone
+    FOR(3){
+        S MOVE(flask_ether, waste_reactor, 5, default_speed_fast, default_speed_slow);
+    }
+    S MOVE(waste_reactor, waste_reagents_1, 5);  # flush lines with air
+
+    # wait for formation to complete
+    S SET_RECORDING_SPEED(100);
+    S WAIT(wait_time_grignard_formation);
+
+    # heat to reflux and wait again
+    S SET_TEMP(reactor_reactor, grignard_temperature);
+    S START_HEAT(reactor_reactor);
+    S WAIT(wait_time_grignard_formation);
+
+    # add the benzaldehyde
+    S SET_STIR_RPM(reactor_reactor, 250);
+    S MOVE(flask_benzaldehyde, reactor_reactor, volume_benzaldehyde, default_speed_fast, default_speed_slow, 1);  # dispense dead slow
+
+    # wash backbone
+    FOR(3){
+        S MOVE(flask_ether, waste_reactor, 5, default_speed_fast, default_speed_slow);
+    }
+    S MOVE(waste_reactor, waste_reagents_1, 5);  # flush lines with air
+
+    # waiting for reaction completion
+    S SET_RECORDING_SPEED(5000);
+    S WAIT(wait_time_grignard_reaction);
+
+    # cooling down
+    S STOP_HEAT(reactor_reactor);
+    S SET_TEMP(reactor_reactor, room_temperature);
+    S STIRRER_WAIT_FOR_TEMP(reactor_reactor);
+
+    # aqueous workup
+    S SET_RECORDING_SPEED(50);
+    S SET_STIR_RPM(reactor_reactor, extraction_stirring_rate);
+    S MOVE(flask_water, reactor_reactor, volume_water_quench);
+    S WAIT(60);
+    S MOVE(flask_HCl, reactor_reactor, volume_acid_dilution);
+    S SET_RECORDING_SPEED(200);
+    S WAIT(wait_time_grignard_extraction);
+    S SET_RECORDING_SPEED(50);
+    S STOP_STIR(reactor_reactor);
+    S WAIT(60);
+
+    # move to separator
+    S MOVE(reactor_reactor, flask_separator_top, all, default_speed_fast, default_speed_slow);  # aspirate more slowly
+    FOR(3){
+        S MOVE(flask_HCl, reactor_reactor, 5);
+        S MOVE(flask_ether, reactor_reactor, 5, default_speed_fast, default_speed_slow);
+        S START_STIR(reactor_reactor);
+        S WAIT(60);
+        S STOP_STIR(reactor_reactor);
+        S MOVE(reactor_reactor, flask_separator_top, all, default_speed_fast, default_speed_slow);
+    }
+
+    # vigorous stirring, then settling
+    S SET_RECORDING_SPEED(5);
+    S SET_STIR_RPM(flask_separator_top, extraction_overhead_stirring_rate);
+    S START_STIR(flask_separator_top);
+    S WAIT(60);
+    S SET_STIR_RPM(flask_separator_top, extraction_settling_stirring_rate);
+    S SET_RECORDING_SPEED(10);
+    S WAIT(wait_time_settling);
+    S STOP_STIR(flask_separator_top);
+
+    # do the separation, keep the organic layer in the sep funnel
+    S SET_RECORDING_SPEED(50);
+    S MOVE(flask_separator_bottom, waste_workup, 100);  # dump the bulk of the aqueous layer
+    S SEPARATE(waste_workup, flask_separator_top);
+
+    # add water
+    S MOVE(flask_water, reactor_reactor, volume_water_wash);
+    S START_STIR(reactor_reactor);
+    S WAIT(60);
+    S STOP_STIR(reactor_reactor);
+    S MOVE(reactor_reactor, flask_separator_bottom, all);  # add from the bottom to flush the sensor
+    S MOVE(flask_water, flask_separator_bottom, 5);
+
+    # vigorous stirring, then settling
+    S SET_STIR_RPM(flask_separator_top, extraction_overhead_stirring_rate);
+    S START_STIR(flask_separator_top);
+    S WAIT(60);
+    S SET_STIR_RPM(flask_separator_top, extraction_settling_stirring_rate);
+    S WAIT(wait_time_settling);
+    S STOP_STIR(flask_separator_top);
+
+    # do the separation, transfer the top layer to the rotavap
+    S SEPARATE(waste_workup, rotavap);
+
+    # sweeping up
+    FOR(3){
+        S MOVE(flask_ether, reactor_reactor, 5, default_speed_fast, default_speed_slow);
+        S START_STIR(reactor_reactor);
+        S WAIT(30);
+        S STOP_STIR(reactor_reactor);
+        S MOVE(reactor_reactor, flask_separator_top, all, default_speed_fast, default_speed_slow);
+        S SET_STIR_RPM(flask_separator_top, 1000);
+        S START_STIR(flask_separator_top);
+        S WAIT(60);
+        S STOP_STIR(flask_separator_top);
+        S MOVE(flask_separator_bottom, rotavap, all, default_speed_fast, default_speed_slow);
+    }
+
+    # rotating off solvent
+    evaporate_to_dryness(115, 700, 100, 1800, 3600);  # TODO not hard code that
+
+    # cleaning out the remaining salt
+    S SET_RECORDING_SPEED(100);
+    S MOVE(flask_HCl, reactor_reactor, 25);
+    S MOVE(flask_water, reactor_reactor, 75);
+    S START_STIR(reactor_reactor);
+    S WAIT(900);  # wait for 15min for every solid to dissolve
+    S STOP_STIR(reactor_reactor);
+    S MOVE(reactor_reactor, flask_separator_top, all);
+    S MOVE(reactor_reactor, flask_separator_top, 25);  # empty the reactor really well
+
+    S SET_STIR_RPM(flask_separator_top, 1000);
+    S START_STIR(flask_separator_top);
+    S WAIT(60);
+    S STOP_STIR(flask_separator_top);
+    S MOVE(flask_separator_bottom, waste_workup, all);
+    S MOVE(flask_separator_bottom, waste_workup, 25);  # empty the separator really well
+
+    clean_reactor();
+    clean_separator();
+
+    ###############
+    # Bromination #
+    ###############
+
+    # charge the reactor with acetyl bromide
+    S SET_RECORDING_SPEED(50);
+    S MOVE(flask_acetyl_bromide, reactor_reactor, volume_acetyl_bromide, default_speed_fast, default_speed_slow);
+    FOR(3){  # clean lines
+        S MOVE(flask_toluene, waste_reactor, volume_default_wash);
+    }
+
+    # dissolve starting material
+    S MOVE(flask_toluene, rotavap, volume_toluene_1);
+    S LIFT_ARM_DOWN(rotavap);
+    S SET_INTERVAL(rotavap, 5);
+    S SET_ROTATION(rotavap, 100);
+    S START_ROTATION(rotavap);
+    S SET_RECORDING_SPEED(100);
+    S WAIT(900);
+    S SET_RECORDING_SPEED(50);
+
+    # transfer to reactor and sweep up the rest
+    S STOP_ROTATION(rotavap);
+    S SET_STIR_RPM(reactor_reactor, 200);  # TODO make variable
+    S START_STIR(reactor_reactor);
+    S MOVE(rotavap, reactor_reactor, all);
+    S MOVE(flask_toluene, rotavap, volume_toluene_2);
+    S START_ROTATION(rotavap);
+    S WAIT(300);
+    S STOP_ROTATION(rotavap);
+    S MOVE(rotavap, reactor_reactor, all);
+    S MOVE(flask_toluene, rotavap, volume_toluene_3);
+    S START_ROTATION(rotavap);
+    S WAIT(300);
+    S STOP_ROTATION(rotavap);
+    S MOVE(rotavap, reactor_reactor, all);
+    S LIFT_ARM_UP(rotavap);
+    S SET_INTERVAL(rotavap, 0);
+
+    S SET_RECORDING_SPEED(2000);
+    reflux_and_wait(bromination_temperature, bromination_time, room_temperature, reactor_reactor);
+    S SET_RECORDING_SPEED(50);
+
+    # transfer to rotavap and sweep up
+    S STOP_STIR(reactor_reactor);
+    S MOVE(reactor_reactor, rotavap, all);
+    FOR(3){
+        S MOVE(flask_toluene, reactor_reactor, 10);
+        S START_STIR(reactor_reactor);
+        S WAIT(60);
+        S STOP_STIR(reactor_reactor);
+        S MOVE(reactor_reactor, rotavap, all);
+    }
+
+    # distill off toluene
+    evaporate_to_dryness(volume_bromination_reaction, 50, 20, 1800, 3600);
+
+    ##############
+    # Williamson #
+    ##############
+
+    # charge the reactor with DMEA
+    S SET_RECORDING_SPEED(50);
+    S MOVE(flask_dimethylaminoethanol, reactor_reactor, volume_dimethylaminoethanol, default_speed_fast, default_speed_slow);
+    S MOVE(flask_toluene, reactor_reactor, volume_toluene_williamson);
+
+    # dissolve starting material
+    S MOVE(flask_toluene, rotavap, volume_toluene_4);
+    S LIFT_ARM_DOWN(rotavap);
+    S SET_ROTATION(rotavap, 100);
+    S SET_INTERVAL(rotavap, 5);
+    S START_ROTATION(rotavap);
+    S SET_BATH_TEMP(rotavap, default_temp_rv);
+    S START_HEATER_BATH(rotavap);
+    S SET_RECORDING_SPEED(100);
+    S WAIT(900);
+    S SET_RECORDING_SPEED(50);
+
+    # transfer to reactor and sweep up the rest
+    S STOP_ROTATION(rotavap);
+    S SET_STIR_RPM(reactor_reactor, 200);  # TODO make variable
+    S START_STIR(reactor_reactor);
+    S MOVE(rotavap, reactor_reactor, all);
+    S MOVE(flask_toluene, rotavap, volume_toluene_5);
+    S START_ROTATION(rotavap);
+    S WAIT(300);
+    S STOP_ROTATION(rotavap);
+    S MOVE(rotavap, reactor_reactor, all);
+    S MOVE(flask_toluene, rotavap, volume_toluene_6);
+    S START_ROTATION(rotavap);
+    S WAIT(300);
+    S STOP_ROTATION(rotavap);
+    S MOVE(rotavap, reactor_reactor, all);
+    S STOP_HEATER_BATH(rotavap);
+    S LIFT_ARM_UP(rotavap);
+    S SET_INTERVAL(rotavap, 0);
+
+    # wash the line with toluene
+    FOR(3){
+        S MOVE(flask_toluene, waste_reactor, volume_default_wash);
+    }
+    S MOVE(waste_reactor, waste_reagents_1, volume_default_wash);
+
+    S SET_RECORDING_SPEED(2000);
+    reflux_and_wait(williamson_temperature, williamson_time, 40, reactor_reactor);
+    S SET_RECORDING_SPEED(50);
+
+    # aqueous workup
+    S MOVE(flask_toluene, reactor_reactor, 25);  # ungoopify tube
+    S MOVE(flask_NaOH, reactor_reactor, 25);  # dissolve gloop
+    S SET_STIR_RPM(reactor_reactor, 400);
+
+    FOR(3){  # flush NaOH out
+        S MOVE(flask_water, waste_workup, volume_default_wash);
+    }
+    S MOVE(flask_water, flask_NaOH, 1);  # flush the NaOH out of the valve
+
+    S SET_RECORDING_SPEED(150);
+    S WAIT(900);  # let the stuff dissolve
+    S SET_RECORDING_SPEED(50);
+    S SET_TEMP(reactor_reactor, room_temperature);
+    S STIRRER_WAIT_FOR_TEMP(reactor_reactor);
+    S SET_RECORDING_SPEED(10);
+    S MOVE(flask_water, reactor_reactor, 5);  # ungoopify again
+    S SET_RECORDING_SPEED(50);
+    S WAIT(300);  # for safety, you know...
+
+    S STOP_STIR(reactor_reactor);
+    S WAIT(300);
+
+    S SET_RECORDING_SPEED(10);
+    S MOVE(reactor_reactor, flask_separator_top, all, default_speed_fast, default_speed_slow);
+
+    FOR(3){
+        S MOVE(flask_toluene, reactor_reactor, 10);
+        S MOVE(flask_water, reactor_reactor, 10);
+        S START_STIR(reactor_reactor);
+        S WAIT(60);
+        S STOP_STIR(reactor_reactor);
+        S MOVE(reactor_reactor, flask_separator_bottom, all);
+    }
+
+    S MOVE(flask_water, flask_separator_bottom, 10);
+
+    S SET_STIR_RPM(flask_separator_top, extraction_overhead_stirring_rate);
+    S START_STIR(flask_separator_top);
+    S WAIT(60);  # extracting
+    S SET_STIR_RPM(flask_separator_top, extraction_settling_stirring_rate);
+    S SET_RECORDING_SPEED(50);
+    S WAIT(300);  # settling
+    S SET_RECORDING_SPEED(10);
+    S STOP_STIR(flask_separator_top);
+
+    S MOVE(flask_separator_bottom, flask_holding, 50);  # move the bulk of the aqueous layer
+    S SEPARATE(flask_holding, flask_separator_top);
+
+    # now extract with HCl thrice
+    FOR(3){
+        S SET_RECORDING_SPEED(10);
+        S MOVE(flask_HCl, flask_separator_bottom, volume_HCl);  # pump in from the bottom to purge tubing
+        S MOVE(flask_water, flask_separator_bottom, 20);
+        S SET_STIR_RPM(flask_separator_top, extraction_overhead_stirring_rate);
+        S START_STIR(flask_separator_top);
+        S WAIT(60);  # extracting
+        S SET_STIR_RPM(flask_separator_top, extraction_settling_stirring_rate);
+        S SET_RECORDING_SPEED(50);
+        S WAIT(300);  # settling
+        S STOP_STIR(flask_separator_top);
+        S MOVE(flask_separator_bottom, flask_holding, volume_pre_extraction_acidic);  # move the bulk of the aqueous layer
+        S SEPARATE(flask_holding, flask_separator_top);  # keep the organic layer in the sep funnel
+    }
+
+    # dump spent organic phase
+    S SET_RECORDING_SPEED(10);
+    S MOVE(flask_separator_bottom, waste_workup, all);
+
+    # basifying aqueous layer
+    S SET_STIR_RPM(flask_holding, 400);
+    S START_STIR(flask_holding);
+    S MOVE(flask_NaOH, flask_holding, volume_NaOH);
+    FOR(3){
+        S MOVE(flask_water, waste_aqueous, volume_default_wash);
+    }
+    S MOVE(flask_water, flask_NaOH, 1);  # flush the NaOH out of the valve
+    S WAIT(60);
+
+    # re-extracting product
+    FOR(3){
+        S SET_RECORDING_SPEED(10);
+        S STOP_STIR(flask_holding);
+        S MOVE(flask_holding, flask_separator_top, all);
+        S MOVE(flask_water, flask_separator_bottom, 2);  # flush in some water, again to purge tube
+        S MOVE(flask_ether, flask_separator_top, volume_ether_extraction, default_speed_fast, default_speed_slow);
+        S SET_STIR_RPM(flask_separator_top, extraction_overhead_stirring_rate);
+        S START_STIR(flask_separator_top);
+        S WAIT(60);  # extracting
+        S SET_STIR_RPM(flask_separator_top, extraction_settling_stirring_rate);
+        S WAIT(60);  # settling
+        S STOP_STIR(flask_separator_top);
+        S MOVE(flask_separator_bottom, flask_holding, volume_pre_extraction_basic);  # move the bulk of the aqueous layer
+        S START_STIR(flask_holding);
+        S SET_RECORDING_SPEED(50);
+        S SEPARATE(flask_holding, rotavap);  # keep the organic layer in the sep funnel
+    }
+
+    S SET_RECORDING_SPEED(10);
+    S STOP_STIR(flask_holding);
+
+    # dump spent aqueous phase
+    S MOVE(flask_holding, waste_workup, all);
+
+    # rotating off solvent
+    evaporate_to_dryness(150, 700, 100, 1800, drying_time_DMAE);  # TODO not hard code that
+
+    # wash reactor
+    clean_reactor();
+
+    # clean separator with water and acid
+    S SET_RECORDING_SPEED(50);
+    S MOVE(flask_HCl, flask_separator_top, 25);
+    S MOVE(flask_water, flask_separator_top, 175);
+    S SET_STIR_RPM(flask_separator_top, 1000);
+    S START_STIR(flask_separator_top);
+    S WAIT(60);
+    S STOP_STIR(flask_separator_top);
+    S MOVE(flask_separator_bottom, waste_workup, all);
+    S MOVE(flask_separator_bottom, waste_workup, 25);  # empty the separator really well
+
+    # run normal cleaning routines
+    clean_separator();
+    clean_holding_flask();
+
+    ###############################
+    # Hydrochloride precipitation #
+    ###############################
+
+    # wash filter first
+    S SET_RECORDING_SPEED(10);
+    S MOVE(flask_ether, filter_filter_top, 10, default_speed_fast, default_speed_slow);
+    S MOVE(flask_filter_bottom, waste_solvents, 10, default_speed_fast, default_speed_slow);
+
+    # prepare and charge filter
+    S MOVE(flask_ether, flask_filter_bottom, dead_volume_filter, default_speed_fast, default_speed_slow);
+    S MOVE(flask_HCl_Et2O, waste_reagents_2, 5, default_speed_fast, default_speed_slow);  # flush first
+    S MOVE(flask_HCl_Et2O, filter_filter_top, volume_etheric_HCl, default_speed_fast, default_speed_slow);
+
+    # flush in the rest
+    S MOVE(flask_ether, filter_filter_top, 5, default_speed_fast, default_speed_slow);
+
+    # wash lines
+    FOR(3){
+        S MOVE(flask_ether, waste_solvents, 5, default_speed_fast, default_speed_slow);
+    }
+
+    # transferring DPH
+    S SET_STIR_RPM(filter_filter_top, 400);
+    S START_STIR(filter_filter_top);
+    S LIFT_ARM_DOWN(rotavap);
+    S SET_INTERVAL(rotavap, 5);
+    S SET_ROTATION(rotavap, 100);
+
+    FOR(3){
+        S SET_RECORDING_SPEED(10);
+        S MOVE(flask_ether, rotavap, volume_ether_transfer, default_speed_fast, default_speed_slow);
+        S START_ROTATION(rotavap);
+        S WAIT(60);
+        S STOP_ROTATION(rotavap);
+        S SET_RECORDING_SPEED(100);
+        S MOVE(rotavap, filter_filter_top, all, default_speed_fast, default_speed_slow, 1);  # aspirate slow, dispense dead slow
+    }
+
+    S SET_RECORDING_SPEED(20);
+    S SET_INTERVAL(rotavap, 0);
+
+    S SET_STIR_RPM(filter_filter_top, 550);
+    S WAIT(180);
+    S STOP_STIR(filter_filter_top);
+
+    # filter
+    S SET_RECORDING_SPEED(450);
+    S MOVE(flask_filter_bottom, waste_solvents, 110, default_speed_fast, 3);
+    S SET_RECORDING_SPEED(10);
+
+    # suck trough some argon
+    FOR(5){
+        S MOVE(flask_filter_bottom, waste_solvents, 25);
+    }
+
+    # dry under vacuum
+    S SET_RECORDING_SPEED(100);
+    S SWITCH_VACUUM(flask_filter_bottom, vacuum);
+    S SET_CHILLER(filter_filter_top, nytol_drying_temperature);
+    S SWITCH_CHILLER(filter_filter_top, 1);  # switch on coil, divert flow to filter
+    S START_CHILLER(filter_filter_top);
+    S CHILLER_WAIT_FOR_TEMP(filter_filter_top);
+    S WAIT(ether_drying_time);
+    S STOP_CHILLER(filter_filter_top);
+    S SWITCH_VACUUM(flask_filter_bottom, backbone);
+    S SET_RECORDING_SPEED(10);
+
+    #####################
+    # Recrystallisation #
+    #####################
+
+    # add isoprop, stir and heat to 60°C
+    S MOVE(flask_isoprop, flask_filter_bottom, volume_isoprop_recrystallisation);
+    S SET_STIR_RPM(filter_filter_top, recrystallisation_rpm);
+    S START_STIR(filter_filter_top);
+    S SET_CHILLER(filter_filter_top, dissolution_temperature);
+    S SWITCH_CHILLER(filter_filter_top, 1);  # switch on coil, divert flow to filter
+    S START_CHILLER(filter_filter_top);
+    S SET_RECORDING_SPEED(100);
+    S CHILLER_WAIT_FOR_TEMP(filter_filter_top);
+
+    # wait for dissolution
+    S WAIT(dissolution_time);
+
+    # switch off cooling, and wait for it to slowly cool
+    S SET_COOLING_POWER(filter_filter_top, 0);
+    S SET_CHILLER(filter_filter_top, cooling_threshold);
+    S CHILLER_WAIT_FOR_TEMP(filter_filter_top);
+    S SWITCH_CHILLER(filter_filter_top, 1);  # switch on coil, divert flow to filter
+    S SET_COOLING_POWER(filter_filter_top, 100);
+
+    # now cool to -20°C and wait until crystallisation is finished
+    S SET_CHILLER(filter_filter_top, crystallisation_temperature);
+    S START_CHILLER(filter_filter_top);
+    S CHILLER_WAIT_FOR_TEMP(filter_filter_top);
+    S WAIT(crystallisation_time);
+
+    # now filter off the solution
+    S STOP_STIR(filter_filter_top);
+    S SET_RECORDING_SPEED(450);
+    S MOVE(flask_filter_bottom, waste_solvents, all, default_speed_fast, 3);
+    S SET_RECORDING_SPEED(10);
+
+    # suck trough some argon
+    FOR(5){
+        S MOVE(flask_filter_bottom, waste_solvents, 25);
+    }
+
+    # add more isoprop, and wash the solid
+    S MOVE(flask_isoprop, flask_filter_bottom, washing_volume);
+    S SET_STIR_RPM(filter_filter_top, recrystallisation_rpm);
+    S START_STIR(filter_filter_top);
+    S SET_RECORDING_SPEED(50);
+    S WAIT(crystallisation_time);
+
+    # filter off the solution
+    S STOP_STIR(filter_filter_top);
+    S SET_RECORDING_SPEED(200);
+    S MOVE(flask_filter_bottom, waste_solvents, all, default_speed_fast, 3);
+    S SET_RECORDING_SPEED(10);
+
+    # suck trough some argon
+    FOR(5){
+        S MOVE(flask_filter_bottom, waste_solvents, 25);
+    }
+
+    # dry under vacuum
+    S SWITCH_VACUUM(flask_filter_bottom, vacuum);
+    S SET_CHILLER(filter_filter_top, nytol_drying_temperature);
+    S SET_RECORDING_SPEED(250);
+    S CHILLER_WAIT_FOR_TEMP(filter_filter_top);
+    S WAIT(nytol_drying_time);
+
+    # return to room temperature, stop vacuum and heating
+    S SET_CHILLER(filter_filter_top, room_temperature);
+    S CHILLER_WAIT_FOR_TEMP(filter_filter_top);
+    S SET_RECORDING_SPEED(1);
+    S STOP_CHILLER(filter_filter_top);
+    S SWITCH_VACUUM(flask_filter_bottom, backbone);
+
+    ##################
+    # Final cleaning #
+    ##################
+
+    # clean rotavap
+    clean_rotavap();
+
+    # clean backbone
+    S SET_RECORDING_SPEED(10);
+    FOR(3){
+        S MOVE(flask_water, waste_reagents_1, 10);
+    }
+    FOR(3){
+        S MOVE(flask_isoprop, waste_reagents_1, 10);
+    }
+    FOR(3){
+        S MOVE(flask_ether, waste_aqueous, 10);
+    }
+    FOR(3){
+        S MOVE(waste_aqueous, waste_reagents_1, 10);
+    }
+}

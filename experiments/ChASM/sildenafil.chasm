@@ -1,0 +1,854 @@
+# General constants
+
+DEF dead_volume_filter = 25; #mL
+
+# 1st Step: Chlorosulphonation
+DEF volume_chlorosulphonic_acid = 10.3125;  #mL 24.038G (206.7 mmol) 30 ML CONSUMED in TOTAL
+
+DEF volume_thionyl_chloride_1st_step = 2.95; # mL 5.968G (50.2 mmol)   30ML cONSUMED IN TOTAL
+
+DEF volume_ethoxybenzoic_acid = 5.65; # mL 8.32G (50 mmol)
+DEF volume_water_1st = 31.5; # mL
+DEF volume_water_washing_1st = 8; # mL
+
+# 2nd Step: substituion of chloride
+DEF volume_water_2nd = 30; # 3.6 mL per g of starting mat
+DEF volume_methyl_piperazine = 8.634; #8.134; # now again only 90% yield#increased to roughly 95% yield in first step # mL
+#DEF volume_HCl_neutralise = 2.2; #ml, should equal 0.33 eq of methylpiperazine, the excess, use HCL 4.47M
+DEF volume_water_washing_2nd = 6; # mL
+
+# 3rd: Formation of Acid chloride and coupling
+DEF volume_DCM = 46.73; # mL 5 ml per gram of benzoic acid
+DEF volume_thionyl_chloride_3rd_step = 2.68;# now 1.3 eq #mL increased to 1.4 eq 2.8875 #2.475;  mL 1.2 eq
+DEF volume_DMF = 0.087; # mL 0.04 eq
+DEF volume_pyrazole_in_DCM = 61.10; # mL, volume to be determined, 0.95 eq pyrazole in 11 mL of DCM per gram
+DEF volume_TEA_prime = 5; #ml, this is to wash away potentially acidic compounds from backbone and neutralise remnants in reactor
+DEF volume_TEA = 17.2; # now 1.3 eq# increased to 4.7 eq 18.5 #15.863; # mL 4 eq
+DEF volume_water_3rd = 84; #decreaed to 84 again# mL increased so that in total 300 mL of liquid, increased 30 mL
+
+# 4th: Cyclisation to form Sildenafil
+DEF volume_KOtBu_in_tBuOH = 53.5; # mL, in tBuOH, 0.5M , volume to be determined (should be 1.2 eq KOtBu)
+DEF volume_water_4th = 55.5; # mL, volume to be determined, 5.07 mL per gram starting material
+#DEF volume_water_HCl_dilute = 65.83; #ml, so volumeHCl is diluted to 0.447 M
+#DEF volume_HCl = 7.314; # mL, volume to be determined, 4.47 M
+DEF volume_HCl_dilute = 54.83; # 0.447 M
+DEF volume_water_washing_4th = 10; #3 mL
+
+DEF sildenafil_stirring_rate = 400; # RPM
+DEF sildenafil_stirring_rate_slow = 200; #RPM
+DEF extraction_overhead_stirring_rate = 700;  # RPM
+DEF extraction_settling_stirring_rate = 30;  # RPM
+DEF default_speed_rv = 280; #RPM
+
+DEF wait_time_sildenafil_stage_1 = 43200; # 12 h
+DEF crystallisation_time_sildenafil_stage_1 = 600;#3000, but now the cleanreactor is here, therefore waiting reduced to 10 min; #3600; # 1 h, decreased because addition and reactor clean and hose clean take long enough to make that unnecessery
+DEF wait_time_sildenafil_stage_2 = 300; # 5 min, Normally no crystallisation observed after this time, check if seeding neccesery
+DEF crystallisation_time_sildenafil_stage_2 = 7200;#10800; # 3 h, longer to allow for checking if crystals
+DEF wait_time_sildenafil_stage_3_activation = 18000; # 5 h, decreased time (precipitate after while)
+DEF wait_time_sildenafil_stage_3_coupling = 57600; # 16 h
+DEF wait_time_sildenafil_stage_3_coupling_cooled = 1800; #30 min, before coupling is warmed to room temperature
+DEF wait_time_sildenafil_stage_4 = 28800; # 8 h
+DEF crystallisation_time_sildenafil_stage_4 = 3600; # 1 h
+
+DEF room_temperature = 25; # oC
+
+DEF stage_1_temperature_addition = 15; # oC
+DEF stage_1_temperature_reaction = room_temperature; # oC
+DEF stage_1_temperature_quench = 0.5; # oC
+DEF stage_2_temperature = 0.5; # oC
+DEF stage_3_temperature_acid_chlorid_formation = 5; # oC
+DEF stage_3_temperature_acid_chlorid_completion = room_temperature; # oC
+DEF stage_3_temperature_coupling_addition = 10; # oC
+DEF stage_3_temperature_coupling_completion = room_temperature; # oC
+DEF stage_4_temperature_reflux = 105; # oC # increased for 10deg, because there is an offset observable
+DEF stage_4_temperature_granulation = 10; # oC
+
+
+DEF default_speed_dead_slow = 0.5; # mL/min
+DEF default_speed_slow = 20;  # mL/min
+DEF default_speed_fast = 50;  # mL/min
+DEF default_speed_viscous = 2; # mL/min for viscous stuff
+
+DEF wash_precipitate(flask_washing_liquid, volume_washing_liquid){
+    #washes precipitate in filter with volume_washing_liquid of flask_washing_liquid for 2 times
+    S SET_RECORDING_SPEED(60);
+    S SWITCH_CHILLER(flask_filter_bottom, 0);
+	S WAIT(5);
+    S SET_CHILLER(filter_filter_top, 0.5);
+    S START_CHILLER(filter_filter_top);
+	S WAIT(20);
+    S CHILLER_WAIT_FOR_TEMP(filter_filter_top);
+    S MOVE(flask_filter_bottom, waste_reactor, 20);
+#    ###S SWITCH_VACUUM(filter_filter_top, vacuum); #seems to cause a breaking of the stirrer (resistance)
+
+    S SWITCH_VACUUM(filter_filter_top, backbone);
+
+    S SET_STIR_RPM(filter_filter_top, sildenafil_stirring_rate_slow);
+    FOR(2){
+        S SET_RECORDING_SPEED(36);
+        S MOVE(flask_washing_liquid, filter_filter_top, volume_washing_liquid);
+        S MOVE(flask_washing_liquid, filter_filter_top, 1, default_speed_slow, default_speed_slow, default_speed_dead_slow); # to clean side of filter where hose comes in a bit
+        S START_STIR(filter_filter_top);
+        S SET_RECORDING_SPEED(120);
+        S WAIT(120); #soaking for 2 min
+        S SET_RECORDING_SPEED(60);
+        S STOP_STIR(filter_filter_top);
+        S MOVE(flask_filter_bottom, waste_reactor, all);# it occured that effective filtration needs much more extraction, otherwise washing is not effective
+        S MOVE(flask_filter_bottom, waste_reactor, 20);
+#        #####S SWITCH_VACUUM(filter_filter_top, vacuum);
+    }
+    S SET_RECORDING_SPEED(300);
+    S SWITCH_VACUUM(filter_filter_top, vacuum);
+    S WAIT(300);
+    S SWITCH_VACUUM(filter_filter_top, backbone);
+    S STOP_CHILLER(filter_filter_top);
+    S SET_RECORDING_SPEED(30);
+}
+
+DEF clean_hose(volume_washing_hose, part_backbone_used){ #general cleaning method for hoses and pumps. Takes the desired volume of washing liquid as an argument. The cleaning agents are moved from one side through the whole backbone and pumps. By that technique, everything in between is cleaned. The first cleaning step is with ether, to get rid of really reactive chemicals like chlorosulphonic acid. Then everything is washed with water, followed by acetone and once again, ether, to get rid of reactive solvents.
+    # make sure washing liquids are on the valve on other side of rig than waste
+    # PART_BACKBONE_USED: put in the name of the waste on the valve, up till where you want to clean, works in this graphfile from left to right
+
+    S SET_RECORDING_SPEED(180);
+
+    S MOVE(flask_ether, waste_reagents_1, 1, default_speed_fast, default_speed_fast);
+    S MOVE(flask_ether, waste_reagents_2, 1, default_speed_fast, default_speed_fast);
+    S MOVE(flask_ether, waste_solvents, 1, default_speed_fast, default_speed_fast);
+    S MOVE(flask_ether, waste_reactor, 1, default_speed_fast, default_speed_fast);
+
+    S MOVE(flask_ether, part_backbone_used, 5, default_speed_fast, default_speed_fast);
+    S MOVE(flask_water, part_backbone_used, volume_washing_hose, default_speed_fast, default_speed_slow);
+    S MOVE(part_backbone_used, waste_reagents_1, 40); #dries backbone a bit
+
+    S MOVE(flask_acetone, part_backbone_used, volume_washing_hose, default_speed_fast, default_speed_slow);
+    S MOVE(flask_acetone, part_backbone_used, volume_washing_hose, default_speed_fast, default_speed_slow);
+    S MOVE(part_backbone_used, waste_reagents_1, 40); #dries backbone a bit
+
+    S MOVE(flask_ether, part_backbone_used, volume_washing_hose, default_speed_fast, default_speed_slow);
+    S MOVE(flask_ether, part_backbone_used, volume_washing_hose, default_speed_fast, default_speed_slow);
+    S MOVE(part_backbone_used, waste_reagents_1, 40); #dries backbone a bit
+    S SET_RECORDING_SPEED(30);
+}
+
+
+DEF dry_hose_filter(){ #flask has to contain nothing but solids! best do before drying solids
+    S SET_RECORDING_SPEED(80);
+    S MOVE(filter_filter_top, waste_solvents, 20, default_speed_fast, default_speed_slow);
+    S MOVE(flask_filter_bottom, waste_reactor, 40, default_speed_fast, default_speed_slow);
+    S MOVE(flask_acetone, filter_filter_top, 1, default_speed_fast, default_speed_slow);
+    S MOVE(flask_acetone, flask_filter_bottom, 2, default_speed_fast, default_speed_slow);
+    S MOVE(filter_filter_top, waste_solvents, 40, default_speed_fast, default_speed_slow);
+    S MOVE(flask_filter_bottom, waste_reactor, 40, default_speed_fast, default_speed_slow);
+    S MOVE(flask_ether, filter_filter_top, 1, default_speed_fast, default_speed_slow);
+    S MOVE(flask_ether, flask_filter_bottom, 2, default_speed_fast, default_speed_slow);
+    S MOVE(filter_filter_top, waste_solvents, 40, default_speed_fast, default_speed_slow);
+    S MOVE(flask_filter_bottom, waste_reactor, 40, default_speed_fast, default_speed_slow);
+    S MOVE(waste_reactor, flask_filter_bottom, 12);
+    S SET_RECORDING_SPEED(30);
+}
+
+
+DEF dry_hose(flask_hose_to_be_dried, volume_hose){ #flask has to be empty, only makes sense for rotavap and reactor
+    S SET_RECORDING_SPEED(60);
+
+    #make sure no drying cartridge is in between if using to dry rotavap tubing
+    S MOVE(flask_hose_to_be_dried, waste_rotary, 20, default_speed_fast, default_speed_slow);
+
+    ###S MOVE(flask_acetone, flask_hose_to_be_dried, volume_hose, default_speed_fast, default_speed_slow); #acetone might react therefore not employed
+    S MOVE(flask_hose_to_be_dried, waste_rotary, 20, default_speed_fast, default_speed_slow);
+    S MOVE(flask_ether, flask_hose_to_be_dried, volume_hose, default_speed_fast, default_speed_slow);
+    S MOVE(flask_hose_to_be_dried, waste_rotary, 20, default_speed_fast, default_speed_slow);
+    S SET_RECORDING_SPEED(30);
+}
+
+DEF clean_reactor(flask_washing_liquid){ #function takes one argument, for example flask_ether, and washes with specified liquid
+# for first 3 steps sufficient, check if for 4th
+    S SET_RECORDING_SPEED(340);
+
+    S MOVE(reactor_reactor, waste_solvents, 20);
+
+    S SET_STIR_RPM(reactor_reactor, 400);
+    S START_STIR(reactor_reactor);
+    S MOVE(flask_washing_liquid, reactor_reactor, 10);
+    S WAIT(60);
+    S STOP_STIR(reactor_reactor);
+    S MOVE(reactor_reactor, waste_solvents, all, default_speed_slow, default_speed_slow);
+
+    S SET_STIR_RPM(reactor_reactor, 400);
+    S START_STIR(reactor_reactor);
+    S MOVE(flask_washing_liquid, reactor_reactor, 10);
+    S WAIT(60);
+    S STOP_STIR(reactor_reactor);
+    S MOVE(reactor_reactor, waste_solvents, all, default_speed_slow, default_speed_slow);
+
+    S SET_STIR_RPM(reactor_reactor, 400);
+    S START_STIR(reactor_reactor);
+    S MOVE(flask_washing_liquid, reactor_reactor, 200);
+    S WAIT(120);
+    S STOP_STIR(reactor_reactor);
+    S MOVE(reactor_reactor, waste_solvents, all, default_speed_slow, default_speed_slow);
+    S MOVE(reactor_reactor, waste_solvents, 50, default_speed_slow, default_speed_slow);
+
+    S SET_RECORDING_SPEED(30);
+}
+
+
+DEF clean_filter(flask_washing_liquid){ #function takes one argument, for example flask_ether, and washes with specified liquid
+    S SET_RECORDING_SPEED(120);
+    S SWITCH_VACUUM(filter_filter_top, backbone);
+    S SET_STIR_RPM(filter_filter_top, sildenafil_stirring_rate_slow);
+    S START_STIR(filter_filter_top);
+    S MOVE(flask_washing_liquid, filter_filter_top, 200);
+    S SET_RECORDING_SPEED(300);
+    S WAIT(600);
+    S SET_RECORDING_SPEED(120);
+    S MOVE(flask_filter_bottom, waste_reactor, all);
+    S STOP_STIR(filter_filter_top);
+    S SWITCH_VACUUM(filter_filter_top, vacuum);
+    S WAIT(60);
+    S SWITCH_VACUUM(filter_filter_top, backbone);
+    S SET_RECORDING_SPEED(30);
+}
+
+
+DEF prime_filter(temperature, solvent_bottom, filter_stirring){ # sets and starts stirring and temperature(via chiller) for the flask. Additionally, puts some solvent to the bottom, so reaction solution doesnt drop through frit and crystallize beneath.
+    S SET_RECORDING_SPEED(72);
+    S SWITCH_VACUUM(filter_filter_top, backbone);
+	S SWITCH_CHILLER(flask_filter_bottom, 0);
+    S SET_CHILLER(filter_filter_top, temperature);
+	S WAIT(5);
+    S START_CHILLER(filter_filter_top);
+
+    S SET_STIR_RPM(filter_filter_top, filter_stirring);
+    S START_STIR(filter_filter_top);
+
+    S MOVE(solvent_bottom, flask_filter_bottom, dead_volume_filter);
+
+    S CHILLER_WAIT_FOR_TEMP(filter_filter_top);
+    S SET_RECORDING_SPEED(30);
+}
+
+DEF dry_precipitate(){ # dries the precipitate by sucking air through precipitate at 50 deg celsius
+    S SET_RECORDING_SPEED(2000);
+    S SWITCH_CHILLER(flask_filter_bottom, 0);
+	S WAIT(5);
+    S SET_CHILLER(filter_filter_top, 50);
+    S START_CHILLER(filter_filter_top);
+    S SWITCH_VACUUM(filter_filter_top, vacuum);
+    S WAIT(7200);
+    S SWITCH_VACUUM(filter_filter_top, backbone);
+
+    dry_hose_filter();
+
+    S SWITCH_VACUUM(filter_filter_top, vacuum);
+    S SET_RECORDING_SPEED(2000);
+    S WAIT(14400);
+    S STOP_CHILLER(filter_filter_top);
+    S SWITCH_VACUUM(filter_filter_top, backbone);
+    S SET_RECORDING_SPEED(30);
+}
+
+
+DEF separate_phases(position_drying_cartridge, destination_bottom_layer, destination_top_layer, flask_solvent_used, volume_organic_phase){ # hand volume_organic_phase: 90% of total organic phase(will be pumped without reading)
+    S SET_RECORDING_SPEED(24);
+    S SET_STIR_RPM(flask_separator_top, extraction_overhead_stirring_rate);
+    S START_STIR(flask_separator_top);
+    S WAIT(120);  # extracting
+    S STOP_STIR(flask_separator_top);
+
+    S SET_RECORDING_SPEED(60);
+
+    S SET_STIR_RPM(flask_separator_top, extraction_settling_stirring_rate);
+    S START_STIR(flask_separator_top);
+    S WAIT(600);  # settling
+    S STOP_STIR(flask_separator_top);
+
+    S SET_RECORDING_SPEED(60);
+
+    # here drying of organic layer necessery
+    S SWITCH_CARTRIDGE(rotavap, position_drying_cartridge); # switches to connection with drying cartridge
+    S MOVE(flask_separator_bottom, rotavap, volume_organic_phase, default_speed_slow, default_speed_slow);
+    S MOVE(flask_solvent_used, flask_separator_bottom, 5);
+
+    S SET_RECORDING_SPEED(90);
+
+    S SEPARATE(destination_bottom_layer, destination_top_layer);  # pump organic phase to rotary, dump watery layer
+	S MOVE(flask_solvent_used, destination_bottom_layer, 10);
+
+    FOR(2){
+        S MOVE(flask_solvent_used, rotavap, 10, default_speed_slow, default_speed_slow);
+    }
+
+    S SWITCH_CARTRIDGE(rotavap, 0);
+    S SET_RECORDING_SPEED(30);
+}
+
+DEF evaporate_to_dryness(rv_origin, rv_destination, distillate_volume, end_vacuum, distillation_time, drying_time){ #yet to be looked upon
+    # lower flask, start rotation
+    S SET_RECORDING_SPEED(5);
+    S SWITCH_CARTRIDGE(rotavap, 0);
+    S LIFT_ARM_DOWN(rotavap);
+    S SET_ROTATION(rotavap, default_speed_rv);
+    S START_ROTATION(rotavap);
+
+    # degas
+    S SET_RECORDING_SPEED(100);
+    S SET_VAC_SP(rotavap, 900);
+    S START_VAC(rotavap);
+    S SET_BATH_TEMP(rotavap, 50);
+    S START_HEATER_BATH(rotavap);
+    S WAIT(300);
+
+    # main distillation
+    S SET_RECORDING_SPEED(270);
+    S SET_VAC_SP(rotavap, end_vacuum);
+    S WAIT(distillation_time);
+
+    # vent and empty
+    S SET_RECORDING_SPEED(7);
+    S LIFT_ARM_UP(rotavap);
+	S STOP_ROTATION(rotavap);
+    S WAIT(10);
+    S STOP_VAC(rotavap);
+    S VENT_VAC(rotavap);
+    S SET_RECORDING_SPEED(60);
+    S MOVE(rv_origin, rv_destination, distillate_volume, default_speed_fast, default_speed_slow, default_speed_fast); 
+
+    # dry at max. vacuum
+    S SET_RECORDING_SPEED(5);
+    S LIFT_ARM_DOWN(rotavap);
+	S SET_ROTATION(rotavap, default_speed_rv);
+    S START_ROTATION(rotavap);
+    S SET_VAC_SP(rotavap, 0);
+    S SET_RECORDING_SPEED(270);
+    S START_VAC(rotavap);
+    S WAIT(drying_time);
+
+    # recover flask and vent;
+    S SET_RECORDING_SPEED(7);
+    S LIFT_ARM_UP(rotavap);
+    S WAIT(10);
+    S STOP_VAC(rotavap);
+    S VENT_VAC(rotavap);
+    S STOP_ROTATION(rotavap);
+    S STOP_HEATER_BATH(rotavap);
+    S SET_RECORDING_SPEED(30);
+}
+
+
+DEF transfer_from_rotavap(destination, flask_solvent, volume_solvent, aspiration_speed_solvent, temperature_heatbath){
+    S SWITCH_CARTRIDGE(rotavap, 0);
+    S SET_RECORDING_SPEED(36);
+    S SET_BATH_TEMP(rotavap, temperature_heatbath);
+    S START_HEATER_BATH(rotavap);
+    S SET_INTERVAL(rotavap, 5);
+    S SET_ROTATION(rotavap, default_speed_rv);
+    S START_ROTATION(rotavap);
+    S LIFT_ARM_DOWN(rotavap);
+
+    # a bit of cleaning
+    S MOVE(flask_DCM, waste_rotary, 3);
+    S MOVE(waste_rotary, waste_rotary, 20);
+    S MOVE(flask_solvent, waste_rotary, 3, default_speed_slow, default_speed_viscous);
+
+    S SET_RECORDING_SPEED(120);
+    S MOVE(flask_solvent, rotavap, volume_solvent, default_speed_slow, aspiration_speed_solvent); # transfers KOtBu in tBuOH to rotavap to dissolve product
+
+     #this is for cleaning
+    S SET_RECORDING_SPEED(60);
+    S MOVE(flask_DCM, waste_rotary, 3);
+    S MOVE(waste_rotary, waste_rotary, 20);
+    S MOVE(flask_DCM, waste_rotary, 3);
+    S MOVE(waste_rotary, waste_rotary, 20);
+    S MOVE(flask_DCM, waste_rotary, 3);
+    S MOVE(waste_rotary, waste_rotary, 20);
+
+
+    S SET_RECORDING_SPEED(100);
+    S WAIT(1500); #s, let it dissolve
+    S SET_RECORDING_SPEED(5);
+    S STOP_ROTATION(rotavap);
+    S STOP_HEATER_BATH(rotavap);
+    S SET_RECORDING_SPEED(120);
+    S MOVE(flask_solvent, waste_solvents, 3, default_speed_slow, default_speed_viscous);
+    S MOVE(rotavap, destination, all, default_speed_slow, default_speed_viscous);
+    S MOVE(rotavap, destination, 32, default_speed_slow, default_speed_viscous);
+
+    S SET_RECORDING_SPEED(60);
+
+    S LIFT_ARM_UP(rotavap);
+
+    # bit if cleaning
+    S MOVE(flask_DCM, waste_rotary, 3);
+    S MOVE(flask_DCM, rotavap, 5);
+    S MOVE(waste_rotary, waste_rotary, 20);
+    S MOVE(flask_DCM, waste_separator, 6);
+    S MOVE(waste_separator, waste_rotary, 40);
+    S MOVE(flask_DCM, waste_rotary, 3);
+    S MOVE(waste_rotary, waste_rotary, 20);
+    clean_hose(5, waste_rotary);
+
+    S SET_RECORDING_SPEED(30);
+}
+
+DEF move_quantitative(source_flask, source_valve_waste, destination_flask, volume, moving_speed, aspiration_speed, dispense_speed){ #reasonable for small amounts, only works for filter_top (only where piping isn´t potentially suspended in liquid)
+    S SET_RECORDING_SPEED(60);
+#    S MOVE(source_flask, destination_flask, volume, moving_speed, aspiration_speed, dispense_speed);
+#    S MOVE(destination_flask, destination_flask, 10, 30, 30, 5);
+    S MOVE(flask_water, source_valve_waste, 10, default_speed_slow, default_speed_slow);
+    S MOVE(flask_acetone, source_valve_waste, 10, default_speed_slow, default_speed_slow);
+    S MOVE(flask_ether, source_valve_waste, 20, default_speed_slow, default_speed_slow);
+	S MOVE(source_valve_waste, source_valve_waste, 60);
+	S SET_RECORDING_SPEED(20);
+    S MOVE(source_flask, source_valve_waste, 2, moving_speed, aspiration_speed);
+	S MOVE(source_valve_waste, source_valve_waste, 20);
+	S MOVE(source_flask, destination_flask, volume, moving_speed, aspiration_speed, dispense_speed);
+    S MOVE(source_valve_waste, destination_flask, 20);
+    S SET_RECORDING_SPEED(30);
+}
+
+# ===============================================
+# |\/|   /\   | |\  |		|\/|   /\   | |\  | #
+# |  |  /__\  | | \ |		|  |  /__\  | | \ | #
+# |  | /    \ | |  \|		|  | /    \ | |  \| #
+# ===============================================
+
+MAIN{
+	
+	#####################################
+	# First step of sildenafil synthesis#
+	#####################################
+	S SET_RECORDING_SPEED(25);
+	
+	#all primes abandoned. the result of priming is that the nonreturnalves sit in reagents solutions the whole time
+	#S PRIME(default_speed_slow);
+	
+	S SET_CHILLER(reactor_reactor, 12);
+	S SWITCH_CHILLER(reactor_reactor, 1); # Just because the chiller gives problems at the beginning.
+	S START_CHILLER(reactor_reactor);
+	
+	clean_hose(5, waste_separator);
+	clean_hose(5, waste_rotary);
+	
+	S SET_STIR_RPM(reactor_reactor, sildenafil_stirring_rate); # set stirring rate
+	S START_STIR(reactor_reactor); # start stirrer
+	
+	S SET_RECORDING_SPEED(60);
+	
+	# S SWITCH_CHILLER(reactor_reactor, 1);
+	S SET_CHILLER(reactor_reactor, stage_1_temperature_addition); # set temperature
+	S START_CHILLER(reactor_reactor); # start cooling
+	S WAIT(20);
+	S CHILLER_WAIT_FOR_TEMP(reactor_reactor);
+	
+	S SET_RECORDING_SPEED(30);
+	
+	#ensuring quantitative transfer
+	S MOVE(flask_ether, waste_reagents_2, 10, default_speed_slow, default_speed_slow);
+	S MOVE(flask_thionyl_chloride, waste_reagents_2, 3, default_speed_slow, default_speed_slow); # adds thionylchloride into reaction mixture
+	S MOVE(flask_thionyl_chloride, waste_solvents, 3, default_speed_slow, default_speed_slow);
+	S MOVE(waste_reagents_2, waste_solvents, 60);
+	S MOVE(flask_thionyl_chloride, reactor_reactor, volume_thionyl_chloride_1st_step, default_speed_slow, default_speed_slow); # adds thionylchloride into reaction mixture
+	S MOVE(waste_reagents_2, reactor_reactor, 10);
+	
+	S MOVE(flask_chlorosulphonic_acid, waste_reagents_2, 10, default_speed_slow, default_speed_viscous); #really agressive, watch valves pumpes,...
+	S MOVE(flask_chlorosulphonic_acid, reactor_reactor, volume_chlorosulphonic_acid, default_speed_slow, default_speed_viscous); #really agressive, watch valves pumpes,...
+	clean_hose(5, waste_separator);
+	S MOVE(waste_reagents_2, waste_reagents_2, 60, default_speed_fast, default_speed_fast, default_speed_fast);
+	S MOVE(flask_ethoxybenzoic_acid, waste_reagents_2, 4.5, default_speed_slow, default_speed_viscous); #watch that it doesnt crystallize
+	S MOVE(waste_reagents_2, waste_reagents_2, 20, default_speed_slow, default_speed_slow, default_speed_slow);
+	S MOVE(flask_ethoxybenzoic_acid, reactor_reactor, volume_ethoxybenzoic_acid, default_speed_slow, default_speed_viscous, default_speed_dead_slow); #watch that it doesnt crystallize
+	S MOVE(waste_reagents_2, reactor_reactor, 20, default_speed_slow, default_speed_slow, default_speed_slow);
+	S MOVE(flask_chlorosulphonic_acid, reactor_reactor, 4, default_speed_slow, default_speed_viscous); # makes sure whole volume of ethoxybenzoic acid is in reaction
+	
+	# build an airseal in reactor, hope this prevents solid in hose
+	S SWITCH_CARTRIDGE(rotavap, 2);
+	S SET_RECORDING_SPEED(250);
+	S MOVE(rotavap, waste_rotary, 10, default_speed_slow, 10);
+	S MOVE(rotavap, waste_solvents, 10, default_speed_slow, 10);
+	S MOVE(rotavap, reactor_reactor, 20, default_speed_slow, 10);
+	S SWITCH_CARTRIDGE(rotavap, 0);
+	S MOVE(flask_separator_bottom, waste_reactor, 20, default_speed_fast, default_speed_fast, default_speed_fast);
+	clean_hose(5, waste_separator);
+	# build an airseal in reactor, hope this prevents solid in hose
+	S SWITCH_CARTRIDGE(rotavap, 2);
+	S MOVE(rotavap, flask_chlorosulphonic_acid, 10, default_speed_slow, default_speed_viscous);
+	S SWITCH_CARTRIDGE(rotavap, 0);
+	
+	clean_hose(5, waste_separator);
+	
+	
+	
+	S SET_RECORDING_SPEED(2000);
+	
+	S WAIT(1800); # instead of ramping the temperature up
+	S SET_CHILLER(reactor_reactor, stage_1_temperature_reaction);
+	S START_CHILLER(reactor_reactor);
+	S SWITCH_CHILLER(reactor_reactor, 1);
+	S WAIT(wait_time_sildenafil_stage_1); # let it react for 12 h
+	# ========================#
+	# REACTION TIME 12 HOURS! #
+	# ========================#
+	prime_filter(stage_1_temperature_quench, flask_water, sildenafil_stirring_rate); #prepares filter for quenching
+	
+	S MOVE(flask_water, flask_filter_bottom, volume_water_1st); # fills water for quenching into filter, to bottom because then no preciputate in valve
+	S STOP_STIR(reactor_reactor); #stops stirring in reactor
+	clean_hose(5, waste_separator); # otherwise precipitate might clogg pipes
+	
+    S SET_RECORDING_SPEED(2000);
+	
+	S WAIT(1200);# so water cools to 0deg and quench is good, not really necessery, because transfer takes long
+	
+	S SET_RECORDING_SPEED(120);
+		
+	# GETTING RID OF THE CHLOROSULFONIC ACID
+	S MOVE(flask_chlorosulphonic_acid, waste_solvents, 70, default_speed_slow, default_speed_viscous); #thereby all thats in this flask is pumped out, the backbone dried and ether removed from pumps as well
+		
+    # DECLOGG
+    S SWITCH_CARTRIDGE(rotavap, 2); 
+	S MOVE(rotavap, waste_rotary, 10, default_speed_slow, 10);
+	S MOVE(rotavap, waste_solvents, 10, default_speed_slow, 10);
+    S MOVE(rotavap, reactor_reactor, 10, default_speed_slow, 10);
+    S SWITCH_CARTRIDGE(rotavap, 0);
+	S MOVE(reactor_reactor, filter_filter_top, all, default_speed_slow, default_speed_viscous, default_speed_viscous); # so2 in solution, otherwise  bubbles, quench has to be slow to exothermia
+	
+	S MOVE(reactor_reactor, filter_filter_top, 30, default_speed_slow, default_speed_viscous, default_speed_viscous);
+    clean_hose(5, waste_separator);
+	
+	FOR(2){
+		S MOVE(flask_chlorosulphonic_acid, waste_reagents_2, 20); # to protect valve, again
+		S MOVE(flask_ether, flask_chlorosulphonic_acid, 5); # to protect valve, again
+		S MOVE(flask_chlorosulphonic_acid, waste_reagents_2, 20); # to protect valve, again
+	}
+    clean_reactor(flask_ether); #takes roughly half an hour, waiting therefore reduced to 10 min
+	
+    S SET_RECORDING_SPEED(2000);
+	
+	S WAIT(crystallisation_time_sildenafil_stage_1); # wait for synthesis
+	S STOP_STIR(filter_filter_top);
+	
+    S SET_RECORDING_SPEED(72);
+	
+	S MOVE(flask_filter_bottom, waste_reactor, all);
+	S MOVE(flask_filter_bottom, waste_reactor, 15);
+	wash_precipitate(flask_water, volume_water_washing_1st); #get rid of byproducts
+	
+	clean_hose(5, waste_separator); #clean from waste for next step
+    S MOVE(waste_separator, flask_filter_bottom, 12);
+    S SWITCH_VACUUM(filter_filter_top, vacuum);
+    S WAIT(60);
+    S SWITCH_VACUUM(filter_filter_top, backbone);
+	
+    # S BREAKPOINT();
+	
+	#####################################
+	#Second step of sildenafil synthesis#
+	#####################################
+	
+    S SET_RECORDING_SPEED(128);
+	S MOVE(flask_water, flask_filter_bottom, volume_water_2nd); # suspense precipitate in water
+    prime_filter(stage_2_temperature, flask_water, sildenafil_stirring_rate_slow);
+    S SET_RECORDING_SPEED(128);
+	
+	# Priming already included in the function below S MOVE(flask_methyl_piperazine, waste_reactor, 2);
+	move_quantitative(flask_methyl_piperazine, waste_separator, filter_filter_top, volume_methyl_piperazine, default_speed_slow, default_speed_viscous, default_speed_dead_slow); # Add methyl piperazine
+    S MOVE(flask_water, filter_filter_top, 1); # quantitative transfer
+	
+	clean_hose(5, waste_separator); #piperazine is basic
+	
+	S SET_RECORDING_SPEED(60);
+	S WAIT(wait_time_sildenafil_stage_2); #should crystallize after 5 min
+	
+    #seeding with actual product suspension
+    S SET_RECORDING_SPEED(75);
+    S MOVE(flask_water, waste_rotary, 5, default_speed_slow, default_speed_slow);
+    S MOVE(flask_water, waste_rotary, 5, default_speed_slow, default_speed_slow);
+    S SWITCH_CARTRIDGE(rotavap, 3);#here sits suspension
+    S MOVE(rotavap, waste_solvents, 2);
+    S MOVE(rotavap, waste_solvents, 2);
+    S MOVE(rotavap, filter_filter_top, 4);
+    S SWITCH_CARTRIDGE(rotavap, 2);#here you aspire air to get everything in
+    S MOVE(rotavap, filter_filter_top, 10);
+    clean_hose(5, waste_rotary);
+    S MOVE(rotavap, waste_rotary, 50);
+    S SWITCH_CARTRIDGE(rotavap, 0); # this is so hopefully the separated solution ends up in the rotavap next time.
+	
+    S SET_RECORDING_SPEED(2000);
+	
+    S WAIT(crystallisation_time_sildenafil_stage_2); # two times, so more time to crystallise
+	
+	# S BREAKPOINT();
+	
+	S SET_RECORDING_SPEED(60);
+	
+	S STOP_STIR(filter_filter_top);
+	S MOVE(flask_filter_bottom, waste_reactor, all, default_speed_fast, default_speed_viscous, default_speed_fast); # get rid of water
+	
+    # now warm up the precipitate, so sulphonyl chloride(starting mat) gets hydrolysed, then do wash precipitate
+    S SET_RECORDING_SPEED(2000);
+    S SET_CHILLER(filter_filter_top, 35);
+    S START_CHILLER(filter_filter_top);
+	S WAIT(20);
+    S CHILLER_WAIT_FOR_TEMP(filter_filter_top);
+    S WAIT(600);
+    S STOP_CHILLER(filter_filter_top);
+	
+    wash_precipitate(flask_water, volume_water_washing_2nd);
+	
+	clean_hose(5, waste_separator); #so everything is dry and clean for next step
+	
+    dry_precipitate(); # Basically vacuuming for 6 hours the jacketed filter for next step
+	
+	# S BREAKPOINT();
+	
+	#####################################
+	#Third step of sildenafil synthesis #
+	#####################################
+	
+	# S PRIME(default_speed_slow);
+	
+    clean_hose(5, waste_separator); # here better, then residual water will be taken away from syringe
+	
+	# suspend precipitate in DCM and form acid chloride
+	S SET_RECORDING_SPEED(120);
+	FOR(3){
+       S MOVE(flask_DCM, waste_solvents, 3);
+       S MOVE(waste_solvents, waste_rotary, 20);
+    }
+    S SET_RECORDING_SPEED(120);
+	
+    # this is for drying the filterbottom of water residues
+    S MOVE(flask_thionyl_chloride, waste_reactor, 6, default_speed_slow, default_speed_slow, default_speed_slow);
+    S MOVE(flask_thionyl_chloride, flask_filter_bottom, 2);
+    S MOVE(flask_DCM, flask_filter_bottom, 18);
+    S WAIT(120);
+    S MOVE(flask_filter_bottom, waste_reactor, 60);
+    S MOVE(waste_reactor, flask_filter_bottom, 12); # accounts for product volume
+    S SWITCH_VACUUM(filter_filter_top, vacuum);
+    S WAIT(60);
+    S SWITCH_VACUUM(filter_filter_top, backbone);
+	
+    S SET_RECORDING_SPEED(60);
+	
+    S MOVE(flask_DCM, flask_filter_bottom, volume_DCM, default_speed_slow, default_speed_slow, default_speed_fast); #check if it gets sticky, if so, maybe warmer filter would help
+	
+    prime_filter(stage_3_temperature_acid_chlorid_formation, flask_DCM, sildenafil_stirring_rate_slow);
+	
+    S SET_RECORDING_SPEED(50);
+	
+    S MOVE(flask_ether, waste_reagents_2, 20, default_speed_slow, default_speed_slow);
+	S MOVE(flask_thionyl_chloride, waste_reagents_2, 6, default_speed_slow, default_speed_slow); # adds thionylchloride into reaction mixture
+    S MOVE(waste_reagents_2, waste_reagents_2, 60);
+    S MOVE(flask_thionyl_chloride, filter_filter_top, volume_thionyl_chloride_3rd_step, default_speed_slow, default_speed_slow, default_speed_dead_slow);
+    S MOVE(waste_reagents_2, reactor_reactor, 10);
+	
+	
+    S MOVE(flask_DCM, filter_filter_top, 2, default_speed_slow, default_speed_slow); #get rest of thionyl chloride into reaction
+	
+    clean_hose(5, waste_separator); # prevent reaction between DMF and Thionyl chloride
+	
+    # Priming already included in the function below S MOVE(flask_DMF, waste_solvents, 2); # replaces PRIME function
+    move_quantitative(flask_DMF, waste_solvents, filter_filter_top, volume_DMF, default_speed_slow, default_speed_slow, default_speed_slow);
+	
+    S MOVE(flask_DCM, filter_filter_top, 2, default_speed_slow, default_speed_slow); # get rest of dmf in reaction
+	
+    S SET_RECORDING_SPEED(60);
+	
+    S MOVE(flask_DCM, waste_rotary, 3);
+    S MOVE(waste_rotary, waste_rotary, 40);
+    clean_hose(5, waste_separator);
+    S SWITCH_CHILLER(flask_filter_bottom, 0);
+    S SET_CHILLER(filter_filter_top, stage_3_temperature_acid_chlorid_completion); # reflux neccessary?
+    S START_CHILLER(filter_filter_top);
+	
+    S SET_RECORDING_SPEED(2000);
+	
+    S WAIT(wait_time_sildenafil_stage_3_activation); # 18000 s = 5 hours
+    S STOP_CHILLER(filter_filter_top);
+    S STOP_STIR(filter_filter_top);
+	
+    # basify the pyrazole solution to quench byproduct of reaction with excess of TEA and cool it down
+    S SWITCH_CHILLER(reactor_reactor, 1);
+    S SET_CHILLER(reactor_reactor, stage_3_temperature_coupling_addition);
+    S START_CHILLER(reactor_reactor);
+    clean_hose(5, waste_separator); #there always was solids observable in syringes
+	
+    S SET_RECORDING_SPEED(60);
+	
+    clean_reactor(flask_ether);
+	
+    S MOVE(flask_ether, waste_separator, 3);
+    S MOVE(flask_ether, waste_separator, 3);
+    S MOVE(flask_ether, waste_separator, 3);
+    S MOVE(flask_thionyl_chloride, waste_reactor, 5);
+    S MOVE(flask_ether, waste_separator, 3);
+    S MOVE(flask_ether, waste_separator, 3);
+    S MOVE(flask_ether, waste_separator, 3);
+    S MOVE(flask_DCM, waste_solvents, 3);
+    S MOVE(flask_DCM, waste_solvents, 3);
+	
+    S CHILLER_WAIT_FOR_TEMP(reactor_reactor);
+    S MOVE(flask_TEA, waste_separator, 1, default_speed_slow, default_speed_slow);
+    S MOVE(flask_TEA, reactor_reactor, volume_TEA_prime, default_speed_slow, default_speed_slow, default_speed_slow);
+    S MOVE(flask_pyrazole_in_DCM, waste_solvents, 1);
+	
+    S SET_RECORDING_SPEED(40);
+	
+    S SET_STIR_RPM(reactor_reactor, sildenafil_stirring_rate);
+    S START_STIR(reactor_reactor);
+    S MOVE(flask_pyrazole_in_DCM, reactor_reactor, volume_pyrazole_in_DCM, default_speed_slow, default_speed_slow);
+    S MOVE(flask_TEA, reactor_reactor, volume_TEA, default_speed_slow, default_speed_slow, default_speed_slow);
+    S MOVE(flask_DCM, reactor_reactor, 2);
+	
+    clean_hose(5, waste_separator); # TEA is basic
+	
+    # add the acid chloride into the pyrazole solution for coupling
+    # first 3 movements just dry the hose in between
+	
+	S MOVE(flask_DCM, waste_solvents, 5);
+	S MOVE(waste_solvents, waste_solvents, 10);
+    S MOVE(flask_ether, waste_separator, 3);
+    S MOVE(flask_thionyl_chloride, waste_reactor, 2);
+    S MOVE(flask_thionyl_chloride, waste_solvents, 2);
+    S MOVE(waste_solvents, waste_solvents, 10);
+	
+    S SET_RECORDING_SPEED(360);
+	
+    S MOVE(flask_filter_bottom, reactor_reactor, all,default_speed_slow, default_speed_slow, default_speed_viscous); # violent, exothermic reaction
+    S MOVE(flask_filter_bottom, reactor_reactor, 5,default_speed_slow, default_speed_slow, default_speed_viscous);
+	
+    clean_hose(5, waste_separator);
+	
+    S SET_RECORDING_SPEED(2000);
+	
+    S WAIT(wait_time_sildenafil_stage_3_coupling_cooled); # 30 min required for acid chloride reaction
+    S STOP_CHILLER(reactor_reactor);
+	
+    # warm coupling up and let it react over night, RAMPING
+    S SET_CHILLER(reactor_reactor, stage_3_temperature_coupling_completion); # reflux neccesary?
+    S START_CHILLER(reactor_reactor);
+    S SWITCH_CHILLER(reactor_reactor, 1);
+    S WAIT(wait_time_sildenafil_stage_3_coupling); # 16 hours
+	
+	
+	# quench reaction with water in cold
+	S SWITCH_CHILLER(reactor_reactor, 1);
+    S SET_CHILLER(reactor_reactor, stage_3_temperature_coupling_addition); # reflux neccesary?
+    S START_CHILLER(reactor_reactor);
+	S WAIT(20);
+    S CHILLER_WAIT_FOR_TEMP(reactor_reactor);
+	
+    S SET_RECORDING_SPEED(60);
+	
+    S SET_STIR_RPM(reactor_reactor, 600);
+    S START_STIR(reactor_reactor);
+    S MOVE(flask_water, reactor_reactor, volume_water_3rd, default_speed_slow, default_speed_slow);
+    S MOVE(flask_DCM, reactor_reactor, 50, default_speed_slow, default_speed_slow);
+    S SET_CHILLER(reactor_reactor, room_temperature); # reflux neccesary?
+    S START_CHILLER(reactor_reactor);
+    S SWITCH_CHILLER(reactor_reactor, 1);
+    S CHILLER_WAIT_FOR_TEMP(reactor_reactor);
+    S WAIT(600); #to dissolve all precipitate
+    S STOP_STIR(reactor_reactor); #okay as soon as overhead stirrer is implemented
+	
+    S SET_RECORDING_SPEED(120);
+	S MOVE(flask_separator_bottom, waste_reactor, 20, default_speed_fast, default_speed_fast, default_speed_fast);
+    S MOVE(reactor_reactor, flask_separator_top, all, default_speed_slow, default_speed_slow);
+	
+    # clean hoses and reactor with a bit of dcm and transfer to separator
+	
+	
+    S SET_RECORDING_SPEED(30);
+	
+    S STOP_CHILLER(reactor_reactor);
+	
+    #separation of the phases
+    # separate, keep lower organic phase
+    separate_phases(1, rotavap, waste_reactor, flask_DCM, 110);
+    #rotate off
+    clean_hose(5, waste_separator);
+	S MOVE(flask_DCM, flask_separator_bottom, 3);
+    S MOVE(flask_DCM, flask_separator_top, 3);
+	
+    evaporate_to_dryness(flask_rv_bottom, waste_rotary, all, 699, 2700, 2700); # check distillate volume, TODO dont hardcode that
+    #clean reactor
+    clean_reactor(flask_water);
+    clean_reactor(flask_acetone);
+    clean_reactor(flask_ether);
+    clean_filter(flask_acetone);
+    clean_filter(flask_ether);
+    clean_filter(flask_water);
+    dry_hose(rotavap, 3.5); #check actual volume of hose to rotavap: it is 4 mL
+	
+	
+	
+	#######################################
+	# fourth step of sildenafil synthesis #
+	#######################################
+	
+    #dissolve starting material in rotavap
+    S SET_RECORDING_SPEED(7);
+	
+	#S PRIME(default_speed_slow);
+    clean_hose(5, waste_separator);
+	
+    # move to reactor
+    transfer_from_rotavap(reactor_reactor, flask_KOtBu_in_tBuOH, volume_KOtBu_in_tBuOH, default_speed_viscous, 60);
+	
+    #reflux
+    S SET_STIR_RPM(reactor_reactor, sildenafil_stirring_rate);
+    S START_STIR(reactor_reactor);
+    S SWITCH_CHILLER(reactor_reactor, 1);
+	S WAIT(5);
+    S SET_CHILLER(reactor_reactor, stage_4_temperature_reflux);
+    S START_CHILLER(reactor_reactor);
+	
+    S SET_RECORDING_SPEED(2000);
+	
+    S WAIT(wait_time_sildenafil_stage_4);
+    S STOP_CHILLER(reactor_reactor);
+    S SWITCH_CHILLER(reactor_reactor, 1);
+
+    S SET_CHILLER(reactor_reactor, stage_4_temperature_granulation);
+    S START_CHILLER(reactor_reactor);
+	S WAIT(20);
+    S CHILLER_WAIT_FOR_TEMP(reactor_reactor);
+	
+    S SET_RECORDING_SPEED(40);
+	
+    S MOVE(flask_water, reactor_reactor, volume_water_4th, default_speed_slow, default_speed_slow);
+    S STOP_CHILLER(reactor_reactor);
+	
+    prime_filter(stage_4_temperature_granulation, flask_water, sildenafil_stirring_rate_slow);
+	
+    # moves reaction mixture to filter and washes remains from reactor
+    S STOP_STIR(reactor_reactor);
+	
+    S SET_RECORDING_SPEED(200);
+    S MOVE(reactor_reactor, filter_filter_top, all, default_speed_slow, default_speed_viscous);
+	
+    S SET_RECORDING_SPEED(180);
+	
+    # precipitate with HCl
+    S MOVE(flask_HCl, waste_reagents_1, 1, default_speed_slow, default_speed_slow); #for priming
+    S MOVE(flask_HCl, filter_filter_top, volume_HCl_dilute, default_speed_slow, default_speed_slow, default_speed_dead_slow);
+	
+    clean_hose(5, waste_separator);
+	
+    S SET_RECORDING_SPEED(1000);
+	
+    S WAIT(crystallisation_time_sildenafil_stage_4);
+	
+    S SET_RECORDING_SPEED(120);
+	
+    # separate precipitate off
+    S STOP_STIR(filter_filter_top);
+    S MOVE(flask_filter_bottom, waste_reactor, all, default_speed_slow);
+    wash_precipitate(flask_water, volume_water_washing_4th);
+    S STOP_CHILLER(filter_filter_top);
+    clean_hose(5, waste_separator);
+	
+    dry_precipitate();
+	
+	S WAIT(60);
+}

@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tools.module_execution.vacuum_execution &mdash; Chempiler 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Chempiler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Chempiler</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>tools.module_execution.vacuum_execution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tools.module_execution.vacuum_execution</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;vacuum_execution&quot; -- Mid-level wrapper class around :mod:&quot;Vacuubrand_CVC_3000&quot;</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: vacuum_execution</span>
+<span class="sd">   :platform: Windows, Unix</span>
+<span class="sd">   :synopsis: Mid-level wrapper around vacuum pump control, provides real-live useful methods</span>
+<span class="sd">.. moduleauthor:: Graham Keenan &lt;1105045k@student.gla.ac.uk&gt;</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+
+<span class="sd">(c) 2017 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This class provides all real-life applications of vacuum pumps within the Chemputer rig, essentially</span>
+<span class="sd">just wrapping the original class methods. It also has a &quot;vent to ambient pressure&quot; function for convenience.</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+
+<div class="viewcode-block" id="VacuumExecutioner"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner">[docs]</a><span class="k">class</span> <span class="nc">VacuumExecutioner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to interface with the CVC3000 vacuum pump</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum</span><span class="p">,</span> <span class="n">simulation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialiser for the VacuumExecutioner class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum (dict): Dictionary containing the vacuum pump name and their associated objects</span>
+<span class="sd">            simulation (bool): Simulation mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span> <span class="o">=</span> <span class="n">vacuum</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span> <span class="o">=</span> <span class="n">simulation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ATMOSPHERIC_PRESSURE</span> <span class="o">=</span> <span class="mi">900</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;main_logger.vacuum_executioner_logger&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="VacuumExecutioner.initialise"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner.initialise">[docs]</a>    <span class="k">def</span> <span class="nf">initialise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum_pump</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets up the vacuum pump, getting it ready for operation</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum_pump (str): The name of the vacuum pump</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initialising vacuum pump </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vacuum_pump</span><span class="p">))</span>
+        <span class="n">vacuum_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">[</span><span class="n">vacuum_pump</span><span class="p">]</span>
+        <span class="n">vacuum_obj</span><span class="o">.</span><span class="n">initialise</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="VacuumExecutioner.get_vacuum_set_point"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner.get_vacuum_set_point">[docs]</a>    <span class="k">def</span> <span class="nf">get_vacuum_set_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum_pump</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the set point (target) for the vacuum pump in Vac control</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum_pump (str): The name of the vacuum pump</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vacuum_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">[</span><span class="n">vacuum_pump</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Vacuum setpoint for vacuum pump </span><span class="si">{0}</span><span class="s2"> is </span><span class="si">{1}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vacuum_pump</span><span class="p">,</span> <span class="n">vacuum_obj</span><span class="o">.</span><span class="n">vacuum_sp</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="VacuumExecutioner.set_vacuum_set_point"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner.set_vacuum_set_point">[docs]</a>    <span class="k">def</span> <span class="nf">set_vacuum_set_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum_pump</span><span class="p">,</span> <span class="n">vac</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the vacuum set point</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum_pump (str): The name of the vacuum pump</span>
+<span class="sd">            vac (int): Set point to set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting vacuum for vacuum pump  </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2">mbar...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vacuum_pump</span><span class="p">,</span> <span class="n">vac</span><span class="p">))</span>
+        <span class="n">vacuum_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">[</span><span class="n">vacuum_pump</span><span class="p">]</span>
+        <span class="n">vacuum_obj</span><span class="o">.</span><span class="n">vacuum_sp</span> <span class="o">=</span> <span class="n">vac</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="VacuumExecutioner.start_vacuum"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner.start_vacuum">[docs]</a>    <span class="k">def</span> <span class="nf">start_vacuum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum_pump</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts the vacuum pump</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum_pump (str): The name of the vacuum pump</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting vacuum pump </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vacuum_pump</span><span class="p">))</span>
+        <span class="n">vacuum_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">[</span><span class="n">vacuum_pump</span><span class="p">]</span>
+        <span class="n">vacuum_obj</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="VacuumExecutioner.stop_vacuum"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner.stop_vacuum">[docs]</a>    <span class="k">def</span> <span class="nf">stop_vacuum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum_pump</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stops the vacuum pump</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum_pump (str): The name of the vacuum pump</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stopping vacuum pump </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vacuum_pump</span><span class="p">))</span>
+        <span class="n">vacuum_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">[</span><span class="n">vacuum_pump</span><span class="p">]</span>
+        <span class="n">vacuum_obj</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="VacuumExecutioner.vent_vacuum"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner.vent_vacuum">[docs]</a>    <span class="k">def</span> <span class="nf">vent_vacuum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum_pump</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Vents all the way to atmospheric pressure.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum_pump (str): The name of the vacuum pump</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Venting vacuum pump </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vacuum_pump</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Pffffffffsssssshhhhhhhhhh...&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vacuum_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">[</span><span class="n">vacuum_pump</span><span class="p">]</span>
+            <span class="n">vacuum_obj</span><span class="o">.</span><span class="n">vent</span><span class="p">()</span>
+            <span class="c1"># wait for the venting to complete</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">pressure</span> <span class="o">=</span> <span class="n">vacuum_obj</span><span class="o">.</span><span class="n">vacuum_pv</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Current pressure is </span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pressure</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pressure</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">pressure</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ATMOSPHERIC_PRESSURE</span><span class="p">:</span>  <span class="c1"># if the pressure is about ambient pressure</span>
+                    <span class="n">vacuum_obj</span><span class="o">.</span><span class="n">vent</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Venting finished.&quot;</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Still venting...&quot;</span><span class="p">)</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="VacuumExecutioner.get_status"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner.get_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum_pump</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the status of the vacuum pump</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum_pump (str): The name of the vacuum pump</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vacuum_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">[</span><span class="n">vacuum_pump</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">vacuum_obj</span><span class="o">.</span><span class="n">query_status</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="VacuumExecutioner.get_end_vacuum_set_point"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner.get_end_vacuum_set_point">[docs]</a>    <span class="k">def</span> <span class="nf">get_end_vacuum_set_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum_pump</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the set point (target) for the switch off vacuum in mode Auto</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum_pump (str): The name of the vacuum pump             </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vacuum_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">[</span><span class="n">vacuum_pump</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">vacuum_obj</span><span class="o">.</span><span class="n">end_vacuum_sp</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="VacuumExecutioner.set_end_vacuum_set_point"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner.set_end_vacuum_set_point">[docs]</a>    <span class="k">def</span> <span class="nf">set_end_vacuum_set_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum_pump</span><span class="p">,</span> <span class="n">vac</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the switch off vacuum set point</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum_pump (str): The name of the vacuum pump</span>
+<span class="sd">            vac (int): Set point value to set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vacuum_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">[</span><span class="n">vacuum_pump</span><span class="p">]</span>
+        <span class="n">vacuum_obj</span><span class="o">.</span><span class="n">end_vacuum_sp</span> <span class="o">=</span> <span class="n">vac</span></div>
+
+<div class="viewcode-block" id="VacuumExecutioner.get_runtime_set_point"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner.get_runtime_set_point">[docs]</a>    <span class="k">def</span> <span class="nf">get_runtime_set_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum_pump</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the set point (target) for the run time in mode Auto</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum_pump (str): The name of the vacuum pump</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vacuum_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">[</span><span class="n">vacuum_pump</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">vacuum_obj</span><span class="o">.</span><span class="n">runtime_sp</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="VacuumExecutioner.set_runtime_set_point"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner.set_runtime_set_point">[docs]</a>    <span class="k">def</span> <span class="nf">set_runtime_set_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum_pump</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the set point for the runtime</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum_pump (str): The name of the vacuum pump</span>
+<span class="sd">            time (int): Desired runtime</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vacuum_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">[</span><span class="n">vacuum_pump</span><span class="p">]</span>
+        <span class="n">vacuum_obj</span><span class="o">.</span><span class="n">runtimesp</span> <span class="o">=</span> <span class="n">time</span></div>
+
+<div class="viewcode-block" id="VacuumExecutioner.set_speed_set_point"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.vacuum_execution.VacuumExecutioner.set_speed_set_point">[docs]</a>    <span class="k">def</span> <span class="nf">set_speed_set_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum_pump</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the set point for the speed</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vacuum_pump (str): The name of the vacuum pump</span>
+<span class="sd">            speed (int): Desired speed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting speed for vacuum pump </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2">%...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vacuum_pump</span><span class="p">,</span> <span class="n">speed</span><span class="p">))</span>
+        <span class="n">vacuum_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span><span class="p">[</span><span class="n">vacuum_pump</span><span class="p">]</span>
+        <span class="n">vacuum_obj</span><span class="o">.</span><span class="n">speed_sp</span> <span class="o">=</span> <span class="n">speed</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,817 @@
+2018-08-05 17:45:43,998 ; DEBUG ; chempiler_client ; MainThread ; User Input:
+XML file: C:\Users\group\Documents\Chempiler\experiments\graph\chemputer_rig_3_sildenafil.graphml
+Command file: C:\Users\group\Documents\Chempiler\experiments\ChASM\clean_rig.chasm
+Simulation: n
+2018-08-05 17:45:44,185 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Clear errors DONE.
+2018-08-05 17:45:44,201 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:44,201 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Clear errors DONE.
+2018-08-05 17:45:44,216 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:44,216 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Clear errors DONE.
+2018-08-05 17:45:44,216 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:44,232 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Clear errors DONE.
+2018-08-05 17:45:44,232 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:44,248 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Clear errors DONE.
+2018-08-05 17:45:44,248 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:44,263 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Clear errors DONE.
+2018-08-05 17:45:44,263 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:45,091 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-08-05 17:45:45,216 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-08-05 17:45:45,263 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Move DONE
+2018-08-05 17:45:45,294 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Move DONE
+2018-08-05 17:45:45,310 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Move DONE
+2018-08-05 17:45:45,326 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-08-05 17:45:45,763 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:45,763 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:45,763 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:45,763 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:45,763 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:45,763 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:45,763 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-08-05 17:45:45,763 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-08-05 17:45:45,763 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Move DONE
+2018-08-05 17:45:45,763 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Move DONE
+2018-08-05 17:45:45,763 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Move DONE
+2018-08-05 17:45:46,185 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-08-05 17:45:46,841 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Clear errors DONE.
+2018-08-05 17:45:46,857 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:46,857 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Clear errors DONE.
+2018-08-05 17:45:46,872 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:46,872 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Clear errors DONE.
+2018-08-05 17:45:46,888 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:46,888 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Clear errors DONE.
+2018-08-05 17:45:46,888 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:46,904 ; DEBUG ; Chemputer_Device_API ; pump_separator TCP thread ; Clear errors DONE.
+2018-08-05 17:45:46,904 ; DEBUG ; Chemputer_Device_API ; pump_separator TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:46,919 ; DEBUG ; Chemputer_Device_API ; pump_rotary TCP thread ; Clear errors DONE.
+2018-08-05 17:45:46,919 ; DEBUG ; Chemputer_Device_API ; pump_rotary TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:50,872 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; DONE. New home reading is 637
+2018-08-05 17:45:50,872 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Homing DONE.
+2018-08-05 17:45:50,888 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; DONE. New home reading is 600
+2018-08-05 17:45:50,888 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Homing DONE.
+2018-08-05 17:45:50,903 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; DONE. New home reading is 581
+2018-08-05 17:45:50,919 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; DONE. New home reading is 608
+2018-08-05 17:45:50,919 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Homing DONE.
+2018-08-05 17:45:50,919 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Homing DONE.
+2018-08-05 17:45:50,919 ; DEBUG ; Chemputer_Device_API ; pump_separator TCP thread ; DONE. New home reading is 604
+2018-08-05 17:45:50,935 ; DEBUG ; Chemputer_Device_API ; pump_separator TCP thread ; Homing DONE.
+2018-08-05 17:45:50,935 ; DEBUG ; Chemputer_Device_API ; pump_rotary TCP thread ; DONE. New home reading is 628
+2018-08-05 17:45:50,950 ; DEBUG ; Chemputer_Device_API ; pump_rotary TCP thread ; Homing DONE.
+2018-08-05 17:45:53,419 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Clear errors DONE.
+2018-08-05 17:45:53,450 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:54,231 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Move DONE
+2018-08-05 17:45:54,450 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Actuation SUCCESS!
+2018-08-05 17:45:54,919 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Move DONE
+2018-08-05 17:45:58,372 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Initialising IKA RV10...
+2018-08-05 17:45:58,434 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Starting rotation...
+2018-08-05 17:45:58,825 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Stopping rotation...
+2018-08-05 17:45:59,215 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Starting heater...
+2018-08-05 17:45:59,793 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Stopping heater...
+2018-08-05 17:46:01,559 ; DEBUG ; Vacuubrand_CVC_3000 ; MainThread ; Initialising CVC3000...
+2018-08-05 17:46:04,027 ; DEBUG ; Vacuubrand_CVC_3000 ; MainThread ; Done.
+2018-08-05 17:46:04,590 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Clear errors DONE.
+2018-08-05 17:46:04,652 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Clear errors DONE.
+2018-08-05 17:46:04,746 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Actuation SUCCESS!
+2018-08-05 17:46:04,824 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Actuation SUCCESS!
+2018-08-05 17:46:05,840 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Move DONE
+2018-08-05 17:46:05,840 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Move DONE
+2018-08-05 17:46:06,433 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Actuation SUCCESS!
+2018-08-05 17:46:06,527 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Move DONE
+2018-08-05 17:46:06,543 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Actuation SUCCESS!
+2018-08-05 17:46:06,543 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Move DONE
+2018-08-05 17:46:08,105 ; DEBUG ; chempiler ; MainThread ; Parsing ChASM file. Command stack:
+2018-08-05 17:46:08,152 ; DEBUG ; chempiler ; MainThread ; ['S', 'SWITCH_CHILLER', 'reactor_reactor', '1']
+2018-08-05 17:46:08,183 ; DEBUG ; chempiler ; MainThread ; ['S', 'SET_CHILLER', 'reactor_reactor', '5']
+2018-08-05 17:46:08,230 ; DEBUG ; chempiler ; MainThread ; ['S', 'START_CHILLER', 'reactor_reactor']
+2018-08-05 17:46:08,355 ; DEBUG ; chempiler ; MainThread ; ['S', 'WAIT', '20']
+2018-08-05 17:46:08,371 ; DEBUG ; chempiler ; MainThread ; ['S', 'CHILLER_WAIT_FOR_TEMP', 'reactor_reactor']
+2018-08-05 17:46:08,418 ; DEBUG ; chempiler ; MainThread ; ['S', 'WAIT', '60']
+2018-08-05 17:46:08,449 ; DEBUG ; chempiler ; MainThread ; ['S', 'WAIT', '180']
+2018-08-05 17:46:08,511 ; DEBUG ; chempiler ; MainThread ; ['S', 'SWITCH_CHILLER', 'reactor_reactor', '0']
+2018-08-05 17:46:08,527 ; DEBUG ; chempiler ; MainThread ; ['S', 'WAIT', '5']
+2018-08-05 17:46:08,543 ; DEBUG ; chempiler ; MainThread ; ['S', 'SET_CHILLER', 'filter_filter_top', '30']
+2018-08-05 17:46:08,558 ; DEBUG ; chempiler ; MainThread ; ['S', 'START_CHILLER', 'filter_filter_top']
+2018-08-05 17:46:08,621 ; DEBUG ; chempiler ; MainThread ; ['S', 'WAIT', '20']
+2018-08-05 17:46:08,636 ; DEBUG ; chempiler ; MainThread ; ['S', 'CHILLER_WAIT_FOR_TEMP', 'filter_filter_top']
+2018-08-05 17:46:08,652 ; DEBUG ; chempiler ; MainThread ; ['S', 'SET_CHILLER', 'filter_filter_top', '60']
+2018-08-05 17:46:08,668 ; DEBUG ; chempiler ; MainThread ; ['S', 'WAIT', '20']
+2018-08-05 17:46:08,730 ; DEBUG ; chempiler ; MainThread ; ['S', 'CHILLER_WAIT_FOR_TEMP', 'filter_filter_top']
+2018-08-05 17:46:08,777 ; DEBUG ; chempiler ; MainThread ; ['S', 'STOP_CHILLER', 'filter_filter_top']
+2018-08-05 17:46:08,902 ; DEBUG ; chempiler ; MainThread ; ['S', 'WAIT', '60']
+2018-08-05 17:46:09,855 ; INFO ; chiller_execution ; MainThread ; Chiller is switched Coil ON.
+2018-08-05 17:46:10,089 ; INFO ; chiller_execution ; MainThread ; Setting temperature for chiller reactor_reactor to 5.0°C...
+2018-08-05 17:46:12,636 ; INFO ; chiller_execution ; MainThread ; Done.
+2018-08-05 17:46:12,917 ; INFO ; chiller_execution ; MainThread ; Starting chiller reactor_reactor...
+2018-08-05 17:46:16,605 ; INFO ; chiller_execution ; MainThread ; Done.
+2018-08-05 17:46:17,511 ; INFO ; cmd_execution ; MainThread ; Waiting for 20 seconds...
+2018-08-05 17:46:17,542 ; INFO ; cmd_execution ; MainThread ; Waiting will be done at approximately 2018-08-05 17:46:37
+2018-08-05 17:46:17,839 ; INFO ; cmd_execution ; MainThread ; Waiting to 1% done. Approximately 0 h, 0 min, 20 sec remaining.
+2018-08-05 17:46:18,058 ; INFO ; cmd_execution ; MainThread ; Waiting to 2% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 17:46:18,230 ; INFO ; cmd_execution ; MainThread ; Waiting to 3% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 17:46:18,526 ; INFO ; cmd_execution ; MainThread ; Waiting to 4% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 17:46:18,698 ; INFO ; cmd_execution ; MainThread ; Waiting to 5% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 17:46:18,761 ; INFO ; cmd_execution ; MainThread ; Waiting to 6% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 17:46:18,995 ; INFO ; cmd_execution ; MainThread ; Waiting to 7% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 17:46:19,229 ; INFO ; cmd_execution ; MainThread ; Waiting to 8% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 17:46:19,354 ; INFO ; cmd_execution ; MainThread ; Waiting to 9% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 17:46:19,558 ; INFO ; cmd_execution ; MainThread ; Waiting to 10% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 17:46:19,823 ; INFO ; cmd_execution ; MainThread ; Waiting to 11% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 17:46:19,964 ; INFO ; cmd_execution ; MainThread ; Waiting to 12% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 17:46:20,307 ; INFO ; cmd_execution ; MainThread ; Waiting to 13% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 17:46:20,354 ; INFO ; cmd_execution ; MainThread ; Waiting to 14% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 17:46:20,557 ; INFO ; cmd_execution ; MainThread ; Waiting to 15% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 17:46:20,745 ; INFO ; cmd_execution ; MainThread ; Waiting to 16% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 17:46:21,120 ; INFO ; cmd_execution ; MainThread ; Waiting to 17% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 17:46:21,792 ; INFO ; cmd_execution ; MainThread ; Waiting to 21% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 17:46:22,198 ; INFO ; cmd_execution ; MainThread ; Waiting to 23% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 17:46:22,510 ; INFO ; cmd_execution ; MainThread ; Waiting to 24% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 17:46:22,573 ; INFO ; cmd_execution ; MainThread ; Waiting to 25% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 17:46:22,760 ; INFO ; cmd_execution ; MainThread ; Waiting to 26% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 17:46:22,979 ; INFO ; cmd_execution ; MainThread ; Waiting to 27% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 17:46:23,167 ; INFO ; cmd_execution ; MainThread ; Waiting to 28% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 17:46:23,401 ; INFO ; cmd_execution ; MainThread ; Waiting to 29% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 17:46:23,557 ; INFO ; cmd_execution ; MainThread ; Waiting to 30% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 17:46:23,760 ; INFO ; cmd_execution ; MainThread ; Waiting to 31% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 17:46:23,963 ; INFO ; cmd_execution ; MainThread ; Waiting to 32% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 17:46:24,182 ; INFO ; cmd_execution ; MainThread ; Waiting to 33% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 17:46:24,479 ; INFO ; cmd_execution ; MainThread ; Waiting to 34% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 17:46:24,557 ; INFO ; cmd_execution ; MainThread ; Waiting to 35% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 17:46:24,963 ; INFO ; cmd_execution ; MainThread ; Waiting to 37% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 17:46:25,151 ; INFO ; cmd_execution ; MainThread ; Waiting to 38% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 17:46:25,370 ; INFO ; cmd_execution ; MainThread ; Waiting to 39% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 17:46:25,604 ; INFO ; cmd_execution ; MainThread ; Waiting to 40% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 17:46:26,088 ; INFO ; cmd_execution ; MainThread ; Waiting to 42% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 17:46:26,166 ; INFO ; cmd_execution ; MainThread ; Waiting to 43% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 17:46:26,416 ; INFO ; cmd_execution ; MainThread ; Waiting to 44% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 17:46:26,557 ; INFO ; cmd_execution ; MainThread ; Waiting to 45% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 17:46:26,932 ; INFO ; cmd_execution ; MainThread ; Waiting to 46% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 17:46:26,979 ; INFO ; cmd_execution ; MainThread ; Waiting to 47% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 17:46:27,182 ; INFO ; cmd_execution ; MainThread ; Waiting to 48% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 17:46:27,541 ; INFO ; cmd_execution ; MainThread ; Waiting to 49% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 17:46:27,619 ; INFO ; cmd_execution ; MainThread ; Waiting to 50% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 17:46:27,791 ; INFO ; cmd_execution ; MainThread ; Waiting to 51% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 17:46:28,057 ; INFO ; cmd_execution ; MainThread ; Waiting to 52% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 17:46:28,479 ; INFO ; cmd_execution ; MainThread ; Waiting to 54% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 17:46:28,619 ; INFO ; cmd_execution ; MainThread ; Waiting to 55% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 17:46:28,760 ; INFO ; cmd_execution ; MainThread ; Waiting to 56% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 17:46:29,197 ; INFO ; cmd_execution ; MainThread ; Waiting to 58% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 17:46:29,369 ; INFO ; cmd_execution ; MainThread ; Waiting to 59% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 17:46:29,588 ; INFO ; cmd_execution ; MainThread ; Waiting to 60% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 17:46:29,776 ; INFO ; cmd_execution ; MainThread ; Waiting to 61% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 17:46:30,072 ; INFO ; cmd_execution ; MainThread ; Waiting to 62% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 17:46:30,291 ; INFO ; cmd_execution ; MainThread ; Waiting to 63% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 17:46:30,416 ; INFO ; cmd_execution ; MainThread ; Waiting to 64% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 17:46:30,557 ; INFO ; cmd_execution ; MainThread ; Waiting to 65% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 17:46:31,088 ; INFO ; cmd_execution ; MainThread ; Waiting to 67% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 17:46:31,275 ; INFO ; cmd_execution ; MainThread ; Waiting to 68% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 17:46:31,432 ; INFO ; cmd_execution ; MainThread ; Waiting to 69% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 17:46:31,807 ; INFO ; cmd_execution ; MainThread ; Waiting to 71% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 17:46:32,072 ; INFO ; cmd_execution ; MainThread ; Waiting to 72% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 17:46:32,166 ; INFO ; cmd_execution ; MainThread ; Waiting to 73% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 17:46:32,354 ; INFO ; cmd_execution ; MainThread ; Waiting to 74% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 17:46:32,619 ; INFO ; cmd_execution ; MainThread ; Waiting to 75% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 17:46:32,885 ; INFO ; cmd_execution ; MainThread ; Waiting to 76% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 17:46:32,947 ; INFO ; cmd_execution ; MainThread ; Waiting to 77% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 17:46:33,338 ; INFO ; cmd_execution ; MainThread ; Waiting to 78% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 17:46:33,494 ; INFO ; cmd_execution ; MainThread ; Waiting to 79% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 17:46:33,791 ; INFO ; cmd_execution ; MainThread ; Waiting to 81% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 17:46:34,072 ; INFO ; cmd_execution ; MainThread ; Waiting to 82% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 17:46:34,228 ; INFO ; cmd_execution ; MainThread ; Waiting to 83% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 17:46:34,369 ; INFO ; cmd_execution ; MainThread ; Waiting to 84% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 17:46:34,697 ; INFO ; cmd_execution ; MainThread ; Waiting to 85% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 17:46:34,806 ; INFO ; cmd_execution ; MainThread ; Waiting to 86% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 17:46:35,213 ; INFO ; cmd_execution ; MainThread ; Waiting to 88% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 17:46:35,353 ; INFO ; cmd_execution ; MainThread ; Waiting to 89% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 17:46:35,556 ; INFO ; cmd_execution ; MainThread ; Waiting to 90% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 17:46:36,025 ; INFO ; cmd_execution ; MainThread ; Waiting to 92% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 17:46:36,213 ; INFO ; cmd_execution ; MainThread ; Waiting to 93% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 17:46:36,369 ; INFO ; cmd_execution ; MainThread ; Waiting to 94% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 17:46:36,666 ; INFO ; cmd_execution ; MainThread ; Waiting to 95% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 17:46:36,744 ; INFO ; cmd_execution ; MainThread ; Waiting to 96% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 17:46:36,947 ; INFO ; cmd_execution ; MainThread ; Waiting to 97% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 17:46:37,088 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2018-08-05 17:46:38,884 ; INFO ; chiller_execution ; MainThread ; Chiller reactor_reactor waiting to reach 5.0°C...
+2018-08-05 17:46:49,352 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 47.78°C
+2018-08-05 17:46:59,789 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 46.22°C
+2018-08-05 17:47:10,648 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 44.11°C
+2018-08-05 17:47:22,006 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 42.7°C
+2018-08-05 17:47:33,240 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 41.86°C
+2018-08-05 17:47:43,520 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 41.27°C
+2018-08-05 17:47:56,566 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 40.72°C
+2018-08-05 17:48:07,862 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 39.99°C
+2018-08-05 17:48:18,752 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 38.64°C
+2018-08-05 17:48:27,002 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 36.77°C
+2018-08-05 17:48:36,623 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 34.55°C
+2018-08-05 17:48:49,028 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 32.92°C
+2018-08-05 17:49:00,027 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 31.56°C
+2018-08-05 17:49:09,995 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 30.46°C
+2018-08-05 17:49:19,729 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 29.47°C
+2018-08-05 17:49:29,869 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 28.57°C
+2018-08-05 17:49:40,477 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 27.51°C
+2018-08-05 17:49:51,539 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 26.54°C
+2018-08-05 17:50:02,320 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 25.72°C
+2018-08-05 17:50:13,694 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 24.77°C
+2018-08-05 17:50:23,240 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 23.97°C
+2018-08-05 17:50:35,130 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 23.08°C
+2018-08-05 17:50:45,801 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 22.29°C
+2018-08-05 17:50:54,816 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 21.59°C
+2018-08-05 17:51:04,503 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 20.92°C
+2018-08-05 17:51:14,658 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 20.22°C
+2018-08-05 17:51:24,564 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 19.56°C
+2018-08-05 17:51:34,735 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 18.89°C
+2018-08-05 17:51:45,328 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 18.16°C
+2018-08-05 17:51:56,421 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 17.38°C
+2018-08-05 17:52:07,280 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 16.57°C
+2018-08-05 17:52:17,154 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 15.9°C
+2018-08-05 17:52:27,247 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 15.27°C
+2018-08-05 17:52:36,918 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 14.61°C
+2018-08-05 17:52:46,996 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 13.96°C
+2018-08-05 17:52:57,589 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 13.3°C
+2018-08-05 17:53:08,197 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 12.69°C
+2018-08-05 17:53:17,650 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 12.06°C
+2018-08-05 17:53:27,462 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 11.47°C
+2018-08-05 17:53:37,930 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 10.84°C
+2018-08-05 17:53:47,882 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 10.19°C
+2018-08-05 17:53:58,631 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 9.55°C
+2018-08-05 17:54:08,802 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 9.0°C
+2018-08-05 17:54:18,864 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 8.44°C
+2018-08-05 17:54:29,660 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 7.98°C
+2018-08-05 17:54:39,925 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 7.52°C
+2018-08-05 17:54:51,127 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 7.12°C
+2018-08-05 17:55:02,778 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 6.73°C
+2018-08-05 17:55:14,230 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 6.42°C
+2018-08-05 17:55:26,651 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 6.09°C
+2018-08-05 17:55:39,182 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 5.82°C
+2018-08-05 17:55:50,665 ; INFO ; chiller_execution ; MainThread ; Still cooling... Current temperature: 5.64°C
+2018-08-05 17:55:59,477 ; INFO ; cmd_execution ; MainThread ; Waiting for 60 seconds...
+2018-08-05 17:55:59,618 ; INFO ; cmd_execution ; MainThread ; Waiting will be done at approximately 2018-08-05 17:56:59
+2018-08-05 17:56:00,258 ; INFO ; cmd_execution ; MainThread ; Waiting to 1% done. Approximately 0 h, 0 min, 59 sec remaining.
+2018-08-05 17:56:00,836 ; INFO ; cmd_execution ; MainThread ; Waiting to 2% done. Approximately 0 h, 0 min, 59 sec remaining.
+2018-08-05 17:56:01,508 ; INFO ; cmd_execution ; MainThread ; Waiting to 3% done. Approximately 0 h, 0 min, 58 sec remaining.
+2018-08-05 17:56:02,040 ; INFO ; cmd_execution ; MainThread ; Waiting to 4% done. Approximately 0 h, 0 min, 58 sec remaining.
+2018-08-05 17:56:02,758 ; INFO ; cmd_execution ; MainThread ; Waiting to 5% done. Approximately 0 h, 0 min, 57 sec remaining.
+2018-08-05 17:56:03,305 ; INFO ; cmd_execution ; MainThread ; Waiting to 6% done. Approximately 0 h, 0 min, 56 sec remaining.
+2018-08-05 17:56:03,852 ; INFO ; cmd_execution ; MainThread ; Waiting to 7% done. Approximately 0 h, 0 min, 56 sec remaining.
+2018-08-05 17:56:04,430 ; INFO ; cmd_execution ; MainThread ; Waiting to 8% done. Approximately 0 h, 0 min, 55 sec remaining.
+2018-08-05 17:56:05,086 ; INFO ; cmd_execution ; MainThread ; Waiting to 9% done. Approximately 0 h, 0 min, 55 sec remaining.
+2018-08-05 17:56:05,633 ; INFO ; cmd_execution ; MainThread ; Waiting to 10% done. Approximately 0 h, 0 min, 54 sec remaining.
+2018-08-05 17:56:06,492 ; INFO ; cmd_execution ; MainThread ; Waiting to 11% done. Approximately 0 h, 0 min, 53 sec remaining.
+2018-08-05 17:56:06,930 ; INFO ; cmd_execution ; MainThread ; Waiting to 12% done. Approximately 0 h, 0 min, 53 sec remaining.
+2018-08-05 17:56:07,508 ; INFO ; cmd_execution ; MainThread ; Waiting to 13% done. Approximately 0 h, 0 min, 52 sec remaining.
+2018-08-05 17:56:08,102 ; INFO ; cmd_execution ; MainThread ; Waiting to 14% done. Approximately 0 h, 0 min, 52 sec remaining.
+2018-08-05 17:56:08,867 ; INFO ; cmd_execution ; MainThread ; Waiting to 15% done. Approximately 0 h, 0 min, 51 sec remaining.
+2018-08-05 17:56:09,383 ; INFO ; cmd_execution ; MainThread ; Waiting to 16% done. Approximately 0 h, 0 min, 50 sec remaining.
+2018-08-05 17:56:09,867 ; INFO ; cmd_execution ; MainThread ; Waiting to 17% done. Approximately 0 h, 0 min, 50 sec remaining.
+2018-08-05 17:56:10,430 ; INFO ; cmd_execution ; MainThread ; Waiting to 18% done. Approximately 0 h, 0 min, 49 sec remaining.
+2018-08-05 17:56:11,039 ; INFO ; cmd_execution ; MainThread ; Waiting to 19% done. Approximately 0 h, 0 min, 49 sec remaining.
+2018-08-05 17:56:11,695 ; INFO ; cmd_execution ; MainThread ; Waiting to 20% done. Approximately 0 h, 0 min, 48 sec remaining.
+2018-08-05 17:56:12,414 ; INFO ; cmd_execution ; MainThread ; Waiting to 21% done. Approximately 0 h, 0 min, 47 sec remaining.
+2018-08-05 17:56:12,898 ; INFO ; cmd_execution ; MainThread ; Waiting to 22% done. Approximately 0 h, 0 min, 47 sec remaining.
+2018-08-05 17:56:13,507 ; INFO ; cmd_execution ; MainThread ; Waiting to 23% done. Approximately 0 h, 0 min, 46 sec remaining.
+2018-08-05 17:56:14,023 ; INFO ; cmd_execution ; MainThread ; Waiting to 24% done. Approximately 0 h, 0 min, 46 sec remaining.
+2018-08-05 17:56:14,648 ; INFO ; cmd_execution ; MainThread ; Waiting to 25% done. Approximately 0 h, 0 min, 45 sec remaining.
+2018-08-05 17:56:15,257 ; INFO ; cmd_execution ; MainThread ; Waiting to 26% done. Approximately 0 h, 0 min, 44 sec remaining.
+2018-08-05 17:56:15,960 ; INFO ; cmd_execution ; MainThread ; Waiting to 27% done. Approximately 0 h, 0 min, 44 sec remaining.
+2018-08-05 17:56:16,445 ; INFO ; cmd_execution ; MainThread ; Waiting to 28% done. Approximately 0 h, 0 min, 43 sec remaining.
+2018-08-05 17:56:17,070 ; INFO ; cmd_execution ; MainThread ; Waiting to 29% done. Approximately 0 h, 0 min, 43 sec remaining.
+2018-08-05 17:56:17,632 ; INFO ; cmd_execution ; MainThread ; Waiting to 30% done. Approximately 0 h, 0 min, 42 sec remaining.
+2018-08-05 17:56:18,226 ; INFO ; cmd_execution ; MainThread ; Waiting to 31% done. Approximately 0 h, 0 min, 41 sec remaining.
+2018-08-05 17:56:18,851 ; INFO ; cmd_execution ; MainThread ; Waiting to 32% done. Approximately 0 h, 0 min, 41 sec remaining.
+2018-08-05 17:56:19,429 ; INFO ; cmd_execution ; MainThread ; Waiting to 33% done. Approximately 0 h, 0 min, 40 sec remaining.
+2018-08-05 17:56:20,023 ; INFO ; cmd_execution ; MainThread ; Waiting to 34% done. Approximately 0 h, 0 min, 40 sec remaining.
+2018-08-05 17:56:20,882 ; INFO ; cmd_execution ; MainThread ; Waiting to 35% done. Approximately 0 h, 0 min, 39 sec remaining.
+2018-08-05 17:56:21,319 ; INFO ; cmd_execution ; MainThread ; Waiting to 36% done. Approximately 0 h, 0 min, 38 sec remaining.
+2018-08-05 17:56:21,913 ; INFO ; cmd_execution ; MainThread ; Waiting to 37% done. Approximately 0 h, 0 min, 38 sec remaining.
+2018-08-05 17:56:22,460 ; INFO ; cmd_execution ; MainThread ; Waiting to 38% done. Approximately 0 h, 0 min, 37 sec remaining.
+2018-08-05 17:56:23,116 ; INFO ; cmd_execution ; MainThread ; Waiting to 39% done. Approximately 0 h, 0 min, 37 sec remaining.
+2018-08-05 17:56:23,710 ; INFO ; cmd_execution ; MainThread ; Waiting to 40% done. Approximately 0 h, 0 min, 36 sec remaining.
+2018-08-05 17:56:24,272 ; INFO ; cmd_execution ; MainThread ; Waiting to 41% done. Approximately 0 h, 0 min, 35 sec remaining.
+2018-08-05 17:56:24,913 ; INFO ; cmd_execution ; MainThread ; Waiting to 42% done. Approximately 0 h, 0 min, 35 sec remaining.
+2018-08-05 17:56:25,475 ; INFO ; cmd_execution ; MainThread ; Waiting to 43% done. Approximately 0 h, 0 min, 34 sec remaining.
+2018-08-05 17:56:26,038 ; INFO ; cmd_execution ; MainThread ; Waiting to 44% done. Approximately 0 h, 0 min, 34 sec remaining.
+2018-08-05 17:56:26,694 ; INFO ; cmd_execution ; MainThread ; Waiting to 45% done. Approximately 0 h, 0 min, 33 sec remaining.
+2018-08-05 17:56:27,428 ; INFO ; cmd_execution ; MainThread ; Waiting to 46% done. Approximately 0 h, 0 min, 32 sec remaining.
+2018-08-05 17:56:27,960 ; INFO ; cmd_execution ; MainThread ; Waiting to 47% done. Approximately 0 h, 0 min, 32 sec remaining.
+2018-08-05 17:56:28,491 ; INFO ; cmd_execution ; MainThread ; Waiting to 48% done. Approximately 0 h, 0 min, 31 sec remaining.
+2018-08-05 17:56:29,022 ; INFO ; cmd_execution ; MainThread ; Waiting to 49% done. Approximately 0 h, 0 min, 31 sec remaining.
+2018-08-05 17:56:29,678 ; INFO ; cmd_execution ; MainThread ; Waiting to 50% done. Approximately 0 h, 0 min, 30 sec remaining.
+2018-08-05 17:56:30,225 ; INFO ; cmd_execution ; MainThread ; Waiting to 51% done. Approximately 0 h, 0 min, 29 sec remaining.
+2018-08-05 17:56:31,006 ; INFO ; cmd_execution ; MainThread ; Waiting to 52% done. Approximately 0 h, 0 min, 29 sec remaining.
+2018-08-05 17:56:31,459 ; INFO ; cmd_execution ; MainThread ; Waiting to 53% done. Approximately 0 h, 0 min, 28 sec remaining.
+2018-08-05 17:56:32,116 ; INFO ; cmd_execution ; MainThread ; Waiting to 54% done. Approximately 0 h, 0 min, 28 sec remaining.
+2018-08-05 17:56:32,647 ; INFO ; cmd_execution ; MainThread ; Waiting to 55% done. Approximately 0 h, 0 min, 27 sec remaining.
+2018-08-05 17:56:33,240 ; INFO ; cmd_execution ; MainThread ; Waiting to 56% done. Approximately 0 h, 0 min, 26 sec remaining.
+2018-08-05 17:56:33,912 ; INFO ; cmd_execution ; MainThread ; Waiting to 57% done. Approximately 0 h, 0 min, 26 sec remaining.
+2018-08-05 17:56:34,490 ; INFO ; cmd_execution ; MainThread ; Waiting to 58% done. Approximately 0 h, 0 min, 25 sec remaining.
+2018-08-05 17:56:35,100 ; INFO ; cmd_execution ; MainThread ; Waiting to 59% done. Approximately 0 h, 0 min, 25 sec remaining.
+2018-08-05 17:56:35,647 ; INFO ; cmd_execution ; MainThread ; Waiting to 60% done. Approximately 0 h, 0 min, 24 sec remaining.
+2018-08-05 17:56:36,459 ; INFO ; cmd_execution ; MainThread ; Waiting to 61% done. Approximately 0 h, 0 min, 23 sec remaining.
+2018-08-05 17:56:36,818 ; INFO ; cmd_execution ; MainThread ; Waiting to 62% done. Approximately 0 h, 0 min, 23 sec remaining.
+2018-08-05 17:56:37,537 ; INFO ; cmd_execution ; MainThread ; Waiting to 63% done. Approximately 0 h, 0 min, 22 sec remaining.
+2018-08-05 17:56:38,037 ; INFO ; cmd_execution ; MainThread ; Waiting to 64% done. Approximately 0 h, 0 min, 22 sec remaining.
+2018-08-05 17:56:38,693 ; INFO ; cmd_execution ; MainThread ; Waiting to 65% done. Approximately 0 h, 0 min, 21 sec remaining.
+2018-08-05 17:56:39,349 ; INFO ; cmd_execution ; MainThread ; Waiting to 66% done. Approximately 0 h, 0 min, 20 sec remaining.
+2018-08-05 17:56:39,927 ; INFO ; cmd_execution ; MainThread ; Waiting to 67% done. Approximately 0 h, 0 min, 20 sec remaining.
+2018-08-05 17:56:40,474 ; INFO ; cmd_execution ; MainThread ; Waiting to 68% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 17:56:41,162 ; INFO ; cmd_execution ; MainThread ; Waiting to 69% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 17:56:41,880 ; INFO ; cmd_execution ; MainThread ; Waiting to 70% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 17:56:42,490 ; INFO ; cmd_execution ; MainThread ; Waiting to 71% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 17:56:42,865 ; INFO ; cmd_execution ; MainThread ; Waiting to 72% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 17:56:43,521 ; INFO ; cmd_execution ; MainThread ; Waiting to 73% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 17:56:44,130 ; INFO ; cmd_execution ; MainThread ; Waiting to 74% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 17:56:44,896 ; INFO ; cmd_execution ; MainThread ; Waiting to 75% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 17:56:45,224 ; INFO ; cmd_execution ; MainThread ; Waiting to 76% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 17:56:45,943 ; INFO ; cmd_execution ; MainThread ; Waiting to 77% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 17:56:46,427 ; INFO ; cmd_execution ; MainThread ; Waiting to 78% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 17:56:47,021 ; INFO ; cmd_execution ; MainThread ; Waiting to 79% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 17:56:47,755 ; INFO ; cmd_execution ; MainThread ; Waiting to 80% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 17:56:48,302 ; INFO ; cmd_execution ; MainThread ; Waiting to 81% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 17:56:48,864 ; INFO ; cmd_execution ; MainThread ; Waiting to 82% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 17:56:49,458 ; INFO ; cmd_execution ; MainThread ; Waiting to 83% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 17:56:50,333 ; INFO ; cmd_execution ; MainThread ; Waiting to 84% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 17:56:50,645 ; INFO ; cmd_execution ; MainThread ; Waiting to 85% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 17:56:51,333 ; INFO ; cmd_execution ; MainThread ; Waiting to 86% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 17:56:52,052 ; INFO ; cmd_execution ; MainThread ; Waiting to 87% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 17:56:52,520 ; INFO ; cmd_execution ; MainThread ; Waiting to 88% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 17:56:53,083 ; INFO ; cmd_execution ; MainThread ; Waiting to 89% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 17:56:53,692 ; INFO ; cmd_execution ; MainThread ; Waiting to 90% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 17:56:54,301 ; INFO ; cmd_execution ; MainThread ; Waiting to 91% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 17:56:54,973 ; INFO ; cmd_execution ; MainThread ; Waiting to 92% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 17:56:55,489 ; INFO ; cmd_execution ; MainThread ; Waiting to 93% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 17:56:56,036 ; INFO ; cmd_execution ; MainThread ; Waiting to 94% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 17:56:56,754 ; INFO ; cmd_execution ; MainThread ; Waiting to 95% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 17:56:57,254 ; INFO ; cmd_execution ; MainThread ; Waiting to 96% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 17:56:57,832 ; INFO ; cmd_execution ; MainThread ; Waiting to 97% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 17:56:59,004 ; INFO ; cmd_execution ; MainThread ; Waiting to 98% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 17:56:59,067 ; INFO ; cmd_execution ; MainThread ; Waiting to 99% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 17:56:59,301 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2018-08-05 17:57:00,457 ; INFO ; cmd_execution ; MainThread ; Waiting for 180 seconds...
+2018-08-05 17:57:00,504 ; INFO ; cmd_execution ; MainThread ; Waiting will be done at approximately 2018-08-05 18:00:00
+2018-08-05 17:57:02,363 ; INFO ; cmd_execution ; MainThread ; Waiting to 1% done. Approximately 0 h, 2 min, 58 sec remaining.
+2018-08-05 17:57:04,145 ; INFO ; cmd_execution ; MainThread ; Waiting to 2% done. Approximately 0 h, 2 min, 56 sec remaining.
+2018-08-05 17:57:06,004 ; INFO ; cmd_execution ; MainThread ; Waiting to 3% done. Approximately 0 h, 2 min, 55 sec remaining.
+2018-08-05 17:57:07,847 ; INFO ; cmd_execution ; MainThread ; Waiting to 4% done. Approximately 0 h, 2 min, 53 sec remaining.
+2018-08-05 17:57:09,582 ; INFO ; cmd_execution ; MainThread ; Waiting to 5% done. Approximately 0 h, 2 min, 51 sec remaining.
+2018-08-05 17:57:11,378 ; INFO ; cmd_execution ; MainThread ; Waiting to 6% done. Approximately 0 h, 2 min, 49 sec remaining.
+2018-08-05 17:57:13,206 ; INFO ; cmd_execution ; MainThread ; Waiting to 7% done. Approximately 0 h, 2 min, 47 sec remaining.
+2018-08-05 17:57:14,956 ; INFO ; cmd_execution ; MainThread ; Waiting to 8% done. Approximately 0 h, 2 min, 46 sec remaining.
+2018-08-05 17:57:16,722 ; INFO ; cmd_execution ; MainThread ; Waiting to 9% done. Approximately 0 h, 2 min, 44 sec remaining.
+2018-08-05 17:57:18,534 ; INFO ; cmd_execution ; MainThread ; Waiting to 10% done. Approximately 0 h, 2 min, 42 sec remaining.
+2018-08-05 17:57:20,425 ; INFO ; cmd_execution ; MainThread ; Waiting to 11% done. Approximately 0 h, 2 min, 40 sec remaining.
+2018-08-05 17:57:22,253 ; INFO ; cmd_execution ; MainThread ; Waiting to 12% done. Approximately 0 h, 2 min, 38 sec remaining.
+2018-08-05 17:57:23,924 ; INFO ; cmd_execution ; MainThread ; Waiting to 13% done. Approximately 0 h, 2 min, 37 sec remaining.
+2018-08-05 17:57:25,987 ; INFO ; cmd_execution ; MainThread ; Waiting to 14% done. Approximately 0 h, 2 min, 35 sec remaining.
+2018-08-05 17:57:27,534 ; INFO ; cmd_execution ; MainThread ; Waiting to 15% done. Approximately 0 h, 2 min, 33 sec remaining.
+2018-08-05 17:57:29,392 ; INFO ; cmd_execution ; MainThread ; Waiting to 16% done. Approximately 0 h, 2 min, 31 sec remaining.
+2018-08-05 17:57:31,158 ; INFO ; cmd_execution ; MainThread ; Waiting to 17% done. Approximately 0 h, 2 min, 29 sec remaining.
+2018-08-05 17:57:33,251 ; INFO ; cmd_execution ; MainThread ; Waiting to 18% done. Approximately 0 h, 2 min, 27 sec remaining.
+2018-08-05 17:57:34,892 ; INFO ; cmd_execution ; MainThread ; Waiting to 19% done. Approximately 0 h, 2 min, 26 sec remaining.
+2018-08-05 17:57:36,579 ; INFO ; cmd_execution ; MainThread ; Waiting to 20% done. Approximately 0 h, 2 min, 24 sec remaining.
+2018-08-05 17:57:38,360 ; INFO ; cmd_execution ; MainThread ; Waiting to 21% done. Approximately 0 h, 2 min, 22 sec remaining.
+2018-08-05 17:57:40,313 ; INFO ; cmd_execution ; MainThread ; Waiting to 22% done. Approximately 0 h, 2 min, 20 sec remaining.
+2018-08-05 17:57:41,985 ; INFO ; cmd_execution ; MainThread ; Waiting to 23% done. Approximately 0 h, 2 min, 19 sec remaining.
+2018-08-05 17:57:43,751 ; INFO ; cmd_execution ; MainThread ; Waiting to 24% done. Approximately 0 h, 2 min, 17 sec remaining.
+2018-08-05 17:57:45,547 ; INFO ; cmd_execution ; MainThread ; Waiting to 25% done. Approximately 0 h, 2 min, 15 sec remaining.
+2018-08-05 17:57:47,313 ; INFO ; cmd_execution ; MainThread ; Waiting to 26% done. Approximately 0 h, 2 min, 13 sec remaining.
+2018-08-05 17:57:49,141 ; INFO ; cmd_execution ; MainThread ; Waiting to 27% done. Approximately 0 h, 2 min, 11 sec remaining.
+2018-08-05 17:57:51,141 ; INFO ; cmd_execution ; MainThread ; Waiting to 28% done. Approximately 0 h, 2 min, 9 sec remaining.
+2018-08-05 17:57:52,750 ; INFO ; cmd_execution ; MainThread ; Waiting to 29% done. Approximately 0 h, 2 min, 8 sec remaining.
+2018-08-05 17:57:54,516 ; INFO ; cmd_execution ; MainThread ; Waiting to 30% done. Approximately 0 h, 2 min, 6 sec remaining.
+2018-08-05 17:57:56,406 ; INFO ; cmd_execution ; MainThread ; Waiting to 31% done. Approximately 0 h, 2 min, 4 sec remaining.
+2018-08-05 17:57:58,109 ; INFO ; cmd_execution ; MainThread ; Waiting to 32% done. Approximately 0 h, 2 min, 2 sec remaining.
+2018-08-05 17:57:59,937 ; INFO ; cmd_execution ; MainThread ; Waiting to 33% done. Approximately 0 h, 2 min, 1 sec remaining.
+2018-08-05 17:58:01,718 ; INFO ; cmd_execution ; MainThread ; Waiting to 34% done. Approximately 0 h, 1 min, 59 sec remaining.
+2018-08-05 17:58:03,609 ; INFO ; cmd_execution ; MainThread ; Waiting to 35% done. Approximately 0 h, 1 min, 57 sec remaining.
+2018-08-05 17:58:05,343 ; INFO ; cmd_execution ; MainThread ; Waiting to 36% done. Approximately 0 h, 1 min, 55 sec remaining.
+2018-08-05 17:58:07,124 ; INFO ; cmd_execution ; MainThread ; Waiting to 37% done. Approximately 0 h, 1 min, 53 sec remaining.
+2018-08-05 17:58:08,936 ; INFO ; cmd_execution ; MainThread ; Waiting to 38% done. Approximately 0 h, 1 min, 52 sec remaining.
+2018-08-05 17:58:10,858 ; INFO ; cmd_execution ; MainThread ; Waiting to 39% done. Approximately 0 h, 1 min, 50 sec remaining.
+2018-08-05 17:58:12,624 ; INFO ; cmd_execution ; MainThread ; Waiting to 40% done. Approximately 0 h, 1 min, 48 sec remaining.
+2018-08-05 17:58:14,373 ; INFO ; cmd_execution ; MainThread ; Waiting to 41% done. Approximately 0 h, 1 min, 46 sec remaining.
+2018-08-05 17:58:16,139 ; INFO ; cmd_execution ; MainThread ; Waiting to 42% done. Approximately 0 h, 1 min, 44 sec remaining.
+2018-08-05 17:58:18,170 ; INFO ; cmd_execution ; MainThread ; Waiting to 43% done. Approximately 0 h, 1 min, 42 sec remaining.
+2018-08-05 17:58:19,779 ; INFO ; cmd_execution ; MainThread ; Waiting to 44% done. Approximately 0 h, 1 min, 41 sec remaining.
+2018-08-05 17:58:21,514 ; INFO ; cmd_execution ; MainThread ; Waiting to 45% done. Approximately 0 h, 1 min, 39 sec remaining.
+2018-08-05 17:58:23,342 ; INFO ; cmd_execution ; MainThread ; Waiting to 46% done. Approximately 0 h, 1 min, 37 sec remaining.
+2018-08-05 17:58:25,170 ; INFO ; cmd_execution ; MainThread ; Waiting to 47% done. Approximately 0 h, 1 min, 35 sec remaining.
+2018-08-05 17:58:26,998 ; INFO ; cmd_execution ; MainThread ; Waiting to 48% done. Approximately 0 h, 1 min, 34 sec remaining.
+2018-08-05 17:58:28,919 ; INFO ; cmd_execution ; MainThread ; Waiting to 49% done. Approximately 0 h, 1 min, 32 sec remaining.
+2018-08-05 17:58:30,685 ; INFO ; cmd_execution ; MainThread ; Waiting to 50% done. Approximately 0 h, 1 min, 30 sec remaining.
+2018-08-05 17:58:32,341 ; INFO ; cmd_execution ; MainThread ; Waiting to 51% done. Approximately 0 h, 1 min, 28 sec remaining.
+2018-08-05 17:58:34,263 ; INFO ; cmd_execution ; MainThread ; Waiting to 52% done. Approximately 0 h, 1 min, 26 sec remaining.
+2018-08-05 17:58:36,122 ; INFO ; cmd_execution ; MainThread ; Waiting to 53% done. Approximately 0 h, 1 min, 24 sec remaining.
+2018-08-05 17:58:37,794 ; INFO ; cmd_execution ; MainThread ; Waiting to 54% done. Approximately 0 h, 1 min, 23 sec remaining.
+2018-08-05 17:58:39,825 ; INFO ; cmd_execution ; MainThread ; Waiting to 55% done. Approximately 0 h, 1 min, 21 sec remaining.
+2018-08-05 17:58:41,356 ; INFO ; cmd_execution ; MainThread ; Waiting to 56% done. Approximately 0 h, 1 min, 19 sec remaining.
+2018-08-05 17:58:43,184 ; INFO ; cmd_execution ; MainThread ; Waiting to 57% done. Approximately 0 h, 1 min, 17 sec remaining.
+2018-08-05 17:58:45,356 ; INFO ; cmd_execution ; MainThread ; Waiting to 58% done. Approximately 0 h, 1 min, 15 sec remaining.
+2018-08-05 17:58:46,715 ; INFO ; cmd_execution ; MainThread ; Waiting to 59% done. Approximately 0 h, 1 min, 14 sec remaining.
+2018-08-05 17:58:48,559 ; INFO ; cmd_execution ; MainThread ; Waiting to 60% done. Approximately 0 h, 1 min, 12 sec remaining.
+2018-08-05 17:58:50,355 ; INFO ; cmd_execution ; MainThread ; Waiting to 61% done. Approximately 0 h, 1 min, 10 sec remaining.
+2018-08-05 17:58:52,449 ; INFO ; cmd_execution ; MainThread ; Waiting to 62% done. Approximately 0 h, 1 min, 8 sec remaining.
+2018-08-05 17:58:53,933 ; INFO ; cmd_execution ; MainThread ; Waiting to 63% done. Approximately 0 h, 1 min, 7 sec remaining.
+2018-08-05 17:58:55,886 ; INFO ; cmd_execution ; MainThread ; Waiting to 64% done. Approximately 0 h, 1 min, 5 sec remaining.
+2018-08-05 17:58:57,558 ; INFO ; cmd_execution ; MainThread ; Waiting to 65% done. Approximately 0 h, 1 min, 3 sec remaining.
+2018-08-05 17:58:59,339 ; INFO ; cmd_execution ; MainThread ; Waiting to 66% done. Approximately 0 h, 1 min, 1 sec remaining.
+2018-08-05 17:59:01,308 ; INFO ; cmd_execution ; MainThread ; Waiting to 67% done. Approximately 0 h, 0 min, 59 sec remaining.
+2018-08-05 17:59:03,151 ; INFO ; cmd_execution ; MainThread ; Waiting to 68% done. Approximately 0 h, 0 min, 57 sec remaining.
+2018-08-05 17:59:05,229 ; INFO ; cmd_execution ; MainThread ; Waiting to 69% done. Approximately 0 h, 0 min, 55 sec remaining.
+2018-08-05 17:59:06,635 ; INFO ; cmd_execution ; MainThread ; Waiting to 70% done. Approximately 0 h, 0 min, 54 sec remaining.
+2018-08-05 17:59:08,417 ; INFO ; cmd_execution ; MainThread ; Waiting to 71% done. Approximately 0 h, 0 min, 52 sec remaining.
+2018-08-05 17:59:10,213 ; INFO ; cmd_execution ; MainThread ; Waiting to 72% done. Approximately 0 h, 0 min, 50 sec remaining.
+2018-08-05 17:59:11,932 ; INFO ; cmd_execution ; MainThread ; Waiting to 73% done. Approximately 0 h, 0 min, 49 sec remaining.
+2018-08-05 17:59:13,713 ; INFO ; cmd_execution ; MainThread ; Waiting to 74% done. Approximately 0 h, 0 min, 47 sec remaining.
+2018-08-05 17:59:15,588 ; INFO ; cmd_execution ; MainThread ; Waiting to 75% done. Approximately 0 h, 0 min, 45 sec remaining.
+2018-08-05 17:59:17,307 ; INFO ; cmd_execution ; MainThread ; Waiting to 76% done. Approximately 0 h, 0 min, 43 sec remaining.
+2018-08-05 17:59:19,166 ; INFO ; cmd_execution ; MainThread ; Waiting to 77% done. Approximately 0 h, 0 min, 41 sec remaining.
+2018-08-05 17:59:21,056 ; INFO ; cmd_execution ; MainThread ; Waiting to 78% done. Approximately 0 h, 0 min, 39 sec remaining.
+2018-08-05 17:59:22,978 ; INFO ; cmd_execution ; MainThread ; Waiting to 79% done. Approximately 0 h, 0 min, 38 sec remaining.
+2018-08-05 17:59:24,728 ; INFO ; cmd_execution ; MainThread ; Waiting to 80% done. Approximately 0 h, 0 min, 36 sec remaining.
+2018-08-05 17:59:26,337 ; INFO ; cmd_execution ; MainThread ; Waiting to 81% done. Approximately 0 h, 0 min, 34 sec remaining.
+2018-08-05 17:59:28,368 ; INFO ; cmd_execution ; MainThread ; Waiting to 82% done. Approximately 0 h, 0 min, 32 sec remaining.
+2018-08-05 17:59:29,931 ; INFO ; cmd_execution ; MainThread ; Waiting to 83% done. Approximately 0 h, 0 min, 31 sec remaining.
+2018-08-05 17:59:32,196 ; INFO ; cmd_execution ; MainThread ; Waiting to 84% done. Approximately 0 h, 0 min, 28 sec remaining.
+2018-08-05 17:59:33,509 ; INFO ; cmd_execution ; MainThread ; Waiting to 85% done. Approximately 0 h, 0 min, 27 sec remaining.
+2018-08-05 17:59:35,305 ; INFO ; cmd_execution ; MainThread ; Waiting to 86% done. Approximately 0 h, 0 min, 25 sec remaining.
+2018-08-05 17:59:37,336 ; INFO ; cmd_execution ; MainThread ; Waiting to 87% done. Approximately 0 h, 0 min, 23 sec remaining.
+2018-08-05 17:59:39,008 ; INFO ; cmd_execution ; MainThread ; Waiting to 88% done. Approximately 0 h, 0 min, 21 sec remaining.
+2018-08-05 17:59:40,711 ; INFO ; cmd_execution ; MainThread ; Waiting to 89% done. Approximately 0 h, 0 min, 20 sec remaining.
+2018-08-05 17:59:42,555 ; INFO ; cmd_execution ; MainThread ; Waiting to 90% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 17:59:44,320 ; INFO ; cmd_execution ; MainThread ; Waiting to 91% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 17:59:46,242 ; INFO ; cmd_execution ; MainThread ; Waiting to 92% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 17:59:48,039 ; INFO ; cmd_execution ; MainThread ; Waiting to 93% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 17:59:49,711 ; INFO ; cmd_execution ; MainThread ; Waiting to 94% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 17:59:51,710 ; INFO ; cmd_execution ; MainThread ; Waiting to 95% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 17:59:53,601 ; INFO ; cmd_execution ; MainThread ; Waiting to 96% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 17:59:55,116 ; INFO ; cmd_execution ; MainThread ; Waiting to 97% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 17:59:57,069 ; INFO ; cmd_execution ; MainThread ; Waiting to 98% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 17:59:58,741 ; INFO ; cmd_execution ; MainThread ; Waiting to 99% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:00:00,007 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2018-08-05 18:00:00,757 ; INFO ; chiller_execution ; MainThread ; Chiller is switched Coil OFF.
+2018-08-05 18:00:00,944 ; INFO ; cmd_execution ; MainThread ; Waiting for 5 seconds...
+2018-08-05 18:00:00,975 ; INFO ; cmd_execution ; MainThread ; Waiting will be done at approximately 2018-08-05 18:00:05
+2018-08-05 18:00:01,038 ; INFO ; cmd_execution ; MainThread ; Waiting to 1% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:00:01,100 ; INFO ; cmd_execution ; MainThread ; Waiting to 2% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:00:01,132 ; INFO ; cmd_execution ; MainThread ; Waiting to 3% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:00:01,288 ; INFO ; cmd_execution ; MainThread ; Waiting to 6% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:00:01,413 ; INFO ; cmd_execution ; MainThread ; Waiting to 8% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:00:01,460 ; INFO ; cmd_execution ; MainThread ; Waiting to 9% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:00:01,507 ; INFO ; cmd_execution ; MainThread ; Waiting to 10% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:01,538 ; INFO ; cmd_execution ; MainThread ; Waiting to 11% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:01,944 ; INFO ; cmd_execution ; MainThread ; Waiting to 19% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:02,116 ; INFO ; cmd_execution ; MainThread ; Waiting to 20% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:02,210 ; INFO ; cmd_execution ; MainThread ; Waiting to 24% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:02,319 ; INFO ; cmd_execution ; MainThread ; Waiting to 25% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:02,366 ; INFO ; cmd_execution ; MainThread ; Waiting to 27% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:02,460 ; INFO ; cmd_execution ; MainThread ; Waiting to 29% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:02,538 ; INFO ; cmd_execution ; MainThread ; Waiting to 31% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:02,678 ; INFO ; cmd_execution ; MainThread ; Waiting to 34% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:02,788 ; INFO ; cmd_execution ; MainThread ; Waiting to 36% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:02,866 ; INFO ; cmd_execution ; MainThread ; Waiting to 37% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:02,928 ; INFO ; cmd_execution ; MainThread ; Waiting to 39% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:02,991 ; INFO ; cmd_execution ; MainThread ; Waiting to 40% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:03,069 ; INFO ; cmd_execution ; MainThread ; Waiting to 41% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:03,147 ; INFO ; cmd_execution ; MainThread ; Waiting to 43% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:03,225 ; INFO ; cmd_execution ; MainThread ; Waiting to 44% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:03,241 ; INFO ; cmd_execution ; MainThread ; Waiting to 45% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:03,335 ; INFO ; cmd_execution ; MainThread ; Waiting to 47% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:03,381 ; INFO ; cmd_execution ; MainThread ; Waiting to 48% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:03,522 ; INFO ; cmd_execution ; MainThread ; Waiting to 49% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:00:03,538 ; INFO ; cmd_execution ; MainThread ; Waiting to 51% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:00:03,616 ; INFO ; cmd_execution ; MainThread ; Waiting to 52% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:00:04,022 ; INFO ; cmd_execution ; MainThread ; Waiting to 60% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:00:04,210 ; INFO ; cmd_execution ; MainThread ; Waiting to 64% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:00:04,475 ; INFO ; cmd_execution ; MainThread ; Waiting to 69% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:00:04,522 ; INFO ; cmd_execution ; MainThread ; Waiting to 70% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:04,553 ; INFO ; cmd_execution ; MainThread ; Waiting to 71% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:04,631 ; INFO ; cmd_execution ; MainThread ; Waiting to 73% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:04,678 ; INFO ; cmd_execution ; MainThread ; Waiting to 74% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:04,756 ; INFO ; cmd_execution ; MainThread ; Waiting to 75% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:04,788 ; INFO ; cmd_execution ; MainThread ; Waiting to 76% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:04,850 ; INFO ; cmd_execution ; MainThread ; Waiting to 77% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:04,928 ; INFO ; cmd_execution ; MainThread ; Waiting to 79% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:04,991 ; INFO ; cmd_execution ; MainThread ; Waiting to 80% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:05,038 ; INFO ; cmd_execution ; MainThread ; Waiting to 81% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:05,131 ; INFO ; cmd_execution ; MainThread ; Waiting to 83% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:05,194 ; INFO ; cmd_execution ; MainThread ; Waiting to 84% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:05,413 ; INFO ; cmd_execution ; MainThread ; Waiting to 88% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:05,569 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2018-08-05 18:00:05,772 ; INFO ; chiller_execution ; MainThread ; Setting temperature for chiller filter_filter_top to 30.0°C...
+2018-08-05 18:00:09,100 ; INFO ; chiller_execution ; MainThread ; Done.
+2018-08-05 18:00:10,225 ; INFO ; chiller_execution ; MainThread ; Starting chiller filter_filter_top...
+2018-08-05 18:00:14,724 ; INFO ; chiller_execution ; MainThread ; Done.
+2018-08-05 18:00:16,459 ; INFO ; cmd_execution ; MainThread ; Waiting for 20 seconds...
+2018-08-05 18:00:16,474 ; INFO ; cmd_execution ; MainThread ; Waiting will be done at approximately 2018-08-05 18:00:36
+2018-08-05 18:00:16,896 ; INFO ; cmd_execution ; MainThread ; Waiting to 2% done. Approximately 0 h, 0 min, 20 sec remaining.
+2018-08-05 18:00:17,302 ; INFO ; cmd_execution ; MainThread ; Waiting to 4% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 18:00:17,505 ; INFO ; cmd_execution ; MainThread ; Waiting to 5% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 18:00:17,755 ; INFO ; cmd_execution ; MainThread ; Waiting to 6% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 18:00:18,021 ; INFO ; cmd_execution ; MainThread ; Waiting to 7% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:00:18,084 ; INFO ; cmd_execution ; MainThread ; Waiting to 8% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:00:18,427 ; INFO ; cmd_execution ; MainThread ; Waiting to 9% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:00:18,646 ; INFO ; cmd_execution ; MainThread ; Waiting to 10% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:00:18,724 ; INFO ; cmd_execution ; MainThread ; Waiting to 11% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:00:18,896 ; INFO ; cmd_execution ; MainThread ; Waiting to 12% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:00:19,802 ; INFO ; cmd_execution ; MainThread ; Waiting to 16% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 18:00:20,224 ; INFO ; cmd_execution ; MainThread ; Waiting to 18% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 18:00:20,318 ; INFO ; cmd_execution ; MainThread ; Waiting to 19% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 18:00:20,490 ; INFO ; cmd_execution ; MainThread ; Waiting to 20% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 18:00:20,818 ; INFO ; cmd_execution ; MainThread ; Waiting to 21% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 18:00:20,896 ; INFO ; cmd_execution ; MainThread ; Waiting to 22% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 18:00:21,099 ; INFO ; cmd_execution ; MainThread ; Waiting to 23% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:00:21,302 ; INFO ; cmd_execution ; MainThread ; Waiting to 24% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:00:21,505 ; INFO ; cmd_execution ; MainThread ; Waiting to 25% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:00:21,677 ; INFO ; cmd_execution ; MainThread ; Waiting to 26% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:00:21,896 ; INFO ; cmd_execution ; MainThread ; Waiting to 27% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:00:22,146 ; INFO ; cmd_execution ; MainThread ; Waiting to 28% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 18:00:22,333 ; INFO ; cmd_execution ; MainThread ; Waiting to 29% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 18:00:22,599 ; INFO ; cmd_execution ; MainThread ; Waiting to 30% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 18:00:22,724 ; INFO ; cmd_execution ; MainThread ; Waiting to 31% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 18:00:22,958 ; INFO ; cmd_execution ; MainThread ; Waiting to 32% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 18:00:23,255 ; INFO ; cmd_execution ; MainThread ; Waiting to 33% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 18:00:23,364 ; INFO ; cmd_execution ; MainThread ; Waiting to 34% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 18:00:23,552 ; INFO ; cmd_execution ; MainThread ; Waiting to 35% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 18:00:24,052 ; INFO ; cmd_execution ; MainThread ; Waiting to 37% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 18:00:24,099 ; INFO ; cmd_execution ; MainThread ; Waiting to 38% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 18:00:24,317 ; INFO ; cmd_execution ; MainThread ; Waiting to 39% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 18:00:24,614 ; INFO ; cmd_execution ; MainThread ; Waiting to 40% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 18:00:24,817 ; INFO ; cmd_execution ; MainThread ; Waiting to 41% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 18:00:25,239 ; INFO ; cmd_execution ; MainThread ; Waiting to 43% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 18:00:25,333 ; INFO ; cmd_execution ; MainThread ; Waiting to 44% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 18:00:25,505 ; INFO ; cmd_execution ; MainThread ; Waiting to 45% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 18:00:25,880 ; INFO ; cmd_execution ; MainThread ; Waiting to 47% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 18:00:26,177 ; INFO ; cmd_execution ; MainThread ; Waiting to 48% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 18:00:26,286 ; INFO ; cmd_execution ; MainThread ; Waiting to 49% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 18:00:26,599 ; INFO ; cmd_execution ; MainThread ; Waiting to 50% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 18:00:26,692 ; INFO ; cmd_execution ; MainThread ; Waiting to 51% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 18:00:27,192 ; INFO ; cmd_execution ; MainThread ; Waiting to 53% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 18:00:27,474 ; INFO ; cmd_execution ; MainThread ; Waiting to 54% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 18:00:27,552 ; INFO ; cmd_execution ; MainThread ; Waiting to 55% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 18:00:28,005 ; INFO ; cmd_execution ; MainThread ; Waiting to 57% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 18:00:28,177 ; INFO ; cmd_execution ; MainThread ; Waiting to 58% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 18:00:28,458 ; INFO ; cmd_execution ; MainThread ; Waiting to 59% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 18:00:28,927 ; INFO ; cmd_execution ; MainThread ; Waiting to 62% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 18:00:29,333 ; INFO ; cmd_execution ; MainThread ; Waiting to 64% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 18:00:29,598 ; INFO ; cmd_execution ; MainThread ; Waiting to 65% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 18:00:29,911 ; INFO ; cmd_execution ; MainThread ; Waiting to 67% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 18:00:30,145 ; INFO ; cmd_execution ; MainThread ; Waiting to 68% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 18:00:30,333 ; INFO ; cmd_execution ; MainThread ; Waiting to 69% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 18:00:30,739 ; INFO ; cmd_execution ; MainThread ; Waiting to 71% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 18:00:30,895 ; INFO ; cmd_execution ; MainThread ; Waiting to 72% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 18:00:31,098 ; INFO ; cmd_execution ; MainThread ; Waiting to 73% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:00:31,317 ; INFO ; cmd_execution ; MainThread ; Waiting to 74% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:00:31,536 ; INFO ; cmd_execution ; MainThread ; Waiting to 75% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:00:31,770 ; INFO ; cmd_execution ; MainThread ; Waiting to 76% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:00:31,879 ; INFO ; cmd_execution ; MainThread ; Waiting to 77% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:00:32,145 ; INFO ; cmd_execution ; MainThread ; Waiting to 78% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:32,442 ; INFO ; cmd_execution ; MainThread ; Waiting to 79% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:32,567 ; INFO ; cmd_execution ; MainThread ; Waiting to 80% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:32,692 ; INFO ; cmd_execution ; MainThread ; Waiting to 81% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:32,895 ; INFO ; cmd_execution ; MainThread ; Waiting to 82% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:00:33,082 ; INFO ; cmd_execution ; MainThread ; Waiting to 83% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:33,301 ; INFO ; cmd_execution ; MainThread ; Waiting to 84% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:33,520 ; INFO ; cmd_execution ; MainThread ; Waiting to 85% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:33,832 ; INFO ; cmd_execution ; MainThread ; Waiting to 86% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:00:34,223 ; INFO ; cmd_execution ; MainThread ; Waiting to 88% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:00:34,567 ; INFO ; cmd_execution ; MainThread ; Waiting to 90% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:00:34,786 ; INFO ; cmd_execution ; MainThread ; Waiting to 91% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:00:34,973 ; INFO ; cmd_execution ; MainThread ; Waiting to 92% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:00:35,082 ; INFO ; cmd_execution ; MainThread ; Waiting to 93% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:35,285 ; INFO ; cmd_execution ; MainThread ; Waiting to 94% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:35,723 ; INFO ; cmd_execution ; MainThread ; Waiting to 96% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:35,879 ; INFO ; cmd_execution ; MainThread ; Waiting to 97% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:00:35,989 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2018-08-05 18:00:38,410 ; INFO ; chiller_execution ; MainThread ; Chiller filter_filter_top waiting to reach 30.0°C...
+2018-08-05 18:00:45,644 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 7.12°C
+2018-08-05 18:00:55,815 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 9.13°C
+2018-08-05 18:01:05,627 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 9.88°C
+2018-08-05 18:01:15,580 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 10.6°C
+2018-08-05 18:01:25,329 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 11.96°C
+2018-08-05 18:01:35,594 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 14.11°C
+2018-08-05 18:01:46,077 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 16.64°C
+2018-08-05 18:01:57,202 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 19.74°C
+2018-08-05 18:02:07,326 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 21.35°C
+2018-08-05 18:02:17,356 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 22.14°C
+2018-08-05 18:02:28,278 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 22.48°C
+2018-08-05 18:02:37,683 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 22.74°C
+2018-08-05 18:02:47,229 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 22.99°C
+2018-08-05 18:02:57,557 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 23.41°C
+2018-08-05 18:03:08,415 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 23.93°C
+2018-08-05 18:03:18,852 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 24.59°C
+2018-08-05 18:03:29,601 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 25.58°C
+2018-08-05 18:03:40,585 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 26.53°C
+2018-08-05 18:03:50,865 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 26.97°C
+2018-08-05 18:04:00,740 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 27.39°C
+2018-08-05 18:04:11,114 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 27.81°C
+2018-08-05 18:04:20,332 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 28.17°C
+2018-08-05 18:04:29,300 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 28.61°C
+2018-08-05 18:04:39,346 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 29.31°C
+2018-08-05 18:04:47,112 ; INFO ; chiller_execution ; MainThread ; Setting temperature for chiller filter_filter_top to 60.0°C...
+2018-08-05 18:04:49,924 ; INFO ; chiller_execution ; MainThread ; Done.
+2018-08-05 18:04:50,314 ; INFO ; cmd_execution ; MainThread ; Waiting for 20 seconds...
+2018-08-05 18:04:50,486 ; INFO ; cmd_execution ; MainThread ; Waiting will be done at approximately 2018-08-05 18:05:10
+2018-08-05 18:04:50,736 ; INFO ; cmd_execution ; MainThread ; Waiting to 1% done. Approximately 0 h, 0 min, 20 sec remaining.
+2018-08-05 18:04:50,908 ; INFO ; cmd_execution ; MainThread ; Waiting to 2% done. Approximately 0 h, 0 min, 20 sec remaining.
+2018-08-05 18:04:51,127 ; INFO ; cmd_execution ; MainThread ; Waiting to 3% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 18:04:51,502 ; INFO ; cmd_execution ; MainThread ; Waiting to 5% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 18:04:51,752 ; INFO ; cmd_execution ; MainThread ; Waiting to 6% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 18:04:52,033 ; INFO ; cmd_execution ; MainThread ; Waiting to 7% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:04:52,111 ; INFO ; cmd_execution ; MainThread ; Waiting to 8% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:04:52,564 ; INFO ; cmd_execution ; MainThread ; Waiting to 10% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:04:52,689 ; INFO ; cmd_execution ; MainThread ; Waiting to 11% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:04:52,939 ; INFO ; cmd_execution ; MainThread ; Waiting to 12% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:04:53,095 ; INFO ; cmd_execution ; MainThread ; Waiting to 13% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 18:04:53,424 ; INFO ; cmd_execution ; MainThread ; Waiting to 14% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 18:04:53,502 ; INFO ; cmd_execution ; MainThread ; Waiting to 15% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 18:04:53,939 ; INFO ; cmd_execution ; MainThread ; Waiting to 16% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 18:04:53,970 ; INFO ; cmd_execution ; MainThread ; Waiting to 17% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 18:04:54,111 ; INFO ; cmd_execution ; MainThread ; Waiting to 18% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 18:04:54,392 ; INFO ; cmd_execution ; MainThread ; Waiting to 19% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 18:04:54,502 ; INFO ; cmd_execution ; MainThread ; Waiting to 20% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 18:04:54,705 ; INFO ; cmd_execution ; MainThread ; Waiting to 21% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 18:04:55,048 ; INFO ; cmd_execution ; MainThread ; Waiting to 22% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:04:55,127 ; INFO ; cmd_execution ; MainThread ; Waiting to 23% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:04:55,408 ; INFO ; cmd_execution ; MainThread ; Waiting to 24% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:04:55,502 ; INFO ; cmd_execution ; MainThread ; Waiting to 25% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:04:55,736 ; INFO ; cmd_execution ; MainThread ; Waiting to 26% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:04:55,970 ; INFO ; cmd_execution ; MainThread ; Waiting to 27% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:04:56,095 ; INFO ; cmd_execution ; MainThread ; Waiting to 28% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 18:04:56,564 ; INFO ; cmd_execution ; MainThread ; Waiting to 30% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 18:04:56,689 ; INFO ; cmd_execution ; MainThread ; Waiting to 31% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 18:04:56,908 ; INFO ; cmd_execution ; MainThread ; Waiting to 32% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 18:04:57,142 ; INFO ; cmd_execution ; MainThread ; Waiting to 33% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 18:04:57,361 ; INFO ; cmd_execution ; MainThread ; Waiting to 34% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 18:04:58,267 ; INFO ; cmd_execution ; MainThread ; Waiting to 38% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 18:04:58,626 ; INFO ; cmd_execution ; MainThread ; Waiting to 40% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 18:04:59,017 ; INFO ; cmd_execution ; MainThread ; Waiting to 42% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 18:04:59,126 ; INFO ; cmd_execution ; MainThread ; Waiting to 43% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 18:04:59,454 ; INFO ; cmd_execution ; MainThread ; Waiting to 44% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 18:04:59,704 ; INFO ; cmd_execution ; MainThread ; Waiting to 46% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 18:04:59,907 ; INFO ; cmd_execution ; MainThread ; Waiting to 47% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 18:05:00,407 ; INFO ; cmd_execution ; MainThread ; Waiting to 49% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 18:05:00,564 ; INFO ; cmd_execution ; MainThread ; Waiting to 50% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 18:05:00,720 ; INFO ; cmd_execution ; MainThread ; Waiting to 51% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 18:05:01,064 ; INFO ; cmd_execution ; MainThread ; Waiting to 52% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 18:05:01,126 ; INFO ; cmd_execution ; MainThread ; Waiting to 53% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 18:05:01,345 ; INFO ; cmd_execution ; MainThread ; Waiting to 54% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 18:05:01,501 ; INFO ; cmd_execution ; MainThread ; Waiting to 55% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 18:05:01,845 ; INFO ; cmd_execution ; MainThread ; Waiting to 56% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 18:05:02,126 ; INFO ; cmd_execution ; MainThread ; Waiting to 58% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 18:05:02,610 ; INFO ; cmd_execution ; MainThread ; Waiting to 60% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 18:05:02,720 ; INFO ; cmd_execution ; MainThread ; Waiting to 61% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 18:05:02,985 ; INFO ; cmd_execution ; MainThread ; Waiting to 62% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 18:05:03,110 ; INFO ; cmd_execution ; MainThread ; Waiting to 63% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 18:05:03,532 ; INFO ; cmd_execution ; MainThread ; Waiting to 65% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 18:05:03,798 ; INFO ; cmd_execution ; MainThread ; Waiting to 66% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 18:05:04,032 ; INFO ; cmd_execution ; MainThread ; Waiting to 67% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 18:05:04,298 ; INFO ; cmd_execution ; MainThread ; Waiting to 69% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 18:05:04,548 ; INFO ; cmd_execution ; MainThread ; Waiting to 70% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 18:05:04,923 ; INFO ; cmd_execution ; MainThread ; Waiting to 72% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 18:05:05,282 ; INFO ; cmd_execution ; MainThread ; Waiting to 73% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:05:05,329 ; INFO ; cmd_execution ; MainThread ; Waiting to 74% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:05:05,610 ; INFO ; cmd_execution ; MainThread ; Waiting to 75% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:05:05,876 ; INFO ; cmd_execution ; MainThread ; Waiting to 76% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:05:06,095 ; INFO ; cmd_execution ; MainThread ; Waiting to 78% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:05:06,313 ; INFO ; cmd_execution ; MainThread ; Waiting to 79% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:05:06,641 ; INFO ; cmd_execution ; MainThread ; Waiting to 80% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:05:07,141 ; INFO ; cmd_execution ; MainThread ; Waiting to 83% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:05:07,298 ; INFO ; cmd_execution ; MainThread ; Waiting to 84% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:05:07,641 ; INFO ; cmd_execution ; MainThread ; Waiting to 85% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:05:07,829 ; INFO ; cmd_execution ; MainThread ; Waiting to 86% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:05:07,907 ; INFO ; cmd_execution ; MainThread ; Waiting to 87% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:05:08,110 ; INFO ; cmd_execution ; MainThread ; Waiting to 88% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:05:08,485 ; INFO ; cmd_execution ; MainThread ; Waiting to 89% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:05:08,829 ; INFO ; cmd_execution ; MainThread ; Waiting to 91% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:05:08,938 ; INFO ; cmd_execution ; MainThread ; Waiting to 92% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:05:09,547 ; INFO ; cmd_execution ; MainThread ; Waiting to 93% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:05:09,797 ; INFO ; cmd_execution ; MainThread ; Waiting to 96% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:05:10,157 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2018-08-05 18:05:12,750 ; INFO ; chiller_execution ; MainThread ; Chiller filter_filter_top waiting to reach 60.0°C...
+2018-08-05 18:05:20,156 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 31.29°C
+2018-08-05 18:05:29,515 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 32.33°C
+2018-08-05 18:05:38,952 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 34.0°C
+2018-08-05 18:05:48,388 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 36.04°C
+2018-08-05 18:05:58,653 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 38.72°C
+2018-08-05 18:06:08,871 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 42.13°C
+2018-08-05 18:06:18,433 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 45.28°C
+2018-08-05 18:06:28,370 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 47.7°C
+2018-08-05 18:06:38,385 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 48.55°C
+2018-08-05 18:06:47,931 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 48.87°C
+2018-08-05 18:06:58,196 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 49.54°C
+2018-08-05 18:07:07,930 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 50.02°C
+2018-08-05 18:07:18,038 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 50.77°C
+2018-08-05 18:07:28,085 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 51.85°C
+2018-08-05 18:07:37,896 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 53.11°C
+2018-08-05 18:07:46,833 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 54.56°C
+2018-08-05 18:07:57,520 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 55.34°C
+2018-08-05 18:08:07,519 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 56.25°C
+2018-08-05 18:08:17,894 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 55.98°C
+2018-08-05 18:08:29,018 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 56.19°C
+2018-08-05 18:08:40,892 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 57.32°C
+2018-08-05 18:08:52,751 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 57.97°C
+2018-08-05 18:09:04,293 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 58.64°C
+2018-08-05 18:09:15,198 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 58.59°C
+2018-08-05 18:09:26,635 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 58.71°C
+2018-08-05 18:09:40,431 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 58.99°C
+2018-08-05 18:09:51,071 ; INFO ; chiller_execution ; MainThread ; Still heating... Current temperature: 59.37°C
+2018-08-05 18:09:59,914 ; INFO ; chiller_execution ; MainThread ; Stopping chiller filter_filter_top...
+2018-08-05 18:10:06,257 ; INFO ; chiller_execution ; MainThread ; Done.
+2018-08-05 18:10:07,319 ; INFO ; cmd_execution ; MainThread ; Waiting for 60 seconds...
+2018-08-05 18:10:07,429 ; INFO ; cmd_execution ; MainThread ; Waiting will be done at approximately 2018-08-05 18:11:07
+2018-08-05 18:10:08,101 ; INFO ; cmd_execution ; MainThread ; Waiting to 1% done. Approximately 0 h, 0 min, 59 sec remaining.
+2018-08-05 18:10:08,632 ; INFO ; cmd_execution ; MainThread ; Waiting to 2% done. Approximately 0 h, 0 min, 59 sec remaining.
+2018-08-05 18:10:09,319 ; INFO ; cmd_execution ; MainThread ; Waiting to 3% done. Approximately 0 h, 0 min, 58 sec remaining.
+2018-08-05 18:10:09,929 ; INFO ; cmd_execution ; MainThread ; Waiting to 4% done. Approximately 0 h, 0 min, 58 sec remaining.
+2018-08-05 18:10:10,507 ; INFO ; cmd_execution ; MainThread ; Waiting to 5% done. Approximately 0 h, 0 min, 57 sec remaining.
+2018-08-05 18:10:11,116 ; INFO ; cmd_execution ; MainThread ; Waiting to 6% done. Approximately 0 h, 0 min, 56 sec remaining.
+2018-08-05 18:10:11,663 ; INFO ; cmd_execution ; MainThread ; Waiting to 7% done. Approximately 0 h, 0 min, 56 sec remaining.
+2018-08-05 18:10:12,257 ; INFO ; cmd_execution ; MainThread ; Waiting to 8% done. Approximately 0 h, 0 min, 55 sec remaining.
+2018-08-05 18:10:13,178 ; INFO ; cmd_execution ; MainThread ; Waiting to 9% done. Approximately 0 h, 0 min, 54 sec remaining.
+2018-08-05 18:10:13,491 ; INFO ; cmd_execution ; MainThread ; Waiting to 10% done. Approximately 0 h, 0 min, 54 sec remaining.
+2018-08-05 18:10:14,069 ; INFO ; cmd_execution ; MainThread ; Waiting to 11% done. Approximately 0 h, 0 min, 53 sec remaining.
+2018-08-05 18:10:14,709 ; INFO ; cmd_execution ; MainThread ; Waiting to 12% done. Approximately 0 h, 0 min, 53 sec remaining.
+2018-08-05 18:10:15,397 ; INFO ; cmd_execution ; MainThread ; Waiting to 13% done. Approximately 0 h, 0 min, 52 sec remaining.
+2018-08-05 18:10:15,897 ; INFO ; cmd_execution ; MainThread ; Waiting to 14% done. Approximately 0 h, 0 min, 52 sec remaining.
+2018-08-05 18:10:16,522 ; INFO ; cmd_execution ; MainThread ; Waiting to 15% done. Approximately 0 h, 0 min, 51 sec remaining.
+2018-08-05 18:10:17,397 ; INFO ; cmd_execution ; MainThread ; Waiting to 16% done. Approximately 0 h, 0 min, 50 sec remaining.
+2018-08-05 18:10:17,819 ; INFO ; cmd_execution ; MainThread ; Waiting to 17% done. Approximately 0 h, 0 min, 50 sec remaining.
+2018-08-05 18:10:18,272 ; INFO ; cmd_execution ; MainThread ; Waiting to 18% done. Approximately 0 h, 0 min, 49 sec remaining.
+2018-08-05 18:10:18,834 ; INFO ; cmd_execution ; MainThread ; Waiting to 19% done. Approximately 0 h, 0 min, 49 sec remaining.
+2018-08-05 18:10:19,537 ; INFO ; cmd_execution ; MainThread ; Waiting to 20% done. Approximately 0 h, 0 min, 48 sec remaining.
+2018-08-05 18:10:20,037 ; INFO ; cmd_execution ; MainThread ; Waiting to 21% done. Approximately 0 h, 0 min, 47 sec remaining.
+2018-08-05 18:10:20,647 ; INFO ; cmd_execution ; MainThread ; Waiting to 22% done. Approximately 0 h, 0 min, 47 sec remaining.
+2018-08-05 18:10:21,350 ; INFO ; cmd_execution ; MainThread ; Waiting to 23% done. Approximately 0 h, 0 min, 46 sec remaining.
+2018-08-05 18:10:21,881 ; INFO ; cmd_execution ; MainThread ; Waiting to 24% done. Approximately 0 h, 0 min, 46 sec remaining.
+2018-08-05 18:10:22,646 ; INFO ; cmd_execution ; MainThread ; Waiting to 25% done. Approximately 0 h, 0 min, 45 sec remaining.
+2018-08-05 18:10:23,412 ; INFO ; cmd_execution ; MainThread ; Waiting to 26% done. Approximately 0 h, 0 min, 44 sec remaining.
+2018-08-05 18:10:23,803 ; INFO ; cmd_execution ; MainThread ; Waiting to 27% done. Approximately 0 h, 0 min, 44 sec remaining.
+2018-08-05 18:10:24,256 ; INFO ; cmd_execution ; MainThread ; Waiting to 28% done. Approximately 0 h, 0 min, 43 sec remaining.
+2018-08-05 18:10:24,990 ; INFO ; cmd_execution ; MainThread ; Waiting to 29% done. Approximately 0 h, 0 min, 42 sec remaining.
+2018-08-05 18:10:25,506 ; INFO ; cmd_execution ; MainThread ; Waiting to 30% done. Approximately 0 h, 0 min, 42 sec remaining.
+2018-08-05 18:10:26,271 ; INFO ; cmd_execution ; MainThread ; Waiting to 31% done. Approximately 0 h, 0 min, 41 sec remaining.
+2018-08-05 18:10:26,630 ; INFO ; cmd_execution ; MainThread ; Waiting to 32% done. Approximately 0 h, 0 min, 41 sec remaining.
+2018-08-05 18:10:27,568 ; INFO ; cmd_execution ; MainThread ; Waiting to 33% done. Approximately 0 h, 0 min, 40 sec remaining.
+2018-08-05 18:10:27,912 ; INFO ; cmd_execution ; MainThread ; Waiting to 34% done. Approximately 0 h, 0 min, 40 sec remaining.
+2018-08-05 18:10:28,896 ; INFO ; cmd_execution ; MainThread ; Waiting to 35% done. Approximately 0 h, 0 min, 39 sec remaining.
+2018-08-05 18:10:29,130 ; INFO ; cmd_execution ; MainThread ; Waiting to 36% done. Approximately 0 h, 0 min, 38 sec remaining.
+2018-08-05 18:10:29,740 ; INFO ; cmd_execution ; MainThread ; Waiting to 37% done. Approximately 0 h, 0 min, 38 sec remaining.
+2018-08-05 18:10:30,271 ; INFO ; cmd_execution ; MainThread ; Waiting to 38% done. Approximately 0 h, 0 min, 37 sec remaining.
+2018-08-05 18:10:30,865 ; INFO ; cmd_execution ; MainThread ; Waiting to 39% done. Approximately 0 h, 0 min, 37 sec remaining.
+2018-08-05 18:10:31,443 ; INFO ; cmd_execution ; MainThread ; Waiting to 40% done. Approximately 0 h, 0 min, 36 sec remaining.
+2018-08-05 18:10:32,271 ; INFO ; cmd_execution ; MainThread ; Waiting to 41% done. Approximately 0 h, 0 min, 35 sec remaining.
+2018-08-05 18:10:32,646 ; INFO ; cmd_execution ; MainThread ; Waiting to 42% done. Approximately 0 h, 0 min, 35 sec remaining.
+2018-08-05 18:10:33,427 ; INFO ; cmd_execution ; MainThread ; Waiting to 43% done. Approximately 0 h, 0 min, 34 sec remaining.
+2018-08-05 18:10:33,849 ; INFO ; cmd_execution ; MainThread ; Waiting to 44% done. Approximately 0 h, 0 min, 34 sec remaining.
+2018-08-05 18:10:34,442 ; INFO ; cmd_execution ; MainThread ; Waiting to 45% done. Approximately 0 h, 0 min, 33 sec remaining.
+2018-08-05 18:10:35,036 ; INFO ; cmd_execution ; MainThread ; Waiting to 46% done. Approximately 0 h, 0 min, 32 sec remaining.
+2018-08-05 18:10:35,802 ; INFO ; cmd_execution ; MainThread ; Waiting to 47% done. Approximately 0 h, 0 min, 32 sec remaining.
+2018-08-05 18:10:36,505 ; INFO ; cmd_execution ; MainThread ; Waiting to 48% done. Approximately 0 h, 0 min, 31 sec remaining.
+2018-08-05 18:10:36,849 ; INFO ; cmd_execution ; MainThread ; Waiting to 49% done. Approximately 0 h, 0 min, 31 sec remaining.
+2018-08-05 18:10:37,520 ; INFO ; cmd_execution ; MainThread ; Waiting to 50% done. Approximately 0 h, 0 min, 30 sec remaining.
+2018-08-05 18:10:38,130 ; INFO ; cmd_execution ; MainThread ; Waiting to 51% done. Approximately 0 h, 0 min, 29 sec remaining.
+2018-08-05 18:10:38,630 ; INFO ; cmd_execution ; MainThread ; Waiting to 52% done. Approximately 0 h, 0 min, 29 sec remaining.
+2018-08-05 18:10:39,239 ; INFO ; cmd_execution ; MainThread ; Waiting to 53% done. Approximately 0 h, 0 min, 28 sec remaining.
+2018-08-05 18:10:39,989 ; INFO ; cmd_execution ; MainThread ; Waiting to 54% done. Approximately 0 h, 0 min, 27 sec remaining.
+2018-08-05 18:10:41,067 ; INFO ; cmd_execution ; MainThread ; Waiting to 56% done. Approximately 0 h, 0 min, 26 sec remaining.
+2018-08-05 18:10:41,895 ; INFO ; cmd_execution ; MainThread ; Waiting to 57% done. Approximately 0 h, 0 min, 26 sec remaining.
+2018-08-05 18:10:42,239 ; INFO ; cmd_execution ; MainThread ; Waiting to 58% done. Approximately 0 h, 0 min, 25 sec remaining.
+2018-08-05 18:10:42,957 ; INFO ; cmd_execution ; MainThread ; Waiting to 59% done. Approximately 0 h, 0 min, 24 sec remaining.
+2018-08-05 18:10:43,520 ; INFO ; cmd_execution ; MainThread ; Waiting to 60% done. Approximately 0 h, 0 min, 24 sec remaining.
+2018-08-05 18:10:44,332 ; INFO ; cmd_execution ; MainThread ; Waiting to 61% done. Approximately 0 h, 0 min, 23 sec remaining.
+2018-08-05 18:10:44,676 ; INFO ; cmd_execution ; MainThread ; Waiting to 62% done. Approximately 0 h, 0 min, 23 sec remaining.
+2018-08-05 18:10:45,239 ; INFO ; cmd_execution ; MainThread ; Waiting to 63% done. Approximately 0 h, 0 min, 22 sec remaining.
+2018-08-05 18:10:45,832 ; INFO ; cmd_execution ; MainThread ; Waiting to 64% done. Approximately 0 h, 0 min, 22 sec remaining.
+2018-08-05 18:10:46,707 ; INFO ; cmd_execution ; MainThread ; Waiting to 65% done. Approximately 0 h, 0 min, 21 sec remaining.
+2018-08-05 18:10:47,473 ; INFO ; cmd_execution ; MainThread ; Waiting to 66% done. Approximately 0 h, 0 min, 20 sec remaining.
+2018-08-05 18:10:47,660 ; INFO ; cmd_execution ; MainThread ; Waiting to 67% done. Approximately 0 h, 0 min, 20 sec remaining.
+2018-08-05 18:10:48,348 ; INFO ; cmd_execution ; MainThread ; Waiting to 68% done. Approximately 0 h, 0 min, 19 sec remaining.
+2018-08-05 18:10:49,035 ; INFO ; cmd_execution ; MainThread ; Waiting to 69% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:10:49,785 ; INFO ; cmd_execution ; MainThread ; Waiting to 70% done. Approximately 0 h, 0 min, 18 sec remaining.
+2018-08-05 18:10:50,051 ; INFO ; cmd_execution ; MainThread ; Waiting to 71% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 18:10:50,691 ; INFO ; cmd_execution ; MainThread ; Waiting to 72% done. Approximately 0 h, 0 min, 17 sec remaining.
+2018-08-05 18:10:51,285 ; INFO ; cmd_execution ; MainThread ; Waiting to 73% done. Approximately 0 h, 0 min, 16 sec remaining.
+2018-08-05 18:10:51,972 ; INFO ; cmd_execution ; MainThread ; Waiting to 74% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:10:52,754 ; INFO ; cmd_execution ; MainThread ; Waiting to 75% done. Approximately 0 h, 0 min, 15 sec remaining.
+2018-08-05 18:10:53,051 ; INFO ; cmd_execution ; MainThread ; Waiting to 76% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 18:10:53,691 ; INFO ; cmd_execution ; MainThread ; Waiting to 77% done. Approximately 0 h, 0 min, 14 sec remaining.
+2018-08-05 18:10:54,316 ; INFO ; cmd_execution ; MainThread ; Waiting to 78% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 18:10:54,894 ; INFO ; cmd_execution ; MainThread ; Waiting to 79% done. Approximately 0 h, 0 min, 13 sec remaining.
+2018-08-05 18:10:55,472 ; INFO ; cmd_execution ; MainThread ; Waiting to 80% done. Approximately 0 h, 0 min, 12 sec remaining.
+2018-08-05 18:10:56,035 ; INFO ; cmd_execution ; MainThread ; Waiting to 81% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 18:10:56,660 ; INFO ; cmd_execution ; MainThread ; Waiting to 82% done. Approximately 0 h, 0 min, 11 sec remaining.
+2018-08-05 18:10:57,535 ; INFO ; cmd_execution ; MainThread ; Waiting to 83% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 18:10:57,925 ; INFO ; cmd_execution ; MainThread ; Waiting to 84% done. Approximately 0 h, 0 min, 10 sec remaining.
+2018-08-05 18:10:58,503 ; INFO ; cmd_execution ; MainThread ; Waiting to 85% done. Approximately 0 h, 0 min, 9 sec remaining.
+2018-08-05 18:10:59,191 ; INFO ; cmd_execution ; MainThread ; Waiting to 86% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 18:10:59,659 ; INFO ; cmd_execution ; MainThread ; Waiting to 87% done. Approximately 0 h, 0 min, 8 sec remaining.
+2018-08-05 18:11:00,394 ; INFO ; cmd_execution ; MainThread ; Waiting to 88% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 18:11:00,878 ; INFO ; cmd_execution ; MainThread ; Waiting to 89% done. Approximately 0 h, 0 min, 7 sec remaining.
+2018-08-05 18:11:01,441 ; INFO ; cmd_execution ; MainThread ; Waiting to 90% done. Approximately 0 h, 0 min, 6 sec remaining.
+2018-08-05 18:11:02,144 ; INFO ; cmd_execution ; MainThread ; Waiting to 91% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:11:02,644 ; INFO ; cmd_execution ; MainThread ; Waiting to 92% done. Approximately 0 h, 0 min, 5 sec remaining.
+2018-08-05 18:11:03,362 ; INFO ; cmd_execution ; MainThread ; Waiting to 93% done. Approximately 0 h, 0 min, 4 sec remaining.
+2018-08-05 18:11:04,065 ; INFO ; cmd_execution ; MainThread ; Waiting to 94% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:11:04,456 ; INFO ; cmd_execution ; MainThread ; Waiting to 95% done. Approximately 0 h, 0 min, 3 sec remaining.
+2018-08-05 18:11:05,065 ; INFO ; cmd_execution ; MainThread ; Waiting to 96% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:11:05,659 ; INFO ; cmd_execution ; MainThread ; Waiting to 97% done. Approximately 0 h, 0 min, 2 sec remaining.
+2018-08-05 18:11:06,253 ; INFO ; cmd_execution ; MainThread ; Waiting to 98% done. Approximately 0 h, 0 min, 1 sec remaining.
+2018-08-05 18:11:07,237 ; INFO ; cmd_execution ; MainThread ; Waiting done.

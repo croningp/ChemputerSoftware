@@ -1,0 +1,975 @@
+2017-10-19 12:03:57,145 ; DEBUG ; chempiler_client ; MainThread ; User Input:
+XML file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\chemputer_rig_3.xml
+Command file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\nytol_bromination.chasm
+Simulation: y
+2017-10-19 12:03:57,352 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_solvents" Address: 192.168.1.13
+2017-10-19 12:03:57,352 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_2" Address: 192.168.1.12
+2017-10-19 12:03:57,352 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_aqueous" Address: 192.168.1.16
+2017-10-19 12:03:57,353 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_workup" Address: 192.168.1.15
+2017-10-19 12:03:57,354 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_solvents" Address: 192.168.1.19
+2017-10-19 12:03:57,354 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reactor_valve" Address: 192.168.1.20
+2017-10-19 12:03:57,354 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_2" Address: 192.168.1.18
+2017-10-19 12:03:57,354 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_1" Address: 192.168.1.17
+2017-10-19 12:03:57,354 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_aqueous" Address: 192.168.1.22
+2017-10-19 12:03:57,355 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_1" Address: 192.168.1.11
+2017-10-19 12:03:57,355 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reactor" Address: 192.168.1.14
+2017-10-19 12:03:57,355 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_workup_valve" Address: 192.168.1.21
+2017-10-19 12:03:57,456 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM11
+2017-10-19 12:03:57,456 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM10
+2017-10-19 12:04:08,584 ; INFO ; hardware_sim ; MainThread ; Recevied IKARV port: COM4
+2017-10-19 12:04:08,584 ; INFO ; hardware_sim ; MainThread ; IKARV - Initialising
+2017-10-19 12:04:08,585 ; INFO ; hardware_sim ; MainThread ; Received CVC3000 port: COM3
+2017-10-19 12:04:08,585 ; INFO ; hardware_sim ; MainThread ; CVC3K - Initialising
+2017-10-19 12:04:13,546 ; INFO ; chempiler ; MainThread ; 
+
+*** Starting simulated command procedure... ***
+
+2017-10-19 12:04:13,547 ; INFO ; hardware_sim ; Thread-6 ; IKARV - Starting Rotations
+2017-10-19 12:04:13,547 ; INFO ; cmd_execution ; MainThread ; Waiting for 300 seconds...
+2017-10-19 12:04:13,547 ; INFO ; cmd_execution ; Thread-7 ; WAIT - Waiting for 300
+2017-10-19 12:04:13,548 ; INFO ; hardware_sim ; MainThread ; IKARV - Stopping roations
+2017-10-19 12:04:13,548 ; INFO ; cmd_execution ; MainThread ; Moving 20.0mL from rotavap_rv_top to reactor_reactor at 20mL/min...
+2017-10-19 12:04:13,549 ; INFO ; pump_execution ; MainThread ; Following path: ['rotavap_rv_top', 'six-valve_reactor_valve', 'reactor_reactor']
+2017-10-19 12:04:13,549 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 20.0 ***
+2017-10-19 12:04:13,549 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:04:13,550 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:04:13,550 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 20.0 Speed: 20
+2017-10-19 12:04:13,550 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:04:13,550 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:04:13,551 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:04:13,551 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:04:13,551 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:04:13,551 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0 ***
+2017-10-19 12:04:13,551 ; INFO ; cmd_execution ; MainThread ; Moving 10.0mL from flask_xylene to rotavap_rv_top at 20mL/min...
+2017-10-19 12:04:13,552 ; INFO ; pump_execution ; MainThread ; Following path: ['flask_xylene', 'six-valve_reagents_1', 'six-valve_reagents_2', 'six-valve_solvents', 'six-valve_reactor_valve', 'rotavap_rv_top']
+2017-10-19 12:04:13,552 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME TO MOVE: 10.0 ***
+2017-10-19 12:04:13,553 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:04:13,553 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_1
+2017-10-19 12:04:13,553 ; INFO ; pump_execution ; MainThread ; Source dict: {'source': '0', 'dest': '1'}
+2017-10-19 12:04:13,554 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:04:13,554 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reagents_2
+2017-10-19 12:04:13,554 ; INFO ; pump_execution ; MainThread ; Target dict: {'source': '2', 'dest': '1'}
+2017-10-19 12:04:13,554 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:04:13,555 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:04:13,555 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:04:13,556 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:10:59,757 ; DEBUG ; chempiler_client ; MainThread ; User Input:
+XML file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\chemputer_rig_3.xml
+Command file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\nytol_bromination.chasm
+Simulation: y
+2017-10-19 12:10:59,903 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_workup_valve" Address: 192.168.1.21
+2017-10-19 12:10:59,904 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_2" Address: 192.168.1.12
+2017-10-19 12:10:59,904 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_1" Address: 192.168.1.17
+2017-10-19 12:10:59,904 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reactor" Address: 192.168.1.14
+2017-10-19 12:10:59,905 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_1" Address: 192.168.1.11
+2017-10-19 12:10:59,905 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_aqueous" Address: 192.168.1.22
+2017-10-19 12:10:59,905 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_workup" Address: 192.168.1.15
+2017-10-19 12:10:59,905 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_solvents" Address: 192.168.1.19
+2017-10-19 12:10:59,905 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reactor_valve" Address: 192.168.1.20
+2017-10-19 12:10:59,906 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_aqueous" Address: 192.168.1.16
+2017-10-19 12:10:59,906 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_2" Address: 192.168.1.18
+2017-10-19 12:10:59,906 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_solvents" Address: 192.168.1.13
+2017-10-19 12:11:00,006 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM10
+2017-10-19 12:11:00,007 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM11
+2017-10-19 12:11:00,108 ; INFO ; hardware_sim ; MainThread ; Recevied IKARV port: COM4
+2017-10-19 12:11:00,108 ; INFO ; hardware_sim ; MainThread ; IKARV - Initialising
+2017-10-19 12:11:00,108 ; INFO ; hardware_sim ; MainThread ; Received CVC3000 port: COM3
+2017-10-19 12:11:00,109 ; INFO ; hardware_sim ; MainThread ; CVC3K - Initialising
+2017-10-19 12:11:00,210 ; INFO ; chempiler ; MainThread ; 
+
+*** Starting simulated command procedure... ***
+
+2017-10-19 12:11:00,211 ; INFO ; hardware_sim ; Thread-6 ; IKARV - Starting Rotations
+2017-10-19 12:11:00,211 ; INFO ; cmd_execution ; MainThread ; Waiting for 300 seconds...
+2017-10-19 12:11:00,212 ; INFO ; cmd_execution ; Thread-7 ; WAIT - Waiting for 300
+2017-10-19 12:11:00,213 ; INFO ; hardware_sim ; MainThread ; IKARV - Stopping roations
+2017-10-19 12:11:00,213 ; INFO ; cmd_execution ; MainThread ; Moving 20.0mL from rotavap_rv_top to reactor_reactor at 20mL/min...
+2017-10-19 12:11:00,214 ; INFO ; pump_execution ; MainThread ; Following path: ['rotavap_rv_top', 'six-valve_reactor_valve', 'reactor_reactor']
+2017-10-19 12:11:00,214 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 20.0 ***
+2017-10-19 12:11:00,214 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:11:00,215 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:11:00,215 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 20.0 Speed: 20
+2017-10-19 12:11:00,216 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:11:00,216 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:11:00,216 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:11:00,216 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:11:00,217 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:11:00,217 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0 ***
+2017-10-19 12:11:00,217 ; INFO ; cmd_execution ; MainThread ; Moving 10.0mL from flask_xylene to rotavap_rv_top at 20mL/min...
+2017-10-19 12:11:00,218 ; INFO ; pump_execution ; MainThread ; Following path: ['flask_xylene', 'six-valve_reagents_1', 'six-valve_reagents_2', 'six-valve_solvents', 'six-valve_reactor_valve', 'rotavap_rv_top']
+2017-10-19 12:11:00,218 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME TO MOVE: 10.0 ***
+2017-10-19 12:11:00,218 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:11:00,219 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_1
+2017-10-19 12:11:00,219 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1', 'source': '0'}
+2017-10-19 12:11:00,220 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:11:00,220 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reagents_2
+2017-10-19 12:11:00,221 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '1', 'source': '2'}
+2017-10-19 12:11:00,221 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:11:00,221 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:11:00,222 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:11:00,222 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:11:05,142 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 1
+2017-10-19 12:11:05,143 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 2
+2017-10-19 12:11:05,143 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:11:05,143 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:11:05,144 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:11:05,144 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:11:05,144 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:11:05,145 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:11:05,145 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:11:05,145 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:11:05,145 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:11:05,146 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_2
+2017-10-19 12:11:05,146 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:11:05,147 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:11:05,147 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_solvents
+2017-10-19 12:11:05,148 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '1', 'source': '2'}
+2017-10-19 12:11:05,148 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 1
+2017-10-19 12:11:05,148 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 2
+2017-10-19 12:11:05,149 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:11:05,149 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:11:05,149 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:11:05,150 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:11:05,150 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:11:05,150 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:33:34,332 ; DEBUG ; chempiler_client ; MainThread ; User Input:
+XML file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\chemputer_rig_3.xml
+Command file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\nytol_bromination.chasm
+Simulation: y
+2017-10-19 12:33:34,478 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reactor_valve" Address: 192.168.1.20
+2017-10-19 12:33:34,478 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_solvents" Address: 192.168.1.19
+2017-10-19 12:33:34,479 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_aqueous" Address: 192.168.1.16
+2017-10-19 12:33:34,479 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_1" Address: 192.168.1.11
+2017-10-19 12:33:34,479 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_aqueous" Address: 192.168.1.22
+2017-10-19 12:33:34,479 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_solvents" Address: 192.168.1.13
+2017-10-19 12:33:34,479 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_2" Address: 192.168.1.12
+2017-10-19 12:33:34,480 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_workup" Address: 192.168.1.15
+2017-10-19 12:33:34,480 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_2" Address: 192.168.1.18
+2017-10-19 12:33:34,480 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reactor" Address: 192.168.1.14
+2017-10-19 12:33:34,480 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_workup_valve" Address: 192.168.1.21
+2017-10-19 12:33:34,480 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_1" Address: 192.168.1.17
+2017-10-19 12:33:34,582 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM10
+2017-10-19 12:33:34,582 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM11
+2017-10-19 12:33:34,684 ; INFO ; hardware_sim ; MainThread ; Recevied IKARV port: COM4
+2017-10-19 12:33:34,684 ; INFO ; hardware_sim ; MainThread ; IKARV - Initialising
+2017-10-19 12:33:34,684 ; INFO ; hardware_sim ; MainThread ; Received CVC3000 port: COM3
+2017-10-19 12:33:34,684 ; INFO ; hardware_sim ; MainThread ; CVC3K - Initialising
+2017-10-19 12:33:34,786 ; INFO ; chempiler ; MainThread ; 
+
+*** Starting simulated command procedure... ***
+
+2017-10-19 12:33:34,787 ; INFO ; hardware_sim ; Thread-6 ; IKARV - Starting Rotations
+2017-10-19 12:33:34,788 ; INFO ; cmd_execution ; MainThread ; Waiting for 300 seconds...
+2017-10-19 12:33:34,789 ; INFO ; cmd_execution ; Thread-7 ; WAIT - Waiting for 300
+2017-10-19 12:33:34,790 ; INFO ; hardware_sim ; MainThread ; IKARV - Stopping roations
+2017-10-19 12:33:34,791 ; INFO ; cmd_execution ; MainThread ; Moving 20.0mL from rotavap_rv_top to reactor_reactor at 20mL/min...
+2017-10-19 12:33:34,792 ; INFO ; pump_execution ; MainThread ; Following path: ['rotavap_rv_top', 'six-valve_reactor_valve', 'reactor_reactor']
+2017-10-19 12:33:34,793 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 20.0 ***
+2017-10-19 12:33:34,794 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:33:34,794 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:33:34,795 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 20.0 Speed: 20
+2017-10-19 12:33:34,795 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:33:34,796 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:33:34,797 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:33:34,797 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:33:34,798 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:33:34,799 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0 ***
+2017-10-19 12:33:34,800 ; INFO ; cmd_execution ; MainThread ; Moving 10.0mL from flask_xylene to rotavap_rv_top at 20mL/min...
+2017-10-19 12:33:34,801 ; INFO ; pump_execution ; MainThread ; Following path: ['flask_xylene', 'six-valve_reagents_1', 'six-valve_reagents_2', 'six-valve_solvents', 'six-valve_reactor_valve', 'rotavap_rv_top']
+2017-10-19 12:33:34,801 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME TO MOVE: 10.0 ***
+2017-10-19 12:33:34,801 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:33:34,802 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_1
+2017-10-19 12:33:34,802 ; INFO ; pump_execution ; MainThread ; Source dict: {'source': '0', 'dest': '1'}
+2017-10-19 12:33:34,803 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:33:34,803 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reagents_2
+2017-10-19 12:33:34,804 ; INFO ; pump_execution ; MainThread ; Target dict: {'source': '2', 'dest': '1'}
+2017-10-19 12:33:34,804 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:33:34,805 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:33:34,805 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:33:34,806 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:33:34,806 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 1
+2017-10-19 12:33:34,806 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 2
+2017-10-19 12:33:34,807 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:33:34,807 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:33:34,807 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:33:34,808 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:33:34,808 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:33:34,808 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:33:34,808 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:33:34,809 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:33:34,809 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:33:34,809 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_2
+2017-10-19 12:46:31,855 ; INFO ; pump_execution ; MainThread ; Source dict: {'source': '1', 'dest': '1'}
+2017-10-19 12:46:31,856 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:46:31,857 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_solvents
+2017-10-19 12:46:31,857 ; INFO ; pump_execution ; MainThread ; Target dict: {'source': '2', 'dest': '1'}
+2017-10-19 12:46:31,858 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 1
+2017-10-19 12:46:31,858 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 2
+2017-10-19 12:46:31,859 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:46:31,859 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:46:31,860 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:46:31,860 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:46:31,861 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:46:31,861 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:46:31,861 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 1
+2017-10-19 12:46:31,862 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:46:31,862 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:46:31,862 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_solvents
+2017-10-19 12:46:52,723 ; INFO ; pump_execution ; MainThread ; Source dict: {'source': '1', 'dest': '1'}
+2017-10-19 12:46:52,724 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:46:52,724 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reactor_valve
+2017-10-19 12:46:52,725 ; INFO ; pump_execution ; MainThread ; Target dict: {'source': '2', 'dest': '5'}
+2017-10-19 12:46:52,726 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 1
+2017-10-19 12:46:52,726 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 2
+2017-10-19 12:46:52,727 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:46:52,727 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:46:52,728 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:46:52,729 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:46:52,729 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:46:52,730 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:46:52,731 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 1
+2017-10-19 12:46:52,731 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:46:52,732 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:46:52,732 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reactor_valve
+2017-10-19 12:47:06,992 ; INFO ; pump_execution ; MainThread ; Source dict: {'source': '1', 'dest': '5'}
+2017-10-19 12:47:06,992 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:47:06,993 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:47:06,994 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:47:06,994 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:47:06,995 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 1
+2017-10-19 12:47:06,995 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:47:06,996 ; INFO ; pump_execution ; MainThread ; -15.0mL left...
+2017-10-19 12:47:06,996 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME LEFT: -15.0 ***
+2017-10-19 12:47:06,997 ; INFO ; pump_execution ; MainThread ; Done.
+2017-10-19 12:47:06,998 ; INFO ; hardware_sim ; Thread-8 ; IKARV - Starting Rotations
+2017-10-19 12:47:06,999 ; INFO ; cmd_execution ; MainThread ; Waiting for 300 seconds...
+2017-10-19 12:47:07,000 ; INFO ; cmd_execution ; Thread-9 ; WAIT - Waiting for 300
+2017-10-19 12:47:07,000 ; INFO ; hardware_sim ; MainThread ; IKARV - Stopping roations
+2017-10-19 12:47:07,001 ; INFO ; cmd_execution ; MainThread ; Moving 20.0mL from rotavap_rv_top to reactor_reactor at 20mL/min...
+2017-10-19 12:47:07,001 ; INFO ; pump_execution ; MainThread ; Following path: ['rotavap_rv_top', 'six-valve_reactor_valve', 'reactor_reactor']
+2017-10-19 12:47:07,002 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 20.0 ***
+2017-10-19 12:47:07,002 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:47:07,002 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:47:07,002 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 20.0 Speed: 20
+2017-10-19 12:47:07,003 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:47:07,003 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:47:07,003 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:47:07,003 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:47:07,004 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:47:07,004 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0 ***
+2017-10-19 12:47:07,004 ; INFO ; hardware_sim ; MainThread ; IKARV - Lifting arm
+2017-10-19 12:47:07,005 ; INFO ; hardware_sim ; MainThread ; IKARV - Stopping Heater
+2017-10-19 12:47:07,005 ; INFO ; hardware_sim ; MainThread ; IKARET - Starting heater
+2017-10-19 12:47:07,005 ; INFO ; cmd_execution ; MainThread ; Waiting for 14400 seconds...
+2017-10-19 12:47:07,005 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 14400
+2017-10-19 12:47:07,006 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2017-10-19 12:47:55,391 ; DEBUG ; chempiler_client ; MainThread ; User Input:
+XML file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\chemputer_rig_3.xml
+Command file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\nytol_bromination.chasm
+Simulation: y
+2017-10-19 12:47:55,537 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_1" Address: 192.168.1.11
+2017-10-19 12:47:55,537 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_solvents" Address: 192.168.1.13
+2017-10-19 12:47:55,537 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_2" Address: 192.168.1.12
+2017-10-19 12:47:55,538 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reactor" Address: 192.168.1.14
+2017-10-19 12:47:55,538 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_aqueous" Address: 192.168.1.16
+2017-10-19 12:47:55,538 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_1" Address: 192.168.1.17
+2017-10-19 12:47:55,539 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reactor_valve" Address: 192.168.1.20
+2017-10-19 12:47:55,539 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_workup_valve" Address: 192.168.1.21
+2017-10-19 12:47:55,539 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_workup" Address: 192.168.1.15
+2017-10-19 12:47:55,539 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_2" Address: 192.168.1.18
+2017-10-19 12:47:55,540 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_solvents" Address: 192.168.1.19
+2017-10-19 12:47:55,540 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_aqueous" Address: 192.168.1.22
+2017-10-19 12:47:55,640 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM10
+2017-10-19 12:47:55,641 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM11
+2017-10-19 12:47:55,742 ; INFO ; hardware_sim ; MainThread ; Recevied IKARV port: COM4
+2017-10-19 12:47:55,742 ; INFO ; hardware_sim ; MainThread ; IKARV - Initialising
+2017-10-19 12:47:55,742 ; INFO ; hardware_sim ; MainThread ; Received CVC3000 port: COM3
+2017-10-19 12:47:55,743 ; INFO ; hardware_sim ; MainThread ; CVC3K - Initialising
+2017-10-19 12:47:55,844 ; INFO ; chempiler ; MainThread ; 
+
+*** Starting simulated command procedure... ***
+
+2017-10-19 12:47:55,845 ; INFO ; hardware_sim ; Thread-6 ; IKARV - Starting Rotations
+2017-10-19 12:47:55,845 ; INFO ; cmd_execution ; MainThread ; Waiting for 300 seconds...
+2017-10-19 12:47:55,846 ; INFO ; cmd_execution ; Thread-7 ; WAIT - Waiting for 300
+2017-10-19 12:47:55,847 ; INFO ; hardware_sim ; MainThread ; IKARV - Stopping roations
+2017-10-19 12:47:55,847 ; INFO ; cmd_execution ; MainThread ; Moving 20.0mL from rotavap_rv_top to reactor_reactor at 20mL/min...
+2017-10-19 12:47:55,848 ; INFO ; pump_execution ; MainThread ; Following path: ['rotavap_rv_top', 'six-valve_reactor_valve', 'reactor_reactor']
+2017-10-19 12:47:55,848 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 20.0 ***
+2017-10-19 12:47:55,848 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:47:55,848 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:47:55,849 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 20.0 Speed: 20
+2017-10-19 12:47:55,849 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:47:55,849 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:47:55,849 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:47:55,849 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:47:55,850 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:47:55,850 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0 ***
+2017-10-19 12:47:55,851 ; INFO ; cmd_execution ; MainThread ; Moving 10.0mL from flask_xylene to rotavap_rv_top at 20mL/min...
+2017-10-19 12:47:55,851 ; INFO ; pump_execution ; MainThread ; Following path: ['flask_xylene', 'six-valve_reagents_1', 'six-valve_reagents_2', 'six-valve_solvents', 'six-valve_reactor_valve', 'rotavap_rv_top']
+2017-10-19 12:47:55,851 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME TO MOVE: 10.0 ***
+2017-10-19 12:47:55,852 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:47:55,852 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_1
+2017-10-19 12:47:55,852 ; INFO ; pump_execution ; MainThread ; Source dict: {'source': '0', 'dest': '1'}
+2017-10-19 12:47:55,852 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:47:55,853 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reagents_2
+2017-10-19 12:47:55,853 ; INFO ; pump_execution ; MainThread ; Target dict: {'source': '2', 'dest': '1'}
+2017-10-19 12:47:55,853 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:47:55,854 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:47:55,854 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:47:55,854 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:47:55,854 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 1
+2017-10-19 12:47:55,855 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 2
+2017-10-19 12:47:55,855 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:47:55,855 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:47:55,855 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:47:55,856 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:47:55,856 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:47:55,856 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:47:55,856 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:47:55,857 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:47:55,858 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:47:55,858 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_2
+2017-10-19 12:47:55,859 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:47:55,859 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:47:55,859 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_solvents
+2017-10-19 12:47:55,860 ; INFO ; pump_execution ; MainThread ; Target dict: {'source': '2', 'dest': '1'}
+2017-10-19 12:47:55,860 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 1
+2017-10-19 12:47:55,861 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 2
+2017-10-19 12:47:55,861 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:47:55,861 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:47:55,862 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:47:55,862 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:47:55,862 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:47:55,862 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:48:17,233 ; DEBUG ; chempiler_client ; MainThread ; User Input:
+XML file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\chemputer_rig_3.xml
+Command file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\nytol_bromination.chasm
+Simulation: y
+2017-10-19 12:48:17,382 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_1" Address: 192.168.1.11
+2017-10-19 12:48:17,382 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_solvents" Address: 192.168.1.19
+2017-10-19 12:48:17,382 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_solvents" Address: 192.168.1.13
+2017-10-19 12:48:17,382 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reactor_valve" Address: 192.168.1.20
+2017-10-19 12:48:17,383 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_2" Address: 192.168.1.12
+2017-10-19 12:48:17,383 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_2" Address: 192.168.1.18
+2017-10-19 12:48:17,383 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_workup_valve" Address: 192.168.1.21
+2017-10-19 12:48:17,383 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_workup" Address: 192.168.1.15
+2017-10-19 12:48:17,384 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_1" Address: 192.168.1.17
+2017-10-19 12:48:17,384 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_aqueous" Address: 192.168.1.16
+2017-10-19 12:48:17,384 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_aqueous" Address: 192.168.1.22
+2017-10-19 12:48:17,384 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reactor" Address: 192.168.1.14
+2017-10-19 12:48:17,484 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM10
+2017-10-19 12:48:17,485 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM11
+2017-10-19 12:48:17,586 ; INFO ; hardware_sim ; MainThread ; Recevied IKARV port: COM4
+2017-10-19 12:48:17,586 ; INFO ; hardware_sim ; MainThread ; IKARV - Initialising
+2017-10-19 12:48:17,586 ; INFO ; hardware_sim ; MainThread ; Received CVC3000 port: COM3
+2017-10-19 12:48:17,587 ; INFO ; hardware_sim ; MainThread ; CVC3K - Initialising
+2017-10-19 12:48:17,689 ; INFO ; chempiler ; MainThread ; 
+
+*** Starting simulated command procedure... ***
+
+2017-10-19 12:48:17,690 ; INFO ; hardware_sim ; Thread-6 ; IKARV - Starting Rotations
+2017-10-19 12:48:17,690 ; INFO ; cmd_execution ; MainThread ; Waiting for 300 seconds...
+2017-10-19 12:48:17,691 ; INFO ; cmd_execution ; Thread-7 ; WAIT - Waiting for 300
+2017-10-19 12:48:17,691 ; INFO ; hardware_sim ; MainThread ; IKARV - Stopping roations
+2017-10-19 12:48:17,692 ; INFO ; cmd_execution ; MainThread ; Moving 20.0mL from rotavap_rv_top to reactor_reactor at 20mL/min...
+2017-10-19 12:48:17,692 ; INFO ; pump_execution ; MainThread ; Following path: ['rotavap_rv_top', 'six-valve_reactor_valve', 'reactor_reactor']
+2017-10-19 12:48:17,693 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 20.0 ***
+2017-10-19 12:48:17,693 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:48:17,693 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:48:17,694 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 20.0 Speed: 20
+2017-10-19 12:48:17,694 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:48:17,694 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:48:17,695 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:48:17,695 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:48:17,695 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:48:17,695 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0 ***
+2017-10-19 12:48:17,696 ; INFO ; cmd_execution ; MainThread ; Moving 10.0mL from flask_xylene to rotavap_rv_top at 20mL/min...
+2017-10-19 12:48:17,696 ; INFO ; pump_execution ; MainThread ; Following path: ['flask_xylene', 'six-valve_reagents_1', 'six-valve_reagents_2', 'six-valve_solvents', 'six-valve_reactor_valve', 'rotavap_rv_top']
+2017-10-19 12:48:17,697 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME TO MOVE: 10.0 ***
+2017-10-19 12:48:17,697 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:48:17,698 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_1
+2017-10-19 12:48:17,698 ; INFO ; pump_execution ; MainThread ; Source dict: {'source': '0', 'dest': '1'}
+2017-10-19 12:48:17,698 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:48:17,699 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reagents_2
+2017-10-19 12:48:17,699 ; INFO ; pump_execution ; MainThread ; Target dict: {'source': '2', 'dest': '1'}
+2017-10-19 12:48:17,699 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:48:17,700 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:48:17,700 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:48:17,700 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:48:17,701 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 1
+2017-10-19 12:48:17,701 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 2
+2017-10-19 12:48:17,701 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:48:17,701 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:48:17,701 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:48:17,702 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:48:17,702 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:48:17,702 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:48:17,702 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:48:17,703 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:48:17,703 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:48:17,703 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_2
+2017-10-19 12:48:17,703 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:48:17,703 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:48:17,704 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_solvents
+2017-10-19 12:48:17,704 ; INFO ; pump_execution ; MainThread ; Target dict: {'source': '2', 'dest': '1'}
+2017-10-19 12:48:17,704 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 1
+2017-10-19 12:48:17,705 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 2
+2017-10-19 12:48:17,705 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:48:17,705 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:48:17,705 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:48:17,706 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:48:17,706 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:48:17,706 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:53:54,747 ; DEBUG ; chempiler_client ; MainThread ; User Input:
+XML file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\chemputer_rig_3.xml
+Command file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\nytol_bromination.chasm
+Simulation: y
+2017-10-19 12:53:54,891 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_1" Address: 192.168.1.17
+2017-10-19 12:53:54,892 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_2" Address: 192.168.1.18
+2017-10-19 12:53:54,892 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_aqueous" Address: 192.168.1.16
+2017-10-19 12:53:54,892 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reactor" Address: 192.168.1.14
+2017-10-19 12:53:54,892 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_workup_valve" Address: 192.168.1.21
+2017-10-19 12:53:54,893 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_aqueous" Address: 192.168.1.22
+2017-10-19 12:53:54,893 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_2" Address: 192.168.1.12
+2017-10-19 12:53:54,893 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_1" Address: 192.168.1.11
+2017-10-19 12:53:54,893 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_solvents" Address: 192.168.1.13
+2017-10-19 12:53:54,894 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reactor_valve" Address: 192.168.1.20
+2017-10-19 12:53:54,894 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_workup" Address: 192.168.1.15
+2017-10-19 12:53:54,894 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_solvents" Address: 192.168.1.19
+2017-10-19 12:53:54,994 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM11
+2017-10-19 12:53:54,995 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM10
+2017-10-19 12:53:55,095 ; INFO ; hardware_sim ; MainThread ; Recevied IKARV port: COM4
+2017-10-19 12:53:55,095 ; INFO ; hardware_sim ; MainThread ; IKARV - Initialising
+2017-10-19 12:53:55,096 ; INFO ; hardware_sim ; MainThread ; Received CVC3000 port: COM3
+2017-10-19 12:53:55,096 ; INFO ; hardware_sim ; MainThread ; CVC3K - Initialising
+2017-10-19 12:53:55,198 ; INFO ; chempiler ; MainThread ; 
+
+*** Starting simulated command procedure... ***
+
+2017-10-19 12:53:55,199 ; INFO ; hardware_sim ; Thread-6 ; IKARV - Starting Rotations
+2017-10-19 12:53:55,199 ; INFO ; cmd_execution ; MainThread ; Waiting for 300 seconds...
+2017-10-19 12:53:55,200 ; INFO ; cmd_execution ; Thread-7 ; WAIT - Waiting for 300
+2017-10-19 12:53:55,201 ; INFO ; hardware_sim ; MainThread ; IKARV - Stopping roations
+2017-10-19 12:53:55,201 ; INFO ; cmd_execution ; MainThread ; Moving 20.0mL from rotavap_rv_top to reactor_reactor at 20mL/min...
+2017-10-19 12:53:55,202 ; INFO ; pump_execution ; MainThread ; Following path: ['rotavap_rv_top', 'six-valve_reactor_valve', 'reactor_reactor']
+2017-10-19 12:53:55,202 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 20.0 ***
+2017-10-19 12:53:55,202 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:53:55,202 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:53:55,203 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 20.0 Speed: 20
+2017-10-19 12:53:55,203 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:53:55,204 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:53:55,204 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:53:55,204 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:53:55,205 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:53:55,205 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0 ***
+2017-10-19 12:53:55,205 ; INFO ; cmd_execution ; MainThread ; Moving 10.0mL from flask_xylene to rotavap_rv_top at 20mL/min...
+2017-10-19 12:53:55,206 ; INFO ; pump_execution ; MainThread ; Following path: ['flask_xylene', 'six-valve_reagents_1', 'six-valve_reagents_2', 'six-valve_solvents', 'six-valve_reactor_valve', 'rotavap_rv_top']
+2017-10-19 12:53:55,206 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME TO MOVE: 10.0 ***
+2017-10-19 12:53:55,206 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:53:55,207 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_1
+2017-10-19 12:53:55,207 ; INFO ; pump_execution ; MainThread ; Source dict: {'source': '0', 'dest': '1'}
+2017-10-19 12:53:55,207 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:53:55,208 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reagents_2
+2017-10-19 12:53:55,208 ; INFO ; pump_execution ; MainThread ; Target dict: {'source': '2', 'dest': '1'}
+2017-10-19 12:53:55,208 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:53:55,209 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:53:55,209 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:53:55,209 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:53:55,210 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 1
+2017-10-19 12:53:55,210 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 2
+2017-10-19 12:53:55,211 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:53:55,211 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:53:55,211 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:53:55,212 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:53:55,212 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:53:55,213 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:53:55,213 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:53:55,213 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_2
+2017-10-19 12:53:55,213 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:53:55,214 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:53:55,214 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_solvents
+2017-10-19 12:53:55,214 ; INFO ; pump_execution ; MainThread ; Target dict: {'source': '2', 'dest': '1'}
+2017-10-19 12:53:55,214 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 1
+2017-10-19 12:53:55,215 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 2
+2017-10-19 12:53:55,215 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:53:55,215 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:53:55,216 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:53:55,216 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:53:55,216 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:53:55,217 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:53:55,217 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:53:55,217 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_solvents
+2017-10-19 12:53:55,217 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:53:55,217 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:53:55,218 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reactor_valve
+2017-10-19 12:53:55,218 ; INFO ; pump_execution ; MainThread ; Target dict: {'source': '2', 'dest': '5'}
+2017-10-19 12:53:55,218 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 1
+2017-10-19 12:53:55,218 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 2
+2017-10-19 12:53:55,218 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:53:55,218 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:53:55,219 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:53:55,219 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:53:55,219 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:53:55,219 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:53:55,219 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:53:55,220 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reactor_valve
+2017-10-19 12:53:55,220 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '5'}
+2017-10-19 12:53:55,220 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:53:55,220 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:53:55,221 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:53:55,221 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:41,057 ; DEBUG ; chempiler_client ; MainThread ; User Input:
+XML file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\chemputer_rig_3.xml
+Command file: C:\Users\group\Documents\Git_repositories\Chempiler\tests\nytol_bromination.chasm
+Simulation: y
+2017-10-19 12:54:41,193 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_2" Address: 192.168.1.12
+2017-10-19 12:54:41,194 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_1" Address: 192.168.1.17
+2017-10-19 12:54:41,194 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_workup" Address: 192.168.1.15
+2017-10-19 12:54:41,194 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_workup_valve" Address: 192.168.1.21
+2017-10-19 12:54:41,194 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_solvents" Address: 192.168.1.13
+2017-10-19 12:54:41,195 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_solvents" Address: 192.168.1.19
+2017-10-19 12:54:41,195 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_1" Address: 192.168.1.11
+2017-10-19 12:54:41,195 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reactor" Address: 192.168.1.14
+2017-10-19 12:54:41,195 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_aqueous" Address: 192.168.1.22
+2017-10-19 12:54:41,195 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_aqueous" Address: 192.168.1.16
+2017-10-19 12:54:41,196 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reagents_2" Address: 192.168.1.18
+2017-10-19 12:54:41,196 ; INFO ; hardware_sim ; MainThread ; Received Valve "six-valve_reactor_valve" Address: 192.168.1.20
+2017-10-19 12:54:41,296 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM11
+2017-10-19 12:54:41,297 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM10
+2017-10-19 12:54:41,397 ; INFO ; hardware_sim ; MainThread ; Recevied IKARV port: COM4
+2017-10-19 12:54:41,397 ; INFO ; hardware_sim ; MainThread ; IKARV - Initialising
+2017-10-19 12:54:41,397 ; INFO ; hardware_sim ; MainThread ; Received CVC3000 port: COM3
+2017-10-19 12:54:41,398 ; INFO ; hardware_sim ; MainThread ; CVC3K - Initialising
+2017-10-19 12:54:41,499 ; INFO ; chempiler ; MainThread ; 
+
+*** Starting simulated command procedure... ***
+
+2017-10-19 12:54:41,500 ; INFO ; hardware_sim ; Thread-6 ; IKARV - Starting Rotations
+2017-10-19 12:54:41,501 ; INFO ; cmd_execution ; MainThread ; Waiting for 300 seconds...
+2017-10-19 12:54:41,502 ; INFO ; cmd_execution ; Thread-7 ; WAIT - Waiting for 300
+2017-10-19 12:54:41,503 ; INFO ; hardware_sim ; MainThread ; IKARV - Stopping roations
+2017-10-19 12:54:41,503 ; INFO ; cmd_execution ; MainThread ; Moving 20.0mL from rotavap_rv_top to reactor_reactor at 20mL/min...
+2017-10-19 12:54:41,504 ; INFO ; pump_execution ; MainThread ; Following path: ['rotavap_rv_top', 'six-valve_reactor_valve', 'reactor_reactor']
+2017-10-19 12:54:41,504 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 20.0 ***
+2017-10-19 12:54:41,505 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:54:41,505 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:41,506 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 20.0 Speed: 20
+2017-10-19 12:54:41,506 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:41,507 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:54:41,507 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:41,507 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:41,508 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:41,508 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0 ***
+2017-10-19 12:54:41,509 ; INFO ; cmd_execution ; MainThread ; Moving 10.0mL from flask_xylene to rotavap_rv_top at 20mL/min...
+2017-10-19 12:54:41,509 ; INFO ; pump_execution ; MainThread ; Following path: ['flask_xylene', 'six-valve_reagents_1', 'six-valve_reagents_2', 'six-valve_solvents', 'six-valve_reactor_valve', 'rotavap_rv_top']
+2017-10-19 12:54:41,510 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME TO MOVE: 10.0 ***
+2017-10-19 12:54:41,510 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:41,510 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_1
+2017-10-19 12:54:41,511 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1', 'source': '0'}
+2017-10-19 12:54:41,511 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:54:41,511 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reagents_2
+2017-10-19 12:54:41,512 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '1', 'source': '2'}
+2017-10-19 12:54:41,512 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:54:41,512 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:54:41,513 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:41,513 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:54:41,513 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 1
+2017-10-19 12:54:41,513 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 2
+2017-10-19 12:54:41,514 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:54:41,514 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:54:41,514 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:41,515 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:41,515 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:54:41,515 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:54:41,516 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:41,516 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_2
+2017-10-19 12:54:41,516 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:54:41,516 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:54:41,517 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_solvents
+2017-10-19 12:54:41,517 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '1', 'source': '2'}
+2017-10-19 12:54:41,517 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 1
+2017-10-19 12:54:41,517 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 2
+2017-10-19 12:54:41,518 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:54:41,518 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:54:41,518 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:41,518 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:41,519 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:54:41,519 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:54:41,519 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:41,519 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_solvents
+2017-10-19 12:54:41,520 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:54:41,520 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:54:41,520 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reactor_valve
+2017-10-19 12:54:41,520 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '5', 'source': '2'}
+2017-10-19 12:54:41,521 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 1
+2017-10-19 12:54:41,521 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 2
+2017-10-19 12:54:41,521 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:54:41,522 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:41,522 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:41,522 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:41,523 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:54:41,523 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:41,523 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:41,523 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reactor_valve
+2017-10-19 12:54:41,524 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '5'}
+2017-10-19 12:54:41,524 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:54:41,524 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:41,525 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:41,525 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:41,525 ; INFO ; pump_execution ; MainThread ; -15.0mL left...
+2017-10-19 12:54:41,525 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME LEFT: -15.0 ***
+2017-10-19 12:54:41,525 ; INFO ; pump_execution ; MainThread ; Done.
+2017-10-19 12:54:41,526 ; INFO ; hardware_sim ; Thread-8 ; IKARV - Starting Rotations
+2017-10-19 12:54:41,526 ; INFO ; cmd_execution ; MainThread ; Waiting for 300 seconds...
+2017-10-19 12:54:41,527 ; INFO ; cmd_execution ; Thread-9 ; WAIT - Waiting for 300
+2017-10-19 12:54:41,528 ; INFO ; hardware_sim ; MainThread ; IKARV - Stopping roations
+2017-10-19 12:54:41,528 ; INFO ; cmd_execution ; MainThread ; Moving 20.0mL from rotavap_rv_top to reactor_reactor at 20mL/min...
+2017-10-19 12:54:41,528 ; INFO ; pump_execution ; MainThread ; Following path: ['rotavap_rv_top', 'six-valve_reactor_valve', 'reactor_reactor']
+2017-10-19 12:54:41,528 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 20.0 ***
+2017-10-19 12:54:41,529 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:54:41,529 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:41,529 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 20.0 Speed: 20
+2017-10-19 12:54:41,529 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:41,529 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:54:41,530 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:41,530 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:41,530 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:41,530 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0 ***
+2017-10-19 12:54:41,530 ; INFO ; hardware_sim ; MainThread ; IKARV - Lifting arm
+2017-10-19 12:54:41,531 ; INFO ; hardware_sim ; MainThread ; IKARV - Stopping Heater
+2017-10-19 12:54:41,531 ; INFO ; hardware_sim ; MainThread ; IKARET - Starting heater
+2017-10-19 12:54:41,531 ; INFO ; cmd_execution ; MainThread ; Waiting for 14400 seconds...
+2017-10-19 12:54:41,531 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 14400
+2017-10-19 12:54:41,531 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2017-10-19 12:54:44,202 ; INFO ; hardware_sim ; MainThread ; IKARET - Stopping heater
+2017-10-19 12:54:44,203 ; INFO ; cmd_execution ; MainThread ; Waiting for 900 seconds...
+2017-10-19 12:54:44,204 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 900
+2017-10-19 12:54:44,204 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2017-10-19 12:54:44,205 ; INFO ; hardware_sim ; MainThread ; IKARET - Stopping stirrer
+2017-10-19 12:54:44,206 ; INFO ; cmd_execution ; MainThread ; Moving 50.0mL from reactor_reactor to rotavap_rv_top at 35mL/min...
+2017-10-19 12:54:44,207 ; INFO ; pump_execution ; MainThread ; Following path: ['reactor_reactor', 'six-valve_reactor_valve', 'rotavap_rv_top']
+2017-10-19 12:54:44,208 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 50.0 ***
+2017-10-19 12:54:44,208 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:54:44,209 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,209 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 25 Speed: 35
+2017-10-19 12:54:44,210 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,211 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:54:44,211 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,212 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 35
+2017-10-19 12:54:44,212 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,213 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 25.0 ***
+2017-10-19 12:54:44,213 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:54:44,213 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,214 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 25 Speed: 35
+2017-10-19 12:54:44,214 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,214 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:54:44,215 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,215 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 35
+2017-10-19 12:54:44,215 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,215 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0.0 ***
+2017-10-19 12:54:44,216 ; INFO ; cmd_execution ; MainThread ; Moving 10.0mL from flask_xylene to reactor_reactor at 20mL/min...
+2017-10-19 12:54:44,216 ; INFO ; pump_execution ; MainThread ; Following path: ['flask_xylene', 'six-valve_reagents_1', 'six-valve_reagents_2', 'six-valve_solvents', 'six-valve_reactor_valve', 'reactor_reactor']
+2017-10-19 12:54:44,217 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME TO MOVE: 10.0 ***
+2017-10-19 12:54:44,217 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:44,217 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_1
+2017-10-19 12:54:44,217 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1', 'source': '0'}
+2017-10-19 12:54:44,218 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:54:44,218 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reagents_2
+2017-10-19 12:54:44,218 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '1', 'source': '2'}
+2017-10-19 12:54:44,218 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:54:44,219 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:54:44,219 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:44,219 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:54:44,219 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 1
+2017-10-19 12:54:44,220 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 2
+2017-10-19 12:54:44,220 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:54:44,220 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:54:44,220 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:44,221 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:44,221 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:54:44,221 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:54:44,221 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:44,222 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_2
+2017-10-19 12:54:44,222 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:54:44,222 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:54:44,222 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_solvents
+2017-10-19 12:54:44,222 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '1', 'source': '2'}
+2017-10-19 12:54:44,223 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 1
+2017-10-19 12:54:44,223 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 2
+2017-10-19 12:54:44,223 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:54:44,223 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:54:44,223 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:44,224 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:44,224 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:54:44,224 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:54:44,224 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:44,224 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_solvents
+2017-10-19 12:54:44,225 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:54:44,225 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:54:44,225 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reactor_valve
+2017-10-19 12:54:44,225 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '0', 'source': '2'}
+2017-10-19 12:54:44,226 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 1
+2017-10-19 12:54:44,226 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 2
+2017-10-19 12:54:44,226 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:54:44,226 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,226 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:44,227 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:44,227 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:54:44,227 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,227 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:44,227 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reactor_valve
+2017-10-19 12:54:44,228 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '0'}
+2017-10-19 12:54:44,228 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:54:44,228 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,228 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:44,228 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,229 ; INFO ; pump_execution ; MainThread ; -15.0mL left...
+2017-10-19 12:54:44,229 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME LEFT: -15.0 ***
+2017-10-19 12:54:44,229 ; INFO ; pump_execution ; MainThread ; Done.
+2017-10-19 12:54:44,229 ; INFO ; hardware_sim ; MainThread ; IKARET - Starting stirrer
+2017-10-19 12:54:44,229 ; INFO ; cmd_execution ; MainThread ; Waiting for 60 seconds...
+2017-10-19 12:54:44,230 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 60
+2017-10-19 12:54:44,230 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2017-10-19 12:54:44,230 ; INFO ; hardware_sim ; MainThread ; IKARET - Stopping stirrer
+2017-10-19 12:54:44,230 ; INFO ; cmd_execution ; MainThread ; Moving 15.0mL from reactor_reactor to rotavap_rv_top at 35mL/min...
+2017-10-19 12:54:44,231 ; INFO ; pump_execution ; MainThread ; Following path: ['reactor_reactor', 'six-valve_reactor_valve', 'rotavap_rv_top']
+2017-10-19 12:54:44,231 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 15.0 ***
+2017-10-19 12:54:44,231 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:54:44,231 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,231 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 15.0 Speed: 35
+2017-10-19 12:54:44,232 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,232 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:54:44,232 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,232 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 35
+2017-10-19 12:54:44,232 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,232 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0 ***
+2017-10-19 12:54:44,233 ; INFO ; cmd_execution ; MainThread ; Moving 10.0mL from flask_xylene to reactor_reactor at 20mL/min...
+2017-10-19 12:54:44,233 ; INFO ; pump_execution ; MainThread ; Following path: ['flask_xylene', 'six-valve_reagents_1', 'six-valve_reagents_2', 'six-valve_solvents', 'six-valve_reactor_valve', 'reactor_reactor']
+2017-10-19 12:54:44,233 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME TO MOVE: 10.0 ***
+2017-10-19 12:54:44,234 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:44,234 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_1
+2017-10-19 12:54:44,234 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1', 'source': '0'}
+2017-10-19 12:54:44,234 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:54:44,235 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reagents_2
+2017-10-19 12:54:44,235 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '1', 'source': '2'}
+2017-10-19 12:54:44,235 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:54:44,235 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:54:44,235 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:44,236 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:54:44,236 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 1
+2017-10-19 12:54:44,236 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 2
+2017-10-19 12:54:44,236 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:54:44,236 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:54:44,236 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:44,237 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:44,237 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:54:44,237 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:54:44,238 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:44,238 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_2
+2017-10-19 12:54:44,238 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:54:44,238 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:54:44,239 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_solvents
+2017-10-19 12:54:44,239 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '1', 'source': '2'}
+2017-10-19 12:54:44,240 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 1
+2017-10-19 12:54:44,240 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 2
+2017-10-19 12:54:44,240 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:54:44,240 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:54:44,241 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:44,241 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:44,241 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:54:44,241 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:54:44,241 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:44,242 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_solvents
+2017-10-19 12:54:44,242 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:54:44,243 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:54:44,243 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reactor_valve
+2017-10-19 12:54:44,243 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '0', 'source': '2'}
+2017-10-19 12:54:44,243 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 1
+2017-10-19 12:54:44,244 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 2
+2017-10-19 12:54:44,244 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:54:44,244 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,244 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:44,244 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:44,245 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:54:44,245 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,245 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:44,246 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reactor_valve
+2017-10-19 12:54:44,246 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '0'}
+2017-10-19 12:54:44,246 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:54:44,246 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,246 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:44,247 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,247 ; INFO ; pump_execution ; MainThread ; -15.0mL left...
+2017-10-19 12:54:44,247 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME LEFT: -15.0 ***
+2017-10-19 12:54:44,247 ; INFO ; pump_execution ; MainThread ; Done.
+2017-10-19 12:54:44,247 ; INFO ; hardware_sim ; MainThread ; IKARET - Starting stirrer
+2017-10-19 12:54:44,247 ; INFO ; cmd_execution ; MainThread ; Waiting for 60 seconds...
+2017-10-19 12:54:44,248 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 60
+2017-10-19 12:54:44,248 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2017-10-19 12:54:44,248 ; INFO ; hardware_sim ; MainThread ; IKARET - Stopping stirrer
+2017-10-19 12:54:44,248 ; INFO ; cmd_execution ; MainThread ; Moving 15.0mL from reactor_reactor to rotavap_rv_top at 35mL/min...
+2017-10-19 12:54:44,249 ; INFO ; pump_execution ; MainThread ; Following path: ['reactor_reactor', 'six-valve_reactor_valve', 'rotavap_rv_top']
+2017-10-19 12:54:44,249 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 15.0 ***
+2017-10-19 12:54:44,249 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:54:44,250 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,250 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 15.0 Speed: 35
+2017-10-19 12:54:44,250 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,250 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:54:44,250 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,251 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 35
+2017-10-19 12:54:44,251 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,251 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0 ***
+2017-10-19 12:54:44,251 ; INFO ; cmd_execution ; MainThread ; Moving 10.0mL from flask_xylene to reactor_reactor at 20mL/min...
+2017-10-19 12:54:44,252 ; INFO ; pump_execution ; MainThread ; Following path: ['flask_xylene', 'six-valve_reagents_1', 'six-valve_reagents_2', 'six-valve_solvents', 'six-valve_reactor_valve', 'reactor_reactor']
+2017-10-19 12:54:44,252 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME TO MOVE: 10.0 ***
+2017-10-19 12:54:44,252 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:44,252 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_1
+2017-10-19 12:54:44,252 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1', 'source': '0'}
+2017-10-19 12:54:44,253 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:54:44,253 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reagents_2
+2017-10-19 12:54:44,253 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '1', 'source': '2'}
+2017-10-19 12:54:44,253 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 0
+2017-10-19 12:54:44,254 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:54:44,254 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:44,254 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:54:44,254 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Moving to position 1
+2017-10-19 12:54:44,254 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 2
+2017-10-19 12:54:44,255 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_1" - Waiting until ready...
+2017-10-19 12:54:44,255 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:54:44,255 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:44,255 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:44,255 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_1" - Waiting until ready...
+2017-10-19 12:54:44,256 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:54:44,256 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:44,256 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reagents_2
+2017-10-19 12:54:44,256 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:54:44,256 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:54:44,257 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_solvents
+2017-10-19 12:54:44,257 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '1', 'source': '2'}
+2017-10-19 12:54:44,257 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Moving to position 1
+2017-10-19 12:54:44,257 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 2
+2017-10-19 12:54:44,257 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reagents_2" - Waiting until ready...
+2017-10-19 12:54:44,258 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:54:44,258 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:44,258 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:44,258 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reagents_2" - Waiting until ready...
+2017-10-19 12:54:44,259 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:54:44,259 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:44,259 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_solvents
+2017-10-19 12:54:44,259 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '1'}
+2017-10-19 12:54:44,259 ; INFO ; pump_execution ; MainThread ; Setting up target
+2017-10-19 12:54:44,259 ; INFO ; pump_execution ; MainThread ; Target valve: six-valve_reactor_valve
+2017-10-19 12:54:44,260 ; INFO ; pump_execution ; MainThread ; Target dict: {'dest': '0', 'source': '2'}
+2017-10-19 12:54:44,260 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Moving to position 1
+2017-10-19 12:54:44,260 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 2
+2017-10-19 12:54:44,260 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_solvents" - Waiting until ready...
+2017-10-19 12:54:44,260 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,261 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:44,261 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 10.0 Speed: 20
+2017-10-19 12:54:44,261 ; INFO ; hardware_sim ; MainThread ; Pump "pump_solvents" - Waiting until ready...
+2017-10-19 12:54:44,261 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,261 ; INFO ; pump_execution ; MainThread ; Setting up source
+2017-10-19 12:54:44,262 ; INFO ; pump_execution ; MainThread ; Source valve: six-valve_reactor_valve
+2017-10-19 12:54:44,262 ; INFO ; pump_execution ; MainThread ; Source dict: {'dest': '0'}
+2017-10-19 12:54:44,262 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:54:44,262 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,263 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 20
+2017-10-19 12:54:44,263 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,263 ; INFO ; pump_execution ; MainThread ; -15.0mL left...
+2017-10-19 12:54:44,263 ; INFO ; pump_execution ; MainThread ; *** TOTAL VOLUME LEFT: -15.0 ***
+2017-10-19 12:54:44,263 ; INFO ; pump_execution ; MainThread ; Done.
+2017-10-19 12:54:44,264 ; INFO ; hardware_sim ; MainThread ; IKARET - Starting stirrer
+2017-10-19 12:54:44,264 ; INFO ; cmd_execution ; MainThread ; Waiting for 60 seconds...
+2017-10-19 12:54:44,264 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 60
+2017-10-19 12:54:44,264 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2017-10-19 12:54:44,264 ; INFO ; hardware_sim ; MainThread ; IKARET - Stopping stirrer
+2017-10-19 12:54:44,265 ; INFO ; cmd_execution ; MainThread ; Moving 15.0mL from reactor_reactor to rotavap_rv_top at 35mL/min...
+2017-10-19 12:54:44,265 ; INFO ; pump_execution ; MainThread ; Following path: ['reactor_reactor', 'six-valve_reactor_valve', 'rotavap_rv_top']
+2017-10-19 12:54:44,265 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 15.0 ***
+2017-10-19 12:54:44,265 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 0
+2017-10-19 12:54:44,266 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,266 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 15.0 Speed: 35
+2017-10-19 12:54:44,266 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,266 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 5
+2017-10-19 12:54:44,266 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,267 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 35
+2017-10-19 12:54:44,267 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,267 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0 ***
+2017-10-19 12:54:44,267 ; INFO ; hardware_sim ; MainThread ; IKARV - Lifting arm down
+2017-10-19 12:54:44,267 ; INFO ; hardware_sim ; MainThread ; IKARV - Speed set to 280
+2017-10-19 12:54:44,268 ; INFO ; hardware_sim ; MainThread ; IKARV - Starting Rotations
+2017-10-19 12:54:44,268 ; INFO ; hardware_sim ; MainThread ; CVC3k - Set SP to 900
+2017-10-19 12:54:44,268 ; INFO ; hardware_sim ; MainThread ; CVC3k - Starting vacuum
+2017-10-19 12:54:44,268 ; INFO ; hardware_sim ; MainThread ; IKARV - Temperature set to 40
+2017-10-19 12:54:44,268 ; INFO ; hardware_sim ; MainThread ; IKARV - Starting Heater
+2017-10-19 12:54:44,269 ; INFO ; cmd_execution ; MainThread ; Waiting for 300 seconds...
+2017-10-19 12:54:44,269 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 300
+2017-10-19 12:54:44,269 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2017-10-19 12:54:44,269 ; INFO ; hardware_sim ; MainThread ; CVC3k - Set SP to 15
+2017-10-19 12:54:44,269 ; INFO ; cmd_execution ; MainThread ; Waiting for 900 seconds...
+2017-10-19 12:54:44,270 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 900
+2017-10-19 12:54:44,270 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2017-10-19 12:54:44,270 ; INFO ; hardware_sim ; MainThread ; IKARV - Lifting arm
+2017-10-19 12:54:44,270 ; INFO ; cmd_execution ; MainThread ; Waiting for 10 seconds...
+2017-10-19 12:54:44,270 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 10
+2017-10-19 12:54:44,271 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2017-10-19 12:54:44,271 ; INFO ; hardware_sim ; MainThread ; CVC3K - Stopping Vacuum
+2017-10-19 12:54:44,271 ; INFO ; hardware_sim ; MainThread ; CVC3K - Venting vacuum
+2017-10-19 12:54:44,271 ; INFO ; cmd_execution ; MainThread ; Waiting for 60 seconds...
+2017-10-19 12:54:44,272 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 60
+2017-10-19 12:54:44,272 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2017-10-19 12:54:44,272 ; INFO ; cmd_execution ; MainThread ; Moving 100.0mL from flask_rv_bottom to waste_reactor at 35mL/min...
+2017-10-19 12:54:44,273 ; INFO ; pump_execution ; MainThread ; Following path: ['flask_rv_bottom', 'six-valve_reactor_valve', 'waste_reactor']
+2017-10-19 12:54:44,273 ; INFO ; pump_execution ; MainThread ; *** VOLUME TO MOVE: 100.0 ***
+2017-10-19 12:54:44,273 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 4
+2017-10-19 12:54:44,273 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,274 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 25 Speed: 35
+2017-10-19 12:54:44,274 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,274 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 3
+2017-10-19 12:54:44,274 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,274 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 35
+2017-10-19 12:54:44,274 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,275 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 75.0 ***
+2017-10-19 12:54:44,275 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 4
+2017-10-19 12:54:44,275 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,275 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 25 Speed: 35
+2017-10-19 12:54:44,275 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,276 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 3
+2017-10-19 12:54:44,276 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,276 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 35
+2017-10-19 12:54:44,276 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,277 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 50.0 ***
+2017-10-19 12:54:44,277 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 4
+2017-10-19 12:54:44,277 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,277 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 25 Speed: 35
+2017-10-19 12:54:44,277 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,277 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 3
+2017-10-19 12:54:44,278 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,278 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 35
+2017-10-19 12:54:44,278 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,278 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 25.0 ***
+2017-10-19 12:54:44,278 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 4
+2017-10-19 12:54:44,279 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,279 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 25 Speed: 35
+2017-10-19 12:54:44,279 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,279 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Moving to position 3
+2017-10-19 12:54:44,279 ; INFO ; hardware_sim ; MainThread ; Valve "six-valve_reactor_valve" - Waiting until ready...
+2017-10-19 12:54:44,280 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Moving absolute. Volume: 0 Speed: 35
+2017-10-19 12:54:44,280 ; INFO ; hardware_sim ; MainThread ; Pump "pump_reactor" - Waiting until ready...
+2017-10-19 12:54:44,280 ; INFO ; pump_execution ; MainThread ; *** VOLUME LEFT TO MOVE: 0.0 ***
+2017-10-19 12:54:44,281 ; INFO ; hardware_sim ; Thread-10 ; IKARV - Lifting arm down
+2017-10-19 12:54:44,281 ; INFO ; hardware_sim ; Thread-11 ; CVC3k - Set SP to 0
+2017-10-19 12:54:44,282 ; INFO ; hardware_sim ; MainThread ; CVC3k - Starting vacuum
+2017-10-19 12:54:44,282 ; INFO ; cmd_execution ; MainThread ; Waiting for 3600 seconds...
+2017-10-19 12:54:44,282 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 3600
+2017-10-19 12:54:44,282 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2017-10-19 12:54:44,283 ; INFO ; hardware_sim ; MainThread ; IKARV - Lifting arm
+2017-10-19 12:54:44,283 ; INFO ; cmd_execution ; MainThread ; Waiting for 10 seconds...
+2017-10-19 12:54:44,283 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 10
+2017-10-19 12:54:44,283 ; INFO ; cmd_execution ; MainThread ; Waiting done.
+2017-10-19 12:54:44,283 ; INFO ; hardware_sim ; MainThread ; CVC3K - Stopping Vacuum
+2017-10-19 12:54:44,284 ; INFO ; hardware_sim ; MainThread ; CVC3K - Venting vacuum
+2017-10-19 12:54:44,284 ; INFO ; cmd_execution ; MainThread ; Waiting for 60 seconds...
+2017-10-19 12:54:44,284 ; INFO ; cmd_execution ; MainThread ; WAIT - Waiting for 60
+2017-10-19 12:54:44,284 ; INFO ; cmd_execution ; MainThread ; Waiting done.
