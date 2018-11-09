@@ -1,0 +1,10 @@
+*.pyc
+__pycache__/
+.vscode/
+platform/.idea/
+.idea/
+test.txt
+platform_server/tools/parsing/parsetab.py
+client/crash_dump/
+*.avi
+client/log_files/00000.txt

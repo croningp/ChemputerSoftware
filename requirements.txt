@@ -1,0 +1,10 @@
+# Requirements file for the Chemputer suite
+
+# this one HAS to be version 1.x, as version 2.x made major changes that break a lot of the Executioner code
+networkx==1.10
+
+# those packages SHOULD be fine with the most recent versions, if not try the ones mentioned in the comments
+ply             # tested with 3.10
+pyserial        # tested with 3.3
+numpy           # tested with 1.13.1
+opencv-python   # tested with 3.1.4
