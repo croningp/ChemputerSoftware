@@ -111,14 +111,16 @@ The subfolder **parsing** contais the ChASM parser. For details on why and how h
 This subfolder contains the graph and ChASM files of all the various syntheses performed on the various rigs. Future experiments should also go here.
 
 ## Authors
-
-* **Sebastian Steiner** - *General project architecture, ongoing development, debugging, current curator*
+* **Hessam Mehr** - *Current contributor, developing new features
+* **Matthew Craven** - *Software development for the chemputer, developing new features
+* **Sebastian Steiner** - *Previous contributor project architecture, to ongoing development, debugging, current curator*
 * **Graham Keenan** - *Initial work, most of the actual coding*
 * **Jakob Wolf** - *Authored the Sildenafil and Diazirine syntheses, debugging*
-* **Jaroslaw Granda** - *Authored the Rufinamide synthesis*
+* **Jaroslaw Granda** - *Current contributor - authored the Rufinamide synthesis*
 
 ## Acknowledgments
 
 * Stefan Glatzel
 * Anna Andreou
 * Gerardo Aragon
+* Leroy (Lee) Cronin - PI for the project and inventor of the abstraction
