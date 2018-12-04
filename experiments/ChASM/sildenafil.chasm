@@ -11,7 +11,7 @@ DEF volume_ethoxybenzoic_acid = 5.65; # mL 8.32G (50 mmol)
 DEF volume_water_1st = 31.5; # mL
 DEF volume_water_washing_1st = 8; # mL
 
-# 2nd Step: substituion of chloride
+# 2nd Step: substitution of chloride
 DEF volume_water_2nd = 30; # 3.6 mL per g of starting mat
 DEF volume_methyl_piperazine = 8.634; #8.134; # now again only 90% yield#increased to roughly 95% yield in first step # mL
 #DEF volume_HCl_neutralise = 2.2; #ml, should equal 0.33 eq of methylpiperazine, the excess, use HCL 4.47M
