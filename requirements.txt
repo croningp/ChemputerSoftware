@@ -8,3 +8,4 @@ ply             # tested with 3.10
 pyserial        # tested with 3.3
 numpy           # tested with 1.13.1
 opencv-python   # tested with 3.1.4
+click
