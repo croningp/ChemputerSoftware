@@ -1,5 +1,6 @@
 # coding=utf-8
 # !/usr/bin/env python
+
 """
 :mod:"chempiler_client" -- User interface for the Chempiler
 ===================================
@@ -18,42 +19,42 @@ Once the input has been verified, the Chempiler is started.
 For style guide used see http://xkcd.com/1513/
 """
 
-import os
-import sys
 import inspect
 import logging
-import time
 import multiprocessing
+import os
+import sys
+import time
+
+import click
 
 HERE = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 sys.path.append(os.path.join(HERE, '..', 'platform_server'))
 
 from core.chempiler import Chempiler
 
-# TODO: Make this look more like a client
+__all__ = ['main']
 
 
-if __name__ == "__main__":
-    # get parameters from user
-    CRASH_DUMP = False
-
-    EXPERIMENT_CODE = input("Experiment code? ")
-    GRAPHML_FILE = "C:\\Users\\group\\Documents\\Chempiler\\experiments\\graph\\chemputer_rig_3_sildena/fil.graphml" 
-    COMMAND_FILE = "C:\\Users\\group\\Documents\\Chempiler\\experiments\\ChASM\\sildenafil.chasm" 
-    video_recording = input("Record video? (y/n) ")
-    crash_dump = input("Read from crash dump? (y/n) ")
-    if crash_dump == "y":
-        CRASH_DUMP = True
-
-    SIM = input("Simulation? (y/n) ")
-
+@click.command()
+@click.option('-e', '--experiment-code', required=True)
+@click.option('-g', '--graph', required=True,
+              doc='GraphML file. Example: C:\\Users\\group\\Documents\\Chempiler\\experiments\\graph\\chemputer_rig_3_sildena/fil.graphml')
+@click.option('-c', '--command', required=True,
+              doc='Command file. Example: C:\\Users\\group\\Documents\\Chempiler\\experiments\\ChASM\\sildenafil.chasm')
+@click.option('--log-folder', type=click.Path(file_okay=False, dir_okay=True), required=True)
+@click.option('--record-video', is_flag=True)
+@click.option('--crash-dump', is_flag=True)
+@click.option('--simulation', is_flag=True)
+def main(experiment_code, graph, command, log_folder, record_video, crash_dump, simulation):
+    """Run the chemputer."""
     # deal with logging
     # create main thread logger
     logger = logging.getLogger("main_logger")
     logger.setLevel(logging.DEBUG)
 
     # create file handler which logs all messages
-    fh = logging.FileHandler(filename=os.path.join(HERE, "log_files", "{0}.txt".format(EXPERIMENT_CODE)))
+    fh = logging.FileHandler(filename=os.path.join(log_folder, "{0}.txt".format(experiment_code)))
     fh.setLevel(logging.DEBUG)
 
     # create console handler which logs all messages
@@ -71,59 +72,57 @@ if __name__ == "__main__":
     logger.addHandler(ch)
 
     # record the entered parameters
-    logger.debug("User Input:\nXML file: {0}\nCommand file: {1}\nSimulation: {2}".format(GRAPHML_FILE, COMMAND_FILE, SIM))
+    logger.debug("User Input:\nXML file: {0}\nCommand file: {1}\nSimulation: {2}".format(graph, command, SIM))
 
     # only continue if the provided paths are valid
-    if os.path.isfile(GRAPHML_FILE) and os.path.isfile(COMMAND_FILE):
-        # deal with video recording
-        if video_recording == "y":
-            from tools.vlogging import VlogHandler, RecordingSpeedFilter, recording_worker
+    if not (os.path.isfile(graph) and os.path.isfile(command)):
+        raise RuntimeError('Unable to locate source files!')
 
-            # spawn queues
-            message_queue = multiprocessing.Queue()
-            recording_speed_queue = multiprocessing.Queue()
+    # deal with video recording
+    if record_video:
+        from tools.vlogging import VlogHandler, RecordingSpeedFilter, recording_worker
 
-            # create logging message handlers
-            video_handler = VlogHandler(message_queue)
-            recording_speed_handler = VlogHandler(recording_speed_queue)
+        # spawn queues
+        message_queue = multiprocessing.Queue()
+        recording_speed_queue = multiprocessing.Queue()
 
-            # set logging levels
-            video_handler.setLevel(logging.INFO)
-            recording_speed_handler.setLevel(5)  # set a logging level below DEBUG
+        # create logging message handlers
+        video_handler = VlogHandler(message_queue)
+        recording_speed_handler = VlogHandler(recording_speed_queue)
 
-            # only allow dedicated messages for the recording speed handler
-            speed_filter = RecordingSpeedFilter()
-            recording_speed_handler.addFilter(speed_filter)
+        # set logging levels
+        video_handler.setLevel(logging.INFO)
+        recording_speed_handler.setLevel(5)  # set a logging level below DEBUG
 
-            # attach the handlers
-            logger.addHandler(video_handler)
-            logger.addHandler(recording_speed_handler)
+        # only allow dedicated messages for the recording speed handler
+        speed_filter = RecordingSpeedFilter()
+        recording_speed_handler.addFilter(speed_filter)
 
-            # work out video name and path
-            i = 0
-            video_path = os.path.join(HERE, "log_videos", "{0}_{1}.avi".format(EXPERIMENT_CODE, i))
-            while True:
-                # keep incrementing the file counter until you hit one that doesn't yet exist
-                if os.path.isfile(video_path):
-                    i += 1
-                    video_path = os.path.join(HERE, "log_videos", "{0}_{1}.avi".format(EXPERIMENT_CODE, i))
-                else:
-                    break
+        # attach the handlers
+        logger.addHandler(video_handler)
+        logger.addHandler(recording_speed_handler)
 
-            # launch recording process
-            recording_process = multiprocessing.Process(target=recording_worker, args=(message_queue, recording_speed_queue, video_path))
-            recording_process.start()
-            time.sleep(5)  # wait for the video feed to stabilise
+        # work out video name and path
+        i = 0
+        video_path = os.path.join(log_folder, "{0}_{1}.avi".format(experiment_code, i))
+        while True:
+            # keep incrementing the file counter until you hit one that doesn't yet exist
+            if os.path.isfile(video_path):
+                i += 1
+                video_path = os.path.join(log_folder, "{0}_{1}.avi".format(experiment_code, i))
+            else:
+                break
 
-        if SIM == 'y':
-            chempiler = Chempiler(GRAPHML_FILE, COMMAND_FILE, crash_dump=CRASH_DUMP, simulation=True)
-            chempiler.run_platform()
-            os._exit(0)
-        elif SIM == 'n':
-            chempiler = Chempiler(GRAPHML_FILE, COMMAND_FILE, crash_dump=CRASH_DUMP)
-            chempiler.run_platform()
-            os._exit(0)
-        else:
-            print('Type y or n for simulation!\n')
-    else:
-        print('Unable to locate source files!\n')
+        # launch recording process
+        recording_process = multiprocessing.Process(target=recording_worker,
+                                                    args=(message_queue, recording_speed_queue, video_path))
+        recording_process.start()
+        time.sleep(5)  # wait for the video feed to stabilise
+
+    chempiler = Chempiler(graph, command, crash_dump=crash_dump, simulation=simulation)
+    chempiler.run_platform()
+    return sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()
