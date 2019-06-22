@@ -39,9 +39,9 @@ __all__ = ['main']
 @click.command()
 @click.option('-e', '--experiment-code', required=True)
 @click.option('-g', '--graph', required=True,
-              doc='GraphML file. Example: C:\\Users\\group\\Documents\\Chempiler\\experiments\\graph\\chemputer_rig_3_sildena/fil.graphml')
+              help='GraphML file. Example: C:\\Users\\group\\Documents\\Chempiler\\experiments\\graph\\chemputer_rig_3_sildena/fil.graphml')
 @click.option('-c', '--command', required=True,
-              doc='Command file. Example: C:\\Users\\group\\Documents\\Chempiler\\experiments\\ChASM\\sildenafil.chasm')
+              help='Command file. Example: C:\\Users\\group\\Documents\\Chempiler\\experiments\\ChASM\\sildenafil.chasm')
 @click.option('--log-folder', type=click.Path(file_okay=False, dir_okay=True), required=True)
 @click.option('--record-video', is_flag=True)
 @click.option('--crash-dump', is_flag=True)
