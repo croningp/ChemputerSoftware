@@ -38,9 +38,9 @@ __all__ = ['main']
 
 @click.command()
 @click.option('-e', '--experiment-code', required=True)
-@click.option('-g', '--graph', required=True,
+@click.option('-g', '--graph', required=True, type=click.Path(file_okay=True, dir_okay=False, exists=True),
               help='GraphML file. Example: C:\\Users\\group\\Documents\\Chempiler\\experiments\\graph\\chemputer_rig_3_sildena/fil.graphml')
-@click.option('-c', '--command', required=True,
+@click.option('-c', '--command', required=True, type=click.Path(file_okay=True, dir_okay=False, exists=True),
               help='Command file. Example: C:\\Users\\group\\Documents\\Chempiler\\experiments\\ChASM\\sildenafil.chasm')
 @click.option('--log-folder', type=click.Path(file_okay=False, dir_okay=True), required=True)
 @click.option('--record-video', is_flag=True)
@@ -73,10 +73,6 @@ def main(experiment_code, graph, command, log_folder, record_video, crash_dump, 
 
     # record the entered parameters
     logger.debug("User Input:\nXML file: {0}\nCommand file: {1}\nSimulation: {2}".format(graph, command, SIM))
-
-    # only continue if the provided paths are valid
-    if not (os.path.isfile(graph) and os.path.isfile(command)):
-        raise RuntimeError('Unable to locate source files!')
 
     # deal with video recording
     if record_video:
