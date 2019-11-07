@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -165,318 +167,318 @@
 <div class="section" id="mod-hardware-sim-collection-of-classes-to-simulate-the-operation-of-various-hardware-devices">
 <h3>:mod:”hardware_sim” – Collection of classes to simulate the operation of various hardware devices<a class="headerlink" href="#mod-hardware-sim-collection-of-classes-to-simulate-the-operation-of-various-hardware-devices" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-hardware_sim"></span><ol class="loweralpha simple" start="3">
-<li>2017 The Cronin Group, University of Glasgow</li>
+<li><p>2017 The Cronin Group, University of Glasgow</p></li>
 </ol>
 <p>This file provides a number of simulation classes that behave like the real
 control classes, but mostly just log the commands rather than actually doing anything.</p>
 <p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
 <dl class="class">
 <dt id="sims.hardware_sim.SimCVC3000">
-<em class="property">class </em><code class="descclassname">sims.hardware_sim.</code><code class="descname">SimCVC3000</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimCVC3000"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimCVC3000" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
-<dl class="attribute">
+<em class="property">class </em><code class="sig-prename descclassname">sims.hardware_sim.</code><code class="sig-name descname">SimCVC3000</code><span class="sig-paren">(</span><em class="sig-param">port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimCVC3000"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimCVC3000" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
+<dl class="method">
 <dt id="sims.hardware_sim.SimCVC3000.end_vacuum_sp">
-<code class="descname">end_vacuum_sp</code><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.end_vacuum_sp" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">end_vacuum_sp</code><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.end_vacuum_sp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimCVC3000.initialise">
-<code class="descname">initialise</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimCVC3000.initialise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.initialise" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">initialise</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimCVC3000.initialise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.initialise" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimCVC3000.query_status">
-<code class="descname">query_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimCVC3000.query_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.query_status" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">query_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimCVC3000.query_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.query_status" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="sims.hardware_sim.SimCVC3000.runtime_sp">
-<code class="descname">runtime_sp</code><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.runtime_sp" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">runtime_sp</code><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.runtime_sp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimCVC3000.start">
-<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimCVC3000.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.start" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimCVC3000.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.start" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimCVC3000.stop">
-<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimCVC3000.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.stop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimCVC3000.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.stop" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="sims.hardware_sim.SimCVC3000.vacuum_sp">
-<code class="descname">vacuum_sp</code><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.vacuum_sp" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">vacuum_sp</code><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.vacuum_sp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimCVC3000.vent">
-<code class="descname">vent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimCVC3000.vent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.vent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">vent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimCVC3000.vent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimCVC3000.vent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sims.hardware_sim.SimChemputerPump">
-<em class="property">class </em><code class="descclassname">sims.hardware_sim.</code><code class="descname">SimChemputerPump</code><span class="sig-paren">(</span><em>address</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerPump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerPump" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">sims.hardware_sim.</code><code class="sig-name descname">SimChemputerPump</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerPump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerPump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
 <dl class="method">
 <dt id="sims.hardware_sim.SimChemputerPump.move_absolute">
-<code class="descname">move_absolute</code><span class="sig-paren">(</span><em>volume_ul</em>, <em>speed_ul</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerPump.move_absolute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerPump.move_absolute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_absolute</code><span class="sig-paren">(</span><em class="sig-param">volume_ul</em>, <em class="sig-param">speed_ul</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerPump.move_absolute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerPump.move_absolute" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimChemputerPump.move_relative">
-<code class="descname">move_relative</code><span class="sig-paren">(</span><em>volume_ul</em>, <em>speed_ul</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerPump.move_relative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerPump.move_relative" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_relative</code><span class="sig-paren">(</span><em class="sig-param">volume_ul</em>, <em class="sig-param">speed_ul</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerPump.move_relative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerPump.move_relative" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimChemputerPump.move_to_home">
-<code class="descname">move_to_home</code><span class="sig-paren">(</span><em>speed_ul</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerPump.move_to_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerPump.move_to_home" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_to_home</code><span class="sig-paren">(</span><em class="sig-param">speed_ul</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerPump.move_to_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerPump.move_to_home" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimChemputerPump.wait_until_ready">
-<code class="descname">wait_until_ready</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerPump.wait_until_ready"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerPump.wait_until_ready" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">wait_until_ready</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerPump.wait_until_ready"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerPump.wait_until_ready" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sims.hardware_sim.SimChemputerValve">
-<em class="property">class </em><code class="descclassname">sims.hardware_sim.</code><code class="descname">SimChemputerValve</code><span class="sig-paren">(</span><em>address</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerValve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerValve" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">sims.hardware_sim.</code><code class="sig-name descname">SimChemputerValve</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerValve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerValve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
 <dl class="method">
 <dt id="sims.hardware_sim.SimChemputerValve.move_home">
-<code class="descname">move_home</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerValve.move_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerValve.move_home" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_home</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerValve.move_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerValve.move_home" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimChemputerValve.move_to_position">
-<code class="descname">move_to_position</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerValve.move_to_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerValve.move_to_position" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_to_position</code><span class="sig-paren">(</span><em class="sig-param">position</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerValve.move_to_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerValve.move_to_position" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimChemputerValve.wait_until_ready">
-<code class="descname">wait_until_ready</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerValve.wait_until_ready"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerValve.wait_until_ready" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">wait_until_ready</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimChemputerValve.wait_until_ready"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimChemputerValve.wait_until_ready" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sims.hardware_sim.SimDevice">
-<em class="property">class </em><code class="descclassname">sims.hardware_sim.</code><code class="descname">SimDevice</code><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimDevice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">sims.hardware_sim.</code><code class="sig-name descname">SimDevice</code><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="sims.hardware_sim.SimHuber">
-<em class="property">class </em><code class="descclassname">sims.hardware_sim.</code><code class="descname">SimHuber</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimHuber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimHuber" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">sims.hardware_sim.</code><code class="sig-name descname">SimHuber</code><span class="sig-paren">(</span><em class="sig-param">port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimHuber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimHuber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
 <dl class="method">
 <dt id="sims.hardware_sim.SimHuber.set_ramp_duration">
-<code class="descname">set_ramp_duration</code><span class="sig-paren">(</span><em>ramp_duration</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimHuber.set_ramp_duration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimHuber.set_ramp_duration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_ramp_duration</code><span class="sig-paren">(</span><em class="sig-param">ramp_duration</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimHuber.set_ramp_duration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimHuber.set_ramp_duration" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimHuber.set_temperature">
-<code class="descname">set_temperature</code><span class="sig-paren">(</span><em>temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimHuber.set_temperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimHuber.set_temperature" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_temperature</code><span class="sig-paren">(</span><em class="sig-param">temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimHuber.set_temperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimHuber.set_temperature" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimHuber.start">
-<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimHuber.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimHuber.start" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimHuber.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimHuber.start" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimHuber.start_ramp">
-<code class="descname">start_ramp</code><span class="sig-paren">(</span><em>temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimHuber.start_ramp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimHuber.start_ramp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_ramp</code><span class="sig-paren">(</span><em class="sig-param">temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimHuber.start_ramp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimHuber.start_ramp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimHuber.stop">
-<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimHuber.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimHuber.stop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimHuber.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimHuber.stop" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sims.hardware_sim.SimIKARET">
-<em class="property">class </em><code class="descclassname">sims.hardware_sim.</code><code class="descname">SimIKARET</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">sims.hardware_sim.</code><code class="sig-name descname">SimIKARET</code><span class="sig-paren">(</span><em class="sig-param">port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARET.start_heater">
-<code class="descname">start_heater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET.start_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET.start_heater" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_heater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET.start_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET.start_heater" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARET.start_stirrer">
-<code class="descname">start_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET.start_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET.start_stirrer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET.start_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET.start_stirrer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARET.stir_rate_setter">
-<code class="descname">stir_rate_setter</code><span class="sig-paren">(</span><em>stir_rate</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET.stir_rate_setter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET.stir_rate_setter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stir_rate_setter</code><span class="sig-paren">(</span><em class="sig-param">stir_rate</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET.stir_rate_setter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET.stir_rate_setter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARET.stop_heater">
-<code class="descname">stop_heater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET.stop_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET.stop_heater" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_heater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET.stop_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET.stop_heater" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARET.stop_stirrer">
-<code class="descname">stop_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET.stop_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET.stop_stirrer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET.stop_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET.stop_stirrer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARET.temperature_setter">
-<code class="descname">temperature_setter</code><span class="sig-paren">(</span><em>temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET.temperature_setter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET.temperature_setter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">temperature_setter</code><span class="sig-paren">(</span><em class="sig-param">temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARET.temperature_setter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARET.temperature_setter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sims.hardware_sim.SimIKARV">
-<em class="property">class </em><code class="descclassname">sims.hardware_sim.</code><code class="descname">SimIKARV</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">sims.hardware_sim.</code><code class="sig-name descname">SimIKARV</code><span class="sig-paren">(</span><em class="sig-param">port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARV.initialise">
-<code class="descname">initialise</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.initialise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.initialise" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">initialise</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.initialise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.initialise" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARV.lift_down">
-<code class="descname">lift_down</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.lift_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.lift_down" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lift_down</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.lift_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.lift_down" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARV.lift_up">
-<code class="descname">lift_up</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.lift_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.lift_up" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lift_up</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.lift_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.lift_up" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARV.reset_rotavap">
-<code class="descname">reset_rotavap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.reset_rotavap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.reset_rotavap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">reset_rotavap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.reset_rotavap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.reset_rotavap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="sims.hardware_sim.SimIKARV.rotation_speed_sp">
-<code class="descname">rotation_speed_sp</code><a class="headerlink" href="#sims.hardware_sim.SimIKARV.rotation_speed_sp" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">rotation_speed_sp</code><a class="headerlink" href="#sims.hardware_sim.SimIKARV.rotation_speed_sp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARV.set_interval_sp">
-<code class="descname">set_interval_sp</code><span class="sig-paren">(</span><em>interval=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.set_interval_sp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.set_interval_sp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_interval_sp</code><span class="sig-paren">(</span><em class="sig-param">interval=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.set_interval_sp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.set_interval_sp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARV.start_heater">
-<code class="descname">start_heater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.start_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.start_heater" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_heater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.start_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.start_heater" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARV.start_rotation">
-<code class="descname">start_rotation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.start_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.start_rotation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_rotation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.start_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.start_rotation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARV.stop_heater">
-<code class="descname">stop_heater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.stop_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.stop_heater" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_heater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.stop_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.stop_heater" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKARV.stop_rotation">
-<code class="descname">stop_rotation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.stop_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.stop_rotation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_rotation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKARV.stop_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKARV.stop_rotation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="sims.hardware_sim.SimIKARV.temperature_sp">
-<code class="descname">temperature_sp</code><a class="headerlink" href="#sims.hardware_sim.SimIKARV.temperature_sp" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">temperature_sp</code><a class="headerlink" href="#sims.hardware_sim.SimIKARV.temperature_sp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sims.hardware_sim.SimIKAmicrostar">
-<em class="property">class </em><code class="descclassname">sims.hardware_sim.</code><code class="descname">SimIKAmicrostar</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKAmicrostar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKAmicrostar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">sims.hardware_sim.</code><code class="sig-name descname">SimIKAmicrostar</code><span class="sig-paren">(</span><em class="sig-param">port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKAmicrostar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKAmicrostar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKAmicrostar.start_stirrer">
-<code class="descname">start_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKAmicrostar.start_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKAmicrostar.start_stirrer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKAmicrostar.start_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKAmicrostar.start_stirrer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="sims.hardware_sim.SimIKAmicrostar.stir_rate_sp">
-<code class="descname">stir_rate_sp</code><a class="headerlink" href="#sims.hardware_sim.SimIKAmicrostar.stir_rate_sp" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">stir_rate_sp</code><a class="headerlink" href="#sims.hardware_sim.SimIKAmicrostar.stir_rate_sp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimIKAmicrostar.stop_stirrer">
-<code class="descname">stop_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKAmicrostar.stop_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKAmicrostar.stop_stirrer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimIKAmicrostar.stop_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimIKAmicrostar.stop_stirrer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sims.hardware_sim.SimJULABOCF41">
-<em class="property">class </em><code class="descclassname">sims.hardware_sim.</code><code class="descname">SimJULABOCF41</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimJULABOCF41"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimJULABOCF41" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">sims.hardware_sim.</code><code class="sig-name descname">SimJULABOCF41</code><span class="sig-paren">(</span><em class="sig-param">port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimJULABOCF41"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimJULABOCF41" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
 <dl class="method">
 <dt id="sims.hardware_sim.SimJULABOCF41.set_cooling_power">
-<code class="descname">set_cooling_power</code><span class="sig-paren">(</span><em>cooling_power=100</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimJULABOCF41.set_cooling_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimJULABOCF41.set_cooling_power" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_cooling_power</code><span class="sig-paren">(</span><em class="sig-param">cooling_power=100</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimJULABOCF41.set_cooling_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimJULABOCF41.set_cooling_power" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimJULABOCF41.set_temperature">
-<code class="descname">set_temperature</code><span class="sig-paren">(</span><em>temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimJULABOCF41.set_temperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimJULABOCF41.set_temperature" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_temperature</code><span class="sig-paren">(</span><em class="sig-param">temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimJULABOCF41.set_temperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimJULABOCF41.set_temperature" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimJULABOCF41.start">
-<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimJULABOCF41.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimJULABOCF41.start" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimJULABOCF41.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimJULABOCF41.start" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimJULABOCF41.stop">
-<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimJULABOCF41.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimJULABOCF41.stop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimJULABOCF41.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimJULABOCF41.stop" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sims.hardware_sim.SimRZR2052">
-<em class="property">class </em><code class="descclassname">sims.hardware_sim.</code><code class="descname">SimRZR2052</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimRZR2052"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimRZR2052" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">sims.hardware_sim.</code><code class="sig-name descname">SimRZR2052</code><span class="sig-paren">(</span><em class="sig-param">port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimRZR2052"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimRZR2052" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
 <dl class="method">
 <dt id="sims.hardware_sim.SimRZR2052.start_stirrer">
-<code class="descname">start_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimRZR2052.start_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimRZR2052.start_stirrer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimRZR2052.start_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimRZR2052.start_stirrer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="sims.hardware_sim.SimRZR2052.stir_rate_sp">
-<code class="descname">stir_rate_sp</code><a class="headerlink" href="#sims.hardware_sim.SimRZR2052.stir_rate_sp" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">stir_rate_sp</code><a class="headerlink" href="#sims.hardware_sim.SimRZR2052.stir_rate_sp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimRZR2052.stop_stirrer">
-<code class="descname">stop_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimRZR2052.stop_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimRZR2052.stop_stirrer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimRZR2052.stop_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimRZR2052.stop_stirrer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sims.hardware_sim.SimUSBswitch">
-<em class="property">class </em><code class="descclassname">sims.hardware_sim.</code><code class="descname">SimUSBswitch</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimUSBswitch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimUSBswitch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">sims.hardware_sim.</code><code class="sig-name descname">SimUSBswitch</code><span class="sig-paren">(</span><em class="sig-param">port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimUSBswitch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimUSBswitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sims.hardware_sim.SimDevice" title="sims.hardware_sim.SimDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">sims.hardware_sim.SimDevice</span></code></a></p>
 <dl class="method">
 <dt id="sims.hardware_sim.SimUSBswitch.start_stirrer">
-<code class="descname">start_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimUSBswitch.start_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimUSBswitch.start_stirrer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimUSBswitch.start_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimUSBswitch.start_stirrer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sims.hardware_sim.SimUSBswitch.stop_stirrer">
-<code class="descname">stop_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimUSBswitch.stop_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimUSBswitch.stop_stirrer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_stirrer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sims/hardware_sim.html#SimUSBswitch.stop_stirrer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sims.hardware_sim.SimUSBswitch.stop_stirrer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -499,7 +501,7 @@ control classes, but mostly just log the commands rather than actually doing any
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+        &copy; Copyright 2018, Cronin Group;
 
     </p>
   </div>
@@ -516,32 +518,16 @@ control classes, but mostly just log the commands rather than actually doing any
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

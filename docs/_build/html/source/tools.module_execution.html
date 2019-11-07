@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -189,7 +191,7 @@
 <div class="section" id="mod-camera-execution-mid-level-hack-to-change-camera-recording-speed">
 <h3>:mod:”camera_execution” – Mid-level hack to change camera recording speed<a class="headerlink" href="#mod-camera-execution-mid-level-hack-to-change-camera-recording-speed" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-sticamera_executionrrer_execution"></span><ol class="loweralpha simple" start="3">
-<li>2018 The Cronin Group, University of Glasgow</li>
+<li><p>2018 The Cronin Group, University of Glasgow</p></li>
 </ol>
 <p>This class provides a method to change the frame rate of a video log which may or may be recorded. This is accomplished
 by logging messages at a level below DEBUG containing the requested recording speed (in multiples of real time). The
@@ -199,23 +201,20 @@ this level.</p>
 <p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
 <dl class="class">
 <dt id="tools.module_execution.camera_execution.CameraExecutioner">
-<em class="property">class </em><code class="descclassname">tools.module_execution.camera_execution.</code><code class="descname">CameraExecutioner</code><a class="reference internal" href="../_modules/tools/module_execution/camera_execution.html#CameraExecutioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.camera_execution.CameraExecutioner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">tools.module_execution.camera_execution.</code><code class="sig-name descname">CameraExecutioner</code><a class="reference internal" href="../_modules/tools/module_execution/camera_execution.html#CameraExecutioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.camera_execution.CameraExecutioner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class to change camera recording speed</p>
 <p>TODO: add try/except statements to catch calls to unsupported methods!</p>
 <dl class="method">
 <dt id="tools.module_execution.camera_execution.CameraExecutioner.change_recording_speed">
-<code class="descname">change_recording_speed</code><span class="sig-paren">(</span><em>recording_speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/camera_execution.html#CameraExecutioner.change_recording_speed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.camera_execution.CameraExecutioner.change_recording_speed" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">change_recording_speed</code><span class="sig-paren">(</span><em class="sig-param">recording_speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/camera_execution.html#CameraExecutioner.change_recording_speed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.camera_execution.CameraExecutioner.change_recording_speed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to change the camera recording speed. This method simply logs a message at level 5 (below DEBUG), which
 may or may not be intercepted by an appropriate vlogging handler.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recording_speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Requested recording speed (in multiples of real time speed)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>recording_speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Requested recording speed (in multiples of real time speed)</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -227,131 +226,106 @@ may or may not be intercepted by an appropriate vlogging handler.</p>
 <div class="section" id="mod-chiller-execution-mid-level-wrapper-class-around-mod-julabo-cf41">
 <h3>:mod:”chiller_execution” – Mid-level wrapper class around :mod:”JULABO_CF41”<a class="headerlink" href="#mod-chiller-execution-mid-level-wrapper-class-around-mod-julabo-cf41" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-chiller_execution"></span><ol class="loweralpha simple" start="3">
-<li>2017 The Cronin Group, University of Glasgow</li>
+<li><p>2017 The Cronin Group, University of Glasgow</p></li>
 </ol>
 <p>This class provides all real-life applications of recirculation chillers within the Chemputer rig, essentially just
 wrapping the original class methods.</p>
 <p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
 <dl class="class">
 <dt id="tools.module_execution.chiller_execution.ChillerExecutioner">
-<em class="property">class </em><code class="descclassname">tools.module_execution.chiller_execution.</code><code class="descname">ChillerExecutioner</code><span class="sig-paren">(</span><em>graph</em>, <em>chiller</em>, <em>simulation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">tools.module_execution.chiller_execution.</code><code class="sig-name descname">ChillerExecutioner</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">chiller</em>, <em class="sig-param">simulation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class for interfacing with the Chiller objects</p>
 <dl class="method">
 <dt id="tools.module_execution.chiller_execution.ChillerExecutioner.cooling_power">
-<code class="descname">cooling_power</code><span class="sig-paren">(</span><em>chiller_name</em>, <em>cooling_power</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.cooling_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.cooling_power" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">cooling_power</code><span class="sig-paren">(</span><em class="sig-param">chiller_name</em>, <em class="sig-param">cooling_power</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.cooling_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.cooling_power" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the cooling power of the chiller. Only works with Julabo CF41.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>chiller_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the chiller</li>
-<li><strong>cooling_power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Cooling power in % (range 0..100)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chiller_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the chiller</p></li>
+<li><p><strong>cooling_power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Cooling power in % (range 0..100)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.chiller_execution.ChillerExecutioner.ramp_chiller">
-<code class="descname">ramp_chiller</code><span class="sig-paren">(</span><em>chiller_name</em>, <em>ramp_duration</em>, <em>temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.ramp_chiller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.ramp_chiller" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ramp_chiller</code><span class="sig-paren">(</span><em class="sig-param">chiller_name</em>, <em class="sig-param">ramp_duration</em>, <em class="sig-param">temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.ramp_chiller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.ramp_chiller" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the ramp duration and the end temperature for the chiller</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>chiller_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the chiller</li>
-<li><strong>ramp_duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – duration of the ramp in sec</li>
-<li><strong>temp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – End temperature to ramp to in °C</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chiller_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the chiller</p></li>
+<li><p><strong>ramp_duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – duration of the ramp in sec</p></li>
+<li><p><strong>temp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – End temperature to ramp to in °C</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.chiller_execution.ChillerExecutioner.set_temp">
-<code class="descname">set_temp</code><span class="sig-paren">(</span><em>chiller_name</em>, <em>temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.set_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.set_temp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_temp</code><span class="sig-paren">(</span><em class="sig-param">chiller_name</em>, <em class="sig-param">temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.set_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.set_temp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the temperature of the chiller</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>chiller_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the chiller</li>
-<li><strong>temp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Temperature to set</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chiller_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the chiller</p></li>
+<li><p><strong>temp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Temperature to set</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.chiller_execution.ChillerExecutioner.start_chiller">
-<code class="descname">start_chiller</code><span class="sig-paren">(</span><em>chiller_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.start_chiller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.start_chiller" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_chiller</code><span class="sig-paren">(</span><em class="sig-param">chiller_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.start_chiller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.start_chiller" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts the circulation and heating/cooling action</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>chiller_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the chiller</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>chiller_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the chiller</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.chiller_execution.ChillerExecutioner.stop_chiller">
-<code class="descname">stop_chiller</code><span class="sig-paren">(</span><em>chiller_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.stop_chiller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.stop_chiller" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_chiller</code><span class="sig-paren">(</span><em class="sig-param">chiller_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.stop_chiller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.stop_chiller" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stops the circulation and heating/cooling action</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>chiller_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the chiller</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>chiller_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the chiller</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.chiller_execution.ChillerExecutioner.switch_vessel">
-<code class="descname">switch_vessel</code><span class="sig-paren">(</span><em>vessel_name</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.switch_vessel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.switch_vessel" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>vessel_name</strong> – </li>
-<li><strong>state</strong> – </li>
+<code class="sig-name descname">switch_vessel</code><span class="sig-paren">(</span><em class="sig-param">vessel_name</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.switch_vessel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.switch_vessel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vessel_name</strong> – </p></li>
+<li><p><strong>state</strong> – </p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.chiller_execution.ChillerExecutioner.wait_for_temp">
-<code class="descname">wait_for_temp</code><span class="sig-paren">(</span><em>chiller_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.wait_for_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.wait_for_temp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">wait_for_temp</code><span class="sig-paren">(</span><em class="sig-param">chiller_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/chiller_execution.html#ChillerExecutioner.wait_for_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.chiller_execution.ChillerExecutioner.wait_for_temp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Waits for the chiller to reach its setpoint temperature (approaching from either way)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>chiller_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the chiller</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>chiller_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the chiller</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -363,7 +337,7 @@ wrapping the original class methods.</p>
 <div class="section" id="mod-pump-execution-mid-level-wrapper-class-around-mod-chemputer-device-api">
 <h3>:mod:”pump_execution” – Mid-level wrapper class around :mod:”Chemputer_Device_API”<a class="headerlink" href="#mod-pump-execution-mid-level-wrapper-class-around-mod-chemputer-device-api" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-pump_execution"></span><ol class="loweralpha simple" start="3">
-<li>2017 The Cronin Group, University of Glasgow</li>
+<li><p>2017 The Cronin Group, University of Glasgow</p></li>
 </ol>
 <p>This class provides all real-life applications of pumps and valves within the Chemputer rig, most notably
 the path finding algorithm and the moving of material based on that. It also has some compound operations like
@@ -371,120 +345,107 @@ phase separation that are needed to operate the Chemputer rig.</p>
 <p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
 <dl class="class">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner">
-<em class="property">class </em><code class="descclassname">tools.module_execution.pump_execution.</code><code class="descname">PumpExecutioner</code><span class="sig-paren">(</span><em>graph</em>, <em>pumps</em>, <em>valves</em>, <em>simulation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">tools.module_execution.pump_execution.</code><code class="sig-name descname">PumpExecutioner</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">pumps</em>, <em class="sig-param">valves</em>, <em class="sig-param">simulation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Executes the Pump movements around the platform_server
 .. note:: Ignore the style faux pas of the simulation statements on a single line, it’s better than taking up two</p>
 <blockquote>
-<div>lines for something that will rarely be used!</div></blockquote>
+<div><p>lines for something that will rarely be used!</p>
+</div></blockquote>
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.clean_all">
-<code class="descname">clean_all</code><span class="sig-paren">(</span><em>source</em>, <em>volume</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.clean_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.clean_all" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clean_all</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">volume</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.clean_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.clean_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterates over all valves, and pumps a given volume from the source to each outlet.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – flask from which the fluid should be withdrawn</li>
-<li><strong>volume</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – volume to be transferred</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – flask from which the fluid should be withdrawn</p></li>
+<li><p><strong>volume</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – volume to be transferred</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.get_current_node_volume">
-<code class="descname">get_current_node_volume</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.get_current_node_volume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.get_current_node_volume" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_current_node_volume</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.get_current_node_volume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.get_current_node_volume" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks whether the node in question is a special device (filter, separator, rotavap, …). If so, returns volume
 of the associated flask, else returns node volume. I realise this helper is written in a verbose way, but this
 is done on purpose for future proofing (maybe there will be other cases that are not as straightforward as the
 ones currently implemented!).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> – (str) Name of the node to check</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(float) Current volume of the node.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">current_node_volume</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> – (str) Name of the node to check</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(float) Current volume of the node.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>current_node_volume</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.get_maximum_node_volume">
-<code class="descname">get_maximum_node_volume</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.get_maximum_node_volume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.get_maximum_node_volume" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_maximum_node_volume</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.get_maximum_node_volume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.get_maximum_node_volume" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks whether the node in question is a special device (filter, separator, rotavap, …). If so, returns
 maximum volume of the associated flask, else returns node volume. I realise this helper is written in a verbose
 way, but this is done on purpose for future proofing (maybe there will be other cases that are not as
 straightforward as the ones currently implemented!).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> – (str) Name of the node to check</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(float) Maximum volume of the node.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">maximum_node_volume</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> – (str) Name of the node to check</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(float) Maximum volume of the node.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>maximum_node_volume</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.home">
-<code class="descname">home</code><span class="sig-paren">(</span><em>pump</em>, <em>speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.home" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">home</code><span class="sig-paren">(</span><em class="sig-param">pump</em>, <em class="sig-param">speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.home" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves the target pump into the home position</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the pump to home</li>
-<li><strong>speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Speed to move in milliliters per minute</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the pump to home</p></li>
+<li><p><strong>speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Speed to move in milliliters per minute</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.is_valid_obj">
-<code class="descname">is_valid_obj</code><span class="sig-paren">(</span><em>flag</em>, <em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.is_valid_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.is_valid_obj" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_valid_obj</code><span class="sig-paren">(</span><em class="sig-param">flag</em>, <em class="sig-param">obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.is_valid_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.is_valid_obj" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the the passed object is either a ChemputerPump or ChemputerValve, depending on the passed flag</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>flag</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Type of object to check for</li>
-<li><strong>obj</strong> (<em>Object</em>) – Object to compare</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>flag</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Type of object to check for</p></li>
+<li><p><strong>obj</strong> (<em>Object</em>) – Object to compare</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The object is of the expected type</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">valid (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)">bool</a>)</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code></a> – The object is not of the expected type</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The object is of the expected type</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>valid (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)">bool</a>)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.8)"><strong>Exception</strong></a> – The object is not of the expected type</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.move">
-<code class="descname">move</code><span class="sig-paren">(</span><em>path</em>, <em>volume</em>, <em>move_speed</em>, <em>aspiration_speed=None</em>, <em>dispense_speed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.move" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">volume</em>, <em class="sig-param">move_speed</em>, <em class="sig-param">aspiration_speed=None</em>, <em class="sig-param">dispense_speed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.move" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the movement around the platform_server
 Uses either a single valve or multiple valves
 :param list path: List containing the path from the source to the destination and all valves in between
@@ -496,54 +457,46 @@ Uses either a single valve or multiple valves
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.move_multiple_valves">
-<code class="descname">move_multiple_valves</code><span class="sig-paren">(</span><em>valves</em>, <em>source</em>, <em>dest</em>, <em>volume</em>, <em>aspiration_speed</em>, <em>move_speed</em>, <em>dispense_speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.move_multiple_valves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.move_multiple_valves" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_multiple_valves</code><span class="sig-paren">(</span><em class="sig-param">valves</em>, <em class="sig-param">source</em>, <em class="sig-param">dest</em>, <em class="sig-param">volume</em>, <em class="sig-param">aspiration_speed</em>, <em class="sig-param">move_speed</em>, <em class="sig-param">dispense_speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.move_multiple_valves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.move_multiple_valves" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the movement with multiple valves
 Occurs when the path has multiple connections E.g. [source_flask, valve1, valve2, valve2, destination_flask]</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>valves</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a>) – Names of the valves</li>
-<li><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the source flask</li>
-<li><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the destination flask</li>
-<li><strong>volume</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Volume to move in mL</li>
-<li><strong>aspiration_speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Speed in mL/min for the initial aspiration</li>
-<li><strong>move_speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Speed in mL/min for the moves across the backbone</li>
-<li><strong>(</strong><strong>float</strong> (<em>dispense_speed</em>) – Speed in mL/min for the final dispensing</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>valves</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – Names of the valves</p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the source flask</p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the destination flask</p></li>
+<li><p><strong>volume</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Volume to move in mL</p></li>
+<li><p><strong>aspiration_speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Speed in mL/min for the initial aspiration</p></li>
+<li><p><strong>move_speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Speed in mL/min for the moves across the backbone</p></li>
+<li><p><strong>(</strong><strong>float</strong> (<em>dispense_speed</em>) – Speed in mL/min for the final dispensing</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.move_single_valve">
-<code class="descname">move_single_valve</code><span class="sig-paren">(</span><em>valve</em>, <em>source</em>, <em>dest</em>, <em>volume</em>, <em>aspiration_speed</em>, <em>dispense_speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.move_single_valve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.move_single_valve" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_single_valve</code><span class="sig-paren">(</span><em class="sig-param">valve</em>, <em class="sig-param">source</em>, <em class="sig-param">dest</em>, <em class="sig-param">volume</em>, <em class="sig-param">aspiration_speed</em>, <em class="sig-param">dispense_speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.move_single_valve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.move_single_valve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the movement with a single valve
 This occurs when the path would be [source_flask, valve, destination_flask]</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>valve</strong> – (str) Name of the valve</li>
-<li><strong>source</strong> – (str) Name of the source flask</li>
-<li><strong>dest</strong> – (str) Name of the destination flask</li>
-<li><strong>volume</strong> – (float) Volume to move in mL</li>
-<li><strong>aspiration_speed</strong> – (float) Speed in mL/min for the initial aspiration</li>
-<li><strong>dispense_speed</strong> – (float) Speed in mL/min for the final dispensing</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>valve</strong> – (str) Name of the valve</p></li>
+<li><p><strong>source</strong> – (str) Name of the source flask</p></li>
+<li><p><strong>dest</strong> – (str) Name of the destination flask</p></li>
+<li><p><strong>volume</strong> – (float) Volume to move in mL</p></li>
+<li><p><strong>aspiration_speed</strong> – (float) Speed in mL/min for the initial aspiration</p></li>
+<li><p><strong>dispense_speed</strong> – (float) Speed in mL/min for the final dispensing</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.prime_tubes">
-<code class="descname">prime_tubes</code><span class="sig-paren">(</span><em>aspiration_speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.prime_tubes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.prime_tubes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">prime_tubes</code><span class="sig-paren">(</span><em class="sig-param">aspiration_speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.prime_tubes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.prime_tubes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterates over all nodes, and for all flasks moves the volume of the connecting tube from the flask to waste.
 :param aspiration_speed: Speed at which to withdraw from each flask
 :type aspiration_speed: float</p>
@@ -551,102 +504,82 @@ This occurs when the path would be [source_flask, valve, destination_flask]</p>
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.separate_phases">
-<code class="descname">separate_phases</code><span class="sig-paren">(</span><em>lower_phase_target</em>, <em>upper_phase_target</em>, <em>separator_top='flask_separator_top'</em>, <em>separator_bottom='flask_separator_bottom'</em>, <em>step_size=1</em>, <em>threshold=200</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.separate_phases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.separate_phases" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">separate_phases</code><span class="sig-paren">(</span><em class="sig-param">lower_phase_target</em>, <em class="sig-param">upper_phase_target</em>, <em class="sig-param">separator_top='flask_separator_top'</em>, <em class="sig-param">separator_bottom='flask_separator_bottom'</em>, <em class="sig-param">step_size=1</em>, <em class="sig-param">threshold=700</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.separate_phases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.separate_phases" title="Permalink to this definition">¶</a></dt>
 <dd><p>Routine for separating layers in the automated sep funnel based on the conductivity sensor. Draws a known amount
 into the tube, measures response, then keeps removing portions until the response drops below the threshold.
 The implementation of the sensor is still insanely crude, basically an Arduino hack I shat together in a minute.
 Probably worthwhile changing at some point.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>lower_phase_target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – name of the flask the lower phase will be deposited to</li>
-<li><strong>upper_phase_target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – name of the flask the upper phase will be deposited to</li>
-<li><strong>separator_top</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – name of the node which the sensor is associated with</li>
-<li><strong>separator_bottom</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – name of the location the lower phase is to be withdrawn from</li>
-<li><strong>step_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – size of the individual withdrawals in mL</li>
-<li><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – minimum sensor reading indicating aqueous phase</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lower_phase_target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – name of the flask the lower phase will be deposited to</p></li>
+<li><p><strong>upper_phase_target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – name of the flask the upper phase will be deposited to</p></li>
+<li><p><strong>separator_top</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – name of the node which the sensor is associated with</p></li>
+<li><p><strong>separator_bottom</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – name of the location the lower phase is to be withdrawn from</p></li>
+<li><p><strong>step_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – size of the individual withdrawals in mL</p></li>
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – minimum sensor reading indicating aqueous phase</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.switch_cartridge">
-<code class="descname">switch_cartridge</code><span class="sig-paren">(</span><em>flask</em>, <em>cartridge</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.switch_cartridge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.switch_cartridge" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">switch_cartridge</code><span class="sig-paren">(</span><em class="sig-param">flask</em>, <em class="sig-param">cartridge</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.switch_cartridge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.switch_cartridge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Crude hack to swicht a cartridge carousel consisting of two valves. Assumes identical ports are connected,
 i.e. port 0 to 0, 1 to 1 etc.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>flask</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – node the carousel is connected to</li>
-<li><strong>cartridge</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – number of the cartridge to switch to</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>flask</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – node the carousel is connected to</p></li>
+<li><p><strong>cartridge</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – number of the cartridge to switch to</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.switch_column_fraction">
-<code class="descname">switch_column_fraction</code><span class="sig-paren">(</span><em>column</em>, <em>destination</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.switch_column_fraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.switch_column_fraction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">switch_column_fraction</code><span class="sig-paren">(</span><em class="sig-param">column</em>, <em class="sig-param">destination</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.switch_column_fraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.switch_column_fraction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Crude hack for switching the fractionating valve on the flash column.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – column which is to be switched</li>
-<li><strong>destination</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – either “collect” or “waste”</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – column which is to be switched</p></li>
+<li><p><strong>destination</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – either “collect” or “waste”</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.switch_vacuum">
-<code class="descname">switch_vacuum</code><span class="sig-paren">(</span><em>flask</em>, <em>destination</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.switch_vacuum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.switch_vacuum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">switch_vacuum</code><span class="sig-paren">(</span><em class="sig-param">flask</em>, <em class="sig-param">destination</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.switch_vacuum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.switch_vacuum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Crude hack for switching a flask to vacuum via attached valve.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>flask</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – flask which is to be evacuated</li>
-<li><strong>destination</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – either “vacuum” or “backbone”</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>flask</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – flask which is to be evacuated</p></li>
+<li><p><strong>destination</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – either “vacuum” or “backbone”</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.pump_execution.PumpExecutioner.update_node_volumes">
-<code class="descname">update_node_volumes</code><span class="sig-paren">(</span><em>source</em>, <em>target</em>, <em>volume</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.update_node_volumes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.update_node_volumes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_node_volumes</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">target</em>, <em class="sig-param">volume</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/pump_execution.html#PumpExecutioner.update_node_volumes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.pump_execution.PumpExecutioner.update_node_volumes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks whether either source or target node is a special device (filter, separator, rotavap, …). If so,
 updates the volumes of the associated flask as appropriate. Else, updates the node directly.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> – (str) Name of the source node</li>
-<li><strong>target</strong> – (str) Name of the target node</li>
-<li><strong>volume</strong> – (float) Volume moved</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> – (str) Name of the source node</p></li>
+<li><p><strong>target</strong> – (str) Name of the target node</p></li>
+<li><p><strong>volume</strong> – (float) Volume moved</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -658,194 +591,155 @@ updates the volumes of the associated flask as appropriate. Else, updates the no
 <div class="section" id="mod-rotavap-execution-mid-level-wrapper-class-around-mod-ika-rv10">
 <h3>:mod:”rotavap_execution” – Mid-level wrapper class around :mod:”IKA_RV10”<a class="headerlink" href="#mod-rotavap-execution-mid-level-wrapper-class-around-mod-ika-rv10" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-rotavap_execution"></span><ol class="loweralpha simple" start="3">
-<li>2017 The Cronin Group, University of Glasgow</li>
+<li><p>2017 The Cronin Group, University of Glasgow</p></li>
 </ol>
 <p>This class provides all real-life applications of rotavaps within the Chemputer rig, essentially just wrapping
 the original class methods.</p>
 <p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
 <dl class="class">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner">
-<em class="property">class </em><code class="descclassname">tools.module_execution.rotavap_execution.</code><code class="descname">RotavapExecutioner</code><span class="sig-paren">(</span><em>rotavap</em>, <em>simulation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">tools.module_execution.rotavap_execution.</code><code class="sig-name descname">RotavapExecutioner</code><span class="sig-paren">(</span><em class="sig-param">rotavap</em>, <em class="sig-param">simulation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class for interfacing with the Rotavap objects</p>
 <dl class="method">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner.initialise">
-<code class="descname">initialise</code><span class="sig-paren">(</span><em>rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.initialise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.initialise" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">initialise</code><span class="sig-paren">(</span><em class="sig-param">rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.initialise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.initialise" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts the heater for the heating bath</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the rotavap</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the rotavap</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner.lift_down">
-<code class="descname">lift_down</code><span class="sig-paren">(</span><em>rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.lift_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.lift_down" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lift_down</code><span class="sig-paren">(</span><em class="sig-param">rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.lift_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.lift_down" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lowers the arm of the rotavap</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the rotavap</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the rotavap</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner.lift_up">
-<code class="descname">lift_up</code><span class="sig-paren">(</span><em>rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.lift_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.lift_up" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lift_up</code><span class="sig-paren">(</span><em class="sig-param">rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.lift_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.lift_up" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raises the arm of the rotavap</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the rotavap</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the rotavap</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner.reset">
-<code class="descname">reset</code><span class="sig-paren">(</span><em>rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.reset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">reset</code><span class="sig-paren">(</span><em class="sig-param">rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the rotavap</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the rotavap</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the rotavap</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner.set_interval">
-<code class="descname">set_interval</code><span class="sig-paren">(</span><em>rotavap_name</em>, <em>interval</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.set_interval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.set_interval" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_interval</code><span class="sig-paren">(</span><em class="sig-param">rotavap_name</em>, <em class="sig-param">interval</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.set_interval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.set_interval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the interval for the rotavap</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the rotavap</li>
-<li><strong>interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Interval in seconds</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the rotavap</p></li>
+<li><p><strong>interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Interval in seconds</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner.set_rotation">
-<code class="descname">set_rotation</code><span class="sig-paren">(</span><em>rotavap_name</em>, <em>speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.set_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.set_rotation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_rotation</code><span class="sig-paren">(</span><em class="sig-param">rotavap_name</em>, <em class="sig-param">speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.set_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.set_rotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the speed of rotation for the rotavap arm</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the rotavap</li>
-<li><strong>speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Speed of rotation to set</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the rotavap</p></li>
+<li><p><strong>speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Speed of rotation to set</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner.set_temp">
-<code class="descname">set_temp</code><span class="sig-paren">(</span><em>rotavap_name</em>, <em>temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.set_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.set_temp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_temp</code><span class="sig-paren">(</span><em class="sig-param">rotavap_name</em>, <em class="sig-param">temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.set_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.set_temp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the temperature of the heating bath</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the rotavap</li>
-<li><strong>temp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Temperature to set</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the rotavap</p></li>
+<li><p><strong>temp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Temperature to set</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner.start_heater">
-<code class="descname">start_heater</code><span class="sig-paren">(</span><em>rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.start_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.start_heater" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_heater</code><span class="sig-paren">(</span><em class="sig-param">rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.start_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.start_heater" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts the heater for the heating bath</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the rotavap</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the rotavap</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner.start_rotation">
-<code class="descname">start_rotation</code><span class="sig-paren">(</span><em>rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.start_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.start_rotation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_rotation</code><span class="sig-paren">(</span><em class="sig-param">rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.start_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.start_rotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts rotating the arm of the rotavap</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the rotavap</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the rotavap</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner.stop_heater">
-<code class="descname">stop_heater</code><span class="sig-paren">(</span><em>rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.stop_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.stop_heater" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_heater</code><span class="sig-paren">(</span><em class="sig-param">rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.stop_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.stop_heater" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stops the heater for the heating bath</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the rotavap</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the rotavap</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner.stop_rotation">
-<code class="descname">stop_rotation</code><span class="sig-paren">(</span><em>rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.stop_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.stop_rotation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_rotation</code><span class="sig-paren">(</span><em class="sig-param">rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.stop_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.stop_rotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stops rotating the arm of the rotavap</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the rotavap</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the rotavap</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.rotavap_execution.RotavapExecutioner.wait_for_temp">
-<code class="descname">wait_for_temp</code><span class="sig-paren">(</span><em>rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.wait_for_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.wait_for_temp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">wait_for_temp</code><span class="sig-paren">(</span><em class="sig-param">rotavap_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/rotavap_execution.html#RotavapExecutioner.wait_for_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.rotavap_execution.RotavapExecutioner.wait_for_temp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Waits for the rotavap to reach its setpoint temperature (approaching from either way)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the rotavap</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rotavap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the rotavap</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -857,121 +751,98 @@ the original class methods.</p>
 <div class="section" id="mod-stirrer-execution-mid-level-wrapper-class-around-mod-ika-ret-control-visc">
 <h3>:mod:”stirrer_execution” – Mid-level wrapper class around :mod:”IKA_RET_Control_Visc”<a class="headerlink" href="#mod-stirrer-execution-mid-level-wrapper-class-around-mod-ika-ret-control-visc" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-stirrer_execution"></span><ol class="loweralpha simple" start="3">
-<li>2017 The Cronin Group, University of Glasgow</li>
+<li><p>2017 The Cronin Group, University of Glasgow</p></li>
 </ol>
 <p>This class provides all real-life applications of hotplate stirrers within the Chemputer rig, essentially
 just wrapping the original class methods.</p>
 <p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
 <dl class="class">
 <dt id="tools.module_execution.stirrer_execution.StirrerExecutioner">
-<em class="property">class </em><code class="descclassname">tools.module_execution.stirrer_execution.</code><code class="descname">StirrerExecutioner</code><span class="sig-paren">(</span><em>stirrers</em>, <em>simulation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">tools.module_execution.stirrer_execution.</code><code class="sig-name descname">StirrerExecutioner</code><span class="sig-paren">(</span><em class="sig-param">stirrers</em>, <em class="sig-param">simulation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class to interface with Stirrer plates</p>
 <p>TODO: add try/except statements to catch calls to unsupported methods!</p>
 <dl class="method">
 <dt id="tools.module_execution.stirrer_execution.StirrerExecutioner.heat">
-<code class="descname">heat</code><span class="sig-paren">(</span><em>stirrer_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.heat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.heat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">heat</code><span class="sig-paren">(</span><em class="sig-param">stirrer_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.heat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.heat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts heating the stirrer plate</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the stirrer</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the stirrer</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.stirrer_execution.StirrerExecutioner.set_stir_rate">
-<code class="descname">set_stir_rate</code><span class="sig-paren">(</span><em>stirrer_name</em>, <em>stir_rate</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.set_stir_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.set_stir_rate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_stir_rate</code><span class="sig-paren">(</span><em class="sig-param">stirrer_name</em>, <em class="sig-param">stir_rate</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.set_stir_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.set_stir_rate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the stirring rate of the stirrer</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the stirrer</li>
-<li><strong>stir_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Stirring rate to set</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the stirrer</p></li>
+<li><p><strong>stir_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Stirring rate to set</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.stirrer_execution.StirrerExecutioner.set_temp">
-<code class="descname">set_temp</code><span class="sig-paren">(</span><em>stirrer_name</em>, <em>temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.set_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.set_temp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_temp</code><span class="sig-paren">(</span><em class="sig-param">stirrer_name</em>, <em class="sig-param">temp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.set_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.set_temp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the temperature of the stirrer plate</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the stirrer</li>
-<li><strong>temp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Temperature to set</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the stirrer</p></li>
+<li><p><strong>temp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Temperature to set</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.stirrer_execution.StirrerExecutioner.stir">
-<code class="descname">stir</code><span class="sig-paren">(</span><em>stirrer_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.stir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.stir" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stir</code><span class="sig-paren">(</span><em class="sig-param">stirrer_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.stir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.stir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts the stirring the stirrer plate</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the stirrer</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the stirrer</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.stirrer_execution.StirrerExecutioner.stop_heat">
-<code class="descname">stop_heat</code><span class="sig-paren">(</span><em>stirrer_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.stop_heat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.stop_heat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_heat</code><span class="sig-paren">(</span><em class="sig-param">stirrer_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.stop_heat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.stop_heat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stops heating the stirrer plate</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the stirrer</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the stirrer</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.stirrer_execution.StirrerExecutioner.stop_stir">
-<code class="descname">stop_stir</code><span class="sig-paren">(</span><em>stirrer_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.stop_stir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.stop_stir" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_stir</code><span class="sig-paren">(</span><em class="sig-param">stirrer_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.stop_stir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.stop_stir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stops stirring the stirrer plate</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the stirrer</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the stirrer</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.stirrer_execution.StirrerExecutioner.wait_for_temp">
-<code class="descname">wait_for_temp</code><span class="sig-paren">(</span><em>stirrer_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.wait_for_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.wait_for_temp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">wait_for_temp</code><span class="sig-paren">(</span><em class="sig-param">stirrer_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/stirrer_execution.html#StirrerExecutioner.wait_for_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.stirrer_execution.StirrerExecutioner.wait_for_temp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Waits for the stirrer to reach its setpoint temperature (approaching from either way)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the stirrer</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stirrer_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the stirrer</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -983,198 +854,158 @@ just wrapping the original class methods.</p>
 <div class="section" id="mod-vacuum-execution-mid-level-wrapper-class-around-mod-vacuubrand-cvc-3000">
 <h3>:mod:”vacuum_execution” – Mid-level wrapper class around :mod:”Vacuubrand_CVC_3000”<a class="headerlink" href="#mod-vacuum-execution-mid-level-wrapper-class-around-mod-vacuubrand-cvc-3000" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-vacuum_execution"></span><ol class="loweralpha simple" start="3">
-<li>2017 The Cronin Group, University of Glasgow</li>
+<li><p>2017 The Cronin Group, University of Glasgow</p></li>
 </ol>
 <p>This class provides all real-life applications of vacuum pumps within the Chemputer rig, essentially
 just wrapping the original class methods. It also has a “vent to ambient pressure” function for convenience.</p>
 <p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
 <dl class="class">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner">
-<em class="property">class </em><code class="descclassname">tools.module_execution.vacuum_execution.</code><code class="descname">VacuumExecutioner</code><span class="sig-paren">(</span><em>vacuum</em>, <em>simulation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">tools.module_execution.vacuum_execution.</code><code class="sig-name descname">VacuumExecutioner</code><span class="sig-paren">(</span><em class="sig-param">vacuum</em>, <em class="sig-param">simulation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class to interface with the CVC3000 vacuum pump</p>
 <dl class="method">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner.get_end_vacuum_set_point">
-<code class="descname">get_end_vacuum_set_point</code><span class="sig-paren">(</span><em>vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.get_end_vacuum_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.get_end_vacuum_set_point" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_end_vacuum_set_point</code><span class="sig-paren">(</span><em class="sig-param">vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.get_end_vacuum_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.get_end_vacuum_set_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the set point (target) for the switch off vacuum in mode Auto</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The name of the vacuum pump</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the vacuum pump</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner.get_runtime_set_point">
-<code class="descname">get_runtime_set_point</code><span class="sig-paren">(</span><em>vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.get_runtime_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.get_runtime_set_point" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_runtime_set_point</code><span class="sig-paren">(</span><em class="sig-param">vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.get_runtime_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.get_runtime_set_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the set point (target) for the run time in mode Auto</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The name of the vacuum pump</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the vacuum pump</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner.get_status">
-<code class="descname">get_status</code><span class="sig-paren">(</span><em>vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.get_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.get_status" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_status</code><span class="sig-paren">(</span><em class="sig-param">vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.get_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.get_status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the status of the vacuum pump</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The name of the vacuum pump</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the vacuum pump</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner.get_vacuum_set_point">
-<code class="descname">get_vacuum_set_point</code><span class="sig-paren">(</span><em>vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.get_vacuum_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.get_vacuum_set_point" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_vacuum_set_point</code><span class="sig-paren">(</span><em class="sig-param">vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.get_vacuum_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.get_vacuum_set_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads the set point (target) for the vacuum pump in Vac control</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The name of the vacuum pump</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the vacuum pump</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner.initialise">
-<code class="descname">initialise</code><span class="sig-paren">(</span><em>vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.initialise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.initialise" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">initialise</code><span class="sig-paren">(</span><em class="sig-param">vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.initialise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.initialise" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets up the vacuum pump, getting it ready for operation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The name of the vacuum pump</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the vacuum pump</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner.set_end_vacuum_set_point">
-<code class="descname">set_end_vacuum_set_point</code><span class="sig-paren">(</span><em>vacuum_pump</em>, <em>vac</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.set_end_vacuum_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.set_end_vacuum_set_point" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_end_vacuum_set_point</code><span class="sig-paren">(</span><em class="sig-param">vacuum_pump</em>, <em class="sig-param">vac</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.set_end_vacuum_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.set_end_vacuum_set_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the switch off vacuum set point</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The name of the vacuum pump</li>
-<li><strong>vac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Set point value to set</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the vacuum pump</p></li>
+<li><p><strong>vac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Set point value to set</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner.set_runtime_set_point">
-<code class="descname">set_runtime_set_point</code><span class="sig-paren">(</span><em>vacuum_pump</em>, <em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.set_runtime_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.set_runtime_set_point" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_runtime_set_point</code><span class="sig-paren">(</span><em class="sig-param">vacuum_pump</em>, <em class="sig-param">time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.set_runtime_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.set_runtime_set_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the set point for the runtime</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The name of the vacuum pump</li>
-<li><strong>time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Desired runtime</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the vacuum pump</p></li>
+<li><p><strong>time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Desired runtime</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner.set_speed_set_point">
-<code class="descname">set_speed_set_point</code><span class="sig-paren">(</span><em>vacuum_pump</em>, <em>speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.set_speed_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.set_speed_set_point" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_speed_set_point</code><span class="sig-paren">(</span><em class="sig-param">vacuum_pump</em>, <em class="sig-param">speed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.set_speed_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.set_speed_set_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the set point for the speed</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The name of the vacuum pump</li>
-<li><strong>speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Desired speed</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the vacuum pump</p></li>
+<li><p><strong>speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Desired speed</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner.set_vacuum_set_point">
-<code class="descname">set_vacuum_set_point</code><span class="sig-paren">(</span><em>vacuum_pump</em>, <em>vac</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.set_vacuum_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.set_vacuum_set_point" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_vacuum_set_point</code><span class="sig-paren">(</span><em class="sig-param">vacuum_pump</em>, <em class="sig-param">vac</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.set_vacuum_set_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.set_vacuum_set_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the vacuum set point</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The name of the vacuum pump</li>
-<li><strong>vac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Set point to set</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the vacuum pump</p></li>
+<li><p><strong>vac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Set point to set</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner.start_vacuum">
-<code class="descname">start_vacuum</code><span class="sig-paren">(</span><em>vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.start_vacuum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.start_vacuum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_vacuum</code><span class="sig-paren">(</span><em class="sig-param">vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.start_vacuum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.start_vacuum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts the vacuum pump</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The name of the vacuum pump</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the vacuum pump</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner.stop_vacuum">
-<code class="descname">stop_vacuum</code><span class="sig-paren">(</span><em>vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.stop_vacuum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.stop_vacuum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_vacuum</code><span class="sig-paren">(</span><em class="sig-param">vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.stop_vacuum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.stop_vacuum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stops the vacuum pump</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The name of the vacuum pump</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the vacuum pump</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.module_execution.vacuum_execution.VacuumExecutioner.vent_vacuum">
-<code class="descname">vent_vacuum</code><span class="sig-paren">(</span><em>vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.vent_vacuum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.vent_vacuum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">vent_vacuum</code><span class="sig-paren">(</span><em class="sig-param">vacuum_pump</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/module_execution/vacuum_execution.html#VacuumExecutioner.vent_vacuum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.module_execution.vacuum_execution.VacuumExecutioner.vent_vacuum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Vents all the way to atmospheric pressure.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The name of the vacuum pump</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vacuum_pump</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the vacuum pump</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1197,7 +1028,7 @@ just wrapping the original class methods. It also has a “vent to ambient press
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+        &copy; Copyright 2018, Cronin Group;
 
     </p>
   </div>
@@ -1214,32 +1045,16 @@ just wrapping the original class methods. It also has a “vent to ambient press
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

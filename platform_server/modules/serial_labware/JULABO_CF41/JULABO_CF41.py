@@ -7,9 +7,7 @@
 .. module:: JULABO_CF41
    :platform: Windows
    :synopsis: Control Julabo CF41 recirculation chiller
-.. moduleauthor:: Jaroslaw Granda <jaroslaw.granda@glasgow.ac.uk>
-.. moduleauthor:: Sebastian Steiner <s.steiner.1@research.gla.ac.uk>
-.. moduleauthor:: Stefan Glatzel <stefan.glatzel@croningroupplc.com>
+.. moduleauthor:: Cronin Group 2017
 
 (c) 2017 The Cronin Group, University of Glasgow
 

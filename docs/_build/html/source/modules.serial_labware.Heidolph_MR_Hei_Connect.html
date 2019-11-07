@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -161,39 +163,39 @@
 <span id="modules-serial-labware-heidolph-mr-hei-connect-heidolph-mr-hei-connect-module"></span><h2>modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect module<a class="headerlink" href="#module-modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect">
-<em class="property">class </em><code class="descclassname">modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.</code><code class="descname">MRHeiConnect</code><span class="sig-paren">(</span><em>port=None</em>, <em>connect_on_instantiation=False</em>, <em>soft_fail_for_testing=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/Heidolph_MR_Hei_Connect/Heidolph_MR_Hei_Connect.html#MRHeiConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">SerialDevice.serial_labware.SerialDevice</span></code></p>
+<em class="property">class </em><code class="sig-prename descclassname">modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.</code><code class="sig-name descname">MRHeiConnect</code><span class="sig-paren">(</span><em class="sig-param">port=None</em>, <em class="sig-param">connect_on_instantiation=False</em>, <em class="sig-param">soft_fail_for_testing=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/Heidolph_MR_Hei_Connect/Heidolph_MR_Hei_Connect.html#MRHeiConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">SerialDevice.serial_labware.SerialDevice</span></code></p>
 <p>This provides a python class for the Heidolph MR Hei Connect
 The command implementation is based on the German manual version 1.3</p>
 <dl class="method">
 <dt id="modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.keepalive">
-<code class="descname">keepalive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/Heidolph_MR_Hei_Connect/Heidolph_MR_Hei_Connect.html#MRHeiConnect.keepalive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.keepalive" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">keepalive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/Heidolph_MR_Hei_Connect/Heidolph_MR_Hei_Connect.html#MRHeiConnect.keepalive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.keepalive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Queries the stirrer status every 5 seconds to reset the watchdog. Overrides dummy keepalive from parent method.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.query_status">
-<code class="descname">query_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/Heidolph_MR_Hei_Connect/Heidolph_MR_Hei_Connect.html#MRHeiConnect.query_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.query_status" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">query_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/Heidolph_MR_Hei_Connect/Heidolph_MR_Hei_Connect.html#MRHeiConnect.query_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.query_status" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.start_heating">
-<code class="descname">start_heating</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/Heidolph_MR_Hei_Connect/Heidolph_MR_Hei_Connect.html#MRHeiConnect.start_heating"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.start_heating" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_heating</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/Heidolph_MR_Hei_Connect/Heidolph_MR_Hei_Connect.html#MRHeiConnect.start_heating"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.start_heating" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.switch_protocol">
-<code class="descname">switch_protocol</code><span class="sig-paren">(</span><em>protocol='new'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/Heidolph_MR_Hei_Connect/Heidolph_MR_Hei_Connect.html#MRHeiConnect.switch_protocol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.switch_protocol" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">switch_protocol</code><span class="sig-paren">(</span><em class="sig-param">protocol='new'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/Heidolph_MR_Hei_Connect/Heidolph_MR_Hei_Connect.html#MRHeiConnect.switch_protocol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.switch_protocol" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.temperature_sp">
-<code class="descname">temperature_sp</code><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.temperature_sp" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">temperature_sp</code><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.temperature_sp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.watchdog_on">
-<code class="descname">watchdog_on</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/Heidolph_MR_Hei_Connect/Heidolph_MR_Hei_Connect.html#MRHeiConnect.watchdog_on"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.watchdog_on" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">watchdog_on</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/Heidolph_MR_Hei_Connect/Heidolph_MR_Hei_Connect.html#MRHeiConnect.watchdog_on"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.Heidolph_MR_Hei_Connect.Heidolph_MR_Hei_Connect.MRHeiConnect.watchdog_on" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -215,7 +217,7 @@ The command implementation is based on the German manual version 1.3</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+        &copy; Copyright 2018, Cronin Group;
 
     </p>
   </div>
@@ -232,32 +234,16 @@ The command implementation is based on the German manual version 1.3</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

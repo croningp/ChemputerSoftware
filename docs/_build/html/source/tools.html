@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -85,7 +87,10 @@
 <li><a class="reference internal" href="#">tools package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#tools-chempiler-setup-module">tools.chempiler_setup module</a></li>
+<li><a class="reference internal" href="#module-tools.chempiler_setup">tools.chempiler_setup module</a><ul>
+<li><a class="reference internal" href="#mod-chempiler-setup-setup-and-initialisation-routines-for-the-chemputer">:mod:”chempiler_setup” – Setup and initialisation routines for the Chemputer</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-tools.cmd_execution">tools.cmd_execution module</a><ul>
 <li><a class="reference internal" href="#mod-cmd-execution-command-dispatcher-and-deep-control-layer-for-the-chemputer">:mod:”cmd_execution” – Command dispatcher and deep control layer for the Chemputer</a></li>
 </ul>
@@ -203,15 +208,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tools.parsing.html">tools.parsing package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#module-tools.parsing.ChASM_lexer">tools.parsing.ChASM_lexer module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tools.parsing.html#mod-chasm-lexer-ply-based-lexer-for-chasm-files">:mod:”ChASM_lexer” – PLY based lexer for ChASM files</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#module-tools.parsing.ChASM_parser">tools.parsing.ChASM_parser module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tools.parsing.html#mod-chasm-parser-ply-based-parser-for-chasm-files">:mod:”ChASM_parser” – PLY based parser for ChASM files</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#module-tools.parsing.parsetab">tools.parsing.parsetab module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#tools-parsing-chasm-lexer-module">tools.parsing.ChASM_lexer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#tools-parsing-chasm-parser-module">tools.parsing.ChASM_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#tools-parsing-parsetab-module">tools.parsing.parsetab module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#module-tools.parsing">Module contents</a></li>
 </ul>
 </li>
@@ -221,192 +220,236 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="tools-chempiler-setup-module">
-<h2>tools.chempiler_setup module<a class="headerlink" href="#tools-chempiler-setup-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-tools.chempiler_setup">
+<span id="tools-chempiler-setup-module"></span><h2>tools.chempiler_setup module<a class="headerlink" href="#module-tools.chempiler_setup" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mod-chempiler-setup-setup-and-initialisation-routines-for-the-chemputer">
+<h3>:mod:”chempiler_setup” – Setup and initialisation routines for the Chemputer<a class="headerlink" href="#mod-chempiler-setup-setup-and-initialisation-routines-for-the-chemputer" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-chempiler_setup"></span><ol class="loweralpha simple" start="3">
+<li><p>2017 The Cronin Group, University of Glasgow</p></li>
+</ol>
+<p>Performs the initial setup of the Chempiler
+Reads and sanitises a graph from a GraphML file.
+This graph is populated with objects related to the platform e.g. Stirrer plates, pumps, etc</p>
+<p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
+<dl class="class">
+<dt id="tools.chempiler_setup.Setup">
+<em class="property">class </em><code class="sig-prename descclassname">tools.chempiler_setup.</code><code class="sig-name descname">Setup</code><span class="sig-paren">(</span><em class="sig-param">graphml_file</em>, <em class="sig-param">simulation=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/chempiler_setup.html#Setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.chempiler_setup.Setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Performs the inital set up of the Chempiler rig
+Creates a graph object which maps the topology of the physical system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graphml_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Absolute path to the graphml file to parse</p></li>
+<li><p><strong>simulation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether or not we’re simulating hardware</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="tools.chempiler_setup.Setup.load_graph">
+<code class="sig-name descname">load_graph</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/chempiler_setup.html#Setup.load_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.chempiler_setup.Setup.load_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a .graphml file containing the architecture, discards unnecessary information and relabels the nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> – GraphML file containing the architecture</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>sanitised graph object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tools.chempiler_setup.Setup.setup_platform">
+<code class="sig-name descname">setup_platform</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/chempiler_setup.html#Setup.setup_platform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.chempiler_setup.Setup.setup_platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the set up of the platform_server
+Populates the graph with instances of the relavent module objects</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Graph object populated with module objects</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>graph (ChemOSGraph)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tools.chempiler_setup.Setup.setup_pumps_and_valves">
+<code class="sig-name descname">setup_pumps_and_valves</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/chempiler_setup.html#Setup.setup_pumps_and_valves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.chempiler_setup.Setup.setup_pumps_and_valves" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populates the graph with pump and valve objects and initialises them.
+Adapted from <cite>chemputer_control.py</cite> from the old ChemOS</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tools.chempiler_setup.Setup.setup_serial_devices">
+<code class="sig-name descname">setup_serial_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/chempiler_setup.html#Setup.setup_serial_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.chempiler_setup.Setup.setup_serial_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grabs all serial devices from the graph and instantiates them.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tools.chempiler_setup.Setup.setup_special_devices">
+<code class="sig-name descname">setup_special_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/chempiler_setup.html#Setup.setup_special_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.chempiler_setup.Setup.setup_special_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds all devices that have two physical inputs (e.g. separator, filter etc.), find the attached “bottom”, and
+deletes the edge between them.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 <div class="section" id="module-tools.cmd_execution">
 <span id="tools-cmd-execution-module"></span><h2>tools.cmd_execution module<a class="headerlink" href="#module-tools.cmd_execution" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="mod-cmd-execution-command-dispatcher-and-deep-control-layer-for-the-chemputer">
 <h3>:mod:”cmd_execution” – Command dispatcher and deep control layer for the Chemputer<a class="headerlink" href="#mod-cmd-execution-command-dispatcher-and-deep-control-layer-for-the-chemputer" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-cmd_execution"></span><ol class="loweralpha simple" start="3">
-<li>2017 The Cronin Group, University of Glasgow</li>
+<li><p>2017 The Cronin Group, University of Glasgow</p></li>
 </ol>
 <p>This module provides a class that takes possession of the physical resources via the various module executioners,
 and carries out commands supplied as a list of “opcode” and arguments. This is the heart of the Chemputer control.</p>
 <p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
 <dl class="class">
 <dt id="tools.cmd_execution.Executioner">
-<em class="property">class </em><code class="descclassname">tools.cmd_execution.</code><code class="descname">Executioner</code><span class="sig-paren">(</span><em>graph</em>, <em>simulation=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">tools.cmd_execution.</code><code class="sig-name descname">Executioner</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">simulation=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Judge. Jury. Executioner.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>graph</strong> (<em>ChemOSGraph</em>) – Graph object representing the physical platform_server, populated with module objects</li>
-<li><strong>simulation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – Whether or not this is a simulation</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> (<em>ChemOSGraph</em>) – Graph object representing the physical platform_server, populated with module objects</p></li>
+<li><p><strong>simulation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether or not this is a simulation</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="tools.cmd_execution.Executioner.execute">
-<code class="descname">execute</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.execute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">execute</code><span class="sig-paren">(</span><em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes the command, depending on the operation move that is passed</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmd</strong> (<em>List</em>) – List of arguments for a command</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – List of arguments for a command</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.cmd_execution.Executioner.get_device_objects">
-<code class="descname">get_device_objects</code><span class="sig-paren">(</span><em>flag</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.get_device_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.get_device_objects" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_device_objects</code><span class="sig-paren">(</span><em class="sig-param">flag</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.get_device_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.get_device_objects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Goes through the graph, grabbing the objects that held in the nodes depending on the passed flag</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flag</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Flag identifying what objects to retrieve (Pumps, Valves, Stirrer, Rotavap, etc.)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary containing the name of the device and its associated object</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">device_dict (Dict)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code></a> – No objects found</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>flag</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Flag identifying what objects to retrieve (Pumps, Valves, Stirrer, Rotavap, etc.)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing the name of the device and its associated object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>device_dict (Dict)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.8)"><strong>Exception</strong></a> – No objects found</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.cmd_execution.Executioner.join_parallel_operations">
-<code class="descname">join_parallel_operations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.join_parallel_operations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.join_parallel_operations" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">join_parallel_operations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.join_parallel_operations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.join_parallel_operations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Joins all parallel execution threads before processing a sequential command</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.cmd_execution.Executioner.process_camera_cmds">
-<code class="descname">process_camera_cmds</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_camera_cmds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_camera_cmds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">process_camera_cmds</code><span class="sig-paren">(</span><em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_camera_cmds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_camera_cmds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Processes a command involving the camera</p>
 <p>Commands are: [SET_RECORDING_SPEED]</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmd</strong> (<em>List</em>) – List of commands</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – List of commands</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.cmd_execution.Executioner.process_chiller_cmds">
-<code class="descname">process_chiller_cmds</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_chiller_cmds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_chiller_cmds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">process_chiller_cmds</code><span class="sig-paren">(</span><em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_chiller_cmds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_chiller_cmds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Processes a command involving the recirculation chiller</p>
 <p>Commands are: [START_CHILLER, STOP_CHILLER, SET_CHILLER, RAMP_CHILLER]</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmd</strong> (<em>List</em>) – List of commands</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – List of commands</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.cmd_execution.Executioner.process_pump_cmd">
-<code class="descname">process_pump_cmd</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_pump_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_pump_cmd" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">process_pump_cmd</code><span class="sig-paren">(</span><em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_pump_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_pump_cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Processes a command that involves the pumps/valves
 Commands are [MOVE, HOME]</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmd</strong> (<em>List</em>) – Command arguments</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – Command arguments</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.cmd_execution.Executioner.process_rotavap_cmd">
-<code class="descname">process_rotavap_cmd</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_rotavap_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_rotavap_cmd" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">process_rotavap_cmd</code><span class="sig-paren">(</span><em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_rotavap_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_rotavap_cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Processes a command involving the rotavap</p>
 <p>Commands are [START_HEATER, STOP_HEATER, START_ROTATION, STOP_ROTATION, LIFT_UP, LIFT_DOWN, RESET, SET_BATH_TEMP, SET_ROTATION]</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmd</strong> (<em>List</em>) – Command arguments</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – Command arguments</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.cmd_execution.Executioner.process_stirring_cmd">
-<code class="descname">process_stirring_cmd</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_stirring_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_stirring_cmd" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">process_stirring_cmd</code><span class="sig-paren">(</span><em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_stirring_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_stirring_cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Processes a command involving the stirrer plates
 Commands are [STIR, HEAT, SET_TEMP, SET_STIR_RPM]</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmd</strong> (<em>List</em>) – Command arguments</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – Command arguments</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.cmd_execution.Executioner.process_vacuum_cmds">
-<code class="descname">process_vacuum_cmds</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_vacuum_cmds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_vacuum_cmds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">process_vacuum_cmds</code><span class="sig-paren">(</span><em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_vacuum_cmds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_vacuum_cmds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Processes a command involving the Vacuum pump</p>
 <p>Commands are: [INIT, GET_VAC_SP, SET_VAC_SP, START_VAC, STOP_VAC, VENT, GET_STATUS, GET_END_VAC_SP, SET_END_VAC_SP, GET_RUNTIME_SP, SET_RUNTIME_SP]</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmd</strong> (<em>List</em>) – List of commands</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – List of commands</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.cmd_execution.Executioner.process_waiting_cmd">
-<code class="descname">process_waiting_cmd</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_waiting_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_waiting_cmd" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">process_waiting_cmd</code><span class="sig-paren">(</span><em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_waiting_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_waiting_cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Processes a command for waiting on the platform_server</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmd</strong> (<em>List</em>) – Command arguments</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – Command arguments</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="tools.cmd_execution.Executioner.wait_with_feedback">
-<code class="descname">wait_with_feedback</code><span class="sig-paren">(</span><em>wait_time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.wait_with_feedback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.wait_with_feedback" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">wait_with_feedback</code><span class="sig-paren">(</span><em class="sig-param">wait_time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.wait_with_feedback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.wait_with_feedback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Waits for a desired time and prints the wait progress.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wait_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Time to wait in seconds</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>wait_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Time to wait in seconds</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -418,7 +461,7 @@ Commands are [STIR, HEAT, SET_TEMP, SET_STIR_RPM]</p>
 <div class="section" id="mod-constants-global-constants-file-for-easy-maintenance">
 <h3>:mod:”constants” – Global constants file for easy maintenance<a class="headerlink" href="#mod-constants-global-constants-file-for-easy-maintenance" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-constants"></span><ol class="loweralpha simple" start="3">
-<li>2018 The Cronin Group, University of Glasgow</li>
+<li><p>2018 The Cronin Group, University of Glasgow</p></li>
 </ol>
 <p>This file contains all constants used in the Chempiler project,
 such as dictionary keys, device types, and so forth. Keeping them
@@ -431,32 +474,35 @@ all in one file makes future maintenance a lot easier and avoids duplicates.</p>
 <div class="section" id="mod-vlogging-utilities-for-video-logging">
 <h3>:mod:”vlogging” – Utilities for video logging<a class="headerlink" href="#mod-vlogging-utilities-for-video-logging" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-vlogging"></span><ol class="loweralpha simple" start="3">
-<li>2018 The Cronin Group, University of Glasgow</li>
+<li><p>2018 The Cronin Group, University of Glasgow</p></li>
 </ol>
 <p>This file contains all utilities required to record webcam videos at variable frame rates, with time stamp, and the
 current INFO level log message overlaid.</p>
 <p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
 <dl class="class">
 <dt id="tools.vlogging.RecordingSpeedFilter">
-<em class="property">class </em><code class="descclassname">tools.vlogging.</code><code class="descname">RecordingSpeedFilter</code><span class="sig-paren">(</span><em>name=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/vlogging.html#RecordingSpeedFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.vlogging.RecordingSpeedFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Filter" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">logging.Filter</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">tools.vlogging.</code><code class="sig-name descname">RecordingSpeedFilter</code><span class="sig-paren">(</span><em class="sig-param">name=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/vlogging.html#RecordingSpeedFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.vlogging.RecordingSpeedFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Filter" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Filter</span></code></a></p>
 <p>Logging filter that only allows messages with logging level 5 to be passed on. Used for controlling video recording
 speed.</p>
 <dl class="method">
 <dt id="tools.vlogging.RecordingSpeedFilter.filter">
-<code class="descname">filter</code><span class="sig-paren">(</span><em>record</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/vlogging.html#RecordingSpeedFilter.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.vlogging.RecordingSpeedFilter.filter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param">record</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/vlogging.html#RecordingSpeedFilter.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.vlogging.RecordingSpeedFilter.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if the specified record is to be logged.</p>
+<p>Is the specified record to be logged? Returns 0 for no, nonzero for
+yes. If deemed appropriate, the record may be modified in-place.</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="tools.vlogging.VlogHandler">
-<em class="property">class </em><code class="descclassname">tools.vlogging.</code><code class="descname">VlogHandler</code><span class="sig-paren">(</span><em>queue=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/vlogging.html#VlogHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.vlogging.VlogHandler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Handler" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">logging.Handler</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">tools.vlogging.</code><code class="sig-name descname">VlogHandler</code><span class="sig-paren">(</span><em class="sig-param">queue=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/vlogging.html#VlogHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.vlogging.VlogHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Handler" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Handler</span></code></a></p>
 <p>Logging module handler class. Inherits directly from the logging.Handler prototype, as no fancy stuff is required.</p>
 <dl class="method">
 <dt id="tools.vlogging.VlogHandler.emit">
-<code class="descname">emit</code><span class="sig-paren">(</span><em>record</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/vlogging.html#VlogHandler.emit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.vlogging.VlogHandler.emit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">record</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/vlogging.html#VlogHandler.emit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.vlogging.VlogHandler.emit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Emit a record.</p>
 <p>If a formatter is specified, it is used to format the record.
 The record is then put into the queue.</p>
@@ -464,7 +510,7 @@ The record is then put into the queue.</p>
 
 <dl class="method">
 <dt id="tools.vlogging.VlogHandler.flush">
-<code class="descname">flush</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/vlogging.html#VlogHandler.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.vlogging.VlogHandler.flush" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">flush</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/vlogging.html#VlogHandler.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.vlogging.VlogHandler.flush" title="Permalink to this definition">¶</a></dt>
 <dd><p>Empties the queue by popping all items until it’s empty.</p>
 </dd></dl>
 
@@ -472,24 +518,20 @@ The record is then put into the queue.</p>
 
 <dl class="function">
 <dt id="tools.vlogging.recording_worker">
-<code class="descclassname">tools.vlogging.</code><code class="descname">recording_worker</code><span class="sig-paren">(</span><em>message_queue</em>, <em>recording_speed_queue</em>, <em>video_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/vlogging.html#recording_worker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.vlogging.recording_worker" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">tools.vlogging.</code><code class="sig-name descname">recording_worker</code><span class="sig-paren">(</span><em class="sig-param">message_queue</em>, <em class="sig-param">recording_speed_queue</em>, <em class="sig-param">video_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/vlogging.html#recording_worker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.vlogging.recording_worker" title="Permalink to this definition">¶</a></dt>
 <dd><p>Worker process which records a video to a file at variable frame rate. The main loop grabs an image from the camera,
 overlays a time stamp and the most recent log message, and then waits the appropriate time until the next frame is
 due. Log messages and requests to change recording speed are passed via multiprocessing queues. This worker is meant
 to be run as an individual process to improve performance in cPython.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>message_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.6)"><em>multiprocessing.Queue</em></a>) – A queue object containing logging messages</li>
-<li><strong>recording_speed_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.6)"><em>multiprocessing.Queue</em></a>) – A queue object containing requests to change frame rate</li>
-<li><strong>video_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – A path to the output video file</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.8)"><em>multiprocessing.Queue</em></a>) – A queue object containing logging messages</p></li>
+<li><p><strong>recording_speed_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.8)"><em>multiprocessing.Queue</em></a>) – A queue object containing requests to change frame rate</p></li>
+<li><p><strong>video_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – A path to the output video file</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -510,7 +552,7 @@ to be run as an individual process to improve performance in cPython.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+        &copy; Copyright 2018, Cronin Group;
 
     </p>
   </div>
@@ -527,32 +569,16 @@ to be run as an individual process to improve performance in cPython.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -165,18 +167,18 @@
 <div class="section" id="mod-serial-labware-generic-base-class-for-communicating-with-lab-equipment-via-serial-connection">
 <h3>:mod:”serial_labware” – Generic base class for communicating with lab equipment via serial connection<a class="headerlink" href="#mod-serial-labware-generic-base-class-for-communicating-with-lab-equipment-via-serial-connection" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-serial_labware"></span><ol class="loweralpha simple" start="3">
-<li>2017 The Cronin Group, University of Glasgow</li>
+<li><p>2017 The Cronin Group, University of Glasgow</p></li>
 </ol>
 <p>This provides a generic python class for safe serial communication
 with various lab equipment over serial interfaces (RS232, RS485, USB)
 by sending command strings. This parent class handles establishing
 a connection as well as sending and receiving commands.
-Based on code originally developed by Stefan Glatzel.</p>
+Based on code originally developed by the Cronin Group.</p>
 <p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
 <dl class="class">
 <dt id="modules.serial_labware.SerialDevice.serial_labware.SerialDevice">
-<em class="property">class </em><code class="descclassname">modules.serial_labware.SerialDevice.serial_labware.</code><code class="descname">SerialDevice</code><span class="sig-paren">(</span><em>port=None</em>, <em>device_name=None</em>, <em>soft_fail_for_testing=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">modules.serial_labware.SerialDevice.serial_labware.</code><code class="sig-name descname">SerialDevice</code><span class="sig-paren">(</span><em class="sig-param">port=None</em>, <em class="sig-param">device_name=None</em>, <em class="sig-param">soft_fail_for_testing=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>This is a generic parent class handling serial communication with lab equipment. It provides
 methods for opening and closing connections as well as a keepalive. It works by spawning a
 daemon thread which periodically checks a queue for commands. If no commands are enqueued,
@@ -184,25 +186,25 @@ a keepalive method is executed periodically. Replies are put in their own reply 
 they can be retrieved at any time.</p>
 <dl class="method">
 <dt id="modules.serial_labware.SerialDevice.serial_labware.SerialDevice.close_connection">
-<code class="descname">close_connection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice.close_connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.close_connection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">close_connection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice.close_connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.close_connection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attempts to close the serial connection if one is open.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.SerialDevice.serial_labware.SerialDevice.keepalive">
-<code class="descname">keepalive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice.keepalive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.keepalive" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">keepalive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice.keepalive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.keepalive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dummy keepalive method. This is just a stand-in for whatever keepalive operation needs to be performed
 on the device, meant to be overridden in the actual child class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.SerialDevice.serial_labware.SerialDevice.launch_command_handler">
-<code class="descname">launch_command_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice.launch_command_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.launch_command_handler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">launch_command_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice.launch_command_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.launch_command_handler" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.SerialDevice.serial_labware.SerialDevice.non_blocking_wait">
-<code class="descname">non_blocking_wait</code><span class="sig-paren">(</span><em>callback</em>, <em>interval</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice.non_blocking_wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.non_blocking_wait" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">non_blocking_wait</code><span class="sig-paren">(</span><em class="sig-param">callback</em>, <em class="sig-param">interval</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice.non_blocking_wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.non_blocking_wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simple non-blocking wait function crafted after the Arduino Blink Without Delay example. Checks whether the
 time elapsed since the last callback is greater than or equal to the interval. If so, the callback method
 is returned and the time updated.
@@ -213,45 +215,41 @@ is returned and the time updated.
 
 <dl class="method">
 <dt id="modules.serial_labware.SerialDevice.serial_labware.SerialDevice.open_connection">
-<code class="descname">open_connection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice.open_connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.open_connection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">open_connection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice.open_connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.open_connection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Opens the serial connection to the device.
 If a connection is already open it is closed and then a connection is re-established with the current settings</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.SerialDevice.serial_labware.SerialDevice.send_message">
-<code class="descname">send_message</code><span class="sig-paren">(</span><em>message</em>, <em>get_return=False</em>, <em>return_pattern=None</em>, <em>multiline=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice.send_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.send_message" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">send_message</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">get_return=False</em>, <em class="sig-param">return_pattern=None</em>, <em class="sig-param">multiline=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#SerialDevice.send_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.SerialDevice.send_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method for sending messages to the device. This method needs to be publicly accessible, otherwise
 child classes can’t use it. This method does not do a consistency check on the arguments passed to it,
 since they may vary wildly. Therefore such a check must be performed before calling send_message!</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The message string. No checks are performed on the message and it is just passed on</li>
-<li><strong>get_return</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – Are you expecting a return message?</li>
-<li><strong>return_pattern</strong> (<em>_sre.SRE_Pattern</em>) – Passes on a regex pattern to check the returned message against</li>
-<li><strong>multiline</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – Are you expecting a return message spanning multiple lines?
-(not evaluated if get_return is False)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The message string. No checks are performed on the message and it is just passed on</p></li>
+<li><p><strong>get_return</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Are you expecting a return message?</p></li>
+<li><p><strong>return_pattern</strong> (<em>_sre.SRE_Pattern</em>) – Passes on a regex pattern to check the returned message against</p></li>
+<li><p><strong>multiline</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Are you expecting a return message spanning multiple lines?
+(not evaluated if get_return is False)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(conditional)
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(conditional)
 - returns “True” if no message is expected back
 - does a call back to “__receive_message” and passes on “the return pattern”
 - returns -1 if send message fails</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="modules.serial_labware.SerialDevice.serial_labware.command">
-<code class="descclassname">modules.serial_labware.SerialDevice.serial_labware.</code><code class="descname">command</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.command" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">modules.serial_labware.SerialDevice.serial_labware.</code><code class="sig-name descname">command</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/SerialDevice/serial_labware.html#command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.SerialDevice.serial_labware.command" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decorator for command_set execution. Checks if the method is called in the same thread as the class instance,
 if so enqueues the command_set and waits for a reply in the reply queue. Else it concludes it must be the command
 handler thread and actually executes the method. This way methods in the child classes need to be written
@@ -277,7 +275,7 @@ just once and decorated accordingly.
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+        &copy; Copyright 2018, Cronin Group;
 
     </p>
   </div>
@@ -294,32 +292,16 @@ just once and decorated accordingly.
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

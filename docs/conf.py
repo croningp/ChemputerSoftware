@@ -56,7 +56,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Chempiler'
-copyright = '2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda'
+copyright = '2018, Cronin Group;'
 author = 'Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda'
 
 # The version info for the project you're documenting, acts as replacement for

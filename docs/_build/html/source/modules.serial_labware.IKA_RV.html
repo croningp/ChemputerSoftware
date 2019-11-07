@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -165,7 +167,7 @@
 <div class="section" id="mod-ika-rv10-api-for-ika-rv10-remote-controllable-rotary-evaporator">
 <h3>:mod:”IKA_RV10” – API for IKA RV10 remote controllable rotary evaporator<a class="headerlink" href="#mod-ika-rv10-api-for-ika-rv10-remote-controllable-rotary-evaporator" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-IKA_RV10"></span><ol class="loweralpha simple" start="3">
-<li>2017 The Cronin Group, University of Glasgow</li>
+<li><p>2017 The Cronin Group, University of Glasgow</p></li>
 </ol>
 <p>This provides a python class for the IKA RV 10 rotary evaporator
 with IKA HB 10 heating bath.
@@ -176,8 +178,8 @@ correspondence with IKA and by trial and error.</p>
 <p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
 <dl class="class">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10">
-<em class="property">class </em><code class="descclassname">modules.serial_labware.IKA_RV.IKA_RV10.</code><code class="descname">IKARV10</code><span class="sig-paren">(</span><em>port=None</em>, <em>device_name=None</em>, <em>connect_on_instantiation=False</em>, <em>soft_fail_for_testing=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">SerialDevice.serial_labware.SerialDevice</span></code></p>
+<em class="property">class </em><code class="sig-prename descclassname">modules.serial_labware.IKA_RV.IKA_RV10.</code><code class="sig-name descname">IKARV10</code><span class="sig-paren">(</span><em class="sig-param">port=None</em>, <em class="sig-param">device_name=None</em>, <em class="sig-param">connect_on_instantiation=False</em>, <em class="sig-param">soft_fail_for_testing=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">SerialDevice.serial_labware.SerialDevice</span></code></p>
 <p>This provides a python class for the IKA RV 10 rotary evaporator
 with IKA HB 10 heating bath.
 The command implementation is not based on the manual since the
@@ -186,7 +188,7 @@ for the bath at all. The correct commands were worked out in
 correspondence with IKA and by trial and error.</p>
 <dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.initialise">
-<code class="descname">initialise</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.initialise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.initialise" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">initialise</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.initialise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.initialise" title="Permalink to this definition">¶</a></dt>
 <dd><p>Due to unspeakable firmware dumbfuckery both rotavap and heating bath only actually enter remote mode
 after a start command has been sent. This method starts and stops both devices to force them into
 remote mode.
@@ -195,7 +197,7 @@ remote mode.
 
 <dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.keepalive">
-<code class="descname">keepalive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.keepalive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.keepalive" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">keepalive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.keepalive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.keepalive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Queries heating bath temperature every 2 seconds if the heating is on to keep it alive. Overrides dummy
 keepalive from parent method. This does not utilise the non_blocking_wait method because passing a property as
 callback leads to unwanted behaviour (i.e. property gets read on every loop iteration, not just
@@ -204,77 +206,74 @@ every x seconds). self.last_time is initialised in the parent method.</p>
 
 <dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.lift_down">
-<code class="descname">lift_down</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.lift_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.lift_down" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lift_down</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.lift_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.lift_down" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.lift_up">
-<code class="descname">lift_up</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.lift_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.lift_up" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lift_up</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.lift_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.lift_up" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.name">
-<code class="descname">name</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.name" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">name</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the name of the rotavap
 :return: call back to send_message with a request to return the name</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.reset_rotavap">
-<code class="descname">reset_rotavap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.reset_rotavap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.reset_rotavap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">reset_rotavap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.reset_rotavap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.reset_rotavap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.rotation_speed_pv">
-<code class="descname">rotation_speed_pv</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.rotation_speed_pv" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">rotation_speed_pv</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.rotation_speed_pv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads the process variable (i.e. the current) rpm
 :return: call back to send_message with a request to return and check a value</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.rotation_speed_sp">
-<code class="descname">rotation_speed_sp</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.rotation_speed_sp" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">rotation_speed_sp</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.rotation_speed_sp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads the set point (target) for the rpm
 :return: call back to send_message with a request to return and check a value</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.safety_temp">
-<code class="descname">safety_temp</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.safety_temp" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">safety_temp</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.safety_temp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.set_interval">
-<code class="descname">set_interval</code><span class="sig-paren">(</span><em>interval</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.set_interval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.set_interval" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_interval</code><span class="sig-paren">(</span><em class="sig-param">interval</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.set_interval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.set_interval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the interval length in seconds for the interval mode. Setting this to 0 stops the function
 :param interval: (int) the interval in seconds (1-60)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.set_interval_sp">
-<code class="descname">set_interval_sp</code><span class="sig-paren">(</span><em>interval=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.set_interval_sp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.set_interval_sp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_interval_sp</code><span class="sig-paren">(</span><em class="sig-param">interval=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.set_interval_sp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.set_interval_sp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the time for the interval operation. Here it rotates in one direction for a time, then reverts the
 direction, and so forth.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – desired interval time in seconds. “0” deactivates interval mode.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – desired interval time in seconds. “0” deactivates interval mode.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.set_timer">
-<code class="descname">set_timer</code><span class="sig-paren">(</span><em>time_setpoint</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.set_timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.set_timer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_timer</code><span class="sig-paren">(</span><em class="sig-param">time_setpoint</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.set_timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.set_timer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the time in minutes for the timer mode. Setting this to 0 stops the function
 :param time_setpoint: (int) the time in minutes (1-199)</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.software_version">
-<code class="descname">software_version</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.software_version" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">software_version</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.software_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the software version of the firmware
 !!!WARNING!!! Despite being documented this does not seem to work as intended, it just returns an empty string
 :return: (supposed to…) software version of the firmware</p>
@@ -282,32 +281,32 @@ direction, and so forth.</p>
 
 <dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.start_heater">
-<code class="descname">start_heater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.start_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.start_heater" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_heater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.start_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.start_heater" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.start_rotation">
-<code class="descname">start_rotation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.start_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.start_rotation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_rotation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.start_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.start_rotation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.stop_heater">
-<code class="descname">stop_heater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.stop_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.stop_heater" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_heater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.stop_heater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.stop_heater" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.stop_rotation">
-<code class="descname">stop_rotation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.stop_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.stop_rotation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_rotation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/serial_labware/IKA_RV/IKA_RV10.html#IKARV10.stop_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.stop_rotation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.temperature_pv">
-<code class="descname">temperature_pv</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.temperature_pv" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">temperature_pv</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.temperature_pv" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.temperature_sp">
-<code class="descname">temperature_sp</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.temperature_sp" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">temperature_sp</code><a class="headerlink" href="#modules.serial_labware.IKA_RV.IKA_RV10.IKARV10.temperature_sp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -330,7 +329,7 @@ direction, and so forth.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+        &copy; Copyright 2018, Cronin Group;
 
     </p>
   </div>
@@ -347,32 +346,16 @@ direction, and so forth.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

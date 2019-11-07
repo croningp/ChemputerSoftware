@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -170,126 +172,108 @@
 <span class="target" id="module-Chemputer_Device_API"></span><p>This API is intended for controlling a set of Chemputer pumps and valves over a local network.</p>
 <dl class="class">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice">
-<em class="property">class </em><code class="descclassname">modules.pv_api.Chemputer_Device_API.</code><code class="descname">ChemputerDevice</code><span class="sig-paren">(</span><em>address</em>, <em>name=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">modules.pv_api.Chemputer_Device_API.</code><code class="sig-name descname">ChemputerDevice</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">name=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>API for interfacing with the Chemputer pumps and valves.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Address of the device</li>
-<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Optional name of the device</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Address of the device</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Optional name of the device</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="attribute">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.MOVE_TO_POSITION">
-<code class="descname">MOVE_TO_POSITION</code><em class="property"> = None</em><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.MOVE_TO_POSITION" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">MOVE_TO_POSITION</code><em class="property"> = None</em><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.MOVE_TO_POSITION" title="Permalink to this definition">¶</a></dt>
 <dd><p>Default configs</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.assign_ip_address">
-<code class="descname">assign_ip_address</code><span class="sig-paren">(</span><em>ip_address</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.assign_ip_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.assign_ip_address" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">assign_ip_address</code><span class="sig-paren">(</span><em class="sig-param">ip_address</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.assign_ip_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.assign_ip_address" title="Permalink to this definition">¶</a></dt>
 <dd><p>High-level method to assign a new IP to a device. Constructs a standard MAC from the provided IP and sends over
 the entire network config.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ip_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – new IP Address of the device</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ip_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – new IP Address of the device</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.build_command">
-<code class="descname">build_command</code><span class="sig-paren">(</span><em>*cmds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.build_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.build_command" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">build_command</code><span class="sig-paren">(</span><em class="sig-param">*cmds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.build_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.build_command" title="Permalink to this definition">¶</a></dt>
 <dd><p>Builds the command string from a varying list of arguments, adding a null-terminated character</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmds</strong> (<em>Variadic</em>) – List of commands to create the string.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmds</strong> (<em>Variadic</em>) – List of commands to create the string.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.clear_errors">
-<code class="descname">clear_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.clear_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.clear_errors" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clear_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.clear_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.clear_errors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clears the previously set errors</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.connect_to_server">
-<code class="descname">connect_to_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.connect_to_server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.connect_to_server" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">connect_to_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.connect_to_server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.connect_to_server" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attempts to connect to the TCP server.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><em>Exception (OSException)</em> – The connection has failed.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.8)"><strong>Exception</strong></a><strong> (</strong><strong>OSException</strong><strong>)</strong> – The connection has failed.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_network_config">
-<code class="descname">construct_network_config</code><span class="sig-paren">(</span><em>mac_address</em>, <em>ip_address</em>, <em>subnet_mask</em>, <em>gateway_ip</em>, <em>dns_server_ip</em>, <em>DHCP_mode</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.construct_network_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_network_config" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">construct_network_config</code><span class="sig-paren">(</span><em class="sig-param">mac_address</em>, <em class="sig-param">ip_address</em>, <em class="sig-param">subnet_mask</em>, <em class="sig-param">gateway_ip</em>, <em class="sig-param">dns_server_ip</em>, <em class="sig-param">DHCP_mode</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.construct_network_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_network_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructs the network configuration
 Parses the addresses and joining them into a string of numbers that represent the addresses</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>mac_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – MAC address of the device</li>
-<li><strong>ip_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – IP address of the device</li>
-<li><strong>subnet_mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Address f the subnet mask of the network</li>
-<li><strong>gateway_ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Address of the default gateway of the network</li>
-<li><strong>dns_server_ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Address of the DNS server</li>
-<li><strong>DHCP_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Flag for determining if the device should use static IP allocation (1) or the DHCP allocation (2).</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mac_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – MAC address of the device</p></li>
+<li><p><strong>ip_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – IP address of the device</p></li>
+<li><p><strong>subnet_mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Address f the subnet mask of the network</p></li>
+<li><p><strong>gateway_ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Address of the default gateway of the network</p></li>
+<li><p><strong>dns_server_ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Address of the DNS server</p></li>
+<li><p><strong>DHCP_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Flag for determining if the device should use static IP allocation (1) or the DHCP allocation (2).</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">String representing all the addresses as individual numbers</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">cfg_string (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a>)</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String representing all the addresses as individual numbers</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>cfg_string (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_network_config_string">
-<code class="descname">construct_network_config_string</code><span class="sig-paren">(</span><em>cfg_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.construct_network_config_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_network_config_string" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">construct_network_config_string</code><span class="sig-paren">(</span><em class="sig-param">cfg_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.construct_network_config_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_network_config_string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the network configuration string from a list of addresses created via convert_network_address_to_list</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cfg_list</strong> (<em>List</em>) – List of lists containing all the addresses</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">String containing the numbers of the addresses</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">cfg_string (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a>)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg_list</strong> (<em>List</em>) – List of lists containing all the addresses</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String containing the numbers of the addresses</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>cfg_string (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_pump_config">
-<code class="descname">construct_pump_config</code><span class="sig-paren">(</span><em>config_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.construct_pump_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_pump_config" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">construct_pump_config</code><span class="sig-paren">(</span><em class="sig-param">config_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.construct_pump_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_pump_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructs a pump configuration
 Takes a normal (unordered) dictionary with human-readable parameters (e.g. 256 microsteps rather than
 microsteps = 0) and constructs an ordered dict containing all values that need to be sent to the pump in their
@@ -297,312 +281,269 @@ proper order. The process involves three steps: first, the microstep value, the 
 per mL and for the entire syringe are worked out based on the information provided, and stored in the
 PUMP_CONFIG dict. Then all keys that have not yet been populated are just transferred over. Third, the new
 dict is ordered by iterating over the key list and sending each item to the end.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – dictionary containing all necessary information to configure a pump</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ordered dictionary ready to be sent to the pump</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">PUMP_CONFIG (ordereddict)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – dictionary containing all necessary information to configure a pump</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ordered dictionary ready to be sent to the pump</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>PUMP_CONFIG (ordereddict)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_valve_config">
-<code class="descname">construct_valve_config</code><span class="sig-paren">(</span><em>config_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.construct_valve_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_valve_config" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">construct_valve_config</code><span class="sig-paren">(</span><em class="sig-param">config_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.construct_valve_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.construct_valve_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructs a valve configuration</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – dictionary containing all necessary information to configure a valve</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ordered dictionary ready to be sent to the valve</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">VALVE_CONFIG (ordereddict)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – dictionary containing all necessary information to configure a valve</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ordered dictionary ready to be sent to the valve</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>VALVE_CONFIG (ordereddict)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.convert_list_to_address">
-<code class="descname">convert_list_to_address</code><span class="sig-paren">(</span><em>addr_list</em>, <em>mac=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.convert_list_to_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.convert_list_to_address" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">convert_list_to_address</code><span class="sig-paren">(</span><em class="sig-param">addr_list</em>, <em class="sig-param">mac=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.convert_list_to_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.convert_list_to_address" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a list into an address
 Will also convert the decimal mac address into the appropriate hex format</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>addr_list</strong> (<em>List</em>) – List containing the elements of the address</li>
-<li><strong>mac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – Flag for determining if the address is a mac address</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addr_list</strong> (<em>List</em>) – List containing the elements of the address</p></li>
+<li><p><strong>mac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Flag for determining if the address is a mac address</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The string representation of the address</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">addr (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a>)</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The string representation of the address</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>addr (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.convert_network_address_to_list">
-<code class="descname">convert_network_address_to_list</code><span class="sig-paren">(</span><em>address</em>, <em>split_delimiter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.convert_network_address_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.convert_network_address_to_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">convert_network_address_to_list</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">split_delimiter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.convert_network_address_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.convert_network_address_to_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a network address to a python list
 Splits the address based off of a delimiter and adds the elements as string to a list</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Address to convert</li>
-<li><strong>split_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Delimiting character used to split the address (“.” for IP addresses, “:” for MAC Addresses)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Address to convert</p></li>
+<li><p><strong>split_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Delimiting character used to split the address (“.” for IP addresses, “:” for MAC Addresses)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">List of strings containing the values of the address minus the delimiting character</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">addr_split (List)</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of strings containing the values of the address minus the delimiting character</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>addr_split (List)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.parse_device_config_string">
-<code class="descname">parse_device_config_string</code><span class="sig-paren">(</span><em>cfg_string</em>, <em>cfg_type</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.parse_device_config_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.parse_device_config_string" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse_device_config_string</code><span class="sig-paren">(</span><em class="sig-param">cfg_string</em>, <em class="sig-param">cfg_type</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.parse_device_config_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.parse_device_config_string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the config string message and sets the appropriate values in the relevant dictionary</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cfg_string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – String representing the configuration</li>
-<li><strong>cfg_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Type of configuration to parse into (Pump/Valve/Network)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cfg_string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – String representing the configuration</p></li>
+<li><p><strong>cfg_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Type of configuration to parse into (Pump/Valve/Network)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Configuration of the device/network</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">config (OrderedDict)</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code></a> – Unable to parse the configuration string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Configuration of the device/network</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>config (OrderedDict)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.8)"><strong>Exception</strong></a> – Unable to parse the configuration string</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.parse_network_config_string">
-<code class="descname">parse_network_config_string</code><span class="sig-paren">(</span><em>cfg_string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.parse_network_config_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.parse_network_config_string" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse_network_config_string</code><span class="sig-paren">(</span><em class="sig-param">cfg_string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.parse_network_config_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.parse_network_config_string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the network configuration string for the relevant information
 Hardcoded values should not change but a fix will be implemented to make it a bit more robust</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cfg_string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – String representing the network information</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Ordered Dictionary containing all the network information</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">network_config (OrderedDict)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg_string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – String representing the network information</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Ordered Dictionary containing all the network information</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>network_config (OrderedDict)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_ADC">
-<code class="descname">read_ADC</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.read_ADC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_ADC" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_ADC</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.read_ADC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_ADC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads ADC</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_device_configuration">
-<code class="descname">read_device_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.read_device_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_device_configuration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_device_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.read_device_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_device_configuration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads the device configuration from the server and displays it back to the user</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_errors">
-<code class="descname">read_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.read_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_errors" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.read_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_errors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads error flags from the server</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_network_configuration">
-<code class="descname">read_network_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.read_network_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_network_configuration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_network_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.read_network_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.read_network_configuration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads the network configuration for the device from the server and displays it back to the user</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.receive_response">
-<code class="descname">receive_response</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.receive_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.receive_response" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">receive_response</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.receive_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.receive_response" title="Permalink to this definition">¶</a></dt>
 <dd><p>Received the response from the server and prints out the response to screen.
 Specific cases are present for reading configurations (device/network) and for checking the completion flag.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.send_and_wait_reply">
-<code class="descname">send_and_wait_reply</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.send_and_wait_reply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.send_and_wait_reply" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">send_and_wait_reply</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.send_and_wait_reply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.send_and_wait_reply" title="Permalink to this definition">¶</a></dt>
 <dd><p>Debug method for sending arbitrary strings to the server.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Message to send</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Message to send</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.send_command">
-<code class="descname">send_command</code><span class="sig-paren">(</span><em>*cmds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.send_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.send_command" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">send_command</code><span class="sig-paren">(</span><em class="sig-param">*cmds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.send_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.send_command" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructs the command string and sends it to the TCP server.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmds</strong> (<em>Variadic</em>) – List of commands used to create the string.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmds</strong> (<em>Variadic</em>) – List of commands used to create the string.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.wait_until_ready">
-<code class="descname">wait_until_ready</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.wait_until_ready"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.wait_until_ready" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">wait_until_ready</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.wait_until_ready"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.wait_until_ready" title="Permalink to this definition">¶</a></dt>
 <dd><p>Waits until the device is ready by listening for a DONE command from the server.
 This then sets the flag that the operation has completed.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerDevice.write_network_configuration">
-<code class="descname">write_network_configuration</code><span class="sig-paren">(</span><em>mac_address</em>, <em>ip_address</em>, <em>subnet_mask</em>, <em>gateway_ip</em>, <em>dns_server_ip</em>, <em>DHCP_mode=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.write_network_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.write_network_configuration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write_network_configuration</code><span class="sig-paren">(</span><em class="sig-param">mac_address</em>, <em class="sig-param">ip_address</em>, <em class="sig-param">subnet_mask</em>, <em class="sig-param">gateway_ip</em>, <em class="sig-param">dns_server_ip</em>, <em class="sig-param">DHCP_mode=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerDevice.write_network_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice.write_network_configuration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the network configuration for the device and sends it to the server.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>mac_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – MAC address of the device</li>
-<li><strong>ip_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – IP Address of the device</li>
-<li><strong>subnet_mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Address of the subnet mask of the network</li>
-<li><strong>gateway_ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Address of the default gateway of the network</li>
-<li><strong>dns_server_ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Address of  the DNS server</li>
-<li><strong>DHCP_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Flag for determining if the device should use static IP allocation (1) or the DHCP allocation (2). Default is 1</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mac_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – MAC address of the device</p></li>
+<li><p><strong>ip_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – IP Address of the device</p></li>
+<li><p><strong>subnet_mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Address of the subnet mask of the network</p></li>
+<li><p><strong>gateway_ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Address of the default gateway of the network</p></li>
+<li><p><strong>dns_server_ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Address of  the DNS server</p></li>
+<li><p><strong>DHCP_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Flag for determining if the device should use static IP allocation (1) or the DHCP allocation (2). Default is 1</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerPump">
-<em class="property">class </em><code class="descclassname">modules.pv_api.Chemputer_Device_API.</code><code class="descname">ChemputerPump</code><span class="sig-paren">(</span><em>address</em>, <em>name=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerPump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerPump" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice" title="modules.pv_api.Chemputer_Device_API.ChemputerDevice"><code class="xref py py-class docutils literal"><span class="pre">modules.pv_api.Chemputer_Device_API.ChemputerDevice</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">modules.pv_api.Chemputer_Device_API.</code><code class="sig-name descname">ChemputerPump</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">name=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerPump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerPump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice" title="modules.pv_api.Chemputer_Device_API.ChemputerDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">modules.pv_api.Chemputer_Device_API.ChemputerDevice</span></code></a></p>
 <p>Child class of ChemputerDevice. Gives the user control over the pump commands</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Address of the pump</li>
-<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Optional name of the device</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Address of the pump</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Optional name of the device</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="docutils">
-<dt>Extends:</dt>
-<dd>ChemputerDevice</dd>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Extends:</dt><dd><p>ChemputerDevice</p>
+</dd>
 </dl>
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerPump.hard_home">
-<code class="descname">hard_home</code><span class="sig-paren">(</span><em>speed_in_milliliters_per_min=50</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerPump.hard_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerPump.hard_home" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">hard_home</code><span class="sig-paren">(</span><em class="sig-param">speed_in_milliliters_per_min=50</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerPump.hard_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerPump.hard_home" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds the home position by stalling the plunger against the base, then backing up a number of steps.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>speed_in_milliliters_per_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Speed to move in milliliters per minute</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>speed_in_milliliters_per_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Speed to move in milliliters per minute</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerPump.move_absolute">
-<code class="descname">move_absolute</code><span class="sig-paren">(</span><em>target_volume_in_milliliters</em>, <em>speed_in_milliliters_per_min</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerPump.move_absolute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerPump.move_absolute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_absolute</code><span class="sig-paren">(</span><em class="sig-param">target_volume_in_milliliters</em>, <em class="sig-param">speed_in_milliliters_per_min</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerPump.move_absolute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerPump.move_absolute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves the plunger to a set volume, regardless of current position</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>target_volume_in_milliliters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Target volume to move in milliliters</li>
-<li><strong>speed_in_milliliters_per_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Speed to move in milliliters per minute</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_volume_in_milliliters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Target volume to move in milliliters</p></li>
+<li><p><strong>speed_in_milliliters_per_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Speed to move in milliliters per minute</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerPump.move_relative">
-<code class="descname">move_relative</code><span class="sig-paren">(</span><em>volume_in_milliliters</em>, <em>speed_in_milliliters_per_min</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerPump.move_relative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerPump.move_relative" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_relative</code><span class="sig-paren">(</span><em class="sig-param">volume_in_milliliters</em>, <em class="sig-param">speed_in_milliliters_per_min</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerPump.move_relative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerPump.move_relative" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves the plunger to a specific volume relative to the current position</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>volume_in_milliliters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Volume to move in milliliters</li>
-<li><strong>speed_in_milliliters_per_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Speed to move in milliliters per minute</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>volume_in_milliliters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Volume to move in milliliters</p></li>
+<li><p><strong>speed_in_milliliters_per_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Speed to move in milliliters per minute</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerPump.move_to_home">
-<code class="descname">move_to_home</code><span class="sig-paren">(</span><em>speed_in_milliliters_per_min</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerPump.move_to_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerPump.move_to_home" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_to_home</code><span class="sig-paren">(</span><em class="sig-param">speed_in_milliliters_per_min</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerPump.move_to_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerPump.move_to_home" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves the plunger to the home position</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>speed_in_milliliters_per_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Speed to move in milliliters per minute</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>speed_in_milliliters_per_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Speed to move in milliliters per minute</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerPump.write_default_pump_configuration">
-<code class="descname">write_default_pump_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerPump.write_default_pump_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerPump.write_default_pump_configuration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write_default_pump_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerPump.write_default_pump_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerPump.write_default_pump_configuration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes a default configuration for the pump to the server
 This uses the default configuration (OrderedDict) laid out in the default_configs script</p>
 </dd></dl>
@@ -611,54 +552,47 @@ This uses the default configuration (OrderedDict) laid out in the default_config
 
 <dl class="class">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerValve">
-<em class="property">class </em><code class="descclassname">modules.pv_api.Chemputer_Device_API.</code><code class="descname">ChemputerValve</code><span class="sig-paren">(</span><em>address</em>, <em>name=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerValve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerValve" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice" title="modules.pv_api.Chemputer_Device_API.ChemputerDevice"><code class="xref py py-class docutils literal"><span class="pre">modules.pv_api.Chemputer_Device_API.ChemputerDevice</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">modules.pv_api.Chemputer_Device_API.</code><code class="sig-name descname">ChemputerValve</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">name=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerValve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerValve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#modules.pv_api.Chemputer_Device_API.ChemputerDevice" title="modules.pv_api.Chemputer_Device_API.ChemputerDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">modules.pv_api.Chemputer_Device_API.ChemputerDevice</span></code></a></p>
 <p>Child class of the ChemputerDevice. Gives the user control over the valve commands</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Address of the valve</li>
-<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Optional name for the device.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Address of the valve</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Optional name for the device.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="docutils">
-<dt>Extends:</dt>
-<dd>ChemputerDevice</dd>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Extends:</dt><dd><p>ChemputerDevice</p>
+</dd>
 </dl>
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerValve.auto_config">
-<code class="descname">auto_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerValve.auto_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerValve.auto_config" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">auto_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerValve.auto_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerValve.auto_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates an automatic configuration for the valve device</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerValve.move_home">
-<code class="descname">move_home</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerValve.move_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerValve.move_home" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_home</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerValve.move_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerValve.move_home" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves the valve to its home position</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerValve.move_to_position">
-<code class="descname">move_to_position</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerValve.move_to_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerValve.move_to_position" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_to_position</code><span class="sig-paren">(</span><em class="sig-param">position</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerValve.move_to_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerValve.move_to_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves the valve to a specific position</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> (<em>int/str</em>) – Position to move to</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>position</strong> (<em>int/str</em>) – Position to move to</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="modules.pv_api.Chemputer_Device_API.ChemputerValve.write_default_valve_configuration">
-<code class="descname">write_default_valve_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerValve.write_default_valve_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerValve.write_default_valve_configuration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write_default_valve_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#ChemputerValve.write_default_valve_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.ChemputerValve.write_default_valve_configuration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes a default configuration for the valve to the server
 This uses the default configuration (OrderedDict) laid out in the default_configs script</p>
 </dd></dl>
@@ -667,30 +601,24 @@ This uses the default configuration (OrderedDict) laid out in the default_config
 
 <dl class="function">
 <dt id="modules.pv_api.Chemputer_Device_API.initialise_udp_keepalive">
-<code class="descclassname">modules.pv_api.Chemputer_Device_API.</code><code class="descname">initialise_udp_keepalive</code><span class="sig-paren">(</span><em>udp_host</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#initialise_udp_keepalive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.initialise_udp_keepalive" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">modules.pv_api.Chemputer_Device_API.</code><code class="sig-name descname">initialise_udp_keepalive</code><span class="sig-paren">(</span><em class="sig-param">udp_host</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#initialise_udp_keepalive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.initialise_udp_keepalive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts a thread for the UDP keepalive broadcast to the server</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>udp_host</strong> (<em>Tuple</em>) – Tuple containing the IP address and host port of the server.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>udp_host</strong> (<em>Tuple</em>) – Tuple containing the IP address and host port of the server.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="modules.pv_api.Chemputer_Device_API.udp_keepalive">
-<code class="descclassname">modules.pv_api.Chemputer_Device_API.</code><code class="descname">udp_keepalive</code><span class="sig-paren">(</span><em>udp_host</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#udp_keepalive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.udp_keepalive" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">modules.pv_api.Chemputer_Device_API.</code><code class="sig-name descname">udp_keepalive</code><span class="sig-paren">(</span><em class="sig-param">udp_host</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modules/pv_api/Chemputer_Device_API.html#udp_keepalive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modules.pv_api.Chemputer_Device_API.udp_keepalive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Broadcasts the UDP keepalive signal to ensure the board is still alive</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>udp_host</strong> (<em>Tuple</em>) – Tuple containing the IP address and port of the server e.g. (192.168.255.255, 3000)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>udp_host</strong> (<em>Tuple</em>) – Tuple containing the IP address and port of the server e.g. (192.168.255.255, 3000)</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -720,7 +648,7 @@ This uses the default configuration (OrderedDict) laid out in the default_config
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Sebastian Steiner; Graham Keenan; Jakob Wolf; Jaroslaw Granda.
+        &copy; Copyright 2018, Cronin Group;
 
     </p>
   </div>
@@ -737,32 +665,16 @@ This uses the default configuration (OrderedDict) laid out in the default_config
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

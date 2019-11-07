@@ -1,0 +1,592 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tools.chempiler_setup &mdash; Chempiler 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Chempiler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Chempiler</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>tools.chempiler_setup</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tools.chempiler_setup</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;chempiler_setup&quot; -- Setup and initialisation routines for the Chemputer</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: chempiler_setup</span>
+<span class="sd">   :platform: Windows, Unix</span>
+<span class="sd">   :synopsis: Setup and initialisation routines for the Chemputer</span>
+<span class="sd">.. moduleauthor:: Graham Keenan &lt;1105045k@student.gla.ac.uk&gt;</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+
+<span class="sd">(c) 2017 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">Performs the initial setup of the Chempiler</span>
+<span class="sd">Reads and sanitises a graph from a GraphML file.</span>
+<span class="sd">This graph is populated with objects related to the platform e.g. Stirrer plates, pumps, etc</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">serial</span>
+
+<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getfile</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">))</span>
+
+<span class="sd">&quot;&quot;&quot; Imports &quot;&quot;&quot;</span>
+<span class="c1"># Import all modules available</span>
+<span class="kn">from</span> <span class="nn">modules.pv_api.Chemputer_Device_API</span> <span class="k">import</span> <span class="n">ChemputerPump</span><span class="p">,</span> <span class="n">ChemputerValve</span><span class="p">,</span> <span class="n">initialise_udp_keepalive</span>
+<span class="kn">from</span> <span class="nn">modules.serial_labware.IKA_RV.IKA_RV10</span> <span class="k">import</span> <span class="n">IKARV10</span>  <span class="c1"># That&#39;s a rotavap</span>
+<span class="kn">from</span> <span class="nn">modules.serial_labware.Vacuubrand.Vacuubrand_CVC_3000</span> <span class="k">import</span> <span class="n">CVC3000</span>  <span class="c1"># That&#39;s a pump</span>
+<span class="kn">from</span> <span class="nn">modules.serial_labware.IKA_RET_Stirrer.IKA_RET_Control_Visc</span> <span class="k">import</span> <span class="n">IKARETControlVisc</span>  <span class="c1"># That&#39;s a stirrer plate</span>
+<span class="kn">from</span> <span class="nn">modules.serial_labware.Heidolph_RZR_2052_control.Heidolph_RZR_2052_control</span> <span class="k">import</span> <span class="n">RZR_2052</span>  <span class="c1"># That&#39;s an overhead stirrer</span>
+<span class="kn">from</span> <span class="nn">modules.serial_labware.IKA_microstar_75.IKA_microstar_75</span> <span class="k">import</span> <span class="n">IKAmicrostar75</span>  <span class="c1"># That&#39;s a different overhead stirrer</span>
+<span class="kn">from</span> <span class="nn">modules.serial_labware.JULABO_CF41.JULABO_CF41</span> <span class="k">import</span> <span class="n">JULABOCF41</span>  <span class="c1"># That&#39;s a chiller</span>
+<span class="kn">from</span> <span class="nn">modules.serial_labware.Huber_Petite_Fleur.Huber_Petite_Fleur</span> <span class="k">import</span> <span class="n">Huber</span>  <span class="c1"># That&#39;s a different chiller</span>
+
+<span class="c1"># Import simulation classes</span>
+<span class="kn">from</span> <span class="nn">sims.hardware_sim</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="c1"># Import constants</span>
+<span class="kn">from</span> <span class="nn">tools.constants</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="Setup"><a class="viewcode-back" href="../../source/tools.html#tools.chempiler_setup.Setup">[docs]</a><span class="k">class</span> <span class="nc">Setup</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Performs the inital set up of the Chempiler rig</span>
+<span class="sd">    Creates a graph object which maps the topology of the physical system</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        graphml_file (str): Absolute path to the graphml file to parse</span>
+<span class="sd">        simulation (bool): Whether or not we&#39;re simulating hardware</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graphml_file</span><span class="p">,</span> <span class="n">simulation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_graph</span><span class="p">(</span><span class="n">graphml_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span> <span class="o">=</span> <span class="n">simulation</span>
+
+<div class="viewcode-block" id="Setup.load_graph"><a class="viewcode-back" href="../../source/tools.html#tools.chempiler_setup.Setup.load_graph">[docs]</a>    <span class="k">def</span> <span class="nf">load_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads a .graphml file containing the architecture, discards unnecessary information and relabels the nodes.</span>
+
+<span class="sd">        :param file: GraphML file containing the architecture</span>
+<span class="sd">        :return: sanitised graph object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">read_graphml</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;NaN&quot;</span><span class="p">)</span>
+            <span class="n">mapping</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">relabel_nodes</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">mapping</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">graph</span></div>
+
+<div class="viewcode-block" id="Setup.setup_platform"><a class="viewcode-back" href="../../source/tools.html#tools.chempiler_setup.Setup.setup_platform">[docs]</a>    <span class="k">def</span> <span class="nf">setup_platform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the set up of the platform_server</span>
+<span class="sd">        Populates the graph with instances of the relavent module objects</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            graph (ChemOSGraph): Graph object populated with module objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_pumps_and_valves</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># To ensure that the graph has time to update itself</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_serial_devices</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># To ensure that the graph has time to update itself</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_special_devices</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># To ensure that the graph has time to update itself</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span></div>
+
+<div class="viewcode-block" id="Setup.setup_pumps_and_valves"><a class="viewcode-back" href="../../source/tools.html#tools.chempiler_setup.Setup.setup_pumps_and_valves">[docs]</a>    <span class="k">def</span> <span class="nf">setup_pumps_and_valves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Populates the graph with pump and valve objects and initialises them.</span>
+<span class="sd">        Adapted from `chemputer_control.py` from the old ChemOS</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">initialise_udp_keepalive</span><span class="p">(</span><span class="n">UDP_HOST</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="n">pumps</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">valves</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>  <span class="c1"># where each_node is a string containing the node name</span>
+                <span class="n">device_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span>
+                <span class="c1"># name = self.graph.node[each_node][NAME]</span>
+
+                <span class="k">if</span> <span class="n">device_class</span> <span class="ow">in</span> <span class="n">PUMPS</span><span class="p">:</span>
+                    <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">ADDRESS</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                        <span class="n">device_object</span> <span class="o">=</span> <span class="n">SimChemputerPump</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">each_node</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">device_object</span> <span class="o">=</span> <span class="n">ChemputerPump</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">each_node</span><span class="p">)</span>
+                        <span class="n">pumps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">device_object</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">OBJECT</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">]:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">OBJECT</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                <span class="k">elif</span> <span class="n">device_class</span> <span class="ow">in</span> <span class="n">VALVES</span><span class="p">:</span>
+                    <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">ADDRESS</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                        <span class="n">device_object</span> <span class="o">=</span> <span class="n">SimChemputerValve</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">each_node</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">device_object</span> <span class="o">=</span> <span class="n">ChemputerValve</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">each_node</span><span class="p">)</span>
+                        <span class="n">valves</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">device_object</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">OBJECT</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">]:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">OBJECT</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pumps/Valves could not be instantiated!</span><span class="se">\n</span><span class="s1">Error: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+            <span class="c1"># home all valves</span>
+            <span class="k">for</span> <span class="n">valve</span> <span class="ow">in</span> <span class="n">valves</span><span class="p">:</span>
+                <span class="n">valve</span><span class="o">.</span><span class="n">clear_errors</span><span class="p">()</span>
+                <span class="n">valve</span><span class="o">.</span><span class="n">move_home</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">valve</span> <span class="ow">in</span> <span class="n">valves</span><span class="p">:</span>
+                <span class="n">valve</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">valve</span> <span class="ow">in</span> <span class="n">valves</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">successor</span><span class="p">,</span> <span class="n">edge</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">succ</span><span class="p">[</span><span class="n">valve</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">successor</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">WASTE</span><span class="p">:</span>
+                        <span class="n">valve</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">PORT</span><span class="p">])</span>
+                        <span class="k">break</span>
+
+            <span class="k">for</span> <span class="n">valve</span> <span class="ow">in</span> <span class="n">valves</span><span class="p">:</span>
+                <span class="n">valve</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+
+            <span class="c1"># hard home all pumps</span>
+            <span class="k">for</span> <span class="n">pump</span> <span class="ow">in</span> <span class="n">pumps</span><span class="p">:</span>
+                <span class="n">pump</span><span class="o">.</span><span class="n">clear_errors</span><span class="p">()</span>
+                <span class="n">pump</span><span class="o">.</span><span class="n">hard_home</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">pump</span> <span class="ow">in</span> <span class="n">pumps</span><span class="p">:</span>
+                <span class="n">pump</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span></div>
+
+<div class="viewcode-block" id="Setup.setup_serial_devices"><a class="viewcode-back" href="../../source/tools.html#tools.chempiler_setup.Setup.setup_serial_devices">[docs]</a>    <span class="k">def</span> <span class="nf">setup_serial_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Grabs all serial devices from the graph and instantiates them.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: there must be a way to loop over the device types instead of explicitly coding every type individually</span>
+
+        <span class="c1"># initialise dict of already instantiated devices</span>
+        <span class="n">found_devices</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;IKA_ret_visc&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;RZR2052&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;IKA_RV10&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;CVC3000&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;CF41&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;Huber&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;conductivity_sensor&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;vacuum_valve&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;cartridge_carousel&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;microstar&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;usb_switch&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;chiller_switch&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;switching_valve&quot;</span><span class="p">:</span> <span class="p">{}</span>
+        <span class="p">}</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>  <span class="c1"># where each_node is a string containing the node name</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">device_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;serial_device_</span><span class="si">{0}</span><span class="s2">_type&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+                    <span class="n">device_port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;serial_device_</span><span class="si">{0}</span><span class="s2">_port&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">device_type</span> <span class="ow">or</span> <span class="n">device_port</span><span class="p">):</span>
+                        <span class="k">break</span>
+
+                    <span class="k">elif</span> <span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;IKA_ret_visc&quot;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;IKA_ret_visc&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_port</span><span class="p">):</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;IKA_ret_visc&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">SimIKARET</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;IKA_ret_visc&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">IKARETControlVisc</span><span class="p">(</span>
+                                <span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">,</span>
+                                <span class="n">device_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_IKA_ret_visc&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">),</span>
+                                <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">True</span>
+                            <span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;IKA_ret_visc&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="s2">&quot;IKA_ret_visc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>  <span class="c1"># TODO this is potentially troublesome as it precludes multiple serial devices of the same type on one node. I&#39;m somewhat struggling to think of a case where that would be desirable but it&#39;s something to keep in mind</span>
+
+                    <span class="k">elif</span> <span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;RZR2052&quot;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;RZR2052&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_port</span><span class="p">):</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;RZR2052&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">SimRZR2052</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;RZR2052&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">RZR_2052</span><span class="p">(</span>
+                                <span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">,</span>
+                                <span class="n">device_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_RZR2052&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">),</span>
+                                <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">True</span>
+                            <span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;RZR2052&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="s2">&quot;RZR2052&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+
+                    <span class="k">elif</span> <span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;microstar&quot;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;microstar&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_port</span><span class="p">):</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;microstar&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">SimIKAmicrostar</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;microstar&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">IKAmicrostar75</span><span class="p">(</span>
+                                <span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">,</span>
+                                <span class="n">device_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_microstar&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">),</span>
+                                <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">True</span>
+                            <span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;microstar&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="s2">&quot;microstar&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+
+                    <span class="k">elif</span> <span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;IKA_RV10&quot;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;IKA_RV10&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_port</span><span class="p">):</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;IKA_RV10&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">SimIKARV</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;IKA_RV10&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">IKARV10</span><span class="p">(</span>
+                                <span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">,</span>
+                                <span class="n">device_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_IKA_RV10&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">),</span>
+                                <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                <span class="n">soft_fail_for_testing</span><span class="o">=</span><span class="kc">True</span>
+                            <span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;IKA_RV10&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                            <span class="n">device_object</span><span class="o">.</span><span class="n">initialise</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="s2">&quot;IKA_RV10&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+
+                    <span class="k">elif</span> <span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;CVC3000&quot;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;CVC3000&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_port</span><span class="p">):</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;CVC3000&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">SimCVC3000</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;CVC3000&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">CVC3000</span><span class="p">(</span>
+                                <span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">,</span>
+                                <span class="n">device_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_CVC3000&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">),</span>
+                                <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">True</span>
+                            <span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;CVC3000&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                            <span class="n">device_object</span><span class="o">.</span><span class="n">initialise</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="s2">&quot;CVC3000&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+
+                    <span class="k">elif</span> <span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;CF41&quot;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;CF41&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_port</span><span class="p">):</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;CF41&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">SimJULABOCF41</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;CF41&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">JULABOCF41</span><span class="p">(</span>
+                                <span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">,</span>
+                                <span class="n">device_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_CF41&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">),</span>
+                                <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">True</span>
+                            <span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;CF41&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="s2">&quot;CF41&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+
+                    <span class="k">elif</span> <span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;Huber&quot;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;Huber&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_port</span><span class="p">):</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;Huber&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">SimHuber</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;Huber&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">Huber</span><span class="p">(</span>
+                                <span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">,</span>
+                                <span class="n">device_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_Huber&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">),</span>
+                                <span class="n">connect_on_instantiation</span><span class="o">=</span><span class="kc">True</span>
+                            <span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;Huber&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="s2">&quot;Huber&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+
+                    <span class="k">elif</span> <span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;conductivity_sensor&quot;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;conductivity_sensor&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_port</span><span class="p">):</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;conductivity_sensor&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># TODO: do something useful here</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;conductivity_sensor&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;conductivity_sensor&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="s2">&quot;conductivity_sensor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+
+                    <span class="k">elif</span> <span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;chiller_switch&quot;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;chiller_switch&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_port</span><span class="p">):</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;chiller_switch&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># TODO: do something useful here</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;chiller_switch&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">device_port</span><span class="p">)</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;chiller_switch&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="s2">&quot;chiller_switch&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+
+                    <span class="k">elif</span> <span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;vacuum_valve&quot;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;vacuum_valve&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_port</span><span class="p">):</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;vacuum_valve&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">SimChemputerValve</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">device_port</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_vacuum_valve&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">))</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;vacuum_valve&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">ChemputerValve</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">device_port</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_vacuum_valve&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">))</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;vacuum_valve&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                            <span class="n">device_object</span><span class="o">.</span><span class="n">clear_errors</span><span class="p">()</span>
+                        <span class="n">device_object</span><span class="o">.</span><span class="n">move_home</span><span class="p">()</span>
+                        <span class="n">device_object</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+                        <span class="n">device_object</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">BACKBONE_PORT</span><span class="p">)</span>
+                        <span class="n">device_object</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="s2">&quot;vacuum_valve&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+
+                    <span class="k">elif</span> <span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;cartridge_carousel&quot;</span><span class="p">:</span>
+                        <span class="n">ip_addresses</span> <span class="o">=</span> <span class="n">device_port</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;cartridge_carousel&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_port</span><span class="p">):</span>
+                            <span class="n">first_valve</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;cartridge_carousel&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="n">second_valve</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;cartridge_carousel&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                            <span class="n">first_valve</span> <span class="o">=</span> <span class="n">SimChemputerValve</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">ip_addresses</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_first_cartridge_valve&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">))</span>
+                            <span class="n">second_valve</span> <span class="o">=</span> <span class="n">SimChemputerValve</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">ip_addresses</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_second_cartridge_valve&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">))</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;cartridge_carousel&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">first_valve</span><span class="p">,</span> <span class="n">second_valve</span><span class="p">]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">first_valve</span> <span class="o">=</span> <span class="n">ChemputerValve</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">ip_addresses</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_first_cartridge_valve&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">))</span>
+                            <span class="n">second_valve</span> <span class="o">=</span> <span class="n">ChemputerValve</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">ip_addresses</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_second_cartridge_valve&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">))</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;cartridge_carousel&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">first_valve</span><span class="p">,</span> <span class="n">second_valve</span><span class="p">]</span>
+                            <span class="n">first_valve</span><span class="o">.</span><span class="n">clear_errors</span><span class="p">()</span>
+                            <span class="n">second_valve</span><span class="o">.</span><span class="n">clear_errors</span><span class="p">()</span>
+                        <span class="n">first_valve</span><span class="o">.</span><span class="n">move_home</span><span class="p">()</span>
+                        <span class="n">second_valve</span><span class="o">.</span><span class="n">move_home</span><span class="p">()</span>
+                        <span class="n">first_valve</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+                        <span class="n">second_valve</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+                        <span class="n">first_valve</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">STRAIGHT_THROUGH</span><span class="p">)</span>
+                        <span class="n">second_valve</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">STRAIGHT_THROUGH</span><span class="p">)</span>
+                        <span class="n">first_valve</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+                        <span class="n">second_valve</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="s2">&quot;cartridge_carousel&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">first_valve</span><span class="p">,</span> <span class="n">second_valve</span><span class="p">]</span>
+
+                    <span class="k">elif</span> <span class="n">device_type</span> <span class="o">==</span> <span class="s2">&quot;switching_valve&quot;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;switching_valve&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_port</span><span class="p">):</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;switching_valve&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">SimChemputerValve</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">device_port</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_switching_valve&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">))</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;switching_valve&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">device_object</span> <span class="o">=</span> <span class="n">ChemputerValve</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">device_port</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_switching_valve&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">))</span>
+                            <span class="n">found_devices</span><span class="p">[</span><span class="s2">&quot;switching_valve&quot;</span><span class="p">][</span><span class="n">device_port</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+                            <span class="n">device_object</span><span class="o">.</span><span class="n">clear_errors</span><span class="p">()</span>
+                        <span class="n">device_object</span><span class="o">.</span><span class="n">move_home</span><span class="p">()</span>
+                        <span class="n">device_object</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+                        <span class="n">device_object</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">WASTE_PORT</span><span class="p">)</span>
+                        <span class="n">device_object</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="s2">&quot;switching_valve&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device_object</span>
+
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Serial devices could not be instantiated!</span><span class="se">\n</span><span class="s1">Error: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span></div>
+
+<div class="viewcode-block" id="Setup.setup_special_devices"><a class="viewcode-back" href="../../source/tools.html#tools.chempiler_setup.Setup.setup_special_devices">[docs]</a>    <span class="k">def</span> <span class="nf">setup_special_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finds all devices that have two physical inputs (e.g. separator, filter etc.), find the attached &quot;bottom&quot;, and</span>
+<span class="sd">        deletes the edge between them.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>  <span class="c1"># where each_node is a string containing the node name</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">SPECIAL_DEVICES</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">successors</span><span class="p">(</span><span class="n">each_node</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># that is, if it has exactly one successor</span>
+                    <span class="n">associated_flask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">successors</span><span class="p">(</span><span class="n">each_node</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">ASSOCIATED_FLASK</span><span class="p">]</span> <span class="o">=</span> <span class="n">associated_flask</span>  <span class="c1"># make the successor an associated item</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">associated_flask</span><span class="p">][</span><span class="n">PARENT_FLASK</span><span class="p">]</span> <span class="o">=</span> <span class="n">each_node</span>  <span class="c1"># establish bidirectional association</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">each_node</span><span class="p">,</span> <span class="n">associated_flask</span><span class="p">)</span>  <span class="c1"># and then remove the edge (otherwise path finding gets screwed)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Cronin Group;
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
