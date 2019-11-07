@@ -120,7 +120,7 @@ This subfolder contains the graph and ChASM files of all the various syntheses p
 
 ## Acknowledgments
 
-* Stefan Glatzel
-* Anna Andreou
-* Gerardo Aragon
+* Stefan Glatzel (Cronin Group member)
+* Anna Andreou (Cronin Group member)
+* Gerardo Aragon (Cronin Group member)
 * Leroy (Lee) Cronin - PI for the project and inventor of the abstraction

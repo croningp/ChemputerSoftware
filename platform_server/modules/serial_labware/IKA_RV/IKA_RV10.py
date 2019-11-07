@@ -7,8 +7,7 @@
 .. module:: IKA_RV10
    :platform: Windows
    :synopsis: Control IKA RV10 rotary evaporator.
-.. moduleauthor:: Sebastian Steiner <s.steiner.1@research.gla.ac.uk>
-.. moduleauthor:: Stefan Glatzel <stefan.glatzel@croningroupplc.com>
+.. moduleauthor:: Cronin Group 2017
 
 (c) 2017 The Cronin Group, University of Glasgow
 

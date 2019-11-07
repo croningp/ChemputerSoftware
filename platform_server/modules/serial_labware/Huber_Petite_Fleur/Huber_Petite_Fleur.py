@@ -7,8 +7,7 @@
 .. module:: Huber_Petite_Fleur
    :platform: Windows
    :synopsis: Control Huber_Petite_Fleur recirculation chiller
-.. moduleauthor:: Sebastian Steiner <s.steiner.1@research.gla.ac.uk>
-.. moduleauthor:: Stefan Glatzel <stefan.glatzel@croningroupplc.com>
+.. moduleauthor:: Cronin Group 2018
 
 (c) 2018 The Cronin Group, University of Glasgow
 

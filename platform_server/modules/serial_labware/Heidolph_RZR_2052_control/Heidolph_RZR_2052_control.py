@@ -7,8 +7,7 @@
 .. module:: Heidolph_RZR_2052_control
    :platform: Windows
    :synopsis: Control Heidolph RZR 2052 control overhead stirrer
-.. moduleauthor:: Sebastian Steiner <s.steiner.1@research.gla.ac.uk>
-.. moduleauthor:: Stefan Glatzel <stefan.glatzel@croningroupplc.com>
+.. moduleauthor:: Cronin Group 2018
 
 (c) 2018 The Cronin Group, University of Glasgow
 

@@ -7,7 +7,7 @@
 .. module:: serial_labware
    :platform: Windows
    :synopsis: Generic base class to control lab equipment via serial.
-.. moduleauthor:: Sebastian Steiner <s.steiner.1@research.gla.ac.uk>
+.. moduleauthor:: Cronin Group 2017
 
 (c) 2017 The Cronin Group, University of Glasgow
 
@@ -15,7 +15,7 @@ This provides a generic python class for safe serial communication
 with various lab equipment over serial interfaces (RS232, RS485, USB)
 by sending command strings. This parent class handles establishing
 a connection as well as sending and receiving commands.
-Based on code originally developed by Stefan Glatzel.
+Based on code originally developed by the Cronin Group.
 
 For style guide used see http://xkcd.com/1513/
 """

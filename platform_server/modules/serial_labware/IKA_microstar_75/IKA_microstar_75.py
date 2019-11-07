@@ -7,13 +7,12 @@
 .. module:: IKA_microstar_75
    :platform: Windows
    :synopsis: Control IKA microstar 7.5 overhead stirrer.
-.. moduleauthor:: Sebastian Steiner <s.steiner.1@research.gla.ac.uk>
-.. moduleauthor:: Stefan Glatzel <stefan.glatzel@croningroupplc.com>
+.. moduleauthor:: Cronin Group 2018
 
 (c) 2018 The Cronin Group, University of Glasgow
 
 This provides a python class for the IKA microstar 7.5 overhead stirrer
-based on software developed by Stefan Glatzel.
+based on software developed by the Cronin Group.
 The command implementation is based on the German manual pages 32-34.
 
 For style guide used see http://xkcd.com/1513/

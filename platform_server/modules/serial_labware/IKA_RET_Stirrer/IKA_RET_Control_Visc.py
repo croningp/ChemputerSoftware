@@ -7,13 +7,12 @@
 .. module:: IKA_RET_Control_Visc
    :platform: Windows
    :synopsis: Control IKA RET Control Visc hotplate stirrer.
-.. moduleauthor:: Sebastian Steiner <s.steiner.1@research.gla.ac.uk>
-.. moduleauthor:: Stefan Glatzel <stefan.glatzel@croningroupplc.com>
+.. moduleauthor:: Cronin Group 2017
 
 (c) 2017 The Cronin Group, University of Glasgow
 
 This provides a python class for the IKA RET Control Visc Hotplates
-based on software developed by Stefan Glatzel.
+based on software developed by the Cronin Group.
 The command implementation is based on the english manual:
 English manual version: 20000004159, RET control-visc_112015
 Pages 31 - 34, the german version, same file pages 15 - 18 appears
