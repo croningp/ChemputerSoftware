@@ -104,7 +104,7 @@ This subfolder holds all the techincal stuff under the hood. **chempiler_setup.p
 
 The subfolder **module_execution** contains all the Executioners. Those are wrapper classes that sit on top of the device drivers. They are aware of the graph, and expose a unified interface to the command dispatcher which sits on top of the Executioners. This way different pieces of hardware of the same family (such as different brands of stirrers or chillers) can be used without having to change the high-level code.
 
-The subfolder **parsing** contais the ChASM parser. For details on why and how have a look at the [PLY documentation](http://www.dabeaz.com/ply/ply.html).
+The subfolder **parsing** contains the ChASM parser. For details on why and how have a look at the [PLY documentation](http://www.dabeaz.com/ply/ply.html).
 
 ## experiments
 
