@@ -1,0 +1,81 @@
+2018-07-31 00:03:12,980 ; DEBUG ; chempiler_client ; MainThread ; User Input:
+XML file: C:\Users\group\Documents\Chempiler\experiments\graph\chemputer_rig_3_sildenafil.graphml
+Command file: C:\Users\group\Documents\Chempiler\experiments\ChASM\clean_rig.chasm
+Simulation: n
+2018-07-31 00:03:13,207 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Clear errors DONE.
+2018-07-31 00:03:13,213 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:13,220 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Clear errors DONE.
+2018-07-31 00:03:13,226 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:13,233 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Clear errors DONE.
+2018-07-31 00:03:13,239 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:13,247 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Clear errors DONE.
+2018-07-31 00:03:13,253 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:13,260 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Clear errors DONE.
+2018-07-31 00:03:13,267 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:13,274 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Clear errors DONE.
+2018-07-31 00:03:13,280 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:13,644 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:03:13,962 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:03:14,056 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Move DONE
+2018-07-31 00:03:14,118 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:03:14,156 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Move DONE
+2018-07-31 00:03:14,336 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Move DONE
+2018-07-31 00:03:14,727 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:14,731 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:14,731 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:14,732 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:14,732 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:14,732 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:14,733 ; DEBUG ; Chemputer_Device_API ; valve_reagents_2 TCP thread ; Move DONE
+2018-07-31 00:03:14,733 ; DEBUG ; Chemputer_Device_API ; valve_solvents TCP thread ; Move DONE
+2018-07-31 00:03:14,734 ; DEBUG ; Chemputer_Device_API ; valve_reactor TCP thread ; Move DONE
+2018-07-31 00:03:14,734 ; DEBUG ; Chemputer_Device_API ; valve_separator TCP thread ; Move DONE
+2018-07-31 00:03:14,735 ; DEBUG ; Chemputer_Device_API ; valve_rotary TCP thread ; Move DONE
+2018-07-31 00:03:15,156 ; DEBUG ; Chemputer_Device_API ; valve_reagents_1 TCP thread ; Move DONE
+2018-07-31 00:03:15,772 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Clear errors DONE.
+2018-07-31 00:03:15,778 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:15,785 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Clear errors DONE.
+2018-07-31 00:03:15,791 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:15,798 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Clear errors DONE.
+2018-07-31 00:03:15,804 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:15,810 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Clear errors DONE.
+2018-07-31 00:03:15,817 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:15,823 ; DEBUG ; Chemputer_Device_API ; pump_separator TCP thread ; Clear errors DONE.
+2018-07-31 00:03:15,829 ; DEBUG ; Chemputer_Device_API ; pump_separator TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:15,836 ; DEBUG ; Chemputer_Device_API ; pump_rotary TCP thread ; Clear errors DONE.
+2018-07-31 00:03:15,842 ; DEBUG ; Chemputer_Device_API ; pump_rotary TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:19,786 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; DONE. New home reading is 826
+2018-07-31 00:03:19,793 ; DEBUG ; Chemputer_Device_API ; pump_reagents_2 TCP thread ; Homing DONE.
+2018-07-31 00:03:19,830 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; DONE. New home reading is 599
+2018-07-31 00:03:19,837 ; DEBUG ; Chemputer_Device_API ; pump_reagents_1 TCP thread ; Homing DONE.
+2018-07-31 00:03:19,841 ; DEBUG ; Chemputer_Device_API ; pump_separator TCP thread ; DONE. New home reading is 605
+2018-07-31 00:03:19,848 ; DEBUG ; Chemputer_Device_API ; pump_separator TCP thread ; Homing DONE.
+2018-07-31 00:03:19,863 ; DEBUG ; Chemputer_Device_API ; pump_rotary TCP thread ; DONE. New home reading is 630
+2018-07-31 00:03:19,869 ; DEBUG ; Chemputer_Device_API ; pump_rotary TCP thread ; Homing DONE.
+2018-07-31 00:03:19,880 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; DONE. New home reading is 608
+2018-07-31 00:03:19,888 ; DEBUG ; Chemputer_Device_API ; pump_reactor TCP thread ; Homing DONE.
+2018-07-31 00:03:19,906 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; DONE. New home reading is 581
+2018-07-31 00:03:19,913 ; DEBUG ; Chemputer_Device_API ; pump_solvents TCP thread ; Homing DONE.
+2018-07-31 00:03:21,317 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Clear errors DONE.
+2018-07-31 00:03:21,347 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:22,148 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Move DONE
+2018-07-31 00:03:22,344 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:22,829 ; DEBUG ; Chemputer_Device_API ; filter_filter_top_vacuum_valve TCP thread ; Move DONE
+2018-07-31 00:03:24,404 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Initialising IKA RV10...
+2018-07-31 00:03:24,428 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Starting rotation...
+2018-07-31 00:03:24,716 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Stopping rotation...
+2018-07-31 00:03:25,028 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Starting heater...
+2018-07-31 00:03:25,300 ; DEBUG ; IKA_RV10 ; rotavap_IKA_RV10_command_handler ; Stopping heater...
+2018-07-31 00:03:26,109 ; DEBUG ; VACUUM_PUMP_CVC_3000 ; MainThread ; Initialising CVC3000...
+2018-07-31 00:03:26,844 ; DEBUG ; VACUUM_PUMP_CVC_3000 ; MainThread ; Done.
+2018-07-31 00:03:27,082 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Clear errors DONE.
+2018-07-31 00:03:27,140 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Clear errors DONE.
+2018-07-31 00:03:27,219 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:27,254 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:28,235 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Move DONE
+2018-07-31 00:03:28,317 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Move DONE
+2018-07-31 00:03:28,592 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:28,628 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Actuation SUCCESS!
+2018-07-31 00:03:28,628 ; DEBUG ; Chemputer_Device_API ; rotavap_first_cartridge_valve TCP thread ; Move DONE
+2018-07-31 00:03:28,640 ; DEBUG ; Chemputer_Device_API ; rotavap_second_cartridge_valve TCP thread ; Move DONE
+2018-07-31 00:03:29,487 ; ERROR ; ChASM_parser ; MainThread ; Syntax error in line 6: offending token: LexToken(WORD,'clean_hose',6,181)

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tools.module_execution.rotavap_execution &mdash; Chempiler 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Chempiler
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Chempiler</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>tools.module_execution.rotavap_execution</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tools.module_execution.rotavap_execution</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;rotavap_execution&quot; -- Mid-level wrapper class around :mod:&quot;IKA_RV10&quot;</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: rotavap_execution</span>
+<span class="sd">   :platform: Windows, Unix</span>
+<span class="sd">   :synopsis: Mid-level wrapper around rotavap control, provides real-live useful methods</span>
+<span class="sd">.. moduleauthor:: Graham Keenan &lt;1105045k@student.gla.ac.uk&gt;</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+
+<span class="sd">(c) 2017 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This class provides all real-life applications of rotavaps within the Chemputer rig, essentially just wrapping</span>
+<span class="sd">the original class methods.</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+
+<div class="viewcode-block" id="RotavapExecutioner"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner">[docs]</a><span class="k">class</span> <span class="nc">RotavapExecutioner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for interfacing with the Rotavap objects</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap</span><span class="p">,</span> <span class="n">simulation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialiser for the RotavapExecutioner class</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap (dict): Dictionary containing the rotavap names and their associated objects</span>
+<span class="sd">            simulation (bool): Simulation mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span> <span class="o">=</span> <span class="n">rotavap</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span> <span class="o">=</span> <span class="n">simulation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;main_logger.rotavap_executioner_logger&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TEMP_WINDOW</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># degrees</span>
+
+<div class="viewcode-block" id="RotavapExecutioner.initialise"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner.initialise">[docs]</a>    <span class="k">def</span> <span class="nf">initialise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts the heater for the heating bath</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap_name (str): Name of the rotavap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initialising rotavap </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rotavap_name</span><span class="p">))</span>
+        <span class="n">rotavap_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span><span class="p">[</span><span class="n">rotavap_name</span><span class="p">]</span>
+        <span class="n">rotavap_obj</span><span class="o">.</span><span class="n">initialise</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RotavapExecutioner.start_heater"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner.start_heater">[docs]</a>    <span class="k">def</span> <span class="nf">start_heater</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts the heater for the heating bath</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap_name (str): Name of the rotavap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting heater for rotavap </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rotavap_name</span><span class="p">))</span>
+        <span class="n">rotavap_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span><span class="p">[</span><span class="n">rotavap_name</span><span class="p">]</span>
+        <span class="n">rotavap_obj</span><span class="o">.</span><span class="n">start_heater</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RotavapExecutioner.stop_heater"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner.stop_heater">[docs]</a>    <span class="k">def</span> <span class="nf">stop_heater</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stops the heater for the heating bath</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap_name (str): Name of the rotavap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stopping heater for rotavap </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rotavap_name</span><span class="p">))</span>
+        <span class="n">rotavap_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span><span class="p">[</span><span class="n">rotavap_name</span><span class="p">]</span>
+        <span class="n">rotavap_obj</span><span class="o">.</span><span class="n">stop_heater</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RotavapExecutioner.wait_for_temp"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner.wait_for_temp">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Waits for the rotavap to reach its setpoint temperature (approaching from either way)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap_name (str): Name of the rotavap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting for temperature... Done.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rotavap_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span><span class="p">[</span><span class="n">rotavap_name</span><span class="p">]</span>
+            <span class="n">dummy</span> <span class="o">=</span> <span class="n">rotavap_obj</span><span class="o">.</span><span class="n">temperature_sp</span>  <span class="c1"># reading the fucking setpoint so the fucking rotavap fucking reports fucking accurately</span>
+            <span class="n">setpointfloat</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">rotavap_obj</span><span class="o">.</span><span class="n">temperature_sp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;rotavap </span><span class="si">{0}</span><span class="s2"> waiting to reach </span><span class="si">{1}</span><span class="s2">°C...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rotavap_name</span><span class="p">,</span> <span class="n">setpointfloat</span><span class="p">))</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">current_temp</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">rotavap_obj</span><span class="o">.</span><span class="n">temperature_pv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Oh noes! Something went wrong!&quot;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">current_temp</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">setpointfloat</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">TEMP_WINDOW</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Still heating... Current temperature: </span><span class="si">{0}</span><span class="s2">°C&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_temp</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="n">current_temp</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">setpointfloat</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">TEMP_WINDOW</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Still cooling... Current temperature: </span><span class="si">{0}</span><span class="s2">°C&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_temp</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>  <span class="c1"># that&#39;s kinda important...</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="RotavapExecutioner.start_rotation"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner.start_rotation">[docs]</a>    <span class="k">def</span> <span class="nf">start_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts rotating the arm of the rotavap</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap_name (str): Name of the rotavap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting rotation for rotavap </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rotavap_name</span><span class="p">))</span>
+        <span class="n">rotavap_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span><span class="p">[</span><span class="n">rotavap_name</span><span class="p">]</span>
+        <span class="n">rotavap_obj</span><span class="o">.</span><span class="n">start_rotation</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RotavapExecutioner.stop_rotation"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner.stop_rotation">[docs]</a>    <span class="k">def</span> <span class="nf">stop_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stops rotating the arm of the rotavap</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap_name (str): Name of the rotavap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stopping rotation for rotavap </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rotavap_name</span><span class="p">))</span>
+        <span class="n">rotavap_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span><span class="p">[</span><span class="n">rotavap_name</span><span class="p">]</span>
+        <span class="n">rotavap_obj</span><span class="o">.</span><span class="n">stop_rotation</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RotavapExecutioner.lift_up"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner.lift_up">[docs]</a>    <span class="k">def</span> <span class="nf">lift_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Raises the arm of the rotavap</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap_name (str): Name of the rotavap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Lifting up rotavap </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rotavap_name</span><span class="p">))</span>
+        <span class="n">rotavap_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span><span class="p">[</span><span class="n">rotavap_name</span><span class="p">]</span>
+        <span class="n">rotavap_obj</span><span class="o">.</span><span class="n">lift_up</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RotavapExecutioner.lift_down"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner.lift_down">[docs]</a>    <span class="k">def</span> <span class="nf">lift_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lowers the arm of the rotavap</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap_name (str): Name of the rotavap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Lifting down rotavap </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rotavap_name</span><span class="p">))</span>
+        <span class="n">rotavap_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span><span class="p">[</span><span class="n">rotavap_name</span><span class="p">]</span>
+        <span class="n">rotavap_obj</span><span class="o">.</span><span class="n">lift_down</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RotavapExecutioner.reset"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the rotavap</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap_name (str): Name of the rotavap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Resetting rotavap </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rotavap_name</span><span class="p">))</span>
+        <span class="n">rotavap_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span><span class="p">[</span><span class="n">rotavap_name</span><span class="p">]</span>
+        <span class="n">rotavap_obj</span><span class="o">.</span><span class="n">reset_rotavap</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RotavapExecutioner.set_temp"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner.set_temp">[docs]</a>    <span class="k">def</span> <span class="nf">set_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap_name</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the temperature of the heating bath</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap_name (str): Name of the rotavap</span>
+<span class="sd">            temp (float): Temperature to set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting temperature for rotavap </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2">°C...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rotavap_name</span><span class="p">,</span> <span class="n">temp</span><span class="p">))</span>
+        <span class="n">rotavap_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span><span class="p">[</span><span class="n">rotavap_name</span><span class="p">]</span>
+        <span class="n">rotavap_obj</span><span class="o">.</span><span class="n">temperature_sp</span> <span class="o">=</span> <span class="n">temp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RotavapExecutioner.set_rotation"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner.set_rotation">[docs]</a>    <span class="k">def</span> <span class="nf">set_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap_name</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the speed of rotation for the rotavap arm</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap_name (str): Name of the rotavap</span>
+<span class="sd">            speed (int): Speed of rotation to set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting RPM for rotavap </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2"> RPM...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rotavap_name</span><span class="p">,</span> <span class="n">speed</span><span class="p">))</span>
+        <span class="n">rotavap_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span><span class="p">[</span><span class="n">rotavap_name</span><span class="p">]</span>
+        <span class="n">rotavap_obj</span><span class="o">.</span><span class="n">rotation_speed_sp</span> <span class="o">=</span> <span class="n">speed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RotavapExecutioner.set_interval"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.rotavap_execution.RotavapExecutioner.set_interval">[docs]</a>    <span class="k">def</span> <span class="nf">set_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotavap_name</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the interval for the rotavap</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rotavap_name (str): Name of the rotavap</span>
+<span class="sd">            interval (int): Interval in seconds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting interval for rotavap </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2"> seconds...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rotavap_name</span><span class="p">,</span> <span class="n">interval</span><span class="p">))</span>
+        <span class="n">rotavap_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotavap</span><span class="p">[</span><span class="n">rotavap_name</span><span class="p">]</span>
+        <span class="n">rotavap_obj</span><span class="o">.</span><span class="n">set_interval_sp</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Cronin Group;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

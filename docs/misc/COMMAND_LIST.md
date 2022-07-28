@@ -46,20 +46,3 @@ See below for a full list of supported commands
 * SET_ROTATION {name} {rotation}
 * RV_WAIT_FOR_TEMP {name}
 * SET_INTERVAL {name} {interval}
-
-
-## Vacuum Pump (CVC3000)
-**NOTE** The parameter {name} refers to the node the device is attached to (e.g. rotavap)
-
-* INIT_VAC_PUMP {name}
-* GET_VAC_SP {name}
-* SET_VAC_SP {name} {set_point}
-* START_VAC {name}
-* STOP_VAC {name}
-* VENT_VAC {name}
-* GET_VAC_STATUS {name}
-* GET_END_VAC_SP {name} {set_point}
-* SET_END_VAC_SP {name} {set_point}
-* GET_RUNTIME_SP {name}
-* SET_RUNTIME_SP {name} {set_point}
-* SET_SPEED_SP {name} {set_point}

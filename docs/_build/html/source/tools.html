@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tools package &mdash; Chempiler 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Chempiler
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">tools package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#tools-chempiler-setup-module">tools.chempiler_setup module</a></li>
+<li><a class="reference internal" href="#module-tools.cmd_execution">tools.cmd_execution module</a><ul>
+<li><a class="reference internal" href="#mod-cmd-execution-command-dispatcher-and-deep-control-layer-for-the-chemputer">:mod:”cmd_execution” – Command dispatcher and deep control layer for the Chemputer</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-tools.constants">tools.constants module</a><ul>
+<li><a class="reference internal" href="#mod-constants-global-constants-file-for-easy-maintenance">:mod:”constants” – Global constants file for easy maintenance</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tools-vlogging-module">tools.vlogging module</a></li>
+<li><a class="reference internal" href="#module-tools">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Chempiler</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>tools package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/source/tools.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tools-package">
+<h1>tools package<a class="headerlink" href="#tools-package" title="Permalink to this headline"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tools.module_execution.html">tools.module_execution package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools.module_execution.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.module_execution.html#tools-module-execution-auto-column-module">tools.module_execution.auto_column module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.module_execution.html#module-tools.module_execution.camera_execution">tools.module_execution.camera_execution module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.module_execution.html#mod-camera-execution-mid-level-hack-to-change-camera-recording-speed">:mod:”camera_execution” – Mid-level hack to change camera recording speed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.module_execution.html#module-tools.module_execution.chiller_execution">tools.module_execution.chiller_execution module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.module_execution.html#mod-chiller-execution-mid-level-wrapper-class-around-mod-julabo-cf41">:mod:”chiller_execution” – Mid-level wrapper class around :mod:”JULABO_CF41”</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.module_execution.html#module-tools.module_execution.pump_execution">tools.module_execution.pump_execution module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.module_execution.html#mod-pump-execution-mid-level-wrapper-class-around-mod-chemputer-device-api">:mod:”pump_execution” – Mid-level wrapper class around :mod:”Chemputer_Device_API”</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.module_execution.html#module-tools.module_execution.rotavap_execution">tools.module_execution.rotavap_execution module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.module_execution.html#mod-rotavap-execution-mid-level-wrapper-class-around-mod-ika-rv10">:mod:”rotavap_execution” – Mid-level wrapper class around :mod:”IKA_RV10”</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.module_execution.html#module-tools.module_execution.stirrer_execution">tools.module_execution.stirrer_execution module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.module_execution.html#mod-stirrer-execution-mid-level-wrapper-class-around-mod-ika-ret-control-visc">:mod:”stirrer_execution” – Mid-level wrapper class around :mod:”IKA_RET_Control_Visc”</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.module_execution.html#module-tools.module_execution.vacuum_execution">tools.module_execution.vacuum_execution module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.module_execution.html#mod-vacuum-execution-mid-level-wrapper-class-around-vaccum-pump">:mod:”vacuum_execution” – Mid-level wrapper class around vaccum pump</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.module_execution.html#module-tools.module_execution">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.parsing.html">tools.parsing package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#tools-parsing-chasm-lexer-module">tools.parsing.ChASM_lexer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#tools-parsing-chasm-parser-module">tools.parsing.ChASM_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#tools-parsing-parsetab-module">tools.parsing.parsetab module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.parsing.html#module-tools.parsing">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="tools-chempiler-setup-module">
+<h2>tools.chempiler_setup module<a class="headerlink" href="#tools-chempiler-setup-module" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-tools.cmd_execution">
+<span id="tools-cmd-execution-module"></span><h2>tools.cmd_execution module<a class="headerlink" href="#module-tools.cmd_execution" title="Permalink to this headline"></a></h2>
+<section id="mod-cmd-execution-command-dispatcher-and-deep-control-layer-for-the-chemputer">
+<h3>:mod:”cmd_execution” – Command dispatcher and deep control layer for the Chemputer<a class="headerlink" href="#mod-cmd-execution-command-dispatcher-and-deep-control-layer-for-the-chemputer" title="Permalink to this headline"></a></h3>
+<span class="target" id="module-cmd_execution"></span><ol class="loweralpha simple" start="3">
+<li><p>2017 The Cronin Group, University of Glasgow</p></li>
+</ol>
+<p>This module provides a class that takes possession of the physical resources via the various module executioners,
+and carries out commands supplied as a list of “opcode” and arguments. This is the heart of the Chemputer control.</p>
+<p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="tools.cmd_execution.Executioner">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tools.cmd_execution.</span></span><span class="sig-name descname"><span class="pre">Executioner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tools.cmd_execution.Executioner" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Judge. Jury. Executioner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> (<em>ChemOSGraph</em>) – Graph object representing the physical platform_server, populated with module objects</p></li>
+<li><p><strong>simulation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether or not this is a simulation</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="tools.cmd_execution.Executioner.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.execute" title="Permalink to this definition"></a></dt>
+<dd><p>Executes the command, depending on the operation move that is passed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – List of arguments for a command</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tools.cmd_execution.Executioner.get_device_objects">
+<span class="sig-name descname"><span class="pre">get_device_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.get_device_objects"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.get_device_objects" title="Permalink to this definition"></a></dt>
+<dd><p>Goes through the graph, grabbing the objects that held in the nodes depending on the passed flag</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>flag</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Flag identifying what objects to retrieve (Pumps, Valves, Stirrer, Rotavap, etc.)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing the name of the device and its associated object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>device_dict (Dict)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><strong>Exception</strong></a> – No objects found</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tools.cmd_execution.Executioner.join_parallel_operations">
+<span class="sig-name descname"><span class="pre">join_parallel_operations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.join_parallel_operations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.join_parallel_operations" title="Permalink to this definition"></a></dt>
+<dd><p>Joins all parallel execution threads before processing a sequential command</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tools.cmd_execution.Executioner.process_camera_cmds">
+<span class="sig-name descname"><span class="pre">process_camera_cmds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_camera_cmds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_camera_cmds" title="Permalink to this definition"></a></dt>
+<dd><p>Processes a command involving the camera</p>
+<p>Commands are: [SET_RECORDING_SPEED]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – List of commands</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tools.cmd_execution.Executioner.process_chiller_cmds">
+<span class="sig-name descname"><span class="pre">process_chiller_cmds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_chiller_cmds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_chiller_cmds" title="Permalink to this definition"></a></dt>
+<dd><p>Processes a command involving the recirculation chiller</p>
+<p>Commands are: [START_CHILLER, STOP_CHILLER, SET_CHILLER, RAMP_CHILLER]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – List of commands</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tools.cmd_execution.Executioner.process_pump_cmd">
+<span class="sig-name descname"><span class="pre">process_pump_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_pump_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_pump_cmd" title="Permalink to this definition"></a></dt>
+<dd><p>Processes a command that involves the pumps/valves
+Commands are [MOVE, HOME]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – Command arguments</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tools.cmd_execution.Executioner.process_rotavap_cmd">
+<span class="sig-name descname"><span class="pre">process_rotavap_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_rotavap_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_rotavap_cmd" title="Permalink to this definition"></a></dt>
+<dd><p>Processes a command involving the rotavap</p>
+<p>Commands are [START_HEATER, STOP_HEATER, START_ROTATION, STOP_ROTATION, LIFT_UP, LIFT_DOWN, RESET, SET_BATH_TEMP, SET_ROTATION]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – Command arguments</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tools.cmd_execution.Executioner.process_stirring_cmd">
+<span class="sig-name descname"><span class="pre">process_stirring_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_stirring_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_stirring_cmd" title="Permalink to this definition"></a></dt>
+<dd><p>Processes a command involving the stirrer plates
+Commands are [STIR, HEAT, SET_TEMP, SET_STIR_RPM]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – Command arguments</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tools.cmd_execution.Executioner.process_vacuum_cmds">
+<span class="sig-name descname"><span class="pre">process_vacuum_cmds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_vacuum_cmds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_vacuum_cmds" title="Permalink to this definition"></a></dt>
+<dd><p>Processes a command involving the Vacuum pump</p>
+<p>Commands are: [INIT, GET_VAC_SP, SET_VAC_SP, START_VAC, STOP_VAC, VENT, GET_STATUS, GET_END_VAC_SP, SET_END_VAC_SP, GET_RUNTIME_SP, SET_RUNTIME_SP]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – List of commands</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tools.cmd_execution.Executioner.process_waiting_cmd">
+<span class="sig-name descname"><span class="pre">process_waiting_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.process_waiting_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.process_waiting_cmd" title="Permalink to this definition"></a></dt>
+<dd><p>Processes a command for waiting on the platform_server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>List</em>) – Command arguments</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tools.cmd_execution.Executioner.wait_with_feedback">
+<span class="sig-name descname"><span class="pre">wait_with_feedback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wait_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tools/cmd_execution.html#Executioner.wait_with_feedback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tools.cmd_execution.Executioner.wait_with_feedback" title="Permalink to this definition"></a></dt>
+<dd><p>Waits for a desired time and prints the wait progress.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>wait_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Time to wait in seconds</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="module-tools.constants">
+<span id="tools-constants-module"></span><h2>tools.constants module<a class="headerlink" href="#module-tools.constants" title="Permalink to this headline"></a></h2>
+<section id="mod-constants-global-constants-file-for-easy-maintenance">
+<h3>:mod:”constants” – Global constants file for easy maintenance<a class="headerlink" href="#mod-constants-global-constants-file-for-easy-maintenance" title="Permalink to this headline"></a></h3>
+<span class="target" id="module-constants"></span><ol class="loweralpha simple" start="3">
+<li><p>2018 The Cronin Group, University of Glasgow</p></li>
+</ol>
+<p>This file contains all constants used in the Chempiler project,
+such as dictionary keys, device types, and so forth. Keeping them
+all in one file makes future maintenance a lot easier and avoids duplicates.</p>
+<p>For style guide used see <a class="reference external" href="http://xkcd.com/1513/">http://xkcd.com/1513/</a></p>
+</section>
+</section>
+<section id="tools-vlogging-module">
+<h2>tools.vlogging module<a class="headerlink" href="#tools-vlogging-module" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-tools">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tools" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Cronin Group;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

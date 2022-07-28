@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tools.module_execution.pump_execution &mdash; Chempiler 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Chempiler
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Chempiler</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>tools.module_execution.pump_execution</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tools.module_execution.pump_execution</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;pump_execution&quot; -- Mid-level wrapper class around :mod:&quot;Chemputer_Device_API&quot;</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: pump_execution</span>
+<span class="sd">   :platform: Windows, Unix</span>
+<span class="sd">   :synopsis: Mid-level wrapper around pump and valve control, provides real-live useful methods</span>
+<span class="sd">.. moduleauthor:: Graham Keenan &lt;1105045k@student.gla.ac.uk&gt;</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+
+<span class="sd">(c) 2017 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This class provides all real-life applications of pumps and valves within the Chemputer rig, most notably</span>
+<span class="sd">the path finding algorithm and the moving of material based on that. It also has some compound operations like</span>
+<span class="sd">phase separation that are needed to operate the Chemputer rig.</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+<span class="c1"># To get references to Chemputer pump and valve objects</span>
+<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getfile</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s2">&quot;..&#39;, &#39;..&quot;</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">modules.pv_api.Chemputer_Device_API</span> <span class="kn">import</span> <span class="n">ChemputerPump</span><span class="p">,</span> <span class="n">ChemputerValve</span>
+<span class="kn">from</span> <span class="nn">sims.hardware_sim</span> <span class="kn">import</span> <span class="n">SimChemputerPump</span><span class="p">,</span> <span class="n">SimChemputerValve</span>
+<span class="kn">from</span> <span class="nn">tools.constants</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="PumpExecutioner"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner">[docs]</a><span class="k">class</span> <span class="nc">PumpExecutioner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Executes the Pump movements around the platform_server</span>
+<span class="sd">    .. note:: Ignore the style faux pas of the simulation statements on a single line, it&#39;s better than taking up two</span>
+<span class="sd">        lines for something that will rarely be used!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">pumps</span><span class="p">,</span> <span class="n">valves</span><span class="p">,</span> <span class="n">simulation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialiser for the PumpExecutioner class.</span>
+<span class="sd">        :param DiGraph graph: Graph representing the platform</span>
+<span class="sd">        :param dict pumps: Dictionary contianing the pump names and their related objects</span>
+<span class="sd">        :param dict valves: Dictionary containing the valve namaes and their related objects</span>
+<span class="sd">        :param bool simulation: Whether or not this is a simulation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>  <span class="c1"># For determining the correct pumps attached to the valves</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pumps</span> <span class="o">=</span> <span class="n">pumps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valves</span> <span class="o">=</span> <span class="n">valves</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span> <span class="o">=</span> <span class="n">simulation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;main_logger.pump_executioner_logger&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PumpExecutioner.get_current_node_volume"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.get_current_node_volume">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_node_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks whether the node in question is a special device (filter, separator, rotavap, ...). If so, returns volume</span>
+<span class="sd">        of the associated flask, else returns node volume. I realise this helper is written in a verbose way, but this</span>
+<span class="sd">        is done on purpose for future proofing (maybe there will be other cases that are not as straightforward as the</span>
+<span class="sd">        ones currently implemented!).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node: (str) Name of the node to check</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            current_node_volume: (float) Current volume of the node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">FILTER</span><span class="p">:</span>
+            <span class="n">associated_flask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">ASSOCIATED_FLASK</span><span class="p">]</span>
+            <span class="n">current_node_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">associated_flask</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">SEPARATOR</span><span class="p">:</span>
+            <span class="n">associated_flask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">ASSOCIATED_FLASK</span><span class="p">]</span>
+            <span class="n">current_node_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">associated_flask</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">ROTAVAP</span><span class="p">:</span>
+            <span class="n">associated_flask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">ASSOCIATED_FLASK</span><span class="p">]</span>
+            <span class="n">current_node_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">associated_flask</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">current_node_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">current_node_volume</span></div>
+
+<div class="viewcode-block" id="PumpExecutioner.get_maximum_node_volume"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.get_maximum_node_volume">[docs]</a>    <span class="k">def</span> <span class="nf">get_maximum_node_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks whether the node in question is a special device (filter, separator, rotavap, ...). If so, returns</span>
+<span class="sd">        maximum volume of the associated flask, else returns node volume. I realise this helper is written in a verbose</span>
+<span class="sd">        way, but this is done on purpose for future proofing (maybe there will be other cases that are not as</span>
+<span class="sd">        straightforward as the ones currently implemented!).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node: (str) Name of the node to check</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            maximum_node_volume: (float) Maximum volume of the node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">FILTER</span><span class="p">:</span>
+            <span class="n">associated_flask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">ASSOCIATED_FLASK</span><span class="p">]</span>
+            <span class="n">maximum_node_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">associated_flask</span><span class="p">][</span><span class="n">MAX_VOLUME</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">SEPARATOR</span><span class="p">:</span>
+            <span class="n">associated_flask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">ASSOCIATED_FLASK</span><span class="p">]</span>
+            <span class="n">maximum_node_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">associated_flask</span><span class="p">][</span><span class="n">MAX_VOLUME</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">ROTAVAP</span><span class="p">:</span>
+            <span class="n">associated_flask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">ASSOCIATED_FLASK</span><span class="p">]</span>
+            <span class="n">maximum_node_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">associated_flask</span><span class="p">][</span><span class="n">MAX_VOLUME</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">maximum_node_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">MAX_VOLUME</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">maximum_node_volume</span></div>
+
+<div class="viewcode-block" id="PumpExecutioner.update_node_volumes"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.update_node_volumes">[docs]</a>    <span class="k">def</span> <span class="nf">update_node_volumes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">volume</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks whether either source or target node is a special device (filter, separator, rotavap, ...). If so,</span>
+<span class="sd">        updates the volumes of the associated flask as appropriate. Else, updates the node directly.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            source: (str) Name of the source node</span>
+<span class="sd">            target: (str) Name of the target node</span>
+<span class="sd">            volume: (float) Volume moved</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># deal with source node first</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">source</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">-</span> <span class="n">volume</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># can&#39;t be emptier than empty</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">source</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">source</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">-=</span> <span class="n">volume</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">source</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">PARENT_FLASK</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># if the source is a &quot;bottom&quot; of something</span>
+            <span class="n">parent_flask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">source</span><span class="p">][</span><span class="n">PARENT_FLASK</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">parent_flask</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">source</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">source</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ASSOCIATED_FLASK</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># if the source is a &quot;top&quot; of something</span>
+            <span class="n">associated_flask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">source</span><span class="p">][</span><span class="n">ASSOCIATED_FLASK</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">associated_flask</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">source</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span>
+
+        <span class="c1"># then deal with target node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">target</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">+=</span> <span class="n">volume</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">PARENT_FLASK</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># if the target is a &quot;bottom&quot; of something</span>
+            <span class="n">parent_flask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">target</span><span class="p">][</span><span class="n">PARENT_FLASK</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">parent_flask</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">+=</span> <span class="n">volume</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ASSOCIATED_FLASK</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># if the target is a &quot;top&quot; of something</span>
+            <span class="n">associated_flask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">target</span><span class="p">][</span><span class="n">ASSOCIATED_FLASK</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">associated_flask</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">+=</span> <span class="n">volume</span></div>
+
+<div class="viewcode-block" id="PumpExecutioner.is_valid_obj"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.is_valid_obj">[docs]</a>    <span class="k">def</span> <span class="nf">is_valid_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines if the the passed object is either a ChemputerPump or ChemputerValve, depending on the passed flag</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            flag (str): Type of object to check for</span>
+<span class="sd">            obj (Object): Object to compare</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            valid (bool): The object is of the expected type</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception: The object is not of the expected type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="n">PUMP</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">SimChemputerPump</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">flag</span> <span class="o">==</span> <span class="n">VALVE</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">SimChemputerValve</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Object is not what it</span><span class="se">\&#39;</span><span class="s2">s supposed to be!</span><span class="se">\n</span><span class="s2">Offending object: </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">Expected Type: </span><span class="si">{1}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;Simulated Pump/Valve&quot;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="n">PUMP</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">ChemputerPump</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">flag</span> <span class="o">==</span> <span class="n">VALVE</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">ChemputerValve</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Object is not what it</span><span class="se">\&#39;</span><span class="s2">s supposed to be!</span><span class="se">\n</span><span class="s2">Offending Object: </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">Expected Type: </span><span class="si">{1}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">flag</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="PumpExecutioner.home"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.home">[docs]</a>    <span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pump</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the target pump into the home position</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pump (str): Name of the pump to home</span>
+<span class="sd">            speed (int): Speed to move in milliliters per minute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pump_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pumps</span><span class="p">[</span><span class="n">pump</span><span class="p">]</span>
+        <span class="n">pump_object</span><span class="o">.</span><span class="n">move_to_home</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PumpExecutioner.move"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.move">[docs]</a>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">move_speed</span><span class="p">,</span> <span class="n">aspiration_speed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dispense_speed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the movement around the platform_server</span>
+<span class="sd">        Uses either a single valve or multiple valves</span>
+<span class="sd">        :param list path: List containing the path from the source to the destination and all valves in between</span>
+<span class="sd">        :param float volume: Total volume to move in mL</span>
+<span class="sd">        :param float move_speed: speed in mL/min for the moving along</span>
+<span class="sd">        :param float aspiration_speed: speed in mL/min for the initial aspiration. Defaults to move_speed</span>
+<span class="sd">        :param float dispense_speed: speed in mL/min for the final dispensing. Defaults to move_speed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># default speed settings</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">aspiration_speed</span><span class="p">:</span>
+            <span class="n">aspiration_speed</span> <span class="o">=</span> <span class="n">move_speed</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dispense_speed</span><span class="p">:</span>
+            <span class="n">dispense_speed</span> <span class="o">=</span> <span class="n">move_speed</span>
+
+        <span class="c1"># get source, destination and valves involved</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dest</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">valves_in_path</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">source_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_node_volume</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+        <span class="n">target_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_node_volume</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+        <span class="n">target_max_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_maximum_node_volume</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">volume</span> <span class="o">&gt;</span> <span class="n">source_volume</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Warning! MOVE instruction withdraws more (</span><span class="si">{0}</span><span class="s2">mL) than the current volume (</span><span class="si">{1}</span><span class="s2">mL)!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="n">source_volume</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">volume</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">target_max_volume</span> <span class="o">-</span> <span class="n">target_volume</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Warning! MOVE instruction (</span><span class="si">{0}</span><span class="s2">mL) overfills the target (</span><span class="si">{1}</span><span class="s2">mL left)!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="p">(</span><span class="n">target_max_volume</span> <span class="o">-</span> <span class="n">target_volume</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Moving </span><span class="si">{0}</span><span class="s2">mL from </span><span class="si">{1}</span><span class="s2"> to </span><span class="si">{2}</span><span class="s2"> at </span><span class="si">{3}</span><span class="s2">mL/min. Aspirating at </span><span class="si">{4}</span><span class="s2">mL/min, dispensing at </span><span class="si">{5}</span><span class="s2">mL/min.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">move_speed</span><span class="p">,</span> <span class="n">aspiration_speed</span><span class="p">,</span> <span class="n">dispense_speed</span><span class="p">))</span>
+
+        <span class="c1"># Debug for simulation</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Following path: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+        <span class="c1"># Checks if it&#39;s all valves in the path</span>
+        <span class="k">for</span> <span class="n">valve_name</span><span class="p">,</span> <span class="n">valve_object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valves</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">valve_name</span> <span class="ow">in</span> <span class="n">valves_in_path</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_valid_obj</span><span class="p">(</span><span class="n">VALVE</span><span class="p">,</span> <span class="n">valve_object</span><span class="p">):</span>
+                    <span class="k">continue</span>
+
+        <span class="c1"># actually move the pumps and valves</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valves_in_path</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Path length is 0, please check movement command!&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">valves_in_path</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_single_valve</span><span class="p">(</span><span class="n">valves_in_path</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">aspiration_speed</span><span class="p">,</span> <span class="n">dispense_speed</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_multiple_valves</span><span class="p">(</span><span class="n">valves_in_path</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">aspiration_speed</span><span class="p">,</span> <span class="n">move_speed</span><span class="p">,</span> <span class="n">dispense_speed</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_node_volumes</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">volume</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;New volumes are: </span><span class="si">{0}</span><span class="s2">: </span><span class="si">{1}</span><span class="s2">mL; </span><span class="si">{2}</span><span class="s2">: </span><span class="si">{3}</span><span class="s2">mL.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_node_volume</span><span class="p">(</span><span class="n">source</span><span class="p">),</span> <span class="n">dest</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_node_volume</span><span class="p">(</span><span class="n">dest</span><span class="p">)))</span></div>
+        
+<div class="viewcode-block" id="PumpExecutioner.move_single_valve"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.move_single_valve">[docs]</a>    <span class="k">def</span> <span class="nf">move_single_valve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valve</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">aspiration_speed</span><span class="p">,</span> <span class="n">dispense_speed</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the movement with a single valve</span>
+<span class="sd">        This occurs when the path would be [source_flask, valve, destination_flask]</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            valve: (str) Name of the valve</span>
+<span class="sd">            source: (str) Name of the source flask</span>
+<span class="sd">            dest: (str) Name of the destination flask</span>
+<span class="sd">            volume: (float) Volume to move in mL</span>
+<span class="sd">            aspiration_speed: (float) Speed in mL/min for the initial aspiration</span>
+<span class="sd">            dispense_speed: (float) Speed in mL/min for the final dispensing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">target_valve</span> <span class="o">=</span> <span class="n">valve</span>
+        <span class="n">target_pump</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">predecessors_iter</span><span class="p">(</span><span class="n">valve</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">PUMP</span><span class="p">:</span>
+                <span class="n">target_pump</span> <span class="o">=</span> <span class="n">each_node</span>
+                <span class="k">break</span>
+
+        <span class="n">valve_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valves</span><span class="p">[</span><span class="n">target_valve</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">target_pump</span><span class="p">:</span>
+            <span class="n">pump_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pumps</span><span class="p">[</span><span class="n">target_pump</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;No pump attached to valve!&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">source_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">succ</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">source</span><span class="p">][</span><span class="n">PORT</span><span class="p">]</span>
+            <span class="n">dest_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">succ</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">dest</span><span class="p">][</span><span class="n">PORT</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Unable to locate source/destination valve position&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;*** VOLUME TO MOVE: </span><span class="si">{0}</span><span class="s2"> ***&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">volume</span><span class="p">))</span>
+        <span class="k">while</span> <span class="n">volume</span> <span class="o">&gt;</span> <span class="n">EMPTY</span><span class="p">:</span>
+            <span class="n">valve_obj</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">source_position</span><span class="p">)</span>
+            <span class="n">valve_obj</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">volume</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">target_pump</span><span class="p">][</span><span class="n">MAX_VOLUME</span><span class="p">]:</span>
+                <span class="n">vol_to_pump</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">target_pump</span><span class="p">][</span><span class="n">MAX_VOLUME</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">vol_to_pump</span> <span class="o">=</span> <span class="n">volume</span>
+
+            <span class="n">pump_obj</span><span class="o">.</span><span class="n">move_absolute</span><span class="p">(</span><span class="n">vol_to_pump</span><span class="p">,</span> <span class="n">aspiration_speed</span><span class="p">)</span>
+            <span class="n">pump_obj</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span> <span class="n">sleep</span><span class="p">(</span><span class="n">EQUILIBRATION_TIME</span><span class="p">)</span>
+            <span class="n">valve_obj</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">dest_position</span><span class="p">)</span>
+            <span class="n">valve_obj</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+            <span class="n">pump_obj</span><span class="o">.</span><span class="n">move_absolute</span><span class="p">(</span><span class="n">EMPTY</span><span class="p">,</span> <span class="n">dispense_speed</span><span class="p">)</span>
+            <span class="n">pump_obj</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+
+            <span class="n">volume</span> <span class="o">-=</span> <span class="n">vol_to_pump</span>
+            <span class="k">if</span> <span class="n">volume</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">volume</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">mL left...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">volume</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PumpExecutioner.move_multiple_valves"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.move_multiple_valves">[docs]</a>    <span class="k">def</span> <span class="nf">move_multiple_valves</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valves</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">aspiration_speed</span><span class="p">,</span> <span class="n">move_speed</span><span class="p">,</span> <span class="n">dispense_speed</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the movement with multiple valves</span>
+<span class="sd">        Occurs when the path has multiple connections E.g. [source_flask, valve1, valve2, valve2, destination_flask]</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            valves (list): Names of the valves</span>
+<span class="sd">            source (str): Name of the source flask</span>
+<span class="sd">            dest (str): Name of the destination flask</span>
+<span class="sd">            volume (float): Volume to move in mL</span>
+<span class="sd">            aspiration_speed (float): Speed in mL/min for the initial aspiration</span>
+<span class="sd">            move_speed (float): Speed in mL/min for the moves across the backbone</span>
+<span class="sd">            dispense_speed (float: Speed in mL/min for the final dispensing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;*** TOTAL VOLUME TO MOVE: </span><span class="si">{0}</span><span class="s2"> ***&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">volume</span><span class="p">))</span>
+
+        <span class="n">connection_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">pumps</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">minimal_pump_volume</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">valve</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valves</span><span class="p">):</span>
+            <span class="c1"># set up the valve position ditionary</span>
+            <span class="n">connection_dict</span><span class="p">[</span><span class="n">valve</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">successors_iter</span><span class="p">(</span><span class="n">valve</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">each_node</span> <span class="o">==</span> <span class="n">source</span><span class="p">:</span>  <span class="c1"># if the source flask is connected</span>
+                        <span class="n">connection_dict</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">INPUT</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">succ</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">source</span><span class="p">][</span><span class="n">PORT</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">each_node</span> <span class="o">==</span> <span class="n">valves</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>  <span class="c1"># else if the previous valve is connected</span>
+                        <span class="n">connection_dict</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">INPUT</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">succ</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">valves</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]][</span><span class="n">PORT</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">each_node</span> <span class="o">==</span> <span class="n">dest</span><span class="p">:</span>  <span class="c1"># if the destination flask is connected</span>
+                        <span class="n">connection_dict</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">OUTPUT</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">succ</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">dest</span><span class="p">][</span><span class="n">PORT</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="n">each_node</span> <span class="o">==</span> <span class="n">valves</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>  <span class="c1"># else if the next valve is connected</span>
+                        <span class="n">connection_dict</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">OUTPUT</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">succ</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">valves</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]][</span><span class="n">PORT</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+            <span class="c1"># figure out the list of pumps involved</span>
+            <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">predecessors_iter</span><span class="p">(</span><span class="n">valve</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">PUMP</span><span class="p">:</span>
+                    <span class="n">pumps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">each_node</span><span class="p">)</span>
+                    <span class="k">break</span>
+
+            <span class="c1"># work out volume of the smallest syringe in the path</span>
+            <span class="k">for</span> <span class="n">pump</span> <span class="ow">in</span> <span class="n">pumps</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">minimal_pump_volume</span><span class="p">:</span>  <span class="c1"># for the first pump, just use the volume regardless</span>
+                    <span class="n">minimal_pump_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pump</span><span class="p">][</span><span class="n">MAX_VOLUME</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pump</span><span class="p">][</span><span class="n">MAX_VOLUME</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">minimal_pump_volume</span><span class="p">:</span>  <span class="c1"># for subsequent pumps, check if volume is smaller</span>
+                    <span class="n">minimal_pump_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pump</span><span class="p">][</span><span class="n">MAX_VOLUME</span><span class="p">]</span>
+
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># loop iterator</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># switch all the valves</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">valve</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valves</span><span class="p">):</span>
+                <span class="n">valve_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">OBJECT</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">^</span> <span class="nb">bool</span><span class="p">(</span><span class="n">j</span> <span class="o">%</span> <span class="mi">2</span><span class="p">):</span>  <span class="c1"># that is, on odd loop iterations, even valves, and vice versa</span>
+                    <span class="n">position</span> <span class="o">=</span> <span class="n">connection_dict</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">OUTPUT</span><span class="p">]</span>  <span class="c1"># switch to output</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">position</span> <span class="o">=</span> <span class="n">connection_dict</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">INPUT</span><span class="p">]</span>  <span class="c1"># switch to input</span>
+                <span class="n">valve_object</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">valve</span> <span class="ow">in</span> <span class="n">valves</span><span class="p">:</span>
+                <span class="n">valve_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">valve</span><span class="p">][</span><span class="n">OBJECT</span><span class="p">]</span>
+                <span class="n">valve_object</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+
+            <span class="c1"># move all the pumps</span>
+            <span class="c1"># this is a bit complicated. I have to iterate over the pumps backwards, otherwise it accesses the volume of</span>
+            <span class="c1"># the &quot;previous&quot; pump after the volume has been updated. Python offers the reversed() method, but that only</span>
+            <span class="c1"># works on lists, not enumerator objects. So in order to &quot;reverse enumerate&quot; the reversed list, I do a</span>
+            <span class="c1"># normal enumeration, and then inside the loop &quot;flip&quot; the index j with &quot;j = len(pumps) - j - 1&quot;.</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">pump</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">pumps</span><span class="p">)):</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pumps</span><span class="p">)</span> <span class="o">-</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># &quot;flip&quot; iterator</span>
+                <span class="n">pump_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pump</span><span class="p">][</span><span class="n">OBJECT</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">):</span>  <span class="c1"># i.e. even loop iterations</span>
+                    <span class="c1"># work out volume to pump</span>
+                    <span class="k">if</span> <span class="n">volume</span> <span class="o">&gt;</span> <span class="n">minimal_pump_volume</span><span class="p">:</span>
+                        <span class="n">volume_to_pump</span> <span class="o">=</span> <span class="n">minimal_pump_volume</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">volume_to_pump</span> <span class="o">=</span> <span class="n">volume</span>
+                    <span class="n">volume</span> <span class="o">-=</span> <span class="n">volume_to_pump</span>
+                    <span class="k">if</span> <span class="n">volume_to_pump</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">mL left...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">volume</span><span class="p">))</span>
+                        <span class="n">pump_object</span><span class="o">.</span><span class="n">move_absolute</span><span class="p">(</span><span class="n">volume_to_pump</span><span class="p">,</span> <span class="n">aspiration_speed</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pump</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">=</span> <span class="n">volume_to_pump</span>  <span class="c1"># update node</span>
+                <span class="k">elif</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">):</span>  <span class="c1"># i.e. odd loop iterations</span>
+                    <span class="c1"># move to 0</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pump</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">pump_object</span><span class="o">.</span><span class="n">move_absolute</span><span class="p">(</span><span class="n">EMPTY</span><span class="p">,</span> <span class="n">move_speed</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pump</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># update node</span>
+                <span class="k">elif</span> <span class="nb">bool</span><span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">^</span> <span class="nb">bool</span><span class="p">(</span><span class="n">j</span> <span class="o">%</span> <span class="mi">2</span><span class="p">):</span>  <span class="c1"># that is, on odd loop iterations, even pumps, and vice versa</span>
+                    <span class="c1"># move to 0</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pump</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">pumps</span><span class="p">):</span>  <span class="c1"># if it&#39;s the last pump</span>
+                            <span class="n">pump_object</span><span class="o">.</span><span class="n">move_absolute</span><span class="p">(</span><span class="n">EMPTY</span><span class="p">,</span> <span class="n">dispense_speed</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">pump_object</span><span class="o">.</span><span class="n">move_absolute</span><span class="p">(</span><span class="n">EMPTY</span><span class="p">,</span> <span class="n">move_speed</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pump</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># update node</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># move to volume of pump j - 1</span>
+                    <span class="n">prev_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pumps</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">prev_volume</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">pump_object</span><span class="o">.</span><span class="n">move_absolute</span><span class="p">(</span><span class="n">prev_volume</span><span class="p">,</span> <span class="n">move_speed</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pump</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]</span> <span class="o">=</span> <span class="n">prev_volume</span>  <span class="c1"># update node</span>
+
+            <span class="k">for</span> <span class="n">pump</span> <span class="ow">in</span> <span class="n">pumps</span><span class="p">:</span>
+                <span class="n">pump_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pump</span><span class="p">][</span><span class="n">OBJECT</span><span class="p">]</span>
+                <span class="n">pump_object</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+
+            <span class="c1"># figure out if we&#39;re done yet</span>
+            <span class="n">busy</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">pump</span> <span class="ow">in</span> <span class="n">pumps</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">pump</span><span class="p">][</span><span class="n">CURRENT_VOLUME</span><span class="p">]:</span>  <span class="c1"># if even one pump is not empty, this goes to True</span>
+                    <span class="n">busy</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">volume</span><span class="p">:</span>  <span class="c1"># same idea, if volume remains, this goes to True</span>
+                <span class="n">busy</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">busy</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># increment loop iterator</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PumpExecutioner.separate_phases"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.separate_phases">[docs]</a>    <span class="k">def</span> <span class="nf">separate_phases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lower_phase_target</span><span class="p">,</span> <span class="n">upper_phase_target</span><span class="p">,</span> <span class="n">separator_top</span><span class="o">=</span><span class="s2">&quot;flask_separator_top&quot;</span><span class="p">,</span> <span class="n">separator_bottom</span><span class="o">=</span><span class="s2">&quot;flask_separator_bottom&quot;</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">700</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Routine for separating layers in the automated sep funnel based on the conductivity sensor. Draws a known amount</span>
+<span class="sd">        into the tube, measures response, then keeps removing portions until the response drops below the threshold.</span>
+<span class="sd">        The implementation of the sensor is still insanely crude, basically an Arduino hack I shat together in a minute.</span>
+<span class="sd">        Probably worthwhile changing at some point.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            lower_phase_target (str): name of the flask the lower phase will be deposited to</span>
+<span class="sd">            upper_phase_target (str): name of the flask the upper phase will be deposited to</span>
+<span class="sd">            separator_top (str): name of the node which the sensor is associated with</span>
+<span class="sd">            separator_bottom (str): name of the location the lower phase is to be withdrawn from</span>
+<span class="sd">            step_size (float): size of the individual withdrawals in mL</span>
+<span class="sd">            threshold (int): minimum sensor reading indicating aqueous phase</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># acquire sensor</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sensor_connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">separator_top</span><span class="p">][</span><span class="s2">&quot;conductivity_sensor&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error. Separator top or sensor connection not found!&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># work out path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting separation&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">shortest_path</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">),</span> <span class="n">separator_bottom</span><span class="p">,</span> <span class="n">lower_phase_target</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Encountered an error during MOVE command.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># prime sensor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">move_speed</span><span class="o">=</span><span class="n">SEPARATION_DEFAULT_DRAW_SPEED</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="n">SEPARATION_DEFAULT_PRIMING_VOLUME</span><span class="p">)</span>
+
+        <span class="c1"># start separation by repeatedly withdrawing some of the lower phase until the reading disappears</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">move_speed</span><span class="o">=</span><span class="n">SEPARATION_DEFAULT_DRAW_SPEED</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="n">step_size</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;This is where the magic happens&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sensor_connection</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+                <span class="n">reading</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sensor_connection</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Sensor reading is </span><span class="si">{0}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reading</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">reading</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Nope still the same phase.&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Phase changed! Hurrah!&quot;</span><span class="p">)</span>
+                    <span class="k">break</span>
+
+        <span class="c1"># transfer the upper layer to its destination</span>
+        <span class="k">if</span> <span class="n">upper_phase_target</span> <span class="o">==</span> <span class="n">separator_top</span><span class="p">:</span>  <span class="c1"># i.e. keep the stuff</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># withdraw separator dead volume</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Now withdrawing dead volume...&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">move_speed</span><span class="o">=</span><span class="n">SEPARATION_DEFAULT_DRAW_SPEED</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="n">SEPARATION_DEAD_VOLUME</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done. Now transferring the upper layer...&quot;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">shortest_path</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">),</span> <span class="n">separator_bottom</span><span class="p">,</span> <span class="n">upper_phase_target</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Encountered an error during MOVE command.&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="n">volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_node_volume</span><span class="p">(</span><span class="n">separator_bottom</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">move_speed</span><span class="o">=</span><span class="n">SEPARATION_DEFAULT_DRAW_SPEED</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="n">volume</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PumpExecutioner.prime_tubes"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.prime_tubes">[docs]</a>    <span class="k">def</span> <span class="nf">prime_tubes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aspiration_speed</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterates over all nodes, and for all flasks moves the volume of the connecting tube from the flask to waste.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            aspiration_speed (float): Speed at which to withdraw from each flask</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">FLASK</span><span class="p">:</span>
+                <span class="c1"># find valve and tube volume</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">parent_valve</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">predecessors</span><span class="p">(</span><span class="n">each_node</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">tube_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">pred</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">parent_valve</span><span class="p">][</span><span class="n">VOLUME</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error! Can&#39;t find valve and tube volume for flask </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_node</span><span class="p">))</span>
+                    <span class="k">raise</span>
+                <span class="c1"># find waste position</span>
+                <span class="k">for</span> <span class="n">successor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">succ</span><span class="p">[</span><span class="n">parent_valve</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">successor</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">WASTE</span><span class="p">:</span>
+                        <span class="n">associated_waste</span> <span class="o">=</span> <span class="n">successor</span>
+                        <span class="k">break</span>
+                <span class="c1"># move volume to waste</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="p">[</span><span class="n">each_node</span><span class="p">,</span> <span class="n">parent_valve</span><span class="p">,</span> <span class="n">associated_waste</span><span class="p">],</span> <span class="n">volume</span><span class="o">=</span><span class="n">tube_volume</span><span class="p">,</span> <span class="n">move_speed</span><span class="o">=</span><span class="n">DEFAULT_PUMP_SPEED</span><span class="p">,</span> <span class="n">aspiration_speed</span><span class="o">=</span><span class="n">aspiration_speed</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PumpExecutioner.clean_all"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.clean_all">[docs]</a>    <span class="k">def</span> <span class="nf">clean_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">volume</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterates over all valves, and pumps a given volume from the source to each outlet.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            source (str): flask from which the fluid should be withdrawn</span>
+<span class="sd">            volume (float): volume to be transferred</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">each_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">each_node</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">VALVE</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">successor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">succ</span><span class="p">[</span><span class="n">each_node</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">successor</span> <span class="o">!=</span> <span class="n">source</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">successor</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">!=</span> <span class="n">VALVE</span><span class="p">:</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">path</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">shortest_path</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">),</span> <span class="n">source</span><span class="p">,</span> <span class="n">successor</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Encountered an error during MOVE command.&quot;</span><span class="p">)</span>
+                            <span class="k">return</span>
+
+                        <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="n">volume</span><span class="p">,</span> <span class="n">move_speed</span><span class="o">=</span><span class="n">DEFAULT_PUMP_SPEED</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PumpExecutioner.switch_vacuum"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.switch_vacuum">[docs]</a>    <span class="k">def</span> <span class="nf">switch_vacuum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flask</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Crude hack for switching a flask to vacuum via attached valve.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            flask (str): flask which is to be evacuated</span>
+<span class="sd">            destination (str): either &quot;vacuum&quot; or &quot;backbone&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Switching flask </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flask</span><span class="p">,</span> <span class="n">destination</span><span class="p">))</span>
+        <span class="n">vacuum_valve</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">flask</span><span class="p">][</span><span class="s2">&quot;vacuum_valve&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">destination</span> <span class="o">==</span> <span class="s2">&quot;vacuum&quot;</span><span class="p">:</span>
+            <span class="n">vacuum_valve</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">VACUUM_PORT</span><span class="p">)</span>
+            <span class="n">vacuum_valve</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">destination</span> <span class="o">==</span> <span class="s2">&quot;backbone&quot;</span><span class="p">:</span>
+            <span class="n">vacuum_valve</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">BACKBONE_PORT</span><span class="p">)</span>
+            <span class="n">vacuum_valve</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ERROR! Supplied position </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2"> isn&#39;t recognised!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">destination</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PumpExecutioner.switch_cartridge"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.switch_cartridge">[docs]</a>    <span class="k">def</span> <span class="nf">switch_cartridge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flask</span><span class="p">,</span> <span class="n">cartridge</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Crude hack to swicht a cartridge carousel consisting of two valves. Assumes identical ports are connected,</span>
+<span class="sd">        i.e. port 0 to 0, 1 to 1 etc.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            flask (str): node the carousel is connected to</span>
+<span class="sd">            cartridge (int): number of the cartridge to switch to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Switching cartridge carousel on </span><span class="si">{0}</span><span class="s2"> to cartridge </span><span class="si">{1}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flask</span><span class="p">,</span> <span class="n">cartridge</span><span class="p">))</span>
+
+        <span class="n">valve_one</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">flask</span><span class="p">][</span><span class="s2">&quot;cartridge_carousel&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">valve_two</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">flask</span><span class="p">][</span><span class="s2">&quot;cartridge_carousel&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">valve_one</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">cartridge</span><span class="p">)</span>
+        <span class="n">valve_one</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+        <span class="n">valve_two</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">cartridge</span><span class="p">)</span>
+        <span class="n">valve_two</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PumpExecutioner.switch_column_fraction"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.pump_execution.PumpExecutioner.switch_column_fraction">[docs]</a>    <span class="k">def</span> <span class="nf">switch_column_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Crude hack for switching the fractionating valve on the flash column.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            column (str): column which is to be switched</span>
+<span class="sd">            destination (str): either &quot;collect&quot; or &quot;waste&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Switching column </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">destination</span><span class="p">))</span>
+        <span class="n">column_valve</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">column</span><span class="p">][</span><span class="s2">&quot;switching_valve&quot;</span><span class="p">]</span>
+
+        <span class="c1"># find valve and tube volume</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">parent_valve</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">predecessors</span><span class="p">(</span><span class="n">column</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error! Can&#39;t find parent valve for </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column</span><span class="p">))</span>
+            <span class="k">raise</span>
+
+        <span class="c1"># find waste position</span>
+        <span class="n">associated_waste</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">associated_collection_flask</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">for</span> <span class="n">successor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">succ</span><span class="p">[</span><span class="n">parent_valve</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">successor</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">WASTE</span><span class="p">:</span>
+                <span class="n">associated_waste</span> <span class="o">=</span> <span class="n">successor</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">successor</span><span class="p">][</span><span class="n">CLASS</span><span class="p">]</span> <span class="o">==</span> <span class="n">COLLECTION_FLASK</span><span class="p">:</span>
+                <span class="n">associated_collection_flask</span> <span class="o">=</span> <span class="n">successor</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">associated_waste</span> <span class="ow">and</span> <span class="n">associated_collection_flask</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;ERROR! Could not find waste position (</span><span class="si">{0}</span><span class="s2">) or collect position (</span><span class="si">{1}</span><span class="s2">)!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">associated_waste</span><span class="p">,</span> <span class="n">associated_collection_flask</span><span class="p">))</span>
+
+        <span class="c1"># switch the valve and update the graph</span>
+        <span class="k">if</span> <span class="n">destination</span> <span class="o">==</span> <span class="s2">&quot;collect&quot;</span><span class="p">:</span>
+            <span class="n">column_valve</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">COLLECTION_PORT</span><span class="p">)</span>
+            <span class="n">column_valve</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">column</span><span class="p">][</span><span class="n">ASSOCIATED_FLASK</span><span class="p">]</span> <span class="o">=</span> <span class="n">associated_collection_flask</span>
+        <span class="k">elif</span> <span class="n">destination</span> <span class="o">==</span> <span class="s2">&quot;waste&quot;</span><span class="p">:</span>
+            <span class="n">column_valve</span><span class="o">.</span><span class="n">move_to_position</span><span class="p">(</span><span class="n">WASTE_PORT</span><span class="p">)</span>
+            <span class="n">column_valve</span><span class="o">.</span><span class="n">wait_until_ready</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">column</span><span class="p">][</span><span class="n">ASSOCIATED_FLASK</span><span class="p">]</span> <span class="o">=</span> <span class="n">associated_waste</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ERROR! Supplied position </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2"> isn&#39;t recognised!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">destination</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Cronin Group;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

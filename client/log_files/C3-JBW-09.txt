@@ -1,0 +1,38 @@
+2018-04-10 16:23:07,176 ; DEBUG ; chempiler_client ; MainThread ; User Input:
+XML file: C:\Users\group\Documents\Chempiler\graph\chemputer_rig_3_sildenafil.graphml
+Command file: C:\Users\group\Documents\Chempiler\tests\sildenafil.chasm
+Simulation: y
+2018-04-10 16:23:07,298 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_1" Address: 192.168.1.23
+2018-04-10 16:23:07,298 ; INFO ; hardware_sim ; MainThread ; Received Valve "valve_reagents_1" Address: 192.168.1.27
+2018-04-10 16:23:07,298 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reagents_2" Address: 192.168.1.24
+2018-04-10 16:23:07,298 ; INFO ; hardware_sim ; MainThread ; Received Valve "valve_reagents_2" Address: 192.168.1.38
+2018-04-10 16:23:07,298 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_solvents" Address: 192.168.1.25
+2018-04-10 16:23:07,298 ; INFO ; hardware_sim ; MainThread ; Received Valve "valve_solvents" Address: 192.168.1.29
+2018-04-10 16:23:07,298 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_reactor" Address: 192.168.1.26
+2018-04-10 16:23:07,298 ; INFO ; hardware_sim ; MainThread ; Received Valve "valve_reactor" Address: 192.168.1.30
+2018-04-10 16:23:07,298 ; INFO ; hardware_sim ; MainThread ; Received Valve "valve_separator" Address: 192.168.1.28
+2018-04-10 16:23:07,298 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_separator" Address: 192.168.1.31
+2018-04-10 16:23:07,298 ; INFO ; hardware_sim ; MainThread ; Received Valve "valve_rotary" Address: 192.168.1.45
+2018-04-10 16:23:07,298 ; INFO ; hardware_sim ; MainThread ; Received Pump "pump_rotary" Address: 192.168.1.32
+2018-04-10 16:23:07,398 ; INFO ; hardware_sim ; MainThread ; Received IKARET Port: COM26
+2018-04-10 16:23:07,398 ; INFO ; hardware_sim ; MainThread ; Received Huber port: COM7
+2018-04-10 16:23:07,398 ; INFO ; hardware_sim ; MainThread ; Received IKA microstar port: COM3
+2018-04-10 16:23:07,398 ; INFO ; hardware_sim ; MainThread ; Received Valve "filter_filter_top_vacuum_valve" Address: 192.168.1.40
+2018-04-10 16:23:07,398 ; DEBUG ; hardware_sim ; MainThread ; Valve "filter_filter_top_vacuum_valve" - Moving to home position.
+2018-04-10 16:23:07,398 ; DEBUG ; hardware_sim ; MainThread ; Valve "filter_filter_top_vacuum_valve" - Waiting until ready...
+2018-04-10 16:23:07,398 ; DEBUG ; hardware_sim ; MainThread ; Valve "filter_filter_top_vacuum_valve" - Moving to position 4
+2018-04-10 16:23:07,398 ; DEBUG ; hardware_sim ; MainThread ; Valve "filter_filter_top_vacuum_valve" - Waiting until ready...
+2018-04-10 16:23:07,398 ; INFO ; hardware_sim ; MainThread ; Received IKA microstar port: COM25
+2018-04-10 16:23:07,398 ; INFO ; hardware_sim ; MainThread ; Recevied IKARV port: COM32
+2018-04-10 16:23:07,398 ; INFO ; hardware_sim ; MainThread ; Received CVC3000 port: COM24
+2018-04-10 16:23:07,398 ; INFO ; hardware_sim ; MainThread ; Received Valve "rotavap_first_cartridge_valve" Address: 192.168.1.44
+2018-04-10 16:23:07,398 ; INFO ; hardware_sim ; MainThread ; Received Valve "rotavap_second_cartridge_valve" Address: 192.168.1.37
+2018-04-10 16:23:07,398 ; DEBUG ; hardware_sim ; MainThread ; Valve "rotavap_first_cartridge_valve" - Moving to home position.
+2018-04-10 16:23:07,398 ; DEBUG ; hardware_sim ; MainThread ; Valve "rotavap_second_cartridge_valve" - Moving to home position.
+2018-04-10 16:23:07,398 ; DEBUG ; hardware_sim ; MainThread ; Valve "rotavap_first_cartridge_valve" - Waiting until ready...
+2018-04-10 16:23:07,398 ; DEBUG ; hardware_sim ; MainThread ; Valve "rotavap_second_cartridge_valve" - Waiting until ready...
+2018-04-10 16:23:07,398 ; DEBUG ; hardware_sim ; MainThread ; Valve "rotavap_first_cartridge_valve" - Moving to position 0
+2018-04-10 16:23:07,398 ; DEBUG ; hardware_sim ; MainThread ; Valve "rotavap_second_cartridge_valve" - Moving to position 0
+2018-04-10 16:23:07,398 ; DEBUG ; hardware_sim ; MainThread ; Valve "rotavap_first_cartridge_valve" - Waiting until ready...
+2018-04-10 16:23:07,398 ; DEBUG ; hardware_sim ; MainThread ; Valve "rotavap_second_cartridge_valve" - Waiting until ready...
+2018-04-10 16:23:07,645 ; ERROR ; ChASM_parser ; MainThread ; Syntax error in line 121: offending token: LexToken(CURLY_BRACE_CLOSED,'}',121,7066)

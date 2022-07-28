@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tools.module_execution.chiller_execution &mdash; Chempiler 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Chempiler
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Chempiler</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>tools.module_execution.chiller_execution</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tools.module_execution.chiller_execution</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;chiller_execution&quot; -- Mid-level wrapper class around :mod:&quot;JULABO_CF41&quot;</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: chiller_execution</span>
+<span class="sd">   :platform: Windows, Unix</span>
+<span class="sd">   :synopsis: Mid-level wrapper around chiller control, provides real-live useful methods</span>
+<span class="sd">.. moduleauthor:: Graham Keenan &lt;1105045k@student.gla.ac.uk&gt;</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+
+<span class="sd">(c) 2017 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This class provides all real-life applications of recirculation chillers within the Chemputer rig, essentially just</span>
+<span class="sd">wrapping the original class methods.</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getfile</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s2">&quot;..&#39;, &#39;..&quot;</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">tools.constants</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="ChillerExecutioner"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.chiller_execution.ChillerExecutioner">[docs]</a><span class="k">class</span> <span class="nc">ChillerExecutioner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for interfacing with the Chiller objects</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">chiller</span><span class="p">,</span> <span class="n">simulation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialiser for the ChillerExecutioner class</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            graph (DiGraph): Graph representing the platform</span>
+<span class="sd">            chiller (dict): Dictionary containing the chiller names and their associated objects</span>
+<span class="sd">            simulation (bool): Simulation mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chiller</span> <span class="o">=</span> <span class="n">chiller</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span> <span class="o">=</span> <span class="n">simulation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;main_logger.chiller_executioner_logger&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ChillerExecutioner.start_chiller"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.chiller_execution.ChillerExecutioner.start_chiller">[docs]</a>    <span class="k">def</span> <span class="nf">start_chiller</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chiller_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts the circulation and heating/cooling action</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chiller_name (str): Name of the chiller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting chiller </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chiller_name</span><span class="p">))</span>
+        <span class="n">chiller_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chiller</span><span class="p">[</span><span class="n">chiller_name</span><span class="p">]</span>
+        <span class="n">chiller_obj</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChillerExecutioner.stop_chiller"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.chiller_execution.ChillerExecutioner.stop_chiller">[docs]</a>    <span class="k">def</span> <span class="nf">stop_chiller</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chiller_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stops the circulation and heating/cooling action</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chiller_name (str): Name of the chiller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stopping chiller </span><span class="si">{0}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chiller_name</span><span class="p">))</span>
+        <span class="n">chiller_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chiller</span><span class="p">[</span><span class="n">chiller_name</span><span class="p">]</span>
+        <span class="n">chiller_obj</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChillerExecutioner.set_temp"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.chiller_execution.ChillerExecutioner.set_temp">[docs]</a>    <span class="k">def</span> <span class="nf">set_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chiller_name</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the temperature of the chiller</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chiller_name (str): Name of the chiller</span>
+<span class="sd">            temp (float): Temperature to set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting temperature for chiller </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2">°C...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chiller_name</span><span class="p">,</span> <span class="n">temp</span><span class="p">))</span>
+        <span class="n">chiller_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chiller</span><span class="p">[</span><span class="n">chiller_name</span><span class="p">]</span>
+        <span class="n">chiller_obj</span><span class="o">.</span><span class="n">set_temperature</span><span class="p">(</span><span class="n">temp</span><span class="o">=</span><span class="n">temp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChillerExecutioner.cooling_power"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.chiller_execution.ChillerExecutioner.cooling_power">[docs]</a>    <span class="k">def</span> <span class="nf">cooling_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chiller_name</span><span class="p">,</span> <span class="n">cooling_power</span><span class="p">):</span>  <span class="c1"># TODO check if CF41</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the cooling power of the chiller. Only works with Julabo CF41.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chiller_name (str): Name of the chiller</span>
+<span class="sd">            cooling_power (int): Cooling power in % (range 0..100)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting cooling power for chiller </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2">%...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chiller_name</span><span class="p">,</span> <span class="n">cooling_power</span><span class="p">))</span>
+        <span class="n">chiller_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chiller</span><span class="p">[</span><span class="n">chiller_name</span><span class="p">]</span>
+        <span class="n">chiller_obj</span><span class="o">.</span><span class="n">set_cooling_power</span><span class="p">(</span><span class="n">cooling_power</span><span class="o">=</span><span class="n">cooling_power</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChillerExecutioner.ramp_chiller"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.chiller_execution.ChillerExecutioner.ramp_chiller">[docs]</a>    <span class="k">def</span> <span class="nf">ramp_chiller</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chiller_name</span><span class="p">,</span> <span class="n">ramp_duration</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the ramp duration and the end temperature for the chiller</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chiller_name (str): Name of the chiller</span>
+<span class="sd">            ramp_duration (int): duration of the ramp in sec</span>
+<span class="sd">            temp (float): End temperature to ramp to in °C</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting ramp duration and temperature for chiller </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2">°C...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chiller_name</span><span class="p">,</span> <span class="n">ramp_duration</span><span class="p">,</span> <span class="n">temp</span><span class="p">))</span>
+        <span class="n">chiller_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chiller</span><span class="p">[</span><span class="n">chiller_name</span><span class="p">]</span>
+        <span class="n">chiller_obj</span><span class="o">.</span><span class="n">set_ramp_duration</span><span class="p">(</span><span class="n">ramp_duration</span><span class="o">=</span><span class="n">ramp_duration</span><span class="p">)</span>
+        <span class="n">chiller_obj</span><span class="o">.</span><span class="n">start_ramp</span><span class="p">(</span><span class="n">temp</span><span class="o">=</span><span class="n">temp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChillerExecutioner.switch_vessel"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.chiller_execution.ChillerExecutioner.switch_vessel">[docs]</a>    <span class="k">def</span> <span class="nf">switch_vessel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vessel_name</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param vessel_name:</span>
+<span class="sd">        :param state:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># acquire sensor</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sensor_connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="n">vessel_name</span><span class="p">][</span><span class="s2">&quot;chiller_switch&quot;</span><span class="p">]</span> <span class="c1">#should be enough, because its on same port</span>
+
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error. Flask or valveconnection not found!&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Now the chiller switches&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+                <span class="n">sensor_connection</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+                <span class="n">reading</span> <span class="o">=</span> <span class="n">sensor_connection</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Chiller is switched </span><span class="si">{0}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reading</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                <span class="n">sensor_connection</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+                <span class="n">reading</span> <span class="o">=</span> <span class="n">sensor_connection</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Chiller is switched </span><span class="si">{0}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reading</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ChillerExecutioner.wait_for_temp"><a class="viewcode-back" href="../../../source/tools.module_execution.html#tools.module_execution.chiller_execution.ChillerExecutioner.wait_for_temp">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chiller_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Waits for the chiller to reach its setpoint temperature (approaching from either way)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chiller_name (str): Name of the chiller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting for temperature... Done.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">chiller_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chiller</span><span class="p">[</span><span class="n">chiller_name</span><span class="p">]</span>
+            <span class="n">setpoint</span> <span class="o">=</span> <span class="n">chiller_obj</span><span class="o">.</span><span class="n">get_setpoint</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Chiller </span><span class="si">{0}</span><span class="s2"> waiting to reach </span><span class="si">{1}</span><span class="s2">°C...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chiller_name</span><span class="p">,</span> <span class="n">setpoint</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">chiller_obj</span><span class="o">.</span><span class="n">get_temperature</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">setpoint</span><span class="p">:</span>  <span class="c1"># approach from below</span>
+                <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">chiller_obj</span><span class="o">.</span><span class="n">get_temperature</span><span class="p">()</span> <span class="o">-</span> <span class="n">setpoint</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">COOLING_THRESHOLD</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Still heating... Current temperature: </span><span class="si">{0}</span><span class="s2">°C&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chiller_obj</span><span class="o">.</span><span class="n">get_temperature</span><span class="p">()))</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">chiller_obj</span><span class="o">.</span><span class="n">get_temperature</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">setpoint</span><span class="p">:</span>  <span class="c1"># approach from above</span>
+                <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">chiller_obj</span><span class="o">.</span><span class="n">get_temperature</span><span class="p">()</span> <span class="o">-</span> <span class="n">setpoint</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">COOLING_THRESHOLD</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Still cooling... Current temperature: </span><span class="si">{0}</span><span class="s2">°C&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chiller_obj</span><span class="o">.</span><span class="n">get_temperature</span><span class="p">()))</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Cronin Group;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

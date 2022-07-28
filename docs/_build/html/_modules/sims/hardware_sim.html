@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sims.hardware_sim &mdash; Chempiler 1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Chempiler
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Chempiler</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>sims.hardware_sim</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sims.hardware_sim</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:&quot;hardware_sim&quot; -- Collection of classes to simulate the operation of various hardware devices</span>
+<span class="sd">===================================</span>
+
+<span class="sd">.. module:: hardware_sim</span>
+<span class="sd">   :platform: Windows</span>
+<span class="sd">   :synopsis: Classes to simulate chemputer hardware.</span>
+<span class="sd">.. moduleauthor:: Graham Keenan &lt;1105045k@student.gla.ac.uk&gt;</span>
+<span class="sd">.. moduleauthor:: Sebastian Steiner &lt;s.steiner.1@research.gla.ac.uk&gt;</span>
+
+<span class="sd">(c) 2017 The Cronin Group, University of Glasgow</span>
+
+<span class="sd">This file provides a number of simulation classes that behave like the real</span>
+<span class="sd">control classes, but mostly just log the commands rather than actually doing anything.</span>
+
+<span class="sd">For style guide used see http://xkcd.com/1513/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+
+<div class="viewcode-block" id="SimDevice"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimDevice">[docs]</a><span class="k">class</span> <span class="nc">SimDevice</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;main_logger.sim_logger&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SimChemputerPump"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimChemputerPump">[docs]</a><span class="k">class</span> <span class="nc">SimChemputerPump</span><span class="p">(</span><span class="n">SimDevice</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Received Pump </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s1"> Address: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">address</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+<div class="viewcode-block" id="SimChemputerPump.move_relative"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimChemputerPump.move_relative">[docs]</a>    <span class="k">def</span> <span class="nf">move_relative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volume_ul</span><span class="p">,</span> <span class="n">speed_ul</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Pump </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s1"> - Moving relative. Volume: </span><span class="si">{1}</span><span class="s1"> Speed: </span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">volume_ul</span><span class="p">,</span> <span class="n">speed_ul</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SimChemputerPump.move_absolute"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimChemputerPump.move_absolute">[docs]</a>    <span class="k">def</span> <span class="nf">move_absolute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volume_ul</span><span class="p">,</span> <span class="n">speed_ul</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Pump </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s1"> - Moving absolute. Volume: </span><span class="si">{1}</span><span class="s1"> Speed: </span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">volume_ul</span><span class="p">,</span> <span class="n">speed_ul</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SimChemputerPump.move_to_home"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimChemputerPump.move_to_home">[docs]</a>    <span class="k">def</span> <span class="nf">move_to_home</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed_ul</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Pump </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s1"> - Moving home: Speed: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">speed_ul</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SimChemputerPump.wait_until_ready"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimChemputerPump.wait_until_ready">[docs]</a>    <span class="k">def</span> <span class="nf">wait_until_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Pump </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s1"> - Waiting until ready...&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span></div></div>
+
+    
+<div class="viewcode-block" id="SimChemputerValve"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimChemputerValve">[docs]</a><span class="k">class</span> <span class="nc">SimChemputerValve</span><span class="p">(</span><span class="n">SimDevice</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Received Valve </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s1"> Address: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">address</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+<div class="viewcode-block" id="SimChemputerValve.move_home"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimChemputerValve.move_home">[docs]</a>    <span class="k">def</span> <span class="nf">move_home</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Valve </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s1"> - Moving to home position.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SimChemputerValve.move_to_position"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimChemputerValve.move_to_position">[docs]</a>    <span class="k">def</span> <span class="nf">move_to_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Valve </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s1"> - Moving to position </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">position</span><span class="p">))</span></div>
+        
+<div class="viewcode-block" id="SimChemputerValve.wait_until_ready"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimChemputerValve.wait_until_ready">[docs]</a>    <span class="k">def</span> <span class="nf">wait_until_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Valve </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s1"> - Waiting until ready...&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span></div></div>
+
+    
+<div class="viewcode-block" id="SimIKARET"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARET">[docs]</a><span class="k">class</span> <span class="nc">SimIKARET</span><span class="p">(</span><span class="n">SimDevice</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Received IKARET Port: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SimIKARET.start_stirrer"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARET.start_stirrer">[docs]</a>    <span class="k">def</span> <span class="nf">start_stirrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARET - Starting stirrer&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimIKARET.start_heater"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARET.start_heater">[docs]</a>    <span class="k">def</span> <span class="nf">start_heater</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARET - Starting heater&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimIKARET.stop_stirrer"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARET.stop_stirrer">[docs]</a>    <span class="k">def</span> <span class="nf">stop_stirrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARET - Stopping stirrer&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimIKARET.stop_heater"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARET.stop_heater">[docs]</a>    <span class="k">def</span> <span class="nf">stop_heater</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARET - Stopping heater&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimIKARET.temperature_setter"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARET.temperature_setter">[docs]</a>    <span class="k">def</span> <span class="nf">temperature_setter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARET - Temperaure set to: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SimIKARET.stir_rate_setter"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARET.stir_rate_setter">[docs]</a>    <span class="k">def</span> <span class="nf">stir_rate_setter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stir_rate</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARET - Stir rate set to: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stir_rate</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="SimUSBswitch"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimUSBswitch">[docs]</a><span class="k">class</span> <span class="nc">SimUSBswitch</span><span class="p">(</span><span class="n">SimDevice</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Received USB switch port: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SimUSBswitch.start_stirrer"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimUSBswitch.start_stirrer">[docs]</a>    <span class="k">def</span> <span class="nf">start_stirrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;usbswitch - Starting stirrer&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimUSBswitch.stop_stirrer"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimUSBswitch.stop_stirrer">[docs]</a>    <span class="k">def</span> <span class="nf">stop_stirrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;usbswitch - Stopping stirrer&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SimIKARV"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARV">[docs]</a><span class="k">class</span> <span class="nc">SimIKARV</span><span class="p">(</span><span class="n">SimDevice</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Recevied IKARV port: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SimIKARV.initialise"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARV.initialise">[docs]</a>    <span class="k">def</span> <span class="nf">initialise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Initialising&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimIKARV.start_heater"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARV.start_heater">[docs]</a>    <span class="k">def</span> <span class="nf">start_heater</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Starting Heater&#39;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="SimIKARV.stop_heater"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARV.stop_heater">[docs]</a>    <span class="k">def</span> <span class="nf">stop_heater</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Stopping Heater&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimIKARV.start_rotation"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARV.start_rotation">[docs]</a>    <span class="k">def</span> <span class="nf">start_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Starting Rotations&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimIKARV.stop_rotation"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARV.stop_rotation">[docs]</a>    <span class="k">def</span> <span class="nf">stop_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Stopping roations&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimIKARV.lift_up"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARV.lift_up">[docs]</a>    <span class="k">def</span> <span class="nf">lift_up</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Lifting arm&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimIKARV.lift_down"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARV.lift_down">[docs]</a>    <span class="k">def</span> <span class="nf">lift_down</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Lifting arm down&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimIKARV.reset_rotavap"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARV.reset_rotavap">[docs]</a>    <span class="k">def</span> <span class="nf">reset_rotavap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Resetting rotavap&#39;</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">temperature_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Temperature: GIEF TEMP ༼ つ ◕_◕ ༽つ&#39;</span><span class="p">)</span>
+    
+    <span class="nd">@temperature_sp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">temperature_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Temperature set to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rotation_speed_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Speed: GIEF SPEED ༼ つ ◕_◕ ༽つ&#39;</span><span class="p">)</span>
+    
+    <span class="nd">@rotation_speed_sp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">rotation_speed_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Speed set to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speed</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SimIKARV.set_interval_sp"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKARV.set_interval_sp">[docs]</a>    <span class="k">def</span> <span class="nf">set_interval_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKARV - Interval set to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">interval</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="SimJULABOCF41"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimJULABOCF41">[docs]</a><span class="k">class</span> <span class="nc">SimJULABOCF41</span><span class="p">(</span><span class="n">SimDevice</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Received Julabo CF41 port: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SimJULABOCF41.start"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimJULABOCF41.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Julabo CF41 - Starting operation&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimJULABOCF41.stop"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimJULABOCF41.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Julabo CF41 - Stopping operation&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimJULABOCF41.set_temperature"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimJULABOCF41.set_temperature">[docs]</a>    <span class="k">def</span> <span class="nf">set_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Julabo CF41 - Temperature sp set to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SimJULABOCF41.set_cooling_power"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimJULABOCF41.set_cooling_power">[docs]</a>    <span class="k">def</span> <span class="nf">set_cooling_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cooling_power</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cooling_power</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">cooling_power</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ERROR: supplied value </span><span class="si">{0}</span><span class="s2"> is outside the limits (0..100)!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cooling_power</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Julabo CF41 - Cooling power set to set to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cooling_power</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="SimHuber"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimHuber">[docs]</a><span class="k">class</span> <span class="nc">SimHuber</span><span class="p">(</span><span class="n">SimDevice</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Received Huber port: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SimHuber.start"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimHuber.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Huber - Starting operation&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimHuber.stop"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimHuber.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Huber - Stopping operation&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimHuber.set_temperature"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimHuber.set_temperature">[docs]</a>    <span class="k">def</span> <span class="nf">set_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Huber - Temperature sp set to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SimHuber.set_ramp_duration"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimHuber.set_ramp_duration">[docs]</a>    <span class="k">def</span> <span class="nf">set_ramp_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ramp_duration</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Huber - Ramp duration set to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ramp_duration</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SimHuber.start_ramp"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimHuber.start_ramp">[docs]</a>    <span class="k">def</span> <span class="nf">start_ramp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Huber - Starting ramp to </span><span class="si">{0}</span><span class="s1">°C&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="SimRZR2052"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimRZR2052">[docs]</a><span class="k">class</span> <span class="nc">SimRZR2052</span><span class="p">(</span><span class="n">SimDevice</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Received RZR 2052 port: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">stir_rate_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;RZR 2052 - GIEF SP ༼ つ ◕_◕ ༽つ&quot;</span><span class="p">)</span>
+
+    <span class="nd">@stir_rate_sp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">stir_rate_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rpm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;RZR 2052 - Setting RPM to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rpm</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SimRZR2052.start_stirrer"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimRZR2052.start_stirrer">[docs]</a>    <span class="k">def</span> <span class="nf">start_stirrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;RZR 2052 - Starting operation&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimRZR2052.stop_stirrer"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimRZR2052.stop_stirrer">[docs]</a>    <span class="k">def</span> <span class="nf">stop_stirrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;RZR 2052 - Stopping operation&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SimIKAmicrostar"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKAmicrostar">[docs]</a><span class="k">class</span> <span class="nc">SimIKAmicrostar</span><span class="p">(</span><span class="n">SimDevice</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Received IKA microstar port: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">stir_rate_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;IKA microstar - GIEF SP ༼ つ ◕_◕ ༽つ&quot;</span><span class="p">)</span>
+
+    <span class="nd">@stir_rate_sp</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">stir_rate_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rpm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKA microstar - Setting RPM to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rpm</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SimIKAmicrostar.start_stirrer"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKAmicrostar.start_stirrer">[docs]</a>    <span class="k">def</span> <span class="nf">start_stirrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKA microstar - Starting operation&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimIKAmicrostar.stop_stirrer"><a class="viewcode-back" href="../../source/sims.html#sims.hardware_sim.SimIKAmicrostar.stop_stirrer">[docs]</a>    <span class="k">def</span> <span class="nf">stop_stirrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IKA microstar - Stopping operation&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Cronin Group;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
